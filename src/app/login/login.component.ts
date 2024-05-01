@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
-<<<<<<< HEAD
-import { Router } from '@angular/router';
-=======
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
->>>>>>> af869858aeefe069ed80182e65f3ffab38be2189
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
@@ -27,14 +22,6 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginComponent {
 
-<<<<<<< HEAD
-  constructor(private router: Router) {}
-
-  goToDashboard() {
-    this.router.navigateByUrl('/dashboard');
-  }
-
-=======
   loginData = this.formBuilder.group({
     name: '',
     email: '',
@@ -53,5 +40,4 @@ guestLogin() {
     console.log('Gast Login');
     
 }
->>>>>>> af869858aeefe069ed80182e65f3ffab38be2189
 }
