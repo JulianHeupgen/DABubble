@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "da-bubble-4a31a": {
+      "hosting": {
+        "dabubble": [
+          "da-bubble-4a31a"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "da-bubble-4a31a"
+  }
+}
