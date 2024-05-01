@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     MatButtonModule,
     MatCardModule,
-    MatInputModule,    
+    MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
   ],
@@ -35,7 +35,7 @@ export class LoginComponent {
   logIn(event: Event) {
     console.log('log in', this.loginData.value);
     event.preventDefault();
-    
+
 }
 
 guestLogin() {
