@@ -32,12 +32,13 @@ Login, Register, Dashboard, Password-reset, Impressum, Privacy
 
 
 
-Wer macht was???
-
-
-
-
-
 Notes
 CSS Klassen mit: Minus bsp add-user
 ID´s und Script: camelCase
+
+
+FIREBASE Details
+
+Firestore Collections
+Users
+Channels
