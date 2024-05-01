@@ -22,9 +22,11 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginComponent {
 
+
+
   loginData = this.formBuilder.group({
-    name: '',
     email: '',
+    password: '',
   })
 
 
@@ -37,7 +39,6 @@ export class LoginComponent {
 }
 
 guestLogin() {
-    console.log('Gast Login');
-    
+    console.log('Gast Login');    
 }
 }
