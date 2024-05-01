@@ -1,0 +1,6 @@
+@import '../../mixin.scss';
+
+mat-card {
+    border-radius: 30px;
+    @include flex-align-justify();
+}
