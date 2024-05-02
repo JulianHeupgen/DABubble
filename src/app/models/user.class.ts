@@ -34,7 +34,7 @@ export class User {
 
     sendMessage(channel: Channel, messageContent: string): void {
         channel.addMessage(this, messageContent);
-      }
+    }
 
 }
 
