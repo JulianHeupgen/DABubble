@@ -6,6 +6,7 @@ import { UserChatComponent } from './dashboard/user-chat/user-chat.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { ImprintComponent } from './imprint/imprint.component';
 import { RegisterComponent } from './register/register.component';
+import { LogoComponent } from './animations/logo/logo.component';
 
 export const routes: Routes = [
   { path: '',   redirectTo: '/login', pathMatch: 'full' },
@@ -19,6 +20,7 @@ export const routes: Routes = [
     ]
   },
   { path: 'privacy', component: PrivacyComponent},
-  { path: 'imprint', component: ImprintComponent}
+  { path: 'imprint', component: ImprintComponent},
+  { path: 'logo', component: LogoComponent}
 ];
 

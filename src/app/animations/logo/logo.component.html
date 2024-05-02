@@ -1,0 +1,32 @@
+<div class="section">
+
+  <img src="./../../../assets/img/logo-complete-white.png">
+
+  <div style="width: 400px; display: none;">
+
+    <nav>
+      <button type="button" (click)="toggle()">Toggle Open/Close</button>
+    </nav>
+
+    <div [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">
+      <p>The box is now {{ isOpen ? 'Open' : 'Closed' }}!</p>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- Logo Animations Description
+
+
+blue gradient background
+Icon logo centered
+Logo moving to the left to make space for the text
+Then make text visible
+Then move and resize
+-> resize to size of black logo
+-> move to upper left corner
+Change background to standard color and show the login screen
+
+-->
