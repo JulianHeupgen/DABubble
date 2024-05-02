@@ -1,0 +1,35 @@
+<div class="main-container" [class.defaultBg]="defaultBackground">
+
+  <!-- logo-animation.component.html -->
+  <div [@resizeAndMove]="containerState" class="logo-container" (@resizeAndMove.done)="resizeAndMoveDone()">
+
+    <img src="./../../../assets/img/logo-icon.png" class="icon" />
+
+    <div [@grow] (@grow.done)="growDone()" *ngIf="startGrowing" class="text-container">
+      <img [@slideIn] (@slideIn.done)="slideDone()" src="./../../../assets/img/logo-text-white.png" *ngIf="textVisible" class="" />
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- Logo Animations Description
+
+blue gradient background
+Icon logo centered
+Logo moving to the left to make space for the text
+Then make text visible
+Then move and resize
+-> resize to size of black logo
+-> move to upper left corner
+Change background to standard color and show the login screen
+
+-->
