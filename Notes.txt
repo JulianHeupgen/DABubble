@@ -9,7 +9,7 @@ Password Reset (Check mit Firebase Authentication)
 Dashboard Komponente
 - Header
 - Sidenav
-- Message
+- ChannelChatComponent bzw UserChatComponent (regelt router-outlet)
 - Thread
 
 Register
@@ -40,5 +40,6 @@ ID´s und Script: camelCase
 FIREBASE Details
 
 Firestore Collections
-Users
-Channels
+- Users
+- Channels
+

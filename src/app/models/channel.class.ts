@@ -2,12 +2,12 @@ import { Message } from './message.class';
 import { User } from './user.class';
 
 export class Channel {
-  name: string;
+  title: string;
   participants: User[];
   messages: Message[];
 
-  constructor(name: string) {
-    this.name = name;
+  constructor(title: string) {
+    this.title = title;
     this.participants = [];
     this.messages = [];
   }
