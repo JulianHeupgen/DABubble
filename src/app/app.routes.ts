@@ -10,7 +10,8 @@ import { LogoComponent } from './animations/logo/logo.component';
 
 export const routes: Routes = [
 
-  { path: '',   redirectTo: '/login', pathMatch: 'full' },
+  { path: '',   redirectTo: '/hello', pathMatch: 'full' },
+  { path: 'hello', component: LogoComponent},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
   {
