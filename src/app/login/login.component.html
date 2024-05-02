@@ -1,10 +1,16 @@
 <mat-card>
-    <mat-card-content>
-        <h1>Anmelden</h1>
+    <mat-card-content>  
+        <h1>Anmeldung</h1>
         <span>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</span>
         <form [formGroup]="loginData" (ngSubmit)="logIn($event)">
-            <input type="text">
-            <input type="email">
+            <div class="input-login">
+                <input formControlName="email" type="email" placeholder="beispielname@email.com">
+                <mat-icon>mail_outline</mat-icon>
+            </div>
+            <div class="input-login">
+                <mat-icon>lock_outline</mat-icon>
+                <input formControlName="password" type="password" placeholder="Password">
+            </div>
             <div>
                 <button type="submit" mat-flat-button color="primary">Anmelden</button>
                 <button type="button" mat-stroked-button color="primary" (click)="guestLogin()">Guest-Login</button>
