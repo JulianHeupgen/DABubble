@@ -1,1 +1,16 @@
-<p>sidenav works!</p>
+<div *ngIf="opened" [@fadeInOut]="opened ? 'open' : 'closed'">
+    <mat-drawer-container class="sidenav-container" autosize>
+        <mat-drawer #drawer class="sidenav" mode="side" [opened]="opened">
+            <p>Devspace</p>
+        </mat-drawer>
+        <mat-drawer-content class="sidenav-content">Inhalt hier...</mat-drawer-content>
+    </mat-drawer-container>
+</div>
+<!-- <button mat-button (click)="toggleSidenav()"> -->
+    @if (opened) {
+        <img class="img-as-button" (mouseenter)="hoverMenuButton()" (mouseleave)="resetHover()" [src]="imageSrc" (click)="toggleSidenav()">
+    }
+    @if (!opened) {
+        <img class="img-as-button" (mouseenter)="hoverMenuButton()" (mouseleave)="resetHover()" [src]="imageSrc" (click)="toggleSidenav()">
+    }
+<!-- </button> -->

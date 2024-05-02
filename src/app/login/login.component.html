@@ -1,5 +1,5 @@
 <mat-card>
-    <mat-card-content>  
+    <mat-card-content>
         <h1>Anmelden</h1>
         <span>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</span>
         <form [formGroup]="loginData" (ngSubmit)="logIn($event)">
@@ -9,6 +9,6 @@
                 <button type="submit" mat-flat-button color="primary">Anmelden</button>
                 <button type="button" mat-stroked-button color="primary" (click)="guestLogin()">Guest-Login</button>
             </div>
-        </form>    
+        </form>
     </mat-card-content>
 </mat-card>
