@@ -1,5 +1,33 @@
-p {
-    width: 300px;
-    background-color: coral;
+.main-container {
+    margin-left: 20px;
+}
+
+.sidenav-container {
+    border: unset;
+    width: 366px;
+    height: 940px;
+    border-radius: 30px;
+}
+
+.sidenav-content {
+    display: flex;
+    height: 100%;
+    width: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidenav {
+    padding: 32px 30px;
+    height: 940px;
+    width: 366px;
+}
+
+.img-as-button {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
 }
 

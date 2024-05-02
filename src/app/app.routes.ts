@@ -9,6 +9,7 @@ import { RegisterComponent } from './register/register.component';
 import { LogoComponent } from './animations/logo/logo.component';
 
 export const routes: Routes = [
+
   { path: '',   redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
@@ -16,7 +17,7 @@ export const routes: Routes = [
     path: 'dashboard', component: DashboardComponent,
     children: [
       { path: 'channel/:id', component: ChannelChatComponent },
-      { path: 'chat/:id', component: UserChatComponent },
+      { path: 'chat/:id', component: UserChatComponent }
     ]
   },
   { path: 'privacy', component: PrivacyComponent},

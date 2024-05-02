@@ -1,5 +1,35 @@
-p {
-    height: 100px;
-    background-color: chocolate;
+.header {
+    display: flex;
+    align-items: center;
 }
 
+.logo {
+    height: 70px;
+    width: 243px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    border: unset;
+    padding: 5px;
+    position: relative;
+
+
+
+    input {
+        flex-grow: 1;
+        border: none;
+        outline: none;
+        padding: 8px;
+        border-radius: 42px;
+        width: 989px;
+        height: 60px;
+        font-size: 24px;
+    }
+
+    img {
+        position: absolute;
+        right: 20px;
+    }
+}
