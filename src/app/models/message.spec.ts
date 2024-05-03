@@ -8,4 +8,3 @@ describe('Message', () => {
     expect(new Message(sender, 'Hello World')).toBeTruthy();
   });
 });
-

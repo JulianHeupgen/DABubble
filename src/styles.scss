@@ -55,4 +55,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 app-channel-chat {
   width: 100%;
+  height: calc(100vh - 96px);
 }
+
