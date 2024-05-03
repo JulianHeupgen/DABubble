@@ -1,0 +1,65 @@
+@import '../../mixin.scss';
+
+.register-container {
+  @include flex-align-justify();
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+mat-card {
+    width: 40%;
+    height: 80vh;
+    border-radius: 30px;
+    padding: 18px 32px;
+    mat-card-content {
+        text-align: center;
+        @include flex-align-justify();
+        flex-direction: column;
+        gap: 30px;
+        h1 {
+            font-size: 46px;
+            font-weight: 700;
+            color: #444DF2
+        }
+        span {
+            font-size: 20px;
+            font-weight: 400;
+        }
+    }
+}
+
+form {
+    width: 100%;
+    @include flex-align-justify();
+    flex-direction: column;
+    gap: 30px;
+}
+
+.input-login {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    input {
+        font-size: 18px;
+        font-weight: 500;
+        width: 100%;
+        padding: 18px 70px;
+        border-radius: 100px;
+        border: none;
+        background-color: #ECEEFE;
+        &:focus {
+            outline: 1px solid #535AF1;
+        }
+        &:hover {
+            cursor: pointer;
+            outline: 1px solid #686868;
+        }
+    }
+
+    mat-icon {
+        position: absolute;
+        left: 20px;
+    }
+}

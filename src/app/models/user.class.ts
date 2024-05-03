@@ -1,6 +1,6 @@
 import { Channel } from "./channel.class";
 
-export class User { 
+export class User {
     name: string;
     email: string;
     onlineStatus: 'online' | 'offline';
