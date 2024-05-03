@@ -34,8 +34,12 @@ import { MatSidenavModule, MatDrawer, MatDrawerContainer, MatDrawerContent } fro
   ]
 })
 export class SidenavComponent {
-  opened = true;
-  imageSrc = './assets/img/sidemenu_close_normal.png';
+  opened: boolean = true;
+  imageSrc: string = './assets/img/sidemenu_close_normal.png';
+  editSrc: string = './assets/img/edit_square.png';
+  arrowSrc: string = './assets/img/arrow_drop_down.png';
+  logoSrc: string = './assets/img/private_message_logo.png';
+  online: boolean = true;
 
   toggleSidenav() {
     this.opened = !this.opened;
@@ -55,6 +59,14 @@ export class SidenavComponent {
     } else {
       this.imageSrc = './assets/img/sidemenu_close_normal.png';
     }
+  }
+
+  hoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc', url:string) {
+    this[originalSrc] = url;
+  }
+
+  resetHoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc', url:string) {
+    this[originalSrc] = url;
   }
 
 }

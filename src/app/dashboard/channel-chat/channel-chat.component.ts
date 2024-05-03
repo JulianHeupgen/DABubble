@@ -13,7 +13,13 @@ import { Channel } from '../../models/channel.class';
 })
 export class ChannelChatComponent {
 
-  currentChannel!: Channel;   // In dieser Variable die Channel Infos von Firebase laden und dann die Inhalte rendern
+  currentChannel!: Channel;   /* 
+                                 Daniel Sidenav: Klick auf einen Channel und dieser leitet per routerLink an eine bestimmte URL;
+                                 In ChannelChatComponent wird URL ausgelesen (in NgOnInit) und die id geprüft: id ermittelt den gesuchten Channel;
+                                 In Variable "currentChannel" die Channel Infos von Firebase laden und dann die Inhalte rendern;
+                                 in html template ergänzen [ngIf]="currentChannel", sodass Inhalte erst gerendert werden sobald currentChannel die
+                                 Inhalte von Firebase hat
+                              */ 
 
 }
 

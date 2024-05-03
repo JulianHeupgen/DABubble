@@ -1,6 +1,7 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
+
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -8,6 +9,7 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
+@import './font.scss';
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
@@ -55,6 +57,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 app-channel-chat {
   width: 100%;
-  height: calc(100vh - 96px);
+  height: calc(100vh - 180px);
 }
 
+* {
+  font-family: 'Nunito', sans-serif;
+  box-sizing: border-box;
+}

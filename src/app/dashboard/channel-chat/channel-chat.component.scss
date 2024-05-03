@@ -1,10 +1,15 @@
 .channel-wrapper {
     height: 100%;
-    margin: 10px 25px 10px 25px;
+    margin: 20px 25px 20px 25px;
     border-radius: 30px;
 }
 
+mat-card-header {
+    padding: 20px 20px;
+    border-bottom: 3px solid rgba(97, 95, 95, 0.1);
+}
+
 .chat-history {
-    height: 70%;
+    height: 75%;
 }
 
