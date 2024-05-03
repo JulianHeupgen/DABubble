@@ -3,6 +3,27 @@
     align-items: center;
 }
 
+.header-profile {
+    display: flex;
+    align-items: center;
+
+    >p {
+        margin: 0;
+        font-size: 32px;
+        font-weight: 700;
+    }
+}
+
+.profile-img {
+    height: 70px;
+    width: 70px;
+}
+
+.arrow-down {
+    height: 30px;
+    width: 30px;
+}
+
 .logo {
     height: 70px;
     width: 243px;
@@ -17,7 +38,7 @@
 
 
 
-    input {
+    >input {
         flex-grow: 1;
         border: none;
         outline: none;
@@ -28,7 +49,7 @@
         font-size: 24px;
     }
 
-    img {
+    >img {
         position: absolute;
         right: 20px;
     }
