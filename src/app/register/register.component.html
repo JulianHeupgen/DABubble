@@ -1,32 +1,50 @@
 <div class="register-container">
+  <img class="logo" src="./../../assets/img/logo-complete-black.png">
   <mat-card>
     <mat-card-content>
-      <h1>Konto erstellen</h1>
-      <span>Mit deinem Namen und deiner E-Mail Adresse hast du dein neues DABubble Konto.</span>
+      <div class="register-header">
+        <img routerLink="/login" class="back-arrow" src="./../../assets/img/go-back.png">
+        <h1>Konto erstellen</h1>
+        <span>Mit deinem Namen und deiner E-Mail Adresse hast du dein neues DABubble Konto.</span>
+      </div>
+
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
-          <input formControlName="fullname" type="text" placeholder="Name und Nachname">
-          <p *ngIf="registerForm.get('fullname')?.errors && registerForm.get('fullname')?.dirty">Bitte Vorname Nachname schreiben</p>
+        <input formControlName="fullname" type="text" placeholder="Name und Nachname">
+        <p *ngIf="registerForm.get('fullname')?.errors && registerForm.get('fullname')?.dirty">Bitte Vorname Nachname
+          schreiben</p>
 
-          <input formControlName="email" type="email" placeholder="beispielname@email.com">
-          <p *ngIf="registerForm.get('email')?.errors && registerForm.get('email')?.dirty">Bitte richitge email adresse eingeben</p>
+        <input formControlName="email" type="email" placeholder="beispielname@email.com">
+        <p *ngIf="registerForm.get('email')?.errors && registerForm.get('email')?.dirty">Bitte richitge email adresse
+          eingeben</p>
 
-          <input formControlName="password" type="password" placeholder="Password">
-          <p *ngIf="registerForm.get('password')?.errors && registerForm.get('password')?.dirty">Bitte mindestens 6 zeichen eingeben</p>
+        <input formControlName="password" type="password" placeholder="Password">
+        <p *ngIf="registerForm.get('password')?.errors && registerForm.get('password')?.dirty">Bitte mindestens 6
+          zeichen eingeben</p>
 
-          <input formControlName="privacy" type="checkbox">
+        <input formControlName="privacy" type="checkbox">
 
-          <button type="submit" mat-flat-button color="primary" [disabled]="!registerForm.valid">Weiter</button>
+        <button type="submit" mat-flat-button color="primary" [disabled]="!registerForm.valid">Weiter</button>
 
       </form>
+
     </mat-card-content>
+
   </mat-card>
 
 
+  <div class="footer-links">
+    <a href="#">Impressum</a>
+    <a href="#">Datenschutz</a>
+  </div>
 
-  <button (click)="loginUser()">Login Hannes</button>
-  <button (click)="registerUser()">Register</button>
-<hr>
-  <p>Form Status: {{ registerForm.status }}</p>
+  <div class="devtools">
+    <button (click)="loginUser()">Login Hannes</button>
+    <button (click)="registerUser()">Register</button>
+    <hr>
+    <p>Form Status: {{ registerForm.status }}</p>
+  </div>
+
+
 
 </div>

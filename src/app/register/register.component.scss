@@ -7,59 +7,115 @@
   height: 100%;
 }
 
+.logo {
+  width: 240px;
+  position: absolute;
+  top: 75px;
+  left: 75px;
+}
+
+.devtools {
+  position: absolute;
+  bottom: 75px;
+  left: 75px;
+}
+
 mat-card {
-    width: 40%;
-    height: 80vh;
-    border-radius: 30px;
-    padding: 18px 32px;
-    mat-card-content {
-        text-align: center;
-        @include flex-align-justify();
-        flex-direction: column;
-        gap: 30px;
-        h1 {
-            font-size: 46px;
-            font-weight: 700;
-            color: #444DF2
-        }
-        span {
-            font-size: 20px;
-            font-weight: 400;
-        }
+  width: 40%;
+  max-width: calc(1920px*0.4);
+  height: 60%;
+  max-height: 550px;
+  border-radius: 30px;
+  padding: 45px 32px;
+
+  mat-card-content {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 0;
+    height: 100%;
+
+    .back-arrow {
+      height: 40px;
+      width: 40px;
+      position: absolute;
+      top: 45px;
+      left: 32px;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
+
+    .register-header {
+      gap: 32px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1 {
+      font-family: Nunito, sans-serif;
+      font-size: 46px;
+      font-weight: 700;
+      color: #444DF2
+    }
+
+    span {
+      font-family: Nunito, sans-serif;
+      font-size: 20px;
+      font-weight: 400;
+      width: 90%;
+    }
+
+    input {
+      font-family: Nunito, sans-serif;
+    }
+
+    button {
+      align-self: end;
+      justify-self: right;
+    }
+  }
 }
 
 form {
+  width: 100%;
+  @include flex-align-justify();
+  flex-direction: column;
+
+  input {
     width: 100%;
-    @include flex-align-justify();
-    flex-direction: column;
-    gap: 30px;
+  }
 }
 
 .input-login {
-    position: relative;
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  input {
+    font-size: 18px;
+    font-weight: 500;
     width: 100%;
-    display: flex;
-    align-items: center;
-    input {
-        font-size: 18px;
-        font-weight: 500;
-        width: 100%;
-        padding: 18px 70px;
-        border-radius: 100px;
-        border: none;
-        background-color: #ECEEFE;
-        &:focus {
-            outline: 1px solid #535AF1;
-        }
-        &:hover {
-            cursor: pointer;
-            outline: 1px solid #686868;
-        }
+    padding: 18px 70px;
+    border-radius: 100px;
+    border: none;
+    background-color: #ECEEFE;
+
+    &:focus {
+      outline: 1px solid #535AF1;
     }
 
-    mat-icon {
-        position: absolute;
-        left: 20px;
+    &:hover {
+      cursor: pointer;
+      outline: 1px solid #686868;
     }
+  }
+
+  mat-icon {
+    position: absolute;
+    left: 20px;
+  }
 }
