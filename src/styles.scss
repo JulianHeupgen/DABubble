@@ -55,9 +55,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 app-channel-chat {
   width: 100%;
-  height: calc(100vh - 125px);
+  height: calc(100vh - 180px);
 }
 
 * {
   font-family: 'Nunito', sans-serif;
+  box-sizing: border-box;
 }

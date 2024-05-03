@@ -1,6 +1,10 @@
 .header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    padding-top: 24px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .header-profile {
