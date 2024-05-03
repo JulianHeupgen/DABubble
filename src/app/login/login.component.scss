@@ -1,5 +1,10 @@
 @import '../../mixin.scss';
 
+.space {
+    height: 20%;
+    width: 100%;
+}
+
 mat-card {
     width: 40%;
     max-width: 606px;
@@ -61,6 +66,34 @@ form {
     div {
         border-bottom: 2px solid #ADB0D9;
         width: 100%;
+    }
+}
+
+.google-login-btn {
+    width: 100%;
+    cursor: pointer;
+    border: 1px solid #ECEEFE;
+    border-radius: 100px;
+    background-color: #ECEEFE;
+    padding: 11px 32px;    
+    @include flex-align-justify();
+    gap: 10px;
+
+    span {
+        font-size: 18px;
+        font-weight: 400;
+        color: #444DF2;
+    }
+
+    &:hover {
+        border: 1px solid #444DF2;
+        span {
+            font-weight: 700;
+        }
+    }
+
+    &:focus {
+        border: 1px solid #686868; 
     }
 }
 
@@ -130,5 +163,18 @@ form {
     mat-icon {
         position: absolute;
         left: 20px;
+    }
+}
+
+.imprint-privacy {
+    @include flex-align-justify();
+    gap: 16px;
+
+    a {
+        padding: 10px 15px;
+        color: #797EF3;
+        font-size: 18px;
+        font-weight: 400;
+        text-decoration: none;
     }
 }

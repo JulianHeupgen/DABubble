@@ -1,3 +1,4 @@
+<div class="space"></div>
 <mat-card>
     <mat-card-content>  
         <h1>Anmeldung</h1>
@@ -17,6 +18,9 @@
                 <span>ODER</span>
                 <div></div>
             </div>
+
+            <button type="button" class="google-login-btn" (click)="signInWidthGoogle()"><img src="../../assets/img/google.png" alt=""><span>Anmelden mit Google</span></button>
+
             <div>
                 <!-- <asl-google-signin-button type='icon' size='medium'></asl-google-signin-button> -->
             </div>
@@ -27,3 +31,8 @@
         </form>
     </mat-card-content>
 </mat-card>
+
+<div class="space imprint-privacy">
+    <a href="">Impressum</a>
+    <a href="">Datenschutz</a>
+</div>
