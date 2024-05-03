@@ -10,6 +10,7 @@
 .header-profile {
     display: flex;
     align-items: center;
+    gap: 16px;
 
     >p {
         margin: 0;
@@ -18,14 +19,27 @@
     }
 }
 
+.profile-img-container {
+    position: relative;
+    width: 70px;
+    height: 70px;
+}
+
 .profile-img {
     height: 70px;
     width: 70px;
 }
 
+.online-status {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+}
+
 .arrow-down {
     height: 30px;
     width: 30px;
+    cursor: pointer;
 }
 
 .logo {
@@ -46,9 +60,9 @@
         flex-grow: 1;
         border: none;
         outline: none;
-        padding: 8px;
+        padding: 8px 32px;
         border-radius: 42px;
-        width: 989px;
+        width: 50vw;
         height: 60px;
         font-size: 24px;
     }
