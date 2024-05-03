@@ -2,19 +2,24 @@
 
 mat-card {
     width: 40%;
+    max-width: 606px;
     height: 80vh;
+    max-height: 769px;
     border-radius: 30px;
     padding: 18px 32px;
+
     mat-card-content {
         text-align: center;
         @include flex-align-justify();
         flex-direction: column;
         gap: 30px;
+
         h1 {
             font-size: 46px;
             font-weight: 700;
             color: #444DF2
         }
+
         span {
             font-size: 20px;
             font-weight: 400;
@@ -27,13 +32,82 @@ form {
     @include flex-align-justify();
     flex-direction: column;
     gap: 30px;
+
+    a {
+        padding: 5px 15px;
+        text-decoration: none;
+        color: #797EF3;
+        font-size: 18px;
+        font-weight: 400;
+
+        &:hover {
+            background-color: #ECEEFE;
+            border-radius: 30px;
+        }
+    }
 }
+
+.border-line {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+
+    span {
+        font-size: 18px;
+        font-weight: 400;
+        color: #000000;
+    }
+
+    div {
+        border-bottom: 2px solid #ADB0D9;
+        width: 100%;
+    }
+}
+
+.login-btn-field {
+    display: flex;
+    gap: 30px;
+
+    button {
+        cursor: pointer;
+        height: 49px;
+        padding: 12px 25px;
+        border-radius: 25px;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .login-btn {
+        color: white;
+        border: none;
+        background-color: #444DF2;
+
+        &:hover {
+            background-color: #797EF3;
+        }
+    }
+
+    .guest-login-btn {
+        color: #797EF3;
+        border: 1px solid #797EF3;
+        background-color: white;
+
+        &:hover {
+            background-color: #535AF1;
+            border: 1px solid #535AF1;
+            color: white;
+        }
+    }
+}
+
+
 
 .input-login {
     position: relative;
     width: 100%;
     display: flex;
     align-items: center;
+
     input {
         font-size: 18px;
         font-weight: 500;
@@ -42,9 +116,11 @@ form {
         border-radius: 100px;
         border: none;
         background-color: #ECEEFE;
+
         &:focus {
             outline: 1px solid #535AF1;
         }
+
         &:hover {
             cursor: pointer;
             outline: 1px solid #686868;

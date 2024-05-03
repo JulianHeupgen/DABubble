@@ -21,6 +21,7 @@ import { signInWithCredential } from '@angular/fire/auth';
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
+
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -38,19 +39,38 @@ export class LoginComponent {
   })
 
 
-  constructor(private formBuilder: FormBuilder, firebase: Firestore) {
-
+  constructor(private formBuilder: FormBuilder, firebase: Firestore, firebaseui: Firestore) {
+    // ui = new firebaseui.auth.AuthUI(firebase.auth());
   }
 
   logIn(event: Event) {
     console.log('log in', this.loginData.value);
     event.preventDefault();
-    this.logInWithGoogle();
+    // this.logInWithGoogle();
+
+    const actionCodeSettings = {
+      // URL you want to redirect back to. The domain (www.example.com) for this
+      // URL must be in the authorized domains list in the Firebase Console.
+      url: 'https://localhost',
+      // This must be true.
+      handleCodeInApp: true,
+      iOS: {
+        bundleId: 'com.example.ios'
+      },
+      android: {
+        packageName: this.loginData.value.email,
+        installApp: true,
+        minimumVersion: '12'
+      },
+      dynamicLinkDomain: 'example.page.link'
+    };
+    
   }
 
   logInWithGoogle() {
     const provider = new GoogleAuthProvider();
-    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+
+    // provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 
     const auth = getAuth();
     signInWithPopup(auth, provider)
@@ -59,17 +79,15 @@ export class LoginComponent {
         if (credential) {
           const token = credential.accessToken;
           const user = result.user;
-          // ...
         }
-
+        // ...
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         const email = error.customData.email;
         const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
       });
-  
+
   }
 
   guestLogin() {
