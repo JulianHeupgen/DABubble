@@ -8,7 +8,7 @@
         <span>Mit deinem Namen und deiner E-Mail Adresse hast du dein neues DABubble Konto.</span>
       </div>
 
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="registerForm" (ngSubmit)="onNextStep()">
 
         <div class="input-container">
           <div class="input-field-container">
@@ -68,7 +68,5 @@
     <hr>
     <p>Form Status: {{ registerForm.status }}</p>
   </div>
-
-
 
 </div>

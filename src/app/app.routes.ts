@@ -7,6 +7,7 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { ImprintComponent } from './imprint/imprint.component';
 import { RegisterComponent } from './register/register.component';
 import { LogoComponent } from './animations/logo/logo.component';
+import { PhotoSelectionComponent } from './photo-selection/photo-selection.component';
 
 export const routes: Routes = [
 
@@ -14,6 +15,7 @@ export const routes: Routes = [
   { path: 'hello', component: LogoComponent},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
+  { path: 'register/next', component: PhotoSelectionComponent },
   {
     path: 'dashboard', component: DashboardComponent,
     children: [
@@ -21,8 +23,8 @@ export const routes: Routes = [
       { path: 'chat/:id', component: UserChatComponent }
     ]
   },
-  { path: 'privacy', component: PrivacyComponent},
-  { path: 'imprint', component: ImprintComponent},
-  { path: 'logo', component: LogoComponent}
+  { path: 'privacy', component: PrivacyComponent },
+  { path: 'imprint', component: ImprintComponent },
+  { path: 'logo', component: LogoComponent }
 ];
 
