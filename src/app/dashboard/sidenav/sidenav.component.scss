@@ -1,3 +1,5 @@
+@import '../../../mixin.scss';
+
 .main-container {
     margin-left: 20px;
     margin-top: 20px;
@@ -11,11 +13,9 @@
 }
 
 .sidenav-content {
-    display: flex;
+    @include flex-align-justify();
     height: calc(100vh - 180px);
     width: 0;
-    align-items: center;
-    justify-content: center;
 }
 
 .sidenav {
@@ -32,3 +32,24 @@
     z-index: 10;
 }
 
+.devspace-headline {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.headline-container {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    position: relative;
+
+    h1 {
+        margin: 0;
+    }
+}
+
+.edit-square-img {
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+}

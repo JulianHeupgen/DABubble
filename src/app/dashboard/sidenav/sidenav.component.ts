@@ -36,6 +36,7 @@ import { MatSidenavModule, MatDrawer, MatDrawerContainer, MatDrawerContent } fro
 export class SidenavComponent {
   opened = true;
   imageSrc = './assets/img/sidemenu_close_normal.png';
+  editSrc = './assets/img/edit_square.png';
 
   toggleSidenav() {
     this.opened = !this.opened;
@@ -55,6 +56,14 @@ export class SidenavComponent {
     } else {
       this.imageSrc = './assets/img/sidemenu_close_normal.png';
     }
+  }
+
+  hoverEdit() {
+    this.editSrc = './assets/img/edit_square_hover.png';
+  }
+
+  resetHoverEdit() {
+    this.editSrc = './assets/img/edit_square.png';
   }
 
 }
