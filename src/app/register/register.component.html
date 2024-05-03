@@ -10,19 +10,43 @@
 
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
-        <input formControlName="fullname" type="text" placeholder="Name und Nachname">
-        <p *ngIf="registerForm.get('fullname')?.errors && registerForm.get('fullname')?.dirty">Bitte Vorname Nachname
-          schreiben</p>
+        <div class="input-container">
+          <div class="input-field-container">
+            <div>
+              <mat-icon>person</mat-icon>
+              <input formControlName="fullname" type="text" placeholder="Vorname und Nachname">
+            </div>
+          </div>
+          <div class="error-container">
+            <p class="input-feedback" *ngIf="registerForm.get('fullname')?.errors && registerForm.get('fullname')?.dirty">Bitte schreiben sie einen Namen. Vorname Nachname</p>
+          </div>
+        </div>
 
-        <input formControlName="email" type="email" placeholder="beispielname@email.com">
-        <p *ngIf="registerForm.get('email')?.errors && registerForm.get('email')?.dirty">Bitte richitge email adresse
-          eingeben</p>
+        <div class="input-container">
+          <div class="input-field-container">
+            <div>
+              <mat-icon>mail</mat-icon>
+              <input formControlName="email" type="email" placeholder="beispielname@email.com">
+            </div>
+          </div>
+          <div class="error-container">
+            <p class="input-feedback" *ngIf="registerForm.get('email')?.errors && registerForm.get('email')?.dirty">*Diese E-Mail Adresse ist leider ungültig.</p>
+          </div>
+        </div>
 
-        <input formControlName="password" type="password" placeholder="Password">
-        <p *ngIf="registerForm.get('password')?.errors && registerForm.get('password')?.dirty">Bitte mindestens 6
-          zeichen eingeben</p>
+        <div class="input-container">
+          <div class="input-field-container">
+            <div>
+              <mat-icon>lock</mat-icon>
+              <input formControlName="password" type="password" placeholder="Password">
+            </div>
+          </div>
+          <div class="error-container">
+            <p class="input-feedback" *ngIf="registerForm.get('password')?.errors && registerForm.get('password')?.dirty">Bitte geben sie ein Passwort mit mind. 6 Zeichen ein.</p>
+          </div>
+        </div>
 
-        <input formControlName="privacy" type="checkbox">
+        <mat-checkbox formControlName="privacy" color="primary" class="privacy-check"><span>Ich stimme der </span><a href="#">Datenschutzerklärung</a><span> zu.</span></mat-checkbox>
 
         <button type="submit" mat-flat-button color="primary" [disabled]="!registerForm.valid">Weiter</button>
 

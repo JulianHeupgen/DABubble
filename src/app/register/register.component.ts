@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-register',
@@ -18,10 +19,13 @@ import { RouterModule } from '@angular/router';
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    MatCheckboxModule
   ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrls: [
+    './register.component.scss'
+  ]
 })
 export class RegisterComponent {
 
