@@ -5,12 +5,14 @@ export class User {
     email: string;
     onlineStatus: 'online' | 'offline';
     channels: Channel[];
+    userID: string;
 
     constructor(name: string, email: string, onlineStatus: 'online' | 'offline') {
         this.name = name;
         this.email = email;
         this.onlineStatus = onlineStatus;
         this.channels = [];
+        this.userID = '';
     }
 
     joinChannel(channel: Channel): void {
