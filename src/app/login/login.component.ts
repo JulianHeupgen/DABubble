@@ -5,12 +5,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-
-
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { Router } from '@angular/router';
 import { Firestore } from '@angular/fire/firestore';
 import { AuthService } from '../services/auth.service';
-// import { getAuth, signInWithPopup } from '@angular/fire/auth';
 
 
 
@@ -24,7 +21,7 @@ import { AuthService } from '../services/auth.service';
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    
+
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -38,11 +35,12 @@ export class LoginComponent {
   })
 
 
-  
+
   constructor(
     private formBuilder: FormBuilder,
-    private firebase: Firestore,
     private authservice: AuthService,
+    private firebase: Firestore,
+    private router: Router,
   ) { }
 
 
@@ -53,30 +51,9 @@ export class LoginComponent {
 
   guestLogin() {
 
-
   }
 
-  // googleProvider = new GoogleAuthProvider();
-  // googleAuth = getAuth();
-
-
   signInWidthGoogle() {
-// this.authservice.signInWidthGoogle();
-    const googleProvider = new GoogleAuthProvider();
-    const googleAuth = getAuth();
-
-    signInWithPopup(googleAuth, googleProvider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        if (credential) {
-          const token = credential.accessToken;
-          const user = result.user;
-        }
-      }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
-      });
+    this.authservice.signInWidthGoogle();
   }
 }
