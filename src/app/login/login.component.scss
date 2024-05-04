@@ -52,6 +52,22 @@ form {
     }
 }
 
+.input-errormessage {
+    width: 100%;
+
+    p {
+        text-align: left;
+    }
+}
+
+.show-error-message {
+    color: #ED1E79 !important;
+}
+
+.hide-error-message {
+    color: transparent;
+}
+
 .border-line {
     width: 100%;
     display: flex;

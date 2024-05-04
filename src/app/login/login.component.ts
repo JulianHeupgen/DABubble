@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Firestore } from '@angular/fire/firestore';
 import { AuthService } from '../services/auth.service';
+import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 
 
 
@@ -31,26 +32,52 @@ export class LoginComponent {
   loginData = this.formBuilder.group({
     email: '',
     password: '',
-
   })
 
+  email = this.loginData.value.email || '';
+  password = this.loginData.value.password || '';
+
+  logInFalse = false;
 
 
   constructor(
     private formBuilder: FormBuilder,
     private authservice: AuthService,
+    private auth: Auth,
     private firebase: Firestore,
     private router: Router,
   ) { }
 
 
-  logIn(event: Event) {
-    console.log('log in', this.loginData.value);
-    event.preventDefault()
+  async logIn(event: Event) {    
+    event.preventDefault();
+    let logInSuccess = await this.signIn(this.email, this.password);
+    if (logInSuccess) {
+      this.logInFalse = false;
+      this.router.navigate(['/dashboard/',logInSuccess.uid]);
+    } else {
+      this.logInFalse = true;
+      console.log('Anmeldung fehlgeschlagen');      
+    }
   }
 
-  guestLogin() {
+  async guestLogin() {
+    let logInSuccess = await this.signIn('guest@guest.com', '123456');
+    console.log('guest login', logInSuccess);
+    if (logInSuccess) {
+      this.router.navigate(['/dashboard/',logInSuccess.uid]);
+    } else {
+      console.log('Anmeldung fehlgeschlagen');      
+    }
+  }
 
+  async signIn(email: string, password: string) {   
+    try {
+      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      return userCredential.user;
+    } catch (error) {
+      return null;
+    }
   }
 
   signInWidthGoogle() {
