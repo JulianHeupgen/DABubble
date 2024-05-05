@@ -10,6 +10,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserRegistrationService } from '../services/user-registration.service';
 import { Router } from '@angular/router';
 
+
+
+
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -30,12 +33,12 @@ import { Router } from '@angular/router';
 export class RegisterComponent {
 
   registerForm: FormGroup;
-
+  userId = '';
   constructor(
     private authservice: AuthService,
     private formBuilder: FormBuilder,
     private userRegService: UserRegistrationService,
-    private route: Router
+    private route: Router,
   ) {
     this.registerForm = this.formBuilder.group({
       fullname: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+ [a-zA-Z]+$')]],
@@ -45,6 +48,8 @@ export class RegisterComponent {
     });
   }
 
+
+
   onNextStep() {
     this.userRegService.setUserData(this.registerForm.value);
     this.registerForm.reset();
@@ -53,10 +58,12 @@ export class RegisterComponent {
 
 
 
+
+
   // REMOVE those for PROD
   registerUser() {
-    this.authservice.signUp('hannes@dabubble.com', '123456789')
-      .then(user => {
+    this.authservice.signUp('hannes@dabubble.com', '123456789', 'Hannes')
+      .then(user => {        
         console.log(user);
       })
       .catch(error => {

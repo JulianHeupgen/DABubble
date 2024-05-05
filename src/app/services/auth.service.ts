@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
-import { Firestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+
+import { Firestore, addDoc, collection } from '@angular/fire/firestore';
+import { User } from '../models/user.class';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,13 +12,14 @@ export class AuthService {
 
   constructor(
     private auth: Auth,
-    private firebase: Firestore,
+    private firestore: Firestore,
     private router: Router,
   ) { }
 
-  async signUp(email: string, password: string) {
+  async signUp(email: string, password: string, name: string) {
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+      this.setUserToFirestore(userCredential.user, name);
       return userCredential;
     } catch (error) {
       throw error;
@@ -47,6 +50,22 @@ export class AuthService {
         const email = error.customData.email;
         const credential = GoogleAuthProvider.credentialFromError(error);
       });
+  }
+
+  async setUserToFirestore(userData: any, name: string) {
+    // let user = new User(
+    //   name,
+    //   userData.email,
+    //   'offline',
+    //   userData.uid,
+    // )
+    const docRef = await addDoc(collection(this.firestore, "users"), {
+      'name': name,
+      'email': userData.email,
+      'onlineStatus': 'offline',
+      'channels': [],
+      'uid': userData.uid,
+    });
   }
 
 }
