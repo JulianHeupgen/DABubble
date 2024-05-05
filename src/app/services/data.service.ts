@@ -41,5 +41,9 @@ export class DataService {
     }
   }
 
+  ngonDestroy() {
+    this.unsubUsers();
+  }
+
 }
 
