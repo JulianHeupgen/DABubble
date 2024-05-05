@@ -6,11 +6,10 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 })
 export class StorageService {
 
-  // Code bislang noch auskommentiert, da Fehlermeldung (Firebase Storage ist wohl noch nicht korrekt verknüpft)
   
- /* async uploadFile(file: File) {
+  async uploadFile(file: File) {
     const storage = getStorage();
-    const storageRef = ref(storage, file.name);
+    const storageRef = ref(storage, "file");      // 2. Parameter ist nur Test (muss noch angepasst werden)
     try {
       const uploadFile = await uploadBytes(storageRef, file);
       const downloadURL: string = await getDownloadURL(uploadFile.ref);
@@ -20,7 +19,7 @@ export class StorageService {
       throw new Error("Upload failed");
     }
   }
-*/
+
 
 }
 

@@ -5,14 +5,14 @@ export class User {
     email: string;
     onlineStatus: 'online' | 'offline';
     channels: Channel[];
-    userID: string;
+    userId: string;          // "uid" von Authentication hier hinterlegen
 
-    constructor(name: string, email: string, onlineStatus: 'online' | 'offline') {
+    constructor(name: string, email: string, onlineStatus: 'online' | 'offline', userId: string) {
         this.name = name;
         this.email = email;
         this.onlineStatus = onlineStatus;
         this.channels = [];
-        this.userID = '';
+        this.userId = userId;
     }
 
     joinChannel(channel: Channel): void {

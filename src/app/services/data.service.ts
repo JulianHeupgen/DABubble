@@ -10,6 +10,12 @@ export class DataService {
 
   firestore: Firestore = inject(Firestore);
 
+  unsubUsers;
+
+  constructor() {
+    this.unsubUsers = this.getUsersList();
+  }
+
   allUsers: User[] = [];
   allChannels: Channel[] = [];
 
@@ -36,5 +42,4 @@ export class DataService {
   }
 
 }
-
 

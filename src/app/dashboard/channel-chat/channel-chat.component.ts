@@ -35,11 +35,11 @@ export class ChannelChatComponent {
                               */ 
 
   
-  // test!: File;                              
+   test!: File;                              
 
-   /*uploadFile() {
+   uploadFile() {
     this.storage.uploadFile(this.test);
    }                           
-*/
+
 }
 
