@@ -1,5 +1,16 @@
 @import '../../mixin.scss';
 
+.width-100 {
+    width: 100%;
+}
+
+.logo {
+    height: 55px;
+    position: absolute;
+    left: 32px;
+    top: 32px;
+}
+
 .space {
     height: 20%;
     width: 100%;

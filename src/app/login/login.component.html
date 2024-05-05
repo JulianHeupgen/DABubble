@@ -1,25 +1,30 @@
+<img class="logo" src="../../assets/img/dabubble_header_logo.png" alt="">
 <div class="space"></div>
 <mat-card>
     <mat-card-content>
         <h1>Anmeldung</h1>
         <span>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</span>
         <form [formGroup]="loginData" (ngSubmit)="logIn($event)">
-            <div class="input-errormessage">
-                <div class="input-login">
-                    <mat-icon>mail_outline</mat-icon>
-                    <input formControlName="email" type="email" placeholder="beispielname@email.com">
+            <div class="width-100">
+                <div class="input-errormessage">
+                    <div class="input-login">
+                        <mat-icon>mail_outline</mat-icon>
+                        <input formControlName="email" type="email" placeholder="beispielname@email.com">
+                    </div>
+                    <p [class.show-error-message]="logInFalse" class="hide-error-message">*Diese E-Mail-Adresse ist
+                        leider ungültig.</p>
                 </div>
-                <p [class.show-error-message]="logInFalse" class="hide-error-message">*Diese E-Mail-Adresse ist leider ungültig.</p>
-            </div>
-            <div class="input-errormessage">
-                <div class="input-login">
-                    <mat-icon>lock_outline</mat-icon>
-                    <input formControlName="password" type="password" placeholder="Password">
+                <div class="input-errormessage">
+                    <div class="input-login">
+                        <mat-icon>lock_outline</mat-icon>
+                        <input formControlName="password" type="password" placeholder="Password">
+                    </div>
+                    <p [class.show-error-message]="logInFalse" class="hide-error-message">*Dieses Passwort ist leider
+                        ungültig.</p>
                 </div>
-                <p [class.show-error-message]="logInFalse" class="hide-error-message">*Dieses Passwort ist leider ungültig.</p>
-            </div>
 
-            <a href="">Passwort vergessen?</a>
+                <a href="">Passwort vergessen?</a>
+            </div>
             <div class="border-line">
                 <div></div>
                 <span>ODER</span>
