@@ -16,30 +16,37 @@ import { CommonModule } from '@angular/common';
 })
 export class ChannelChatComponent {
 
-  constructor(private storage: StorageService, private dataService: DataService) {}
+  constructor(private dataService: DataService, private storage: StorageService) {}
 
   users: any;
 
-  getUsers() {                               // Bug: Funktion funktioniert immer erst beim 2. Aufruf (siehe Konsole bei Klick auf Button)
+  getUsers() {                               
     this.dataService.getUsersList();
     this.users = this.dataService.allUsers;
     console.log(this.users);
   }
 
-  currentChannel!: Channel;   /* 
-                                 Daniel Sidenav: Klick auf einen Channel und dieser leitet per routerLink an eine bestimmte URL;
-                                 In ChannelChatComponent wird URL ausgelesen (in NgOnInit) und die id geprüft: id ermittelt den gesuchten Channel;
-                                 In Variable "currentChannel" die Channel Infos von Firebase laden und dann die Inhalte rendern;
-                                 in html template ergänzen [ngIf]="currentChannel", sodass Inhalte erst gerendert werden sobald currentChannel die
-                                 Inhalte von Firebase hat
-                              */ 
+  /* 
+    Daniel Sidenav: Klick auf einen Channel und dieser leitet per routerLink an eine bestimmte URL;
+    In ChannelChatComponent wird URL ausgelesen (in NgOnInit) und die id geprüft: id ermittelt den gesuchten Channel;
+    In Variable "currentChannel" die Channel Infos von Firebase laden und dann die Inhalte rendern;
+    in html template ergänzen [ngIf]="currentChannel", sodass Inhalte erst gerendert werden sobald currentChannel die
+    Inhalte von Firebase hat
+  */ 
+
+  currentChannel!: Channel;
+
+               
+  
+
+
 
   
-   test!: File;                              
+  test!: File;
 
-   uploadFile() {
+  uploadFile() {
     this.storage.uploadFile(this.test);
-   }                           
+  }                           
 
 }
 

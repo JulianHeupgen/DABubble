@@ -17,7 +17,7 @@ export class DataService {
   }
 
   allUsers: User[] = [];
-  allChannels: Channel[] = [];
+  allChannels: Channel[] = [];     // das gleiche noch für die Channels machen (getChannelsList() ); diese Funktion ruft Daniel auf um Channels zu rendern
 
 
   getUsersList() {
