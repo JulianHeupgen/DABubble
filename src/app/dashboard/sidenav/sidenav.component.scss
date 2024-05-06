@@ -65,6 +65,11 @@
     width: 60px;
 }
 
+.tag-img {
+    height: 24px;
+    width: 24px;
+}
+
 .online-status {
     position: absolute;
     right: 2px;
@@ -95,4 +100,26 @@ flex-direction: column;
 .img-logo {
     height: 24px;
     width: 24px;
+}
+
+.direct-message-user-container {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+
+    p {
+        margin: 0;
+        font-size: 18px;
+    }
+}
+
+.channels-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    p {
+        margin: 0;
+        font-size: 18px;
+    }
 }
