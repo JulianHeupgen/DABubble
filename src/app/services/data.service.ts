@@ -28,7 +28,7 @@ export class DataService {
   allThreads: Thread[] = [];          
 
 
-  // USER von Firestore laden; Verweis auf Datei 'channel-chat.component.ts' um ein Beispiel zu sehen, wie diese Funktion eingesetzt werden muss
+  // USER von Firestore laden; Verweis auf Datei 'channel-chat.component.ts' um ein Beispiel zu sehen, wie diese Funktion eingesetzt wird
 
   getUsersList() {
     return onSnapshot(this.getUserCollection(), list => {
