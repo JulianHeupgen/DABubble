@@ -1,4 +1,6 @@
 import { Channel } from "./channel.class";
+import { Message } from "./message.class";
+import { Thread } from "./thread.class";
 
 export class User {
     name: string;
@@ -34,9 +36,14 @@ export class User {
         this.onlineStatus = status;
     }
 
-    sendMessage(channel: Channel, messageContent: string): void {
-        channel.addMessage(this, messageContent);
-    }
+    sendMessage(channel: Channel, thread: Thread, messageContent: string): void {
+        const newMessage = new Message(this, messageContent);
+        thread.messages.push(newMessage);
+        if (!channel.threads.includes(thread)) {
+          channel.addThread(thread);
+        }
+      }
 
+      
 }
 

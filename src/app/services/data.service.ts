@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
-import { Thread } from '../models/thread';
+import { Thread } from '../models/thread.class';
 
 @Injectable({
   providedIn: 'root'
