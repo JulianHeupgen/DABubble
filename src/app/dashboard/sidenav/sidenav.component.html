@@ -23,13 +23,34 @@
                                 (mouseenter)="hoverEdit('logoSrcWs', './assets/img/workspaces_hover.png')"
                                 (mouseleave)="resetHoverEdit('logoSrcWs', './assets/img/workspaces.png')">
                             <h2 class="private-headline font-nunito">Channels</h2>
+                            <img class="add-icon" [src]="add"
+                                (mouseenter)="hoverEdit('add', './assets/img/add_hover.png')"
+                                (mouseleave)="resetHoverEdit('add', './assets/img/add.png')">
                         </div>
                     </div>
 
                     <div class="channels-container">
+                        <div class="channel">
+                            <img class="tag-img" src="./assets/img/tag.png">
+                            <p>Allgemein</p>
+                        </div>
+                        <div class="channel">
+                            <img class="tag-img" src="./assets/img/tag.png">
+                            <p>Dev´s</p>
+                        </div>
 
-                        <img class="tag-img" src="./assets/img/tag.png">
-                        <p>Allgemein</p>
+
+                    </div>
+                    <div class="add-channel-container">
+                        <div class="add-channel-subcontainer">
+                            <img class="add-circle-icon" [src]="addCircle"
+                                (mouseenter)="hoverEdit('addCircle', './assets/img/add_circle_hover.png')"
+                                (mouseleave)="resetHoverEdit('addCircle', './assets/img/add_circle.png')">
+                            <p (mouseenter)="hoverEdit('addCircle', './assets/img/add_circle_hover.png')"
+                                (mouseleave)="resetHoverEdit('addCircle', './assets/img/add_circle.png')">Channel
+                                hinzufügen
+                            </p>
+                        </div>
 
                     </div>
                 </div>

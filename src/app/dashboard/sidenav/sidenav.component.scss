@@ -83,9 +83,9 @@
 }
 
 .private-message-container {
-display: flex;
-flex-direction: column;
-gap: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 }
 
 .private-headline {
@@ -109,6 +109,36 @@ gap: 32px;
     width: 24px;
 }
 
+.add-icon {
+    height: 24px;
+    width: 24px;
+    position: absolute;
+    right: 36px;
+}
+
+.add-channel-container {
+    padding-left: 32px;
+    padding-top: 8px;
+    width: fit-content;
+}
+
+.add-channel-subcontainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    p {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    &:hover {
+        p {
+            color: $fontHover;
+        }
+    }
+}
+
 .direct-message-user-container {
     display: flex;
     align-items: center;
@@ -123,13 +153,28 @@ gap: 32px;
 
 .channels-container {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    padding-left: 32px;
+    flex-direction: column;
+    gap: 12px;
+    padding-left: 16px;
 
     p {
         margin: 0;
         font-size: 18px;
+    }
+}
+
+.channel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 33px;
+    width: fit-content;
+    padding: 16px;
+
+    &:hover {
+        border-radius: 20px;
+        background-color: $backgroundHover;
+        height: 33px;
     }
 }
 

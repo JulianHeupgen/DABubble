@@ -40,7 +40,9 @@ export class SidenavComponent {
   arrowSrc: string = './assets/img/arrow_drop_down.png';
   arrowSrcWs: string = './assets/img/arrow_drop_down.png';
   logoSrc: string = './assets/img/private_message_logo.png';
-  logoSrcWs: string = './assets/img/workspaces.png'
+  logoSrcWs: string = './assets/img/workspaces.png';
+  add: string = './assets/img/add.png';
+  addCircle: string = './assets/img/add_circle.png';
   online: boolean = true;
 
   toggleSidenav() {
@@ -63,11 +65,11 @@ export class SidenavComponent {
     }
   }
 
-  hoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs', url:string) {
+  hoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs' | 'add' | 'addCircle', url:string) {
     this[originalSrc] = url;
   }
 
-  resetHoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs', url:string) {
+  resetHoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs' | 'add' | 'addCircle', url:string) {
     this[originalSrc] = url;
   }
 
