@@ -7,12 +7,14 @@ export class Thread {
   channelId: string;
   title: string;
   messages: Message[];
+  timestamp: Date;
 
   constructor(id: number, channelId: string, title: string) {
     this.id = id;
     this.channelId = channelId;
     this.title = title;
     this.messages = [];
+    this.timestamp = new Date();
   }
 
   addReply(message: Message, sender: User, replyContent: string): void {

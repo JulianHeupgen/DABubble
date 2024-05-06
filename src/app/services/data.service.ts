@@ -95,7 +95,8 @@ export class DataService {
     return {
       id: id,
       channelId: data.channelId,
-      messages: data.messages
+      messages: data.messages,
+      timestamp: data.timestamp
     }
   }
 
