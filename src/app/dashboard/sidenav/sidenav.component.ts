@@ -56,17 +56,11 @@ export class SidenavComponent {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      this.userId = params['id'];
-      this.getDataFromFirestore();         
+      this.userId = params['id'];         
       });
-
-
-
-      // console.log(this.userId);
-      
-
-    // this.getDataFromFirestore();
-    // console.log(this.users);
+      setInterval(() => {
+        this.getDataFromFirestore();
+      }, 1000);
   }
 
 
