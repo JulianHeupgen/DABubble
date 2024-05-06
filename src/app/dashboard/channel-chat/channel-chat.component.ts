@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
-import {MatList, MatListModule} from '@angular/material/list';
+import { MatList, MatListModule } from '@angular/material/list';
 import { Channel } from '../../models/channel.class';
 import { StorageService } from '../../services/storage.service';
 import { DataService } from '../../services/data.service';
@@ -16,30 +17,45 @@ import { CommonModule } from '@angular/common';
 })
 export class ChannelChatComponent {
 
-  constructor(private storage: StorageService, private dataService: DataService) {}
+  constructor(private dataService: DataService, private route: ActivatedRoute, private storage: StorageService) {}
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+    this.channelId = params['id'];            
+    });
+  }
+
 
   users: any;
 
-  getUsers() {                               // Bug: Funktion funktioniert immer erst beim 2. Aufruf (siehe Konsole bei Klick auf Button)
+  getUsers() {                               
     this.dataService.getUsersList();
     this.users = this.dataService.allUsers;
     console.log(this.users);
   }
 
-  currentChannel!: Channel;   /* 
-                                 Daniel Sidenav: Klick auf einen Channel und dieser leitet per routerLink an eine bestimmte URL;
-                                 In ChannelChatComponent wird URL ausgelesen (in NgOnInit) und die id geprüft: id ermittelt den gesuchten Channel;
-                                 In Variable "currentChannel" die Channel Infos von Firebase laden und dann die Inhalte rendern;
-                                 in html template ergänzen [ngIf]="currentChannel", sodass Inhalte erst gerendert werden sobald currentChannel die
-                                 Inhalte von Firebase hat
-                              */ 
+  /* 
+    Daniel Sidenav: Klick auf einen Channel und dieser leitet per routerLink an eine bestimmte URL;
+    In ChannelChatComponent wird URL ausgelesen (in NgOnInit) und die id geprüft: id ermittelt den gesuchten Channel (vorher noch getChannelsList() );
+    In Variable "currentChannel" dann korrekten Channel speichern und dann die Inhalte rendern;
+    in html template ergänzen [ngIf]="currentChannel", sodass Inhalte erst gerendert werden sobald currentChannel die
+    Inhalte von Firebase hat
+  */ 
+
+  channelId: string = '';
+  currentChannel!: Channel;
+
+               
+  
+
+
 
   
-  // test!: File;                              
+  test!: File;
 
-   /*uploadFile() {
+  uploadFile() {
     this.storage.uploadFile(this.test);
-   }                           
-*/
+  }                           
+
 }
 

@@ -25,7 +25,7 @@ export class PhotoSelectionComponent {
   }
 
   onRegistrationFinished() {
-    this.authService.signUp(this.userData.email, this.userData.password)
+    this.authService.signUp(this.userData.email, this.userData.password, this.userData.fullname)
       .then(user => {
         this.user = user;
         console.log(user);

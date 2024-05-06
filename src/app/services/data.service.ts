@@ -10,8 +10,14 @@ export class DataService {
 
   firestore: Firestore = inject(Firestore);
 
+  unsubUsers;
+
+  constructor() {
+    this.unsubUsers = this.getUsersList();
+  }
+
   allUsers: User[] = [];
-  allChannels: Channel[] = [];
+  allChannels: Channel[] = [];     // das gleiche noch für die Channels machen (getChannelsList() ); diese Funktion ruft Daniel auf um Channels zu rendern
 
 
   getUsersList() {
@@ -35,6 +41,9 @@ export class DataService {
     }
   }
 
-}
+  ngonDestroy() {
+    this.unsubUsers();
+  }
 
+}
 

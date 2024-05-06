@@ -12,6 +12,12 @@
   justify-content: $jc;
 }
 
+@mixin font-size-weight-color($fs: 18px, $fw:400, $cl: #000000) {
+  font-size: $fs;
+  font-weight: $fw;
+  color: $cl;
+}
+
 .font-nunito {
     font-family: 'Nunito', sans-serif;
 }

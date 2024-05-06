@@ -1,5 +1,46 @@
 @import '../../mixin.scss';
 
+.width-100 {
+    width: 100%;
+}
+
+.logo {
+    height: 55px;
+    position: absolute;
+    left: 32px;
+    top: 32px;
+}
+
+.go-to-register {
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 10px;
+    position: absolute;
+    top: 40px;
+    right: 32px;
+
+    span {
+        @include font-size-weight-color();
+    }
+}
+
+.link-to-register {
+    cursor: pointer;
+    padding: 10px 15px;
+    margin-right: -15px;
+    border: 1px solid transparent;
+    border-radius: 30px;
+    @include font-size-weight-color($cl: #797EF3 !important);
+
+    &:hover {
+        border: 1px solid #ADB0D9;
+        font-weight: 500;
+        color: #444DF2;
+    }
+}
+
 .space {
     height: 20%;
     width: 100%;
@@ -20,14 +61,11 @@ mat-card {
         gap: 30px;
 
         h1 {
-            font-size: 46px;
-            font-weight: 700;
-            color: #444DF2
+            @include font-size-weight-color($fs: 46px, $fw: 700, $cl: #444DF2);
         }
 
         span {
-            font-size: 20px;
-            font-weight: 400;
+            @include font-size-weight-color($fs: 20px, $fw: 400);
         }
     }
 }
@@ -41,11 +79,11 @@ form {
     a {
         padding: 5px 15px;
         text-decoration: none;
-        color: #797EF3;
-        font-size: 18px;
-        font-weight: 400;
+        @include font-size-weight-color($cl: #797EF3);
 
         &:hover {
+            font-weight: 500;
+            color: #444DF2;
             background-color: #ECEEFE;
             border-radius: 30px;
         }
@@ -74,9 +112,7 @@ form {
     gap: 10px;
 
     span {
-        font-size: 18px;
-        font-weight: 400;
-        color: #000000;
+        @include font-size-weight-color();
     }
 
     div {
@@ -91,25 +127,24 @@ form {
     border: 1px solid #ECEEFE;
     border-radius: 100px;
     background-color: #ECEEFE;
-    padding: 11px 32px;    
+    padding: 11px 32px;
     @include flex-align-justify();
     gap: 10px;
 
     span {
-        font-size: 18px;
-        font-weight: 400;
-        color: #444DF2;
+        @include font-size-weight-color($cl: #444DF2);
     }
 
     &:hover {
         border: 1px solid #444DF2;
+
         span {
             font-weight: 700;
         }
     }
 
     &:focus {
-        border: 1px solid #686868; 
+        border: 1px solid #686868;
     }
 }
 
@@ -122,8 +157,7 @@ form {
         height: 49px;
         padding: 12px 25px;
         border-radius: 25px;
-        font-size: 18px;
-        font-weight: 700;
+        @include font-size-weight-color($fw: 700);
     }
 
     .login-btn {
@@ -158,8 +192,7 @@ form {
     align-items: center;
 
     input {
-        font-size: 18px;
-        font-weight: 500;
+        @include font-size-weight-color($fw: 500);
         width: 100%;
         padding: 18px 70px;
         border-radius: 100px;
@@ -187,10 +220,8 @@ form {
     gap: 16px;
 
     a {
+        @include font-size-weight-color($cl: #797EF3);
         padding: 10px 15px;
-        color: #797EF3;
-        font-size: 18px;
-        font-weight: 400;
         text-decoration: none;
     }
 }
