@@ -102,6 +102,7 @@
 .img-arrow {
     height: 30px;
     width: 30px;
+    cursor: pointer;
 }
 
 .img-logo {
@@ -114,6 +115,7 @@
     width: 24px;
     position: absolute;
     right: 36px;
+    cursor: pointer;
 }
 
 .add-channel-container {
@@ -126,6 +128,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    cursor: pointer;
 
     p {
         margin: 0;
@@ -141,14 +144,8 @@
 
 .direct-message-user-container {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 24px;
-    padding-left: 32px;
-
-    p {
-        margin: 0;
-        font-size: 18px;
-    }
 }
 
 .channels-container {
@@ -175,6 +172,7 @@
         border-radius: 20px;
         background-color: $backgroundHover;
         height: 33px;
+        cursor: pointer;
     }
 }
 
@@ -182,4 +180,35 @@
     display: flex;
     align-items: center;
     gap: 16px;
+    cursor: pointer;
+
+    &:hover {
+        h2 {
+            color: $fontHover;
+        }
+    }
+}
+
+.dF {
+    display: flex;
+}
+
+.user-container {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    width: fit-content;
+    height: 58px;
+    padding: 32px;
+
+    p {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    &:hover {
+        background-color: $backgroundHover;
+        border-radius: 30px;
+        cursor: pointer;
+    }
 }

@@ -15,14 +15,17 @@
 
                 <div class="private-message-container">
                     <div class="private-message-headline-container">
-                        <img class="img-arrow" [src]="arrowSrcWs"
-                            (mouseenter)="hoverEdit('arrowSrcWs', './assets/img/arrow_drop_down_hover.png')"
-                            (mouseleave)="resetHoverEdit('arrowSrcWs', './assets/img/arrow_drop_down.png')">
-                        <div class="headline-subcontainer">
-                            <img class="img-logo" [src]="logoSrcWs"
+                        <div class="dF">
+                            <img class="img-arrow" [src]="arrowSrcWs"
+                                (mouseenter)="hoverEdit('arrowSrcWs', './assets/img/arrow_drop_down_hover.png')"
+                                (mouseleave)="resetHoverEdit('arrowSrcWs', './assets/img/arrow_drop_down.png')">
+                            <div class="headline-subcontainer"
                                 (mouseenter)="hoverEdit('logoSrcWs', './assets/img/workspaces_hover.png')"
                                 (mouseleave)="resetHoverEdit('logoSrcWs', './assets/img/workspaces.png')">
-                            <h2 class="private-headline font-nunito">Channels</h2>
+                                <img class="img-logo" [src]="logoSrcWs">
+                                <h2 class="private-headline font-nunito">Channels</h2>
+                            </div>
+
                             <img class="add-icon" [src]="add"
                                 (mouseenter)="hoverEdit('add', './assets/img/add_hover.png')"
                                 (mouseleave)="resetHoverEdit('add', './assets/img/add.png')">
@@ -60,29 +63,48 @@
                         <img class="img-arrow" [src]="arrowSrc"
                             (mouseenter)="hoverEdit('arrowSrc', './assets/img/arrow_drop_down_hover.png')"
                             (mouseleave)="resetHoverEdit('arrowSrc', './assets/img/arrow_drop_down.png')">
-                        <div class="headline-subcontainer">
-                            <img class="img-logo" [src]="logoSrc"
-                                (mouseenter)="hoverEdit('logoSrc', './assets/img/private_message_logo_hover.png')"
-                                (mouseleave)="resetHoverEdit('logoSrc', './assets/img/private_message_logo.png')">
+                        <div class="headline-subcontainer"
+                            (mouseenter)="hoverEdit('logoSrc', './assets/img/private_message_logo_hover.png')"
+                            (mouseleave)="resetHoverEdit('logoSrc', './assets/img/private_message_logo.png')">
+                            <img class="img-logo" [src]="logoSrc">
                             <h2 class="private-headline font-nunito">Direktnachrichten</h2>
                         </div>
                     </div>
 
 
                     <div class="direct-message-user-container">
-                        <div class="profile-img-container">
-                            <img class="profile-img" src="./assets/img/avatar_1.png">
-                            @if (online) {
-                            <img class="online-status" src="./assets/img/online.png">
-                            }
-                            @if (!online) {
-                            <img class="online-status" src="./assets/img/offline.png">
-                            }
+                        <div class="user-container">
+                            <div class="profile-img-container">
+                                <img class="profile-img" src="./assets/img/avatar_1.png">
+                                @if (online) {
+                                <img class="online-status" src="./assets/img/online.png">
+                                }
+                                @if (!online) {
+                                <img class="online-status" src="./assets/img/offline.png">
+                                }
 
+                            </div>
+                            <div>
+                                <p>Sofia Müller</p>
+                            </div>
                         </div>
-                        <div>
-                            <p>Sofia Müller</p>
+
+                        <div class="user-container">
+                            <div class="profile-img-container">
+                                <img class="profile-img" src="./assets/img/avatar_1.png">
+                                @if (online) {
+                                <img class="online-status" src="./assets/img/online.png">
+                                }
+                                @if (!online) {
+                                <img class="online-status" src="./assets/img/offline.png">
+                                }
+
+                            </div>
+                            <div>
+                                <p>Sofia Müller</p>
+                            </div>
                         </div>
+
                     </div>
 
                 </div>
