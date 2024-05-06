@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Firestore } from '@angular/fire/firestore';
 import { AuthService } from '../services/auth.service';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
@@ -22,7 +22,7 @@ import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-
+    RouterLink
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
