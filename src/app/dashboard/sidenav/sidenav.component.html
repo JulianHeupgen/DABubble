@@ -123,3 +123,10 @@
 <img class="img-as-button" (mouseenter)="hoverMenuButton()" (mouseleave)="resetHover()" [src]="imageSrc"
     (click)="toggleSidenav()">
 }
+
+<div *ngFor="let user of users" >
+ {{ user.name }}
+</div>
+<div>
+    <button (click)="getDataFromFirestore()">get data from firestore (test)</button>
+  </div>

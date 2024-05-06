@@ -47,19 +47,27 @@ export class SidenavComponent {
   add: string = './assets/img/add.png';
   addCircle: string = './assets/img/add_circle.png';
   online: boolean = true;
-  user: User[] = [];
+  users: User[] = [];
   userId: string = '';
+  allUsers: User[] = [];
+  
 
-  constructor(private dataService: DataService, private activatedRoute: ActivatedRoute) {}
+  constructor(private dataService: DataService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.activatedRoute.params.subscribe(params => {
+      this.userId = params['id'];
+      this.getDataFromFirestore();         
+      });
 
 
 
-    this.user =  this.dataService.allUsers;
-    console.log(this.user);
+      // console.log(this.userId);
+      
+
+    // this.getDataFromFirestore();
+    // console.log(this.users);
   }
-
 
 
   toggleSidenav() {
@@ -82,12 +90,22 @@ export class SidenavComponent {
     }
   }
 
-  hoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs' | 'add' | 'addCircle', url:string) {
+  hoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs' | 'add' | 'addCircle', url: string) {
     this[originalSrc] = url;
   }
 
-  resetHoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs' | 'add' | 'addCircle', url:string) {
+  resetHoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs' | 'add' | 'addCircle', url: string) {
     this[originalSrc] = url;
+  }
+
+  getDataFromFirestore() {                               
+    this.dataService.getUsersList();
+
+    this.users = this.dataService.allUsers;
+    
+    
+    console.log(this.users);
+    
   }
 
 }
