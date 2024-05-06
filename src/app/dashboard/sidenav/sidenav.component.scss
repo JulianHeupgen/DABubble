@@ -18,6 +18,12 @@
     width: 0;
 }
 
+.inner-container {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+}
+
 .sidenav {
     padding: 32px 30px;
     height: calc(100vh - 180px);
@@ -79,6 +85,7 @@
 .private-message-container {
 display: flex;
 flex-direction: column;
+gap: 32px;
 }
 
 .private-headline {
@@ -106,6 +113,7 @@ flex-direction: column;
     display: flex;
     align-items: center;
     gap: 24px;
+    padding-left: 32px;
 
     p {
         margin: 0;
@@ -117,9 +125,16 @@ flex-direction: column;
     display: flex;
     align-items: center;
     gap: 8px;
+    padding-left: 32px;
 
     p {
         margin: 0;
         font-size: 18px;
     }
+}
+
+.headline-subcontainer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
