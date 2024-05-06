@@ -16,11 +16,11 @@
           <div class="input-field-container">
             <div>
               <mat-icon>person</mat-icon>
-              <input formControlName="fullname" type="text" placeholder="Vorname und Nachname">
+              <input formControlName="name" type="text" placeholder="Vorname und Nachname">
             </div>
           </div>
           <div class="error-container">
-            <p class="input-feedback" *ngIf="registerForm.get('fullname')?.errors && registerForm.get('fullname')?.dirty">Bitte schreiben sie einen Namen. Vorname Nachname</p>
+            <p class="input-feedback" *ngIf="registerForm.get('name')?.errors && registerForm.get('name')?.dirty">Bitte schreiben sie einen Namen. Vorname Nachname</p>
           </div>
         </div>
 

@@ -12,8 +12,8 @@
       <div class="upload-content">
 
         <div class="user-data">
-          <img [src]="imageUrl">
-          <h1 class="name">{{ userData.fullname }}</h1>
+          <img [src]="imgSrcUrl">
+          <h1 class="name">{{ userData.name }}</h1>
         </div>
 
         <span>Aus der Liste wählen</span>
@@ -31,7 +31,7 @@
           </label>
 
           <div class="file-upload" style="display: none;">
-            {{ imageUrl || "No file uploaded yet." }}
+            {{ imgSrcUrl || "No file uploaded yet." }}
           </div>
         </div>
 
@@ -48,6 +48,12 @@
   <div class="footer-links">
     <a href="#">Impressum</a>
     <a href="#">Datenschutz</a>
+  </div>
+
+  <div class="devtools">
+    <hr>
+    <button (click)="testfunc()">Test</button>
+    <hr>
   </div>
 
 </div>

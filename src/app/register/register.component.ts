@@ -10,9 +10,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserRegistrationService } from '../services/user-registration.service';
 import { Router, RouterModule } from '@angular/router';
 
-
-
-
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -45,7 +42,7 @@ export class RegisterComponent {
     private route: Router,
   ) {
     this.registerForm = this.formBuilder.group({
-      fullname: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+ [a-zA-Z]+$')]],
+      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+ [a-zA-Z]+$')]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       privacy: ['', Validators.requiredTrue],
@@ -53,11 +50,11 @@ export class RegisterComponent {
   }
 
   onNextStep() {
-    this.userRegService.setUserData(this.registerForm.value);
+    const { privacy, ...userData } = this.registerForm.value;
+    this.userRegService.saveUserData(userData);
     this.registerForm.reset();
     this.route.navigate(['/register/next']);
   }
-
 
 
   // REMOVE those for PROD
