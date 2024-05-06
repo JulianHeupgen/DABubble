@@ -3,6 +3,7 @@ import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
 import { Thread } from '../models/thread.class';
+import { UserChat } from '../models/user-chat';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class DataService {
   allUsers: User[] = [];
   allChannels: Channel[] = [];   
   allThreads: Thread[] = [];   
-  allUserChats: Thread[] = [];     // Haben UserChats den Typ "Thread" ?
+  allUserChats: UserChat[] = [];     
 
 
   // USER von Firestore laden; Verweis auf Datei 'channel-chat.component.ts' um ein Beispiel zu sehen, wie diese Funktion eingesetzt wird
