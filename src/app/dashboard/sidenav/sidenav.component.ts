@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule, MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav';
 import { DataService } from '../../services/data.service';
 import { User } from '../../models/user.class';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
@@ -46,15 +47,20 @@ export class SidenavComponent {
   add: string = './assets/img/add.png';
   addCircle: string = './assets/img/add_circle.png';
   online: boolean = true;
-  users: User[] = [];
+  user: User[] = [];
+  userId: string = '';
 
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
-    this.users = this.dataService.getUsersList();
-    console.log(this.users);
-    
+
+
+
+    this.user =  this.dataService.allUsers;
+    console.log(this.user);
   }
+
+
 
   toggleSidenav() {
     this.opened = !this.opened;
