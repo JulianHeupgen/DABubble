@@ -33,6 +33,9 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class RegisterComponent {
 
+  //TODO
+  // check email if already in use before next step redirect- otherwise error comes up on next page
+
   registerForm: FormGroup;
   userId = '';
   constructor(
@@ -49,8 +52,6 @@ export class RegisterComponent {
     });
   }
 
-
-
   onNextStep() {
     this.userRegService.setUserData(this.registerForm.value);
     this.registerForm.reset();
@@ -59,12 +60,10 @@ export class RegisterComponent {
 
 
 
-
-
   // REMOVE those for PROD
   registerUser() {
     this.authservice.signUp('hannes@dabubble.com', '123456789', 'Hannes')
-      .then(user => {        
+      .then(user => {
         console.log(user);
       })
       .catch(error => {

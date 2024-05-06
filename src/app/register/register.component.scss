@@ -42,7 +42,6 @@ mat-card {
       top: 0;
       left: 0;
       z-index: 99;
-      background-color: #fff;
 
       &:hover {
         cursor: pointer;
@@ -144,6 +143,7 @@ form {
   margin: 0;
   color: #ed1e79;
   font-size: 14px;
+  line-height: 14px;
 }
 
 .error-container {
@@ -153,13 +153,14 @@ form {
 
 .privacy-check span {
   color: #42526E;
-  font-size: 18px;
+  line-height: 18px;
   padding: 0 !important;
 }
 
 a {
   color: #797EF3;
   font-size: 18px;
+  line-height: 18px;
   font-family: Nunito, sans-serif;
   text-decoration: none;
 

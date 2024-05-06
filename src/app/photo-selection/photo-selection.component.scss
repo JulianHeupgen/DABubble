@@ -1,0 +1,229 @@
+@import '../../mixin.scss';
+
+.photoupload-container {
+  @include flex-align-justify();
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.logo {
+  width: 240px;
+  position: absolute;
+  top: 75px;
+  left: 75px;
+}
+
+mat-card {
+  width: 40%;
+  max-width: 606px;
+  height: 80vh;
+  max-height: 769px;
+  border-radius: 30px;
+  padding: 18px 32px;
+
+  mat-card-content {
+    height: 100%;
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+
+
+    .back-arrow {
+      height: 40px;
+      width: 40px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 99;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .photoupload-header {
+      gap: 48px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .card-headline {
+      font-family: Nunito, sans-serif;
+      font-size: 46px;
+      line-height: 46px;
+      font-weight: 700;
+      color: #444DF2;
+      padding: 0 48px;
+      text-align: center;
+    }
+
+    .input-container {
+      width: 100%;
+    }
+
+    .input-field-container {
+      font-family: Nunito, sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+
+      display: flex;
+      flex-direction: column;
+      border-radius: 100px;
+      padding: 16px 24px;
+      background-color: #ECEEFE;
+      box-sizing: border-box;
+
+      mat-icon {
+        color: #686868;
+        height: 24px;
+      }
+
+      div {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+      }
+
+      input {
+        background-color: #ECEEFE;
+        border: none;
+        color: #686868;
+        font-size: 18px;
+
+        &:focus {
+          outline: none;
+        }
+      }
+
+      &:hover {
+        outline: 1px solid #686868;
+      }
+
+      &:focus-within,
+      &:focus {
+        outline: 1px solid #535AF1;
+      }
+
+    }
+
+    button {
+      align-self: end;
+    }
+  }
+}
+
+form {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  flex-direction: column;
+  height: 100%;
+
+  input {
+    width: 100%;
+  }
+}
+
+a {
+  color: #797EF3;
+  font-size: 18px;
+  font-family: Nunito, sans-serif;
+  text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-upload-btn {
+  border: 1px solid #797EF3;
+  border-radius: 25px;
+  padding: 12px 25px;
+  font-family: Nunito, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18px;
+  color: #444DF2;
+
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.upload-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+
+  span {
+    font-family: Nunito, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+
+  .user-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 24px;
+
+    .name {
+      font-family: Nunito, sans-serif;
+      font-size: 32px;
+      line-height: 32px;
+      font-weight: 700;
+      color: #000;
+    }
+
+    img {
+      width: 160px;
+      height: 160px;
+      border-radius: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .avatar-list {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    overflow: auto;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+
+    .avatar {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    li>img {
+      width: 60px;
+    }
+  }
+
+  .personal-upload {
+    display: flex;
+    gap: 24px;
+  }
+}

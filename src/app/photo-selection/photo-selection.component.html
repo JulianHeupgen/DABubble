@@ -1,3 +1,53 @@
-<p>photo-selection works!</p>
-<button (click)="onRegistrationFinished()">Finish Registartion</button>
-<p *ngIf="user">{{ user.user.email }} Signed Up successfully</p>
+<div class="photoupload-container">
+  <img class="logo" src="./../../assets/img/logo-complete-black.png">
+  <mat-card>
+    <mat-card-content>
+      <div class="photoupload-header">
+        <img routerLink="/register" class="back-arrow" src="./../../assets/img/go-back.png">
+        <h1 class="card-headline">
+          Wähle deinen Avatar
+        </h1>
+      </div>
+
+      <div class="upload-content">
+
+        <div class="user-data">
+          <img [src]="imageUrl">
+          <h1 class="name">{{ userData.fullname }}</h1>
+        </div>
+
+        <span>Aus der Liste wählen</span>
+        <ul class="avatar-list">
+          <li class="avatar" *ngFor="let avatar of defaultAvatars">
+            <img [src]="avatar" (click)="onSelectedAvatar(avatar)">
+          </li>
+        </ul>
+
+        <div class="personal-upload">
+          <span>Eigenes Bild verwenden</span>
+          <label class="upload-btn" mat-mini-fab color="primary">
+            <input type="file" class="file-input" (change)="onFileSelected($event)">
+            <span class="file-upload-btn">Datei hochladen</span>
+          </label>
+
+          <div class="file-upload" style="display: none;">
+            {{ imageUrl || "No file uploaded yet." }}
+          </div>
+        </div>
+
+
+        <button (click)="onRegistrationFinished()" type="submit" mat-flat-button color="primary"
+          [disabled]="!imageSelected">Weiter</button>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+  <div class="footer-links">
+    <a href="#">Impressum</a>
+    <a href="#">Datenschutz</a>
+  </div>
+
+</div>
