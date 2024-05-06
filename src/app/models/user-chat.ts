@@ -1,11 +1,10 @@
-import { DirectMessage } from './direct-message';
 import { Message } from './message.class';
 import { User } from './user.class';
 
 export class UserChat {
   id: number;
   participants: User[];
-  messages: DirectMessage[];
+  messages: Message[];
 
   constructor(id: number, participants: User[]) {
     this.id = id;
@@ -13,7 +12,7 @@ export class UserChat {
     this.messages = [];
   }
 
-  addMessage(message: DirectMessage): void {
+  addMessage(message: Message): void {
     this.messages.push(message);
   }
 

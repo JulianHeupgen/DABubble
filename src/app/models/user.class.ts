@@ -1,5 +1,4 @@
 import { Channel } from "./channel.class";
-import { DirectMessage } from "./direct-message";
 import { Message } from "./message.class";
 import { Thread } from "./thread.class";
 import { UserChat } from "./user-chat";
@@ -10,7 +9,7 @@ export class User {
     onlineStatus: 'online' | 'offline';
     channels: Channel[];
     userChats: [];
-    userId: string;          // "uid" von Authentication hier hinterlegen
+    userId: string;          
 
     constructor(name: string, email: string, onlineStatus: 'online' | 'offline', userId: string) {
         this.name = name;
@@ -52,7 +51,7 @@ export class User {
         const sender = this; 
         const recipient = userChat.participants.find(user => user !== this); 
         if(recipient) {
-            const newDirectMessage = new DirectMessage(9999, sender, recipient, content);     // 9999 ist Beispiel-ID / Parameter
+            const newDirectMessage = new Message(sender, content);   
             userChat.addMessage(newDirectMessage);
         }
     }
