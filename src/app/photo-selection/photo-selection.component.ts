@@ -69,7 +69,7 @@ export class PhotoSelectionComponent {
       console.log('Get your file here: ', downloadUrl);
     }
 
-    // return;
+    return;
 
     // PROD
     this.authService.signUp(this.userData.email, this.userData.password, this.userData.fullname)
