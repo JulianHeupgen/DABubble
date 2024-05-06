@@ -34,8 +34,7 @@ export class LoginComponent {
     password: '',
   })
 
-  email = this.loginData.value.email || '';
-  password = this.loginData.value.password || '';
+
 
   logInFalse = false;
 
@@ -49,15 +48,17 @@ export class LoginComponent {
   ) { }
 
 
-  async logIn(event: Event) {    
+  async logIn(event: Event) {
+    let email = this.loginData.value.email || '';
+    let password = this.loginData.value.password || '';
     event.preventDefault();
-    let logInSuccess = await this.signIn(this.email, this.password);
+    let logInSuccess = await this.signIn(email, password);
     if (logInSuccess) {
       this.logInFalse = false;
-      this.router.navigate(['/dashboard/',logInSuccess.uid]);
+      this.router.navigate(['/dashboard/', logInSuccess.uid]);
     } else {
       this.logInFalse = true;
-      console.log('Anmeldung fehlgeschlagen');      
+      console.log('Anmeldung fehlgeschlagen');
     }
   }
 
@@ -65,13 +66,13 @@ export class LoginComponent {
     let logInSuccess = await this.signIn('guest@guest.com', '123456');
     console.log('guest login', logInSuccess);
     if (logInSuccess) {
-      this.router.navigate(['/dashboard/',logInSuccess.uid]);
+      this.router.navigate(['/dashboard/', logInSuccess.uid]);
     } else {
-      console.log('Anmeldung fehlgeschlagen');      
+      console.log('Anmeldung fehlgeschlagen');
     }
   }
 
-  async signIn(email: string, password: string) {   
+  async signIn(email: string, password: string) {
     try {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
       return userCredential.user;
