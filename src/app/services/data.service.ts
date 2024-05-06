@@ -14,18 +14,21 @@ export class DataService {
   unsubUsers;
   unsubChannels;
   unsubThreads;
+  unsubUserChats;
 
   constructor() {
     this.unsubUsers = this.getUsersList();
     this.unsubChannels = this.getChannelsList();
     this.unsubThreads = this.getThreadsList();
+    this.unsubUserChats = this.getUserChatsList();
   }
 
-  // in die nachfolgenden Arrays werden alle User/Channels/Threads von Firebase gepusht
+  // in die nachfolgenden Arrays werden alle User/Channels/Threads/UserChats von Firebase gepusht
 
   allUsers: User[] = [];
   allChannels: Channel[] = [];   
-  allThreads: Thread[] = [];          
+  allThreads: Thread[] = [];   
+  allUserChats: Thread[] = [];     // Haben UserChats den Typ "Thread" ?
 
 
   // USER von Firestore laden; Verweis auf Datei 'channel-chat.component.ts' um ein Beispiel zu sehen, wie diese Funktion eingesetzt wird
@@ -96,10 +99,32 @@ export class DataService {
   }
 
 
+  // UserChats von Firestore laden
+
+  getUserChatsList() {
+    return onSnapshot(this.getUserChatsCollection(), list => {
+      this.allUserChats = [];
+      list.forEach(userChat =>  this.allUserChats.push(this.setUserChatObject(userChat.id, userChat.data())))
+    }
+  )};
+  
+  getUserChatsCollection() {
+    return collection(this.firestore, 'directMessages');
+  }
+
+  setUserChatObject(id: string, data: any): any {
+    return {
+      id: id,
+      messages: data.messages
+    }
+  }
+
+
   ngonDestroy() {
     this.unsubUsers();
     this.unsubChannels();
     this.unsubThreads();
+    this.unsubUserChats();
   }
 
 
