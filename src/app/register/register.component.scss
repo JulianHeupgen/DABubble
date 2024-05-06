@@ -22,26 +22,25 @@
 
 mat-card {
   width: 40%;
-  max-width: 768px;
-  height: 65%;
-  max-height: 592px;
+  max-width: 606px;
+  height: 80vh;
+  max-height: 769px;
   border-radius: 30px;
-  padding: 45px 32px;
+  padding: 18px 32px;
 
   mat-card-content {
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    padding: 0;
     height: 100%;
+    display: flex;
+    gap: 48px;
+    flex-direction: column;
+
 
     .back-arrow {
       height: 40px;
       width: 40px;
       position: absolute;
-      top: 45px;
-      left: 32px;
+      top: 0;
+      left: 0;
       z-index: 99;
       background-color: #fff;
 
@@ -51,23 +50,26 @@ mat-card {
     }
 
     .register-header {
-      gap: 16px;
+      gap: 48px;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
     h1 {
       font-family: Nunito, sans-serif;
       font-size: 46px;
       font-weight: 700;
-      color: #444DF2
+      color: #444DF2;
+      padding: 0 48px;
+      text-align: center;
     }
 
     span {
       font-family: Nunito, sans-serif;
       font-size: 20px;
       font-weight: 400;
-      padding: 0 24px;
+      text-align: center;
     }
 
     .input-container {
@@ -112,7 +114,8 @@ mat-card {
         outline: 1px solid #686868;
       }
 
-      &:focus-within, &:focus {
+      &:focus-within,
+      &:focus {
         outline: 1px solid #535AF1;
       }
 
@@ -126,9 +129,11 @@ mat-card {
 
 form {
   width: 100%;
-  @include flex-align-justify(flex-start, center);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
   flex-direction: column;
-  gap: 8px;
+  height: 100%;
 
   input {
     width: 100%;
