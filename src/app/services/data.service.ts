@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
+import { Thread } from '../models/thread';
 
 @Injectable({
   providedIn: 'root'
@@ -11,23 +12,32 @@ export class DataService {
   firestore: Firestore = inject(Firestore);
 
   unsubUsers;
+  unsubChannels;
+  unsubThreads;
 
   constructor() {
     this.unsubUsers = this.getUsersList();
+    this.unsubChannels = this.getChannelsList();
+    this.unsubThreads = this.getThreadsList();
   }
 
-  allUsers: User[] = [];
-  allChannels: Channel[] = [];     // das gleiche noch für die Channels machen (getChannelsList() ); diese Funktion ruft Daniel auf um Channels zu rendern
+  // in die nachfolgenden Arrays werden alle User/Channels/Threads von Firebase gepusht
 
+  allUsers: User[] = [];
+  allChannels: Channel[] = [];   
+  allThreads: Thread[] = [];          
+
+
+  // USER von Firestore laden; Verweis auf Datei 'channel-chat.component.ts' um ein Beispiel zu sehen, wie diese Funktion eingesetzt wird
 
   getUsersList() {
-    return onSnapshot(this.getCollection(), list => {
+    return onSnapshot(this.getUserCollection(), list => {
       this.allUsers = [];
       list.forEach(user =>  this.allUsers.push(this.setUserObject(user.id, user.data())))
     }
   )};
   
-  getCollection() {
+  getUserCollection() {
     return collection(this.firestore, 'users');
   }
 
@@ -41,9 +51,60 @@ export class DataService {
     }
   }
 
+
+  // CHANNELS von Firestore laden
+
+  getChannelsList() {
+    return onSnapshot(this.getChannelCollection(), list => {
+      this.allChannels = [];
+      list.forEach(channel =>  this.allChannels.push(this.setChannelObject(channel.id, channel.data())))
+    }
+  )};
+  
+  getChannelCollection() {
+    return collection(this.firestore, 'channels');
+  }
+
+  setChannelObject(id: string, data: any): any {
+    return {
+      id: id,
+      title: data.title,
+      participants: data.participants
+    }
+  }
+
+
+  // THREADS von Firestore laden
+
+  getThreadsList() {
+    return onSnapshot(this.getThreadCollection(), list => {
+      this.allThreads = [];
+      list.forEach(thread =>  this.allThreads.push(this.setThreadObject(thread.id, thread.data())))
+    }
+  )};
+  
+  getThreadCollection() {
+    return collection(this.firestore, 'threads');
+  }
+
+  setThreadObject(id: string, data: any): any {
+    return {
+      id: id,
+      channelId: data.channelId,
+      messages: data.messages
+    }
+  }
+
+
   ngonDestroy() {
     this.unsubUsers();
+    this.unsubChannels();
+    this.unsubThreads();
   }
+
+
+
+
 
 }
 
