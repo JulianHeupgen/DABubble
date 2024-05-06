@@ -4,8 +4,8 @@ export class Message {
   sender: User;
   content: string;
   timestamp: Date;
-  replies: Message[];      // Direkte Antworten von anderen User auf diese Message
-  reactions: string[];    // Emojis als Zeichenketten speichern
+  replies: Message[];      
+  reactions: string[];    
 
   constructor(sender: User, content: string) {
     this.sender = sender;

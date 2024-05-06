@@ -47,7 +47,7 @@ export class User {
         }
     }
 
-    sendUserChatMessage( userChat: UserChat, content: string): void {
+    sendUserChatMessage(userChat: UserChat, content: string): void {
         const sender = this; 
         const recipient = userChat.participants.find(user => user !== this); 
         if(recipient) {
