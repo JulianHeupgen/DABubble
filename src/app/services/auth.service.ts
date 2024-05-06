@@ -73,7 +73,8 @@ export class AuthService {
     try {
       await addDoc(collection(this.firestore, 'users'), strUser);
     } catch (error) {
-      console.error('Error set the user on firebase: ', error);
+      console.error('Error uploading user to firebase: ', error);
+      throw new Error('Failed to create user in firebase.')
     }
   }
 

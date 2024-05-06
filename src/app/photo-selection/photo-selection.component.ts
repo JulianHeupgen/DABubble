@@ -8,9 +8,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { RouterModule } from '@angular/router';
 import { StorageService } from '../services/storage.service';
 import { User } from '../models/user.class';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-photo-selection',
@@ -22,8 +22,7 @@ import { User } from '../models/user.class';
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    MatCheckboxModule,
-    RouterModule
+    MatCheckboxModule
   ],
   templateUrl: './photo-selection.component.html',
   styleUrl: './photo-selection.component.scss'
@@ -54,7 +53,8 @@ export class PhotoSelectionComponent {
   constructor(
     private userRegService: UserRegistrationService,
     private authService: AuthService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -79,8 +79,8 @@ export class PhotoSelectionComponent {
   signUpAndCreateUser() {
     this.authService.signUp(this._userData.email, this._userData.password, this._userData.fullname)
       .then(user => {
-        this.updateUserObject('userId' ,user.user.uid);
-        this.updateUserObject('onlineStatus' , 'online');
+        this.updateUserObject('userId', user.user.uid);
+        this.updateUserObject('onlineStatus', 'online');
         this.createUserObject();
       })
       .catch(error => {
@@ -91,14 +91,20 @@ export class PhotoSelectionComponent {
   createUserObject() {
     const user = new User(this._userData);
     // Connect firebase and set Doc User HERE
-    this.saveUserToFirebase(user);
+    this.saveUserToFirebase(user)
+      .then(() => {
+        this.router.navigate(['dashboard/keinahnungwarumichhierbin/channel/habnochkeineid']);
+      })
+      .catch((error) => {
+        console.error('Error saving user to firebase. ', error);
+      })
   }
 
   async saveUserToFirebase(user: User) {
     try {
       await this.authService.createFirebaseUser(user);
     } catch (error) {
-      console.error('Error uploading user to firebase: ', error);
+      console.error('Error after saving user to firebase: ', error);
     }
   }
 
