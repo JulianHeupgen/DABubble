@@ -9,13 +9,12 @@ export class StorageService {
 
   async uploadFile(file: File) {
     const storage = getStorage();
-    const storageRef = ref(storage, file.name);      // 2. Parameter "file test" muss noch angepasst werden: stattdessen file.name
-    //console.log(file.name);
+    const storageRef = ref(storage, file.name);
 
     try {
       const uploadFile = await uploadBytes(storageRef, file);
       const downloadURL: string = await getDownloadURL(uploadFile.ref);
-      console.log('Download of the file available at: ', downloadURL);
+      //console.log('Download of the file available at: ', downloadURL);
 
       return downloadURL;
     } catch (error) {

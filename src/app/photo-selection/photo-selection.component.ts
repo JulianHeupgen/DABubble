@@ -31,7 +31,6 @@ import { User } from '../models/user.class';
 export class PhotoSelectionComponent {
 
   // this is used as reference for the new User model which will be upped to db
-  userData: Partial<User> = {};
   _userData: any = {};
 
   defaultAvatars: string[] = [
@@ -46,7 +45,6 @@ export class PhotoSelectionComponent {
   // URL which is shown on the Card as selected image
   imgSrcUrl: string | ArrayBuffer | null = './../../assets/img/profile-empty.png';
 
-  //imageName: string = '';
   // Needed boolean to deactivate the next button
   imageSelected: boolean = false;
 
@@ -92,8 +90,16 @@ export class PhotoSelectionComponent {
 
   createUserObject() {
     const user = new User(this._userData);
-    console.log('Created User Object with the _userData. user is: ', user);
     // Connect firebase and set Doc User HERE
+    this.saveUserToFirebase(user);
+  }
+
+  async saveUserToFirebase(user: User) {
+    try {
+      await this.authService.createFirebaseUser(user);
+    } catch (error) {
+      console.error('Error uploading user to firebase: ', error);
+    }
   }
 
   updateUserObject(key: string, data: string) {
@@ -102,38 +108,25 @@ export class PhotoSelectionComponent {
 
   async testfunc() {
     // Set User object which looks like this
-    /* User {
-        "name": "hgfd hgfdhgf",
-        "email": "hgfd@sdfg.com",
-        "onlineStatus": "online",
-        "channels": [],
-        "userChats": [],
-        "userId": "unSemc7HgiXubBTz6qQ571oYCTn1",
-        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_4.png?alt=media&token=d518661c-a6d0-4cbe-846a-8c7fcc072e98"
-    } */
-    console.log(this._userData);
+    console.log(this._userData as User);
   }
 
   // uploaded File
   onFileSelected(event: Event): void {
     const element = event.target as HTMLInputElement;
     const file = element.files ? element.files[0] : null;
-
     if (file) {
       //this.imageName = file.name;
       this.uploadedFile = file;
       const reader = new FileReader;
-
       reader.onload = () => {
         this.imgSrcUrl = reader.result;
         this.imageSelected = true;
         element.value = '';
       }
-
       reader.onerror = () => {
         console.error('Error occurred reading file');
       }
-
       reader.readAsDataURL(file);
     } else {
       element.value = '';
@@ -145,7 +138,6 @@ export class PhotoSelectionComponent {
   onSelectedAvatar(avatarUrl: string): void {
     this.imgSrcUrl = avatarUrl;
     this.imageSelected = true;
-    //this.imageName = '';
   }
 
 }

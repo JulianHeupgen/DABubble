@@ -19,7 +19,7 @@ export class AuthService {
   async signUp(email: string, password: string, name: string) {
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
-      this.setUserToFirestore(userCredential.user, name);
+      //this.setUserToFirestore(userCredential.user, name);
       return userCredential;
     } catch (error) {
       throw error;
@@ -41,10 +41,10 @@ export class AuthService {
     const googleAuth = getAuth();
 
     signInWithPopup(googleAuth, googleProvider)
-    .then(userCredential => {
-      console.log(userCredential.user);
-      this.router.navigate(['/dashboard/',userCredential.user.uid]);
-    }).catch((error) => {
+      .then(userCredential => {
+        console.log(userCredential.user);
+        this.router.navigate(['/dashboard/', userCredential.user.uid]);
+      }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         const email = error.customData.email;
@@ -66,6 +66,27 @@ export class AuthService {
       'channels': [],
       'uid': userData.uid,
     });
+  }
+
+  async createFirebaseUser(user: User) {
+    const strUser = this.stringifyUser(user);
+    try {
+      await addDoc(collection(this.firestore, 'users'), strUser);
+    } catch (error) {
+      console.error('Error set the user on firebase: ', error);
+    }
+  }
+
+  stringifyUser(user: User) {
+    return {
+      "name": user.name,
+      "email": user.email,
+      "onlineStatus": user.onlineStatus,
+      "channels": user.channels,
+      "userChats": user.userChats,
+      "userId": user.userId,
+      "imageUrl": user.imageUrl,
+    }
   }
 
 }
