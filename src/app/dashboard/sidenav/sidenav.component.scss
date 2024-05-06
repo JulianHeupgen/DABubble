@@ -18,6 +18,12 @@
     width: 0;
 }
 
+.inner-container {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+}
+
 .sidenav {
     padding: 32px 30px;
     height: calc(100vh - 180px);
@@ -65,6 +71,11 @@
     width: 60px;
 }
 
+.tag-img {
+    height: 24px;
+    width: 24px;
+}
+
 .online-status {
     position: absolute;
     right: 2px;
@@ -72,8 +83,9 @@
 }
 
 .private-message-container {
-display: flex;
-flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 }
 
 .private-headline {
@@ -90,9 +102,113 @@ flex-direction: column;
 .img-arrow {
     height: 30px;
     width: 30px;
+    cursor: pointer;
 }
 
 .img-logo {
     height: 24px;
     width: 24px;
+}
+
+.add-icon {
+    height: 24px;
+    width: 24px;
+    position: absolute;
+    right: 36px;
+    cursor: pointer;
+}
+
+.add-channel-container {
+    padding-left: 32px;
+    padding-top: 8px;
+    width: fit-content;
+}
+
+.add-channel-subcontainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+
+    p {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    &:hover {
+        p {
+            color: $fontHover;
+        }
+    }
+}
+
+.direct-message-user-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.channels-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-left: 16px;
+
+    p {
+        margin: 0;
+        font-size: 18px;
+    }
+}
+
+.channel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 33px;
+    width: fit-content;
+    padding: 16px;
+
+    &:hover {
+        border-radius: 20px;
+        background-color: $backgroundHover;
+        height: 33px;
+        cursor: pointer;
+    }
+}
+
+.headline-subcontainer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+
+    &:hover {
+        h2 {
+            color: $fontHover;
+        }
+    }
+}
+
+.dF {
+    display: flex;
+}
+
+.user-container {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    width: fit-content;
+    height: 58px;
+    padding: 32px;
+
+    p {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    &:hover {
+        background-color: $backgroundHover;
+        border-radius: 30px;
+        cursor: pointer;
+    }
 }

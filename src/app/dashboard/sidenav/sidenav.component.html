@@ -1,38 +1,115 @@
 <div class="main-container" *ngIf="opened" [@fadeInOut]="opened ? 'open' : 'closed'">
     <mat-drawer-container class="sidenav-container" autosize>
         <mat-drawer #drawer class="sidenav" mode="side" [opened]="opened">
-            <div class="headline-container">
-                <img src="./assets/img/devspace_logo.png">
-                <h1 class="devspace-headline font-nunito">Devspace</h1>
-                <!-- Hier muss noch der Variable Text rein später -->
-                <!-- <div style="height: 40px; width: 40px;"> -->
-                <img class="edit-square-img" [src]="editSrc" (mouseenter)="hoverEdit('editSrc', './assets/img/edit_square_hover.png')" (mouseleave)="resetHoverEdit('editSrc', './assets/img/edit_square.png')">
-                <!-- </div> -->
+            <div class="inner-container">
+                <div class="headline-container">
+                    <img src="./assets/img/devspace_logo.png">
+                    <h1 class="devspace-headline font-nunito">Devspace</h1>
+                    <!-- Hier muss noch der Variable Text rein später -->
+                    <!-- <div style="height: 40px; width: 40px;"> -->
+                    <img class="edit-square-img" [src]="editSrc"
+                        (mouseenter)="hoverEdit('editSrc', './assets/img/edit_square_hover.png')"
+                        (mouseleave)="resetHoverEdit('editSrc', './assets/img/edit_square.png')">
+                    <!-- </div> -->
+                </div>
+
+                <div class="private-message-container">
+                    <div class="private-message-headline-container">
+                        <div class="dF">
+                            <img class="img-arrow" [src]="arrowSrcWs"
+                                (mouseenter)="hoverEdit('arrowSrcWs', './assets/img/arrow_drop_down_hover.png')"
+                                (mouseleave)="resetHoverEdit('arrowSrcWs', './assets/img/arrow_drop_down.png')">
+                            <div class="headline-subcontainer"
+                                (mouseenter)="hoverEdit('logoSrcWs', './assets/img/workspaces_hover.png')"
+                                (mouseleave)="resetHoverEdit('logoSrcWs', './assets/img/workspaces.png')">
+                                <img class="img-logo" [src]="logoSrcWs">
+                                <h2 class="private-headline font-nunito">Channels</h2>
+                            </div>
+
+                            <img class="add-icon" [src]="add"
+                                (mouseenter)="hoverEdit('add', './assets/img/add_hover.png')"
+                                (mouseleave)="resetHoverEdit('add', './assets/img/add.png')">
+                        </div>
+                    </div>
+
+                    <div class="channels-container">
+                        <div class="channel">
+                            <img class="tag-img" src="./assets/img/tag.png">
+                            <p>Allgemein</p>
+                        </div>
+                        <div class="channel">
+                            <img class="tag-img" src="./assets/img/tag.png">
+                            <p>Dev´s</p>
+                        </div>
 
 
+                    </div>
+                    <div class="add-channel-container">
+                        <div class="add-channel-subcontainer">
+                            <img class="add-circle-icon" [src]="addCircle"
+                                (mouseenter)="hoverEdit('addCircle', './assets/img/add_circle_hover.png')"
+                                (mouseleave)="resetHoverEdit('addCircle', './assets/img/add_circle.png')">
+                            <p (mouseenter)="hoverEdit('addCircle', './assets/img/add_circle_hover.png')"
+                                (mouseleave)="resetHoverEdit('addCircle', './assets/img/add_circle.png')">Channel
+                                hinzufügen
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="private-message-container">
+                    <div class="private-message-headline-container">
+                        <img class="img-arrow" [src]="arrowSrc"
+                            (mouseenter)="hoverEdit('arrowSrc', './assets/img/arrow_drop_down_hover.png')"
+                            (mouseleave)="resetHoverEdit('arrowSrc', './assets/img/arrow_drop_down.png')">
+                        <div class="headline-subcontainer"
+                            (mouseenter)="hoverEdit('logoSrc', './assets/img/private_message_logo_hover.png')"
+                            (mouseleave)="resetHoverEdit('logoSrc', './assets/img/private_message_logo.png')">
+                            <img class="img-logo" [src]="logoSrc">
+                            <h2 class="private-headline font-nunito">Direktnachrichten</h2>
+                        </div>
+                    </div>
+
+
+                    <div class="direct-message-user-container">
+                        <div class="user-container">
+                            <div class="profile-img-container">
+                                <img class="profile-img" src="./assets/img/avatar_1.png">
+                                @if (online) {
+                                <img class="online-status" src="./assets/img/online.png">
+                                }
+                                @if (!online) {
+                                <img class="online-status" src="./assets/img/offline.png">
+                                }
+
+                            </div>
+                            <div>
+                                <p>Sofia Müller</p>
+                            </div>
+                        </div>
+
+                        <div class="user-container">
+                            <div class="profile-img-container">
+                                <img class="profile-img" src="./assets/img/avatar_1.png">
+                                @if (online) {
+                                <img class="online-status" src="./assets/img/online.png">
+                                }
+                                @if (!online) {
+                                <img class="online-status" src="./assets/img/offline.png">
+                                }
+
+                            </div>
+                            <div>
+                                <p>Sofia Müller</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
-<div class="private-message-container">
-    <div class="private-message-headline-container">
-        <img class="img-arrow" [src]="arrowSrc" (mouseenter)="hoverEdit('arrowSrc', './assets/img/arrow_drop_down_hover.png')" (mouseleave)="resetHoverEdit('arrowSrc', './assets/img/arrow_drop_down.png')">
-        <img class="img-logo" [src]="logoSrc" (mouseenter)="hoverEdit('logoSrc', './assets/img/private_message_logo_hover.png')" (mouseleave)="resetHoverEdit('logoSrc', './assets/img/private_message_logo.png')">
-        <h2 class="private-headline font-nunito">Direktnachrichten</h2>
-    </div>
-    
-
-    <div class="profile-img-container">
-        <img class="profile-img" src="./assets/img/avatar_1.png">
-        @if (online) {
-        <img class="online-status" src="./assets/img/online.png">
-        }
-        @if (!online) {
-        <img class="online-status" src="./assets/img/offline.png">
-        }
-    </div>
-
-</div>
-
-
         </mat-drawer>
         <!-- <mat-drawer-content class="sidenav-content">Inhalt hier...</mat-drawer-content> -->
     </mat-drawer-container>

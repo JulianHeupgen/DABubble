@@ -1,16 +1,16 @@
-import { Message } from './message.class';
+import { Thread } from './thread.class';
 import { User } from './user.class';
 
 export class Channel {
   title: string;
   participants: User[];
-  messages: Message[];
+  threads: Thread[];
   channelID: string;
 
   constructor(title: string) {
     this.title = title;
     this.participants = [];
-    this.messages = [];
+    this.threads = [];
     this.channelID = '';
   }
 
@@ -27,9 +27,15 @@ export class Channel {
     }
   }
 
-  addMessage(sender: User, content: string): void {
-    const message = new Message(sender, content);
-    this.messages.push(message);
+  addThread(thread: Thread): void {
+    this.threads.push(thread);
+  }
+
+  removeThread(thread: Thread): void {
+    const index = this.threads.indexOf(thread);
+    if (index !== -1) {
+      this.threads.splice(index, 1);
+    }
   }
 
 }

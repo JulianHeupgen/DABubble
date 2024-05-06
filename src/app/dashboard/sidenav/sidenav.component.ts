@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule, MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav';
+import { DataService } from '../../services/data.service';
+import { User } from '../../models/user.class';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
@@ -38,8 +41,26 @@ export class SidenavComponent {
   imageSrc: string = './assets/img/sidemenu_close_normal.png';
   editSrc: string = './assets/img/edit_square.png';
   arrowSrc: string = './assets/img/arrow_drop_down.png';
+  arrowSrcWs: string = './assets/img/arrow_drop_down.png';
   logoSrc: string = './assets/img/private_message_logo.png';
+  logoSrcWs: string = './assets/img/workspaces.png';
+  add: string = './assets/img/add.png';
+  addCircle: string = './assets/img/add_circle.png';
   online: boolean = true;
+  user: User[] = [];
+  userId: string = '';
+
+  constructor(private dataService: DataService, private activatedRoute: ActivatedRoute) {}
+
+  ngOnInit() {
+
+
+
+    this.user =  this.dataService.allUsers;
+    console.log(this.user);
+  }
+
+
 
   toggleSidenav() {
     this.opened = !this.opened;
@@ -61,11 +82,11 @@ export class SidenavComponent {
     }
   }
 
-  hoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc', url:string) {
+  hoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs' | 'add' | 'addCircle', url:string) {
     this[originalSrc] = url;
   }
 
-  resetHoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc', url:string) {
+  resetHoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs' | 'add' | 'addCircle', url:string) {
     this[originalSrc] = url;
   }
 

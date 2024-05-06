@@ -19,6 +19,7 @@ export class ChannelChatComponent {
 
   constructor(private dataService: DataService, private route: ActivatedRoute, private storage: StorageService) {}
 
+  // in ngOnInit() die ID aus der URL extrahieren und anahand der id prüfen, welcher Channel angezeigt wird !
   ngOnInit() {
     this.route.params.subscribe(params => {
     this.channelId = params['id'];            
@@ -27,17 +28,25 @@ export class ChannelChatComponent {
 
 
   users: any;
+  channels: any;
+  threads: any;
 
-  getUsers() {                               
+  getDataFromFirestore() {                               
     this.dataService.getUsersList();
+    this.dataService.getChannelsList();
+    this.dataService.getThreadsList();
     this.users = this.dataService.allUsers;
+    this.channels = this.dataService.allChannels;
+    this.threads = this.dataService.allThreads;
     console.log(this.users);
+    console.log(this.channels);
+    console.log(this.threads);
   }
 
   /* 
     Daniel Sidenav: Klick auf einen Channel und dieser leitet per routerLink an eine bestimmte URL;
     In ChannelChatComponent wird URL ausgelesen (in NgOnInit) und die id geprüft: id ermittelt den gesuchten Channel (vorher noch getChannelsList() );
-    In Variable "currentChannel" dann korrekten Channel speichern und dann die Inhalte rendern;
+    In Variable "currentChannel" dann korrekten Channel speichern und dann die Inhalte/Threads rendern (vorher noch getThreadsList() );
     in html template ergänzen [ngIf]="currentChannel", sodass Inhalte erst gerendert werden sobald currentChannel die
     Inhalte von Firebase hat
   */ 
