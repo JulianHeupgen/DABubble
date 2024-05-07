@@ -23,15 +23,21 @@ export class User {
       this.imageUrl = imageUrl;
   } */
 
-  constructor(data: Partial<User> = {}) {
-    this.id = '';
-    this.name = data.name ?? 'Max Mustermann';
-    this.email = data.email ?? 'max@mustermann.com';
-    this.onlineStatus = data.onlineStatus ?? 'offline';
-    this.channels = data.channels ?? [];
-    this.userChats = data.userChats ?? [];
-    this.authUserId = data.authUserId ?? 'defaultUserId';
-    this.imageUrl = data.imageUrl ?? 'defaultImage.jpg';
+  constructor(data: {
+    name: string,
+    email: string,
+    onlineStatus: 'online' | 'offline',
+    authUserId: string,
+    imageUrl: string
+}) {
+  this.id = '';
+  this.name = data.name;
+  this.email = data.email;
+  this.onlineStatus = data.onlineStatus;
+  this.authUserId = data.authUserId;
+  this.imageUrl = data.imageUrl;
+  this.channels = [];  // Initialize channels as an empty array
+  this.userChats = []; // Initialize userChats as an empty array
   }
 
 
