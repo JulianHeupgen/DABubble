@@ -81,19 +81,19 @@ export class PhotoSelectionComponent {
       .then(user => {
         this.updateUserObject('authUserId', user.user.uid);
         this.updateUserObject('onlineStatus', 'online');
-        this.createUserObject();
+        this.createUserObject(user.user.uid);
       })
       .catch(error => {
         console.error('An error occured while signin up the user. ERR CODE: ', error);
       })
   }
 
-  createUserObject() {
+  createUserObject(uid: string) {
     const user = new User(this._userData);
     // Connect firebase and set Doc User HERE
     this.saveUserToFirebase(user)
       .then(() => {
-        this.router.navigate(['dashboard/keinahnungwarumichhierbin/channel/habnochkeineid']);
+        this.router.navigate(['dashboard/', uid]);
       })
       .catch((error) => {
         console.error('Error saving user to firebase. ', error);
