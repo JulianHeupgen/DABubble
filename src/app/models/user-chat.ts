@@ -2,12 +2,12 @@ import { Message } from './message.class';
 import { User } from './user.class';
 
 export class UserChat {
-  id: number;
+  userChatId: string;
   participants: User[];
   messages: Message[];
 
-  constructor(id: number, participants: User[]) {
-    this.id = id;
+  constructor(participants: User[]) {
+    this.userChatId = '';
     this.participants = participants;
     this.messages = [];
   }

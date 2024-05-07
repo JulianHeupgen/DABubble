@@ -8,7 +8,7 @@ export class User {
   email: string;
   onlineStatus: 'online' | 'offline';
   channels: Channel[];
-  userChats: [];
+  userChats: UserChat[];
   authUserId: string;
   imageUrl: string;
 
