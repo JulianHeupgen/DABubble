@@ -95,7 +95,7 @@ export class User {
 
 
   addReaction(message: Message, emoji: string, reactor: User): void {          // Emoji Reaction
-    message.reactions.push(emoji, reactor.name);
+    message.emojiReactions.push(emoji, reactor.name);
   }
 
 }
