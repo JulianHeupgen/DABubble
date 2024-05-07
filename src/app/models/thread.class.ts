@@ -15,14 +15,5 @@ export class Thread {
     this.timestamp = new Date();
   }
 
-  addReply(message: Message, sender: User, replyContent: string): void {
-    const replyMessage = new Message(sender, replyContent);
-    message.replies.push(replyMessage);
-  }
-
-  addReaction(message: Message, emoji: string, reactor: User): void {
-    message.reactions.push(emoji, reactor.name);
-  }
-
 }
 

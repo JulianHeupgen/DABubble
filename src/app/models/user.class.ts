@@ -87,5 +87,16 @@ export class User {
     }
 }
 
+
+  addReply(message: Message, sender: User, replyContent: string): void {       // Auf eine ausgewählte Message direkt antworten
+      const replyMessage = new Message(sender, replyContent);
+      message.replies.push(replyMessage);
+    }
+
+
+  addReaction(message: Message, emoji: string, reactor: User): void {          // Emoji Reaction
+    message.reactions.push(emoji, reactor.name);
+  }
+
 }
 
