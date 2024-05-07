@@ -3,16 +3,14 @@ import { Message } from './message.class';
 import { User } from './user.class';
 
 export class Thread {
-  id: number;
+  id: string;
   channelId: string;
-  title: string;
   messages: Message[];
   timestamp: Date;
 
-  constructor(id: number, channelId: string, title: string) {
-    this.id = id;
+  constructor(channelId: string) {
+    this.id = '';
     this.channelId = channelId;
-    this.title = title;
     this.messages = [];
     this.timestamp = new Date();
   }
