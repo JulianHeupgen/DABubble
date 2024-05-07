@@ -1,6 +1,5 @@
 // thread.model.ts
 import { Message } from './message.class';
-import { User } from './user.class';
 
 export class Thread {
   threadId: string;
