@@ -125,7 +125,7 @@ export class DataService {
   }
 
 
-  ngonDestroy() {
+  ngOnDestroy() {
     this.unsubUsers();
     this.unsubChannels();
     this.unsubThreads();

@@ -17,7 +17,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'register/next', component: PhotoSelectionComponent },
   {
-    path: 'dashboard/:id', component: DashboardComponent,
+    path: 'dashboard', component: DashboardComponent,
     children: [
       { path: 'channel/:id', component: ChannelChatComponent },
       { path: 'chat/:id', component: UserChatComponent }

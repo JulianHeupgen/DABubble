@@ -44,8 +44,11 @@ export class ChannelChatComponent {
   }
 
   /* 
-    Daniel Sidenav: Klick auf einen Channel und dieser leitet per routerLink an eine bestimmte URL;
-    In ChannelChatComponent wird URL ausgelesen (in NgOnInit) und die id geprüft: id ermittelt den gesuchten Channel (vorher noch getChannelsList() );
+    Daniel Sidenav: Klick auf einen Channel und dieser leitet per routerLink an eine bestimmte URL [routerLink]=["channels", id];
+    localStorage userId auslesen / das ist die authentID, diese abgleichen mit authent-id aus firebase, damit man weiß welche User angemeldet ist
+    (dafür könnte man einen Service anlegen !);
+    In ChannelChatComponent wird URL ausgelesen (in NgOnInit) und die id geprüft: id ermittelt den gesuchten Channel beim
+    angemeldeten User (vorher noch getChannelsList() );
     In Variable "currentChannel" dann korrekten Channel speichern und dann die Inhalte/Threads rendern (vorher noch getThreadsList() );
     in html template ergänzen [ngIf]="currentChannel", sodass Inhalte erst gerendert werden sobald currentChannel die
     Inhalte von Firebase hat
