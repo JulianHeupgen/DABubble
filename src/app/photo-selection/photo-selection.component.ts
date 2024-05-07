@@ -128,13 +128,10 @@ export class PhotoSelectionComponent {
     this.uploadErr = false;
     const element = event.target as HTMLInputElement;
     const file = element.files ? element.files[0] : null;
-
-    // Check file size and abort if size > 500kb
     if (file) {
       this.filesize = Math.round(file?.size / 1000);
       if (this.filesize > 500) {
-        this.uploadErr = true;
-        this.imgSrcUrl = this.DEFAULT_IMG_SRC_URL;
+        this.fileTooBig();
         return;
       }
       this.setFile(file, element);
@@ -142,6 +139,12 @@ export class PhotoSelectionComponent {
       element.value = '';
       this.imageSelected = false;
     }
+  }
+
+  fileTooBig() {
+    this.imageSelected = false;
+    this.uploadErr = true;
+    this.imgSrcUrl = this.DEFAULT_IMG_SRC_URL;
   }
 
   setFile(file: File, element: HTMLInputElement) {
