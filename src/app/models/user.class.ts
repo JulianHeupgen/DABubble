@@ -9,7 +9,7 @@ export class User {
   onlineStatus: 'online' | 'offline';
   channels: Channel[];
   userChats: [];
-  userId: string;
+  userId: string;            // umbenennen in "authId" oder ähnliches
   imageUrl: string;
 
   /* //Old Constructor without Partial
