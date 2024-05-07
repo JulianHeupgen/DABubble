@@ -89,6 +89,7 @@ export class PhotoSelectionComponent {
   }
 
   createUserObject(uid: string) {
+    this.removePasswordFromUserObject();
     const user = new User(this._userData);
     // Connect firebase and set Doc User HERE
     this.saveUserToFirebase(user)
@@ -98,6 +99,12 @@ export class PhotoSelectionComponent {
       .catch((error) => {
         console.error('Error saving user to firebase. ', error);
       })
+  }
+
+  removePasswordFromUserObject() {
+    if (this._userData.password) {
+      delete this._userData.password;
+    }
   }
 
   async saveUserToFirebase(user: User) {
@@ -144,6 +151,18 @@ export class PhotoSelectionComponent {
   onSelectedAvatar(avatarUrl: string): void {
     this.imgSrcUrl = avatarUrl;
     this.imageSelected = true;
+  }
+
+  setUserObject() {
+    return {
+      name: this._userData.name,
+      email: this._userData.email,
+      onlineStatus: this._userData.onlineStatus,
+      channels: this._userData.channels,
+      userChats: this._userData.userChats,
+      authUserId: this._userData.authUserId,
+      imageUrl: this._userData.imageUrl
+    }
   }
 
 }

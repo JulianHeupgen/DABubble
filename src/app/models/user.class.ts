@@ -8,29 +8,24 @@ export class User {
   email: string;
   onlineStatus: 'online' | 'offline';
   channels: Channel[];
-  userChats: [];
+  userChats: UserChat[];
   authUserId: string;
   imageUrl: string;
 
-  /* //Old Constructor without Partial
-  constructor(name: string, email: string, onlineStatus: 'online' | 'offline', userId: string, imageUrl: string) {
-      this.name = name;
-      this.email = email;
-      this.onlineStatus = onlineStatus;
-      this.channels = [];
-      this.userChats = [];
-      this.userId = userId;
-      this.imageUrl = imageUrl;
-  } */
-
-  constructor(data: Partial<User> = {}) {
-    this.name = data.name ?? 'Max Mustermann';
-    this.email = data.email ?? 'max@mustermann.com';
-    this.onlineStatus = data.onlineStatus ?? 'offline';
-    this.channels = data.channels ?? [];
-    this.userChats = data.userChats ?? [];
-    this.authUserId = data.authUserId ?? 'defaultUserId';
-    this.imageUrl = data.imageUrl ?? 'defaultImage.jpg';
+  constructor(data: {
+    name: string,
+    email: string,
+    onlineStatus: 'online' | 'offline',
+    authUserId: string,
+    imageUrl: string
+  }) {
+    this.name = data.name;
+    this.email = data.email;
+    this.onlineStatus = data.onlineStatus;
+    this.channels = [];
+    this.userChats = [];
+    this.authUserId = data.authUserId;
+    this.imageUrl = data.imageUrl;
   }
 
   joinChannel(channel: Channel): void {
