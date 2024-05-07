@@ -221,7 +221,7 @@ form {
 
     a {
         @include font-size-weight-color($cl: #797EF3);
-        padding: 10px 15px;
+        /* padding: 10px 15px; */
         text-decoration: none;
     }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, fetchSignInMethodsForEmail } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 

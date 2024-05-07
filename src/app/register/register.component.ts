@@ -49,7 +49,7 @@ export class RegisterComponent {
     });
   }
 
-  onNextStep() {
+  async onNextStep() {
     const { privacy, ...userData } = this.registerForm.value;
     this.userRegService.saveUserData(userData);
     this.registerForm.reset();
