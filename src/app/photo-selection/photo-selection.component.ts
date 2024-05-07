@@ -42,7 +42,8 @@ export class PhotoSelectionComponent {
   ];
 
   // URL which is shown on the Card as selected image
-  imgSrcUrl: string | ArrayBuffer | null = './../../assets/img/profile-empty.png';
+  DEFAULT_IMG_SRC_URL: string = './../../assets/img/profile-empty.png';
+  imgSrcUrl: string | ArrayBuffer | null = this.DEFAULT_IMG_SRC_URL;
 
   // Needed boolean to deactivate the next button
   imageSelected: boolean = false;
@@ -122,11 +123,6 @@ export class PhotoSelectionComponent {
     this._userData = { ...this._userData, [key]: data };
   }
 
-  async testfunc() {
-    // Set User object which looks like this
-    console.log(this._userData as User);
-  }
-
   // uploaded File
   onFileSelected(event: Event): void {
     this.uploadErr = false;
@@ -138,6 +134,7 @@ export class PhotoSelectionComponent {
       this.filesize = Math.round(file?.size / 1000);
       if (this.filesize > 500) {
         this.uploadErr = true;
+        this.imgSrcUrl = this.DEFAULT_IMG_SRC_URL;
         return;
       }
       this.setFile(file, element);
