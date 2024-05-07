@@ -128,6 +128,11 @@ export class PhotoSelectionComponent {
   onFileSelected(event: Event): void {
     const element = event.target as HTMLInputElement;
     const file = element.files ? element.files[0] : null;
+
+    // Check file size and abort if size > 500kb
+
+
+
     if (file) {
       //this.imageName = file.name;
       this.uploadedFile = file;

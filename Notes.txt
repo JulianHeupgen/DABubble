@@ -45,8 +45,7 @@ Firestore Collections
 
 
 HANNES
-- email duplikat bereits bei eingabe im formular von firestore auth prüfen lassen
--> sollte nicht gemacht werden aus sicherheitsgründen
-
 - wer macht password-reset und email update component
-
+- Jan: reset password
+- Hannes: email und name ändern, impressum, 404 seite, bilder auf max 500kb begrenzen
+- ChannelThreads (oder -list) für die thred Liste, ChannelThread für den Single Thread
