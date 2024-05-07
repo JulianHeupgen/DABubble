@@ -5,14 +5,14 @@ export class Message {
   content: string;
   timestamp: Date;
   replies: Message[];      
-  reactions: string[];    
+  emojiReactions: string[];    
 
   constructor(sender: User, content: string) {
     this.sender = sender;
     this.content = content;
     this.timestamp = new Date();
     this.replies = [];
-    this.reactions = [];
+    this.emojiReactions = [];
   }
 }
 

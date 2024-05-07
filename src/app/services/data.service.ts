@@ -51,7 +51,10 @@ export class DataService {
       name: data.name,
       email: data.email,
       onlineStatus: data.onlineStatus,
-      channels: data.channels
+      channels: data.channels,
+      userChats: data.userChats,
+      authUserId: data.authUserId,
+      imageUrl: data.imageUrl
     }
   }
 

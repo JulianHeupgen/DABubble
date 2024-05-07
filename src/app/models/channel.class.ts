@@ -5,13 +5,13 @@ export class Channel {
   title: string;
   participants: User[];
   threads: Thread[];
-  channelID: string;
+  channelId: string;
 
   constructor(title: string) {
     this.title = title;
     this.participants = [];
     this.threads = [];
-    this.channelID = '';
+    this.channelId = '';
   }
 
   addParticipant(user: User): void {
