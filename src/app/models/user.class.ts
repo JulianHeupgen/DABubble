@@ -10,7 +10,6 @@ export class User {
   onlineStatus: 'online' | 'offline';
   channels: Channel[];
   userChats: UserChat[];
-  userChats: UserChat[];
   authUserId: string;
   imageUrl: string;
 
