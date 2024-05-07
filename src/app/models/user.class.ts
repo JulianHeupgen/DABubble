@@ -53,6 +53,8 @@ export class User {
   }
 
 
+  // Diese Funktion hier nutzen, wenn in einem Channel ein Beitrag verfasst oder dort auf einen Thread geantwortet wird
+
   sendChannelMessage(channel: Channel, messageContent: string, replyToThread?: Thread): void {        // 3. Parameter (Thread) ist optional !
 
     if (replyToThread) {                                      // Antwort auf bestehenden Thread: Neue Message wird dem bestehenden Thread überreicht
@@ -66,6 +68,8 @@ export class User {
     }
   }
 
+
+  // Diese Funktion hier nutzen wenn eine Direktnachricht an einen anderen User gesendet wird
 
   sendDirectMessage(recipient: User, messageContent: string): void {
 
