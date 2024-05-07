@@ -44,7 +44,7 @@ export class SidenavComponent {
   arrowSrcWs: string = './assets/img/arrow_drop_down.png';
   logoSrc: string = './assets/img/private_message_logo.png';
   logoSrcWs: string = './assets/img/workspaces.png';
-  add: string = './assets/img/add.png';
+  add: string = './assets/img/add_channel.png';
   addCircle: string = './assets/img/add_circle.png';
   online: boolean = true;
   users: User[] = [];
