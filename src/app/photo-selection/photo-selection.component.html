@@ -34,6 +34,9 @@
             {{ imgSrcUrl || "No file uploaded yet." }}
           </div>
         </div>
+        <div class="error-container">
+          <span class="upload-error" *ngIf="uploadErr">Bild muss kleiner als 500kb sein. Das Bild hat {{ filesize }} kb.</span>
+        </div>
 
 
         <button (click)="onRegistrationFinished()" type="submit" mat-flat-button color="primary"

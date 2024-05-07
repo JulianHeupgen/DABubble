@@ -171,6 +171,17 @@ a {
   align-items: flex-start;
   justify-content: space-around;
 
+  .error-container {
+    height: 20px;
+    width: 100%;
+
+    .upload-error {
+      color: #ed1e79;
+      font-size: 14px;
+      line-height: 14px;
+    }
+  }
+
   span {
     font-family: Nunito, sans-serif;
     font-size: 20px;

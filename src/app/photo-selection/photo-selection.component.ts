@@ -50,6 +50,9 @@ export class PhotoSelectionComponent {
   // Image uploaded by the User Input field
   uploadedFile: File | null = null;
 
+  filesize: number = 0;
+  uploadErr: boolean = false;
+
   constructor(
     private userRegService: UserRegistrationService,
     private authService: AuthService,
@@ -126,30 +129,36 @@ export class PhotoSelectionComponent {
 
   // uploaded File
   onFileSelected(event: Event): void {
+    this.uploadErr = false;
     const element = event.target as HTMLInputElement;
     const file = element.files ? element.files[0] : null;
 
     // Check file size and abort if size > 500kb
-
-
-
     if (file) {
-      //this.imageName = file.name;
-      this.uploadedFile = file;
-      const reader = new FileReader;
-      reader.onload = () => {
-        this.imgSrcUrl = reader.result;
-        this.imageSelected = true;
-        element.value = '';
+      this.filesize = Math.round(file?.size / 1000);
+      if (this.filesize > 500) {
+        this.uploadErr = true;
+        return;
       }
-      reader.onerror = () => {
-        console.error('Error occurred reading file');
-      }
-      reader.readAsDataURL(file);
+      this.setFile(file, element);
     } else {
       element.value = '';
       this.imageSelected = false;
     }
+  }
+
+  setFile(file: File, element: HTMLInputElement) {
+    this.uploadedFile = file;
+    const reader = new FileReader;
+    reader.onload = () => {
+      this.imgSrcUrl = reader.result;
+      this.imageSelected = true;
+      element.value = '';
+    }
+    reader.onerror = () => {
+      console.error('Error occurred reading file');
+    }
+    reader.readAsDataURL(file);
   }
 
   // Selected Default Avatar
