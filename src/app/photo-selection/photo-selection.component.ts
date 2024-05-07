@@ -79,7 +79,7 @@ export class PhotoSelectionComponent {
   signUpAndCreateUser() {
     this.authService.signUp(this._userData.email, this._userData.password, this._userData.fullname)
       .then(user => {
-        this.updateUserObject('userId', user.user.uid);
+        this.updateUserObject('authUserId', user.user.uid);
         this.updateUserObject('onlineStatus', 'online');
         this.createUserObject();
       })

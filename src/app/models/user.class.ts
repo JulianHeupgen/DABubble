@@ -9,7 +9,7 @@ export class User {
   onlineStatus: 'online' | 'offline';
   channels: Channel[];
   userChats: [];
-  userId: string;
+  authUserId: string;
   imageUrl: string;
 
   /* //Old Constructor without Partial
@@ -29,7 +29,7 @@ export class User {
     this.onlineStatus = data.onlineStatus ?? 'offline';
     this.channels = data.channels ?? [];
     this.userChats = data.userChats ?? [];
-    this.userId = data.userId ?? 'defaultUserId';
+    this.authUserId = data.authUserId ?? 'defaultUserId';
     this.imageUrl = data.imageUrl ?? 'defaultImage.jpg';
   }
 

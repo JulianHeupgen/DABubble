@@ -85,7 +85,7 @@ export class AuthService {
       "onlineStatus": user.onlineStatus,
       "channels": user.channels,
       "userChats": user.userChats,
-      "userId": user.userId,
+      "authUserId": user.authUserId,
       "imageUrl": user.imageUrl,
     }
   }

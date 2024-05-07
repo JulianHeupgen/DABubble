@@ -43,3 +43,7 @@ Firestore Collections
 - Users
 - Channels
 
+
+HANNES
+- email duplikat bereits bei eingabe im formular von firestore auth prüfen lassen
+
