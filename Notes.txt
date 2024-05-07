@@ -46,4 +46,7 @@ Firestore Collections
 
 HANNES
 - email duplikat bereits bei eingabe im formular von firestore auth prüfen lassen
+-> sollte nicht gemacht werden aus sicherheitsgründen
+
+- wer macht password-reset und email update component
 

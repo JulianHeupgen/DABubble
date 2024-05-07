@@ -67,13 +67,13 @@ export class User {
         const newMessage = new Message(this, messageContent);
         newThread.messages.push(newMessage);
         channel.addThread(newThread);
-    }        
+    }
   }
 
 
   sendDirectMessage(recipient: User, messageContent: string): void {
 
-    const existingUserChat = this.userChats.find(chat => 
+    const existingUserChat = this.userChats.find(chat =>
         chat.participants.includes(recipient));                   // Prüfen ob Chat zwischen den beiden schon existiert !
 
     if (existingUserChat) {                                       // UserChat existiert, also Message einfach dort einfügen
