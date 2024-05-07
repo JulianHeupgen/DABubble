@@ -93,13 +93,7 @@ export class SidenavComponent {
   }
 
   getDataFromFirestore(): User[] {                               
-    return this.dataService.allUsers;
-
-    //this.users = this.dataService.allUsers;
-    
-    
-    //console.log(this.users);
-    
+    return this.dataService.allUsers;    
   }
 
 }
