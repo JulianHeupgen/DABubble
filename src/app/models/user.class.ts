@@ -13,16 +13,6 @@ export class User {
   authUserId: string;
   imageUrl: string;
 
-  /* //Old Constructor without Partial
-  constructor(name: string, email: string, onlineStatus: 'online' | 'offline', imageUrl: string) {
-      this.name = name;
-      this.email = email;
-      this.onlineStatus = onlineStatus;
-      this.channels = [];
-      this.userChats = [];
-      this.imageUrl = imageUrl;
-  } */
-
   constructor(data: {
     name: string,
     email: string,
@@ -30,15 +20,15 @@ export class User {
     authUserId: string,
     imageUrl: string
 }) {
-  this.id = '';
-  this.name = data.name;
-  this.email = data.email;
-  this.onlineStatus = data.onlineStatus;
-  this.authUserId = data.authUserId;
-  this.imageUrl = data.imageUrl;
-  this.channels = [];  // Initialize channels as an empty array
-  this.userChats = []; // Initialize userChats as an empty array
-  }
+    this.id = '';
+    this.name = data.name;
+    this.email = data.email;
+    this.onlineStatus = data.onlineStatus;
+    this.authUserId = data.authUserId;
+    this.imageUrl = data.imageUrl;
+    this.channels = [];  
+    this.userChats = []; 
+}
 
 
   joinChannel(channel: Channel): void {
