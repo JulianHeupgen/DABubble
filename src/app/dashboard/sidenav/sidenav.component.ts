@@ -58,9 +58,9 @@ export class SidenavComponent {
     this.activatedRoute.params.subscribe(params => {
       this.userId = params['id'];         
       });
-      setInterval(() => {
-        this.getDataFromFirestore();
-      }, 1000);
+      //setInterval(() => {
+      //  this.getDataFromFirestore();
+      // }, 1000);
   }
 
 
@@ -92,13 +92,13 @@ export class SidenavComponent {
     this[originalSrc] = url;
   }
 
-  getDataFromFirestore() {                               
-    this.dataService.getUsersList();
+  getDataFromFirestore(): User[] {                               
+    return this.dataService.allUsers;
 
-    this.users = this.dataService.allUsers;
+    //this.users = this.dataService.allUsers;
     
     
-    console.log(this.users);
+    //console.log(this.users);
     
   }
 

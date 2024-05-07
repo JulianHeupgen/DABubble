@@ -124,6 +124,6 @@
     (click)="toggleSidenav()">
 }
 
-<div *ngFor="let user of users" >
+<div *ngFor="let user of getDataFromFirestore()" >
  {{ user.name }}
 </div>
