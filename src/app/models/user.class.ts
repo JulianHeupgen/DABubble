@@ -24,6 +24,7 @@ export class User {
   } */
 
   constructor(data: Partial<User> = {}) {
+    this.id = '';
     this.name = data.name ?? 'Max Mustermann';
     this.email = data.email ?? 'max@mustermann.com';
     this.onlineStatus = data.onlineStatus ?? 'offline';
