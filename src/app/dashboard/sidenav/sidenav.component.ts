@@ -56,12 +56,13 @@ export class SidenavComponent {
   userId: string = '';
   allUsers: User[] = [];
 
-  constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private authService: AuthService) { 
+  constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private authService: AuthService) {
 
   }
 
   async ngOnInit() {
     // this.allUsers = await this.loadData();
+    this.loadData();
   }
 
 
@@ -97,15 +98,15 @@ export class SidenavComponent {
     return this.dataService.allUsers;
   }
 
-//  getCurrentUserId(): string | undefined {
-//  const auth = getAuth();
-//   return auth.currentUser ? auth.currentUser.uid : undefined;
-// }
-async loadData() {
-   const uid = this.authService.getUserAuthId();
-   if (uid) {
-     const users = await this.getDataFromFirestore();
-     this.allUsers = users.filter(user => user.authUserId === uid);
-  }
+  //  getCurrentUserId(): string | undefined {
+  //  const auth = getAuth();
+  //   return auth.currentUser ? auth.currentUser.uid : undefined;
+  // }
+  async loadData() {
+    const uid = this.authService.getUserAuthId();
+    if (uid) {
+      const users = await this.getDataFromFirestore();
+      this.allUsers = users.filter(user => user.authUserId === uid);
+    }
   }
 }

@@ -125,7 +125,7 @@ export class AuthService {
    * @returns Logged in User UID or undefined if no User is authenticated
    */
   getUserAuthId() {
-    return new Promise((resolve, reject) => {
+    return new Promise<string|null>((resolve, reject) => {
       const unsubscribe = onAuthStateChanged(this.auth, (user) => {
         unsubscribe();
         if (user) {
