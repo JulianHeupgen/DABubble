@@ -6,6 +6,10 @@ import { MatSidenavModule, MatDrawer, MatDrawerContainer, MatDrawerContent } fro
 import { DataService } from '../../services/data.service';
 import { User } from '../../models/user.class';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { getAuth } from 'firebase/auth';
+import { onAuthStateChanged } from '@angular/fire/auth';
+import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-sidenav',
@@ -36,6 +40,7 @@ import { ActivatedRoute } from '@angular/router';
     ])
   ]
 })
+
 export class SidenavComponent {
   opened: boolean = true;
   imageSrc: string = './assets/img/sidemenu_close_normal.png';
@@ -50,17 +55,13 @@ export class SidenavComponent {
   users: User[] = [];
   userId: string = '';
   allUsers: User[] = [];
-  
 
-  constructor(private dataService: DataService, private activatedRoute: ActivatedRoute) { }
+  constructor(private dataService: DataService, private activatedRoute: ActivatedRoute) { 
 
-  ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
-      this.userId = params['id'];         
-      });
-      //setInterval(() => {
-      //  this.getDataFromFirestore();
-      // }, 1000);
+  }
+
+  async ngOnInit() {
+    // this.allUsers = await this.loadData();
   }
 
 
@@ -92,8 +93,22 @@ export class SidenavComponent {
     this[originalSrc] = url;
   }
 
-  getDataFromFirestore(): User[] {                               
-    return this.dataService.allUsers;    
+  getDataFromFirestore(): User[] {
+    return this.dataService.allUsers;
   }
+
+  getCurrentUserId(): string | undefined {
+    const auth = getAuth();
+    return auth.currentUser ? auth.currentUser.uid : undefined;
+  }
+
+async loadData() {
+    const uid = this.getCurrentUserId();
+    if (uid) {
+      const users = await this.getDataFromFirestore();
+      this.allUsers = users.filter(user => user.authUserId === uid);
+    }
+  }
+  
 
 }

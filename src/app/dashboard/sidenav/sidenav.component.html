@@ -33,14 +33,14 @@
                     </div>
 
                     <div class="channels-container">
-                        <div class="channel">
-                            <img class="tag-img" src="./assets/img/tag.png">
-                            <p>Allgemein</p>
+                        <!-- <div *ngFor="let user of getDataFromFirestore()" class="channel"> -->
+                        <div *ngFor="let user of allUsers">
+                            <div *ngFor="let channel of user.channels" class="channel">
+                                <img class="tag-img" src="./assets/img/tag.png">
+                                <p>{{ channel }}</p>
+                            </div>
                         </div>
-                        <div class="channel">
-                            <img class="tag-img" src="./assets/img/tag.png">
-                            <p>Dev´s</p>
-                        </div>
+
 
 
                     </div>
@@ -73,37 +73,27 @@
 
 
                     <div class="direct-message-user-container">
-                        <div class="user-container">
-                            <div class="profile-img-container">
-                                <img class="profile-img" src="./assets/img/avatar_1.png">
-                                @if (online) {
-                                <img class="online-status" src="./assets/img/online.png">
-                                }
-                                @if (!online) {
-                                <img class="online-status" src="./assets/img/offline.png">
-                                }
+                        <div *ngFor="let user of allUsers">
+                            <div *ngFor="let chat of user.userChats" class="user-container">
 
-                            </div>
-                            <div>
-                                <p>Sofia Müller</p>
+                                <div class="profile-img-container">
+                                    <!-- <img class="profile-img" src="./assets/img/avatar_1.png"> -->
+                                    <img class="profile-img" src="{{ user.imageUrl }}">
+                                    @if (user.onlineStatus === 'online') {
+                                    <img class="online-status" src="./assets/img/online.png">
+                                    }
+                                    @if (user.onlineStatus === 'offline') {
+                                    <img class="online-status" src="./assets/img/offline.png">
+                                    }
+
+                                </div>
+                                <div>
+                                    <p>{{ chat }}</p>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="user-container">
-                            <div class="profile-img-container">
-                                <img class="profile-img" src="./assets/img/avatar_1.png">
-                                @if (online) {
-                                <img class="online-status" src="./assets/img/online.png">
-                                }
-                                @if (!online) {
-                                <img class="online-status" src="./assets/img/offline.png">
-                                }
 
-                            </div>
-                            <div>
-                                <p>Sofia Müller</p>
-                            </div>
-                        </div>
 
                     </div>
 
@@ -124,6 +114,8 @@
     (click)="toggleSidenav()">
 }
 
-<div *ngFor="let user of getDataFromFirestore()" >
- {{ user.name }}
+<div *ngFor="let user of getDataFromFirestore()">
+    {{ user.channels }}
 </div>
+
+<button (click)="loadData()">INDEXED</button>
