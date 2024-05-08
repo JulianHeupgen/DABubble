@@ -104,9 +104,9 @@ export class SidenavComponent {
   // }
   async loadData() {
     const uid = this.authService.getUserAuthId();
-    if (uid) {
+    /* if (uid) {
       const users = await this.getDataFromFirestore();
       this.allUsers = users.filter(user => user.authUserId === uid);
-    }
+    } */
   }
 }
