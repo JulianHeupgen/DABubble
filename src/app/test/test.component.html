@@ -1,0 +1,17 @@
+<div>
+  <hr>
+
+  Check if editing email adress work
+  -> Keep in  mind that you must be logged in -> it needs a active Auth Object<br>
+  Actual email adress is: <b>{{ email }}</b><br>
+  <input [(ngModel)]="newEmail" type="text" placeholder="Type your new Email"><button (click)="changeEmail()">Change email</button>
+
+  <hr>
+
+  Check if editing fullname work
+  -> Keep in  mind that you must be logged in -> it needs an active Auth Object<br>
+  Actual fullname is: <b>{{ fullname }}</b><br>
+  <input [(ngModel)]="newFullname" type="text" placeholder="Type your new Fullname"><button (click)="changeFullname()">Change fullname</button>
+
+  <hr>
+</div>

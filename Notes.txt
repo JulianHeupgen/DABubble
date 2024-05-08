@@ -45,8 +45,12 @@ Firestore Collections
 
 
 HANNES
-- email duplikat bereits bei eingabe im formular von firestore auth prüfen lassen
--> sollte nicht gemacht werden aus sicherheitsgründen
-
 - wer macht password-reset und email update component
+- Jan: reset password
+- Hannes: email und name ändern, impressum, delete user
+- ChannelThreads (oder -list) für die thred Liste, ChannelThread für den Single Thread
 
+Update Email
+done -> create function to update E-Mail Address in the auth service
+done -> once done update the firebase user object -> find it by the uid and set the new email
+test it

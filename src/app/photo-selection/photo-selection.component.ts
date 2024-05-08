@@ -42,13 +42,17 @@ export class PhotoSelectionComponent {
   ];
 
   // URL which is shown on the Card as selected image
-  imgSrcUrl: string | ArrayBuffer | null = './../../assets/img/profile-empty.png';
+  DEFAULT_IMG_SRC_URL: string = './../../assets/img/profile-empty.png';
+  imgSrcUrl: string | ArrayBuffer | null = this.DEFAULT_IMG_SRC_URL;
 
   // Needed boolean to deactivate the next button
   imageSelected: boolean = false;
 
   // Image uploaded by the User Input field
   uploadedFile: File | null = null;
+
+  filesize: number = 0;
+  uploadErr: boolean = false;
 
   constructor(
     private userRegService: UserRegistrationService,
@@ -81,20 +85,20 @@ export class PhotoSelectionComponent {
       .then(user => {
         this.updateUserObject('authUserId', user.user.uid);
         this.updateUserObject('onlineStatus', 'online');
-        this.createUserObject(user.user.uid);
+        this.createUserObject();
       })
       .catch(error => {
         console.error('An error occured while signin up the user. ERR CODE: ', error);
       })
   }
 
-  createUserObject(uid: string) {
+  createUserObject() {
     this.removePasswordFromUserObject();
     const user = new User(this._userData);
     // Connect firebase and set Doc User HERE
     this.saveUserToFirebase(user)
       .then(() => {
-        this.router.navigate(['dashboard/', uid]);
+        this.router.navigate(['dashboard']);
       })
       .catch((error) => {
         console.error('Error saving user to firebase. ', error);
@@ -119,32 +123,42 @@ export class PhotoSelectionComponent {
     this._userData = { ...this._userData, [key]: data };
   }
 
-  async testfunc() {
-    // Set User object which looks like this
-    console.log(this._userData as User);
-  }
-
   // uploaded File
   onFileSelected(event: Event): void {
+    this.uploadErr = false;
     const element = event.target as HTMLInputElement;
     const file = element.files ? element.files[0] : null;
     if (file) {
-      //this.imageName = file.name;
-      this.uploadedFile = file;
-      const reader = new FileReader;
-      reader.onload = () => {
-        this.imgSrcUrl = reader.result;
-        this.imageSelected = true;
-        element.value = '';
+      this.filesize = Math.round(file?.size / 1000);
+      if (this.filesize > 500) {
+        this.fileTooBig();
+        return;
       }
-      reader.onerror = () => {
-        console.error('Error occurred reading file');
-      }
-      reader.readAsDataURL(file);
+      this.setFile(file, element);
     } else {
       element.value = '';
       this.imageSelected = false;
     }
+  }
+
+  fileTooBig() {
+    this.imageSelected = false;
+    this.uploadErr = true;
+    this.imgSrcUrl = this.DEFAULT_IMG_SRC_URL;
+  }
+
+  setFile(file: File, element: HTMLInputElement) {
+    this.uploadedFile = file;
+    const reader = new FileReader;
+    reader.onload = () => {
+      this.imgSrcUrl = reader.result;
+      this.imageSelected = true;
+      element.value = '';
+    }
+    reader.onerror = () => {
+      console.error('Error occurred reading file');
+    }
+    reader.readAsDataURL(file);
   }
 
   // Selected Default Avatar

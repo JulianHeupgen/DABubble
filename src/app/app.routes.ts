@@ -8,6 +8,8 @@ import { ImprintComponent } from './imprint/imprint.component';
 import { RegisterComponent } from './register/register.component';
 import { LogoComponent } from './animations/logo/logo.component';
 import { PhotoSelectionComponent } from './photo-selection/photo-selection.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { TestComponent } from './test/test.component';
 
 
 import { AddChannelComponent } from './dialog/add-channel/add-channel.component';
@@ -31,6 +33,7 @@ export const routes: Routes = [
   { path: 'privacy', component: PrivacyComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'logo', component: LogoComponent },
-  { path: 'adddialog', component: AddChannelComponent },
+  { path: 'test', component: TestComponent },
+  { path: '**', component: PageNotFoundComponent }
 ];
 

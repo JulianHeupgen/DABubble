@@ -27,9 +27,9 @@ export class DataService {
   // in die nachfolgenden Arrays werden alle User/Channels/Threads/UserChats von Firebase gepusht
 
   allUsers: User[] = [];
-  allChannels: Channel[] = [];   
-  allThreads: Thread[] = [];   
-  allUserChats: UserChat[] = [];     
+  allChannels: Channel[] = [];
+  allThreads: Thread[] = [];
+  allUserChats: UserChat[] = [];
 
 
   // USER von Firestore laden; Verweis auf Datei 'channel-chat.component.ts' um ein Beispiel zu sehen, wie diese Funktion eingesetzt wird
@@ -40,7 +40,7 @@ export class DataService {
       list.forEach(user =>  this.allUsers.push(this.setUserObject(user.id, user.data())))
     }
   )};
-  
+
   getUserCollection() {
     return collection(this.firestore, 'users');
   }
@@ -67,7 +67,7 @@ export class DataService {
       list.forEach(channel =>  this.allChannels.push(this.setChannelObject(channel.id, channel.data())))
     }
   )};
-  
+
   getChannelCollection() {
     return collection(this.firestore, 'channels');
   }
@@ -89,7 +89,7 @@ export class DataService {
       list.forEach(thread =>  this.allThreads.push(this.setThreadObject(thread.id, thread.data())))
     }
   )};
-  
+
   getThreadCollection() {
     return collection(this.firestore, 'threads');
   }
@@ -112,7 +112,7 @@ export class DataService {
       list.forEach(userChat =>  this.allUserChats.push(this.setUserChatObject(userChat.id, userChat.data())))
     }
   )};
-  
+
   getUserChatsCollection() {
     return collection(this.firestore, 'directMessages');
   }
@@ -125,7 +125,7 @@ export class DataService {
   }
 
 
-  ngonDestroy() {
+  ngOnDestroy() {
     this.unsubUsers();
     this.unsubChannels();
     this.unsubThreads();

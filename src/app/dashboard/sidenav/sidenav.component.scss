@@ -97,6 +97,7 @@
 .private-message-headline-container {
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .img-arrow {
@@ -111,8 +112,8 @@
 }
 
 .add-icon {
-    height: 24px;
-    width: 24px;
+    height: 30px;
+    width: 30px;
     position: absolute;
     right: 36px;
     cursor: pointer;
