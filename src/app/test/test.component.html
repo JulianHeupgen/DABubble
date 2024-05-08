@@ -2,14 +2,17 @@
   <hr>
 
   Check if editing email adress work
-  -> Keep in  mind that you must be logged in -> it needs a active Auth Object<br>
+  -> Keep in  mind that you must be logged in -> it needs an active Auth Object<br>
+  <b>Please reload as its no Snapshot</b><br>
   Actual email adress is: <b>{{ email }}</b><br>
-  <input [(ngModel)]="newEmail" type="text" placeholder="Type your new Email"><button (click)="changeEmail()">Change email</button>
+  <input [(ngModel)]="newEmail" type="text" placeholder="Type your new Email"><button (click)="changeEmail()">Change email</button><br>
+  <span *ngIf="needsReAuthenetication">Bitte melde dich nochmal neu an um deine Email Adresse zu ändern.<b style="cursor: pointer;" [routerLink]="['/login']">Zum Login</b></span>
 
   <hr>
 
   Check if editing fullname work
   -> Keep in  mind that you must be logged in -> it needs an active Auth Object<br>
+  <b>Please reload as its no Snapshot</b><br>
   Actual fullname is: <b>{{ fullname }}</b><br>
   <input [(ngModel)]="newFullname" type="text" placeholder="Type your new Fullname"><button (click)="changeFullname()">Change fullname</button>
 

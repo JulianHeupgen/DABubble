@@ -1,11 +1,13 @@
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './../services/auth.service';
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-test',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './test.component.html',
   styleUrl: './test.component.scss'
 })
@@ -18,6 +20,8 @@ export class TestComponent {
 
   fullname: string | null = '';
   newFullname: string = '';
+
+  needsReAuthenetication: boolean = false;
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -56,7 +60,10 @@ export class TestComponent {
       await this.authService.updateEmailAddress(this.newEmail);
       console.log('Email sucessful changed.');
     } catch (error) {
-      console.error('Error while updating the email adress to auth and db.', error);
+      if (error instanceof Error && error.message === 'auth/requires-recent-login') {
+        this.needsReAuthenetication = true;
+      }
+      console.error('Error while updating the email adress to auth and db.');
     }
   }
 

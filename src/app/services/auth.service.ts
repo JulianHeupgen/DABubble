@@ -5,6 +5,7 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
 import { Firestore, doc, addDoc, collection, updateDoc, query, where, getDocs, getDoc } from '@angular/fire/firestore';
 import { User } from '../models/user.class';
+import { FirebaseError } from '@angular/fire/app';
 @Injectable({
   providedIn: 'root'
 })
@@ -108,16 +109,15 @@ export class AuthService {
   }
 
   async rollbackUser(currentUser: any, oldEmail: string, error: any) {
-    console.error('Error updating email, attempting to revert: ', error);
     // Attempt to rollback
     try {
       await updateEmail(currentUser, oldEmail);
-      console.log('Reverted back to old email.');
+      console.warn('Reverted back to old email.');
     } catch (revertError) {
       console.error('Failed to revert email in Auth: ', revertError);
       throw new Error('An error happened when udpating email, and reverting it also failed. ');
     }
-    throw new Error('An error happened when updating email, but the mail was reverted successfully.');
+    throw error;
   }
 
   async updateEmailAllRefs(currentUser: any, newmail: string) {
@@ -125,8 +125,12 @@ export class AuthService {
       await updateEmail(currentUser, newmail);
       await this.updateFSUser(newmail);
     } catch (error) {
-      console.error('Failed to update email or Firestore due to:', error);
-      throw error;
+      if (error instanceof FirebaseError && error.code === 'auth/requires-recent-login') {
+        throw new Error('auth/requires-recent-login');
+      } else {
+        console.error('Failed to update email or Firestore due to:', error);
+        throw error;
+      }
     }
   }
 
