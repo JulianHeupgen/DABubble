@@ -45,7 +45,8 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-app-login {
+app-login,
+app-send-mail-to-reset-password {
   height: 100%;
   display: flex;
   align-items: center;
@@ -53,8 +54,15 @@ app-login {
   flex-direction: column;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 app-channel-chat {
   width: 100%;
@@ -62,7 +70,7 @@ app-channel-chat {
 }
 
 * {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito', sans-serif !important;
   box-sizing: border-box;
 }
 

@@ -9,6 +9,10 @@ import { RegisterComponent } from './register/register.component';
 import { LogoComponent } from './animations/logo/logo.component';
 import { PhotoSelectionComponent } from './photo-selection/photo-selection.component';
 
+
+import { AddChannelComponent } from './dialog/add-channel/add-channel.component';
+import { SendMailToResetPasswordComponent } from './send-mail-to-reset-password/send-mail-to-reset-password.component';
+
 export const routes: Routes = [
 
   { path: '',   redirectTo: '/hello', pathMatch: 'full' },
@@ -16,8 +20,9 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'register/next', component: PhotoSelectionComponent },
+  { path: 'send-mail-to-reset', component: SendMailToResetPasswordComponent },
   {
-    path: 'dashboard/:id', component: DashboardComponent,
+    path: 'dashboard', component: DashboardComponent,
     children: [
       { path: 'channel/:id', component: ChannelChatComponent },
       { path: 'chat/:id', component: UserChatComponent }
@@ -25,6 +30,7 @@ export const routes: Routes = [
   },
   { path: 'privacy', component: PrivacyComponent },
   { path: 'imprint', component: ImprintComponent },
-  { path: 'logo', component: LogoComponent }
+  { path: 'logo', component: LogoComponent },
+  { path: 'adddialog', component: AddChannelComponent },
 ];
 

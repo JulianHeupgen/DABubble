@@ -1,0 +1,70 @@
+@import '../../../mixin.scss';
+
+h2,
+h3 {
+    margin: 0;
+}
+
+h2 {
+    @include font-size-weight-color($fs: 24px, $fw: 700)
+}
+
+h3 {
+    @include font-size-weight-color($fw: 700);
+
+    span {
+        @include font-size-weight-color($cl: #686868 !important)
+    }
+}
+
+.add-channel-card {
+    box-shadow: 0px 6px 10px 0px #00000033;
+    max-width: 872px;
+    max-height: 514px;
+    // border-radius: 30px;
+    background-color: #FFFFFF;
+    padding: 40px;
+    @include flex-align-justify($ai: start, $jc: space-between);
+    flex-direction: column;
+    gap: 20px;
+
+    span {
+        @include font-size-weight-color();
+    }
+
+    div {
+        width: 100%;
+    }
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    input  {
+        width: 100%;
+        padding: 18px 20px;
+        border: 1px solid #ADB0D9;
+        border-radius: 40px;
+        @include font-size-weight-color($cl: #686868)
+    }
+}
+
+.btn-section {
+    display: flex;
+    justify-content: right;
+
+    button {
+        cursor: pointer;
+        border-radius: 25px;
+        border: none;
+        background-color: #444DF2;
+        padding: 12px 25px;
+        @include font-size-weight-color($fw: 700, $cl: #FFFFFF);
+
+        &:hover {
+            background-color: #797EF3;
+        }
+    }
+}

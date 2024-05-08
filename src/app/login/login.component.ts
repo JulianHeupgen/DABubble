@@ -8,7 +8,8 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { Firestore } from '@angular/fire/firestore';
 import { AuthService } from '../services/auth.service';
-import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, getAuth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { signInAnonymously } from '@firebase/auth';
 
 
 
@@ -63,13 +64,26 @@ export class LoginComponent {
   }
 
   async guestLogin() {
-    let logInSuccess = await this.signIn('guest@guest.com', '123456');
-    console.log('guest login', logInSuccess);
-    if (logInSuccess) {
-      this.router.navigate(['/dashboard/', logInSuccess.uid]);
-    } else {
-      console.log('Anmeldung fehlgeschlagen');
-    }
+    // let logInSuccess = await this.signIn('guest@guest.com', '123456');
+    // console.log('guest login', logInSuccess);
+    // if (logInSuccess) {
+    //   this.router.navigate(['/dashboard/', logInSuccess.uid]);
+    // } else {
+    //   console.log('Anmeldung fehlgeschlagen');
+    // }
+
+    const auth = getAuth();
+    signInAnonymously(auth)
+      .then(() => {
+        console.log(auth);
+        
+        this.router.navigate(['/dashboard/']);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ...
+      });
   }
 
   async signIn(email: string, password: string) {
