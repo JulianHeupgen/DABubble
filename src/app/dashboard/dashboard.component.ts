@@ -3,13 +3,13 @@ import { ChannelChatComponent } from './channel-chat/channel-chat.component';
 import { UserChatComponent } from './user-chat/user-chat.component';
 import { HeaderComponent } from './header/header.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
-import { ThreadComponent } from './thread/thread.component';
 import { RouterOutlet } from '@angular/router';
+import { FullThreadComponent } from './full-thread/full-thread.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [HeaderComponent, SidenavComponent, RouterOutlet, ChannelChatComponent, UserChatComponent, ThreadComponent],
+  imports: [HeaderComponent, SidenavComponent, RouterOutlet, ChannelChatComponent, UserChatComponent, FullThreadComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })

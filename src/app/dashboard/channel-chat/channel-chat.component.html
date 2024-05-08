@@ -2,17 +2,10 @@
     <mat-card-header>#Entwicklerteam</mat-card-header>
     <div class="chat-history">
 
-      <!--Mit Schleife in diesen Container die Channel Messages/Threads von "currentChannel" rendern (immer nur erste Nachricht des Threads anzeigen): 
-        Thread Component erstellen für Output() Variable bei Änderungen an der Message (zB wenn Message geliked wird ? ) ?
-        Wenn Klick auf Thread, dann wird dieser rechts geöffnet
+      <!--Mit Schleife in diesen Container die ChannelThreadComponents rendern (immer nur erste Nachricht des jeweiligen Threads anzeigen): 
+        Wenn Klick auf einen Thread, dann wird dieser rechts geöffnet mit dem kompletten Chatverlauf ( FullThreadComponent )
       -->
 
-     <button (click)="uploadFile()">Upload File (Test)</button>  
-
-    <div>
-      <button (click)="getDataFromFirestore()">get data from firestore (test)</button>
     </div>
-
-    </div>
-    <input matInput placeholder="Nachricht an Entwicklerteam">
+    <input matInput placeholder="Nachricht an Entwicklerteam">  
 </mat-card>
