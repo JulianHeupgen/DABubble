@@ -68,6 +68,14 @@ export class AuthService {
     });
   }
 
+  /**
+   * This function returns the logged in Users UID by Firebase Auth Object
+   * @returns Logged in User UID or undefined
+   */
+  getUserAuthId(): string | undefined {
+    return this.auth.currentUser?.uid;
+  }
+
   async createFirebaseUser(user: User) {
     const strUser = this.stringifyUser(user);
     try {

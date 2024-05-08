@@ -47,5 +47,5 @@ Firestore Collections
 HANNES
 - wer macht password-reset und email update component
 - Jan: reset password
-- Hannes: email und name ändern, impressum, 404 seite
+- Hannes: email und name ändern, impressum
 - ChannelThreads (oder -list) für die thred Liste, ChannelThread für den Single Thread
