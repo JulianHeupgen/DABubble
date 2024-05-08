@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, fetchSignInMethodsForEmail, updateEmail, onAuthStateChanged } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, fetchSignInMethodsForEmail, updateEmail, onAuthStateChanged, user } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
-import { Firestore, doc, addDoc, collection, updateDoc } from '@angular/fire/firestore';
+import { Firestore, doc, addDoc, collection, updateDoc, query, where, getDocs, getDoc } from '@angular/fire/firestore';
 import { User } from '../models/user.class';
 @Injectable({
   providedIn: 'root'
@@ -72,6 +72,27 @@ export class AuthService {
    * This is the main function to call when changing email address.
    * @param newmail this is the new mail to update to
    */
+  async updateName(name: string) {
+    const currentUser = this.auth.currentUser;
+    if (!currentUser) { return }
+    const authId = currentUser.uid;
+    try {
+      const docId = await this.getDocIdFromAuthUserId(authId);
+      if (!docId) {
+        console.log('No user found for given UID.');
+        return;
+      }
+      const userRef = doc(this.firestore, 'users', docId);
+      await updateDoc(userRef, { 'name': name });
+    } catch (error) {
+      console.error('Error updating user name to firestore. ', error);
+    }
+  }
+
+  /**
+   * This is the main function to call when changing email address.
+   * @param newmail this is the new mail to update to
+   */
   async updateEmailAddress(newmail: string) {
     const currentUser = this.auth.currentUser;
     if (!currentUser) { return }
@@ -80,30 +101,33 @@ export class AuthService {
       throw new Error('Current user have no email set.');
     }
     try {
-      this.updateEmailAllRefs(currentUser, newmail);
+      await this.updateEmailAllRefs(currentUser, newmail);
     } catch (error) {
-      this.rollbackUser(currentUser, oldEmail, error);
+      await this.rollbackUser(currentUser, oldEmail, error);
     }
   }
 
   async rollbackUser(currentUser: any, oldEmail: string, error: any) {
     console.error('Error updating email, attempting to revert: ', error);
-      // Attempt to rollback
-      try {
-        await updateEmail(currentUser, oldEmail);
-        console.log('Reverted back to old email.');
-      } catch (revertError) {
-        console.error('Failed to revert email in Auth: ', revertError);
-        throw new Error('An error happened when udpating email, and reverting it also failed. ');
-      }
-      throw new Error('An error happened when updating email, but the mail was reverted successfully.');
+    // Attempt to rollback
+    try {
+      await updateEmail(currentUser, oldEmail);
+      console.log('Reverted back to old email.');
+    } catch (revertError) {
+      console.error('Failed to revert email in Auth: ', revertError);
+      throw new Error('An error happened when udpating email, and reverting it also failed. ');
+    }
+    throw new Error('An error happened when updating email, but the mail was reverted successfully.');
   }
 
   async updateEmailAllRefs(currentUser: any, newmail: string) {
-    await updateEmail(currentUser, newmail);
-      console.log('User updated in Auth');
+    try {
+      await updateEmail(currentUser, newmail);
       await this.updateFSUser(newmail);
-      console.log('User updated in firestore');
+    } catch (error) {
+      console.error('Failed to update email or Firestore due to:', error);
+      throw error;
+    }
   }
 
   async updateFSUser(email: string) {
@@ -112,11 +136,41 @@ export class AuthService {
       throw new Error('No UID found for current user.');
     }
     try {
-      const userRef = doc(this.firestore, "users", uid);
-      await updateDoc(userRef, { 'email' : email });
+      this.getIdFromUidAndUpdate(email, uid);
     } catch (error) {
       console.error('Couldnt update email on the firestore user.', error);
       throw error;
+    }
+  }
+
+  async getIdFromUidAndUpdate(email: string, uid: string) {
+    try {
+      const docId = await this.getDocIdFromAuthUserId(uid);
+      if (!docId) {
+        console.log('No user found for given UID.');
+        return;
+      }
+      const userRef = doc(this.firestore, 'users', docId);
+      await updateDoc(userRef, { 'email': email });
+    } catch (error) {
+      console.error('Error updating user email to this.firestore. ', error);
+    }
+  }
+
+  async getDocIdFromAuthUserId(uid: string) {
+    const usersRef = collection(this.firestore, "users");
+    const q = query(usersRef, where("authUserId", "==", uid));
+    try {
+      const querySnapshot = await getDocs(q);
+      if (querySnapshot.empty) {
+        console.log('Snapshot empty.');
+        return;
+      }
+      const userDoc = querySnapshot.docs[0];
+      return userDoc.id;
+    } catch (error) {
+      console.error('Error updating user email to this.firestore. ', error);
+      return null;
     }
   }
 
@@ -125,7 +179,7 @@ export class AuthService {
    * @returns Logged in User UID or undefined if no User is authenticated
    */
   getUserAuthId() {
-    return new Promise<string|null>((resolve, reject) => {
+    return new Promise<string | null>((resolve, reject) => {
       const unsubscribe = onAuthStateChanged(this.auth, (user) => {
         unsubscribe();
         if (user) {
@@ -142,7 +196,7 @@ export class AuthService {
    * This function returns the logged in Users Email
    * @returns Logged in User Email address -> should change on email change
    */
-  getUserEmail(): Promise<string|null> {
+  getUserEmail(): Promise<string | null> {
     return new Promise((resolve, reject) => {
       const unsubscribe = onAuthStateChanged(this.auth, (user) => {
         unsubscribe();
@@ -154,6 +208,26 @@ export class AuthService {
         }
       }, reject);
     })
+  }
+
+  /**
+   * This function returns the fullnamer of the logged in user
+   * @returns Logged in User' s Fullname or null if not found
+   */
+  async getUserFullname(uid: string) {
+    const docId = await this.getDocIdFromAuthUserId(uid);
+    if (!docId) {
+      console.log('No such user found.');
+      return;
+    }
+    const docRef = doc(this.firestore, "users", docId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap) {
+      const userData = docSnap.data();
+      if (userData) {
+        return userData['name'];
+      }
+    }
   }
 
   async createFirebaseUser(user: User) {
