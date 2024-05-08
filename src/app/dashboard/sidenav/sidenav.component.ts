@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { getAuth } from 'firebase/auth';
 import { onAuthStateChanged } from '@angular/fire/auth';
-import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, filter, map, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-sidenav',
@@ -56,7 +56,7 @@ export class SidenavComponent {
   userId: string = '';
   allUsers: User[] = [];
 
-  constructor(private dataService: DataService, private activatedRoute: ActivatedRoute) { 
+  constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private authService: AuthService) { 
 
   }
 
@@ -97,18 +97,15 @@ export class SidenavComponent {
     return this.dataService.allUsers;
   }
 
-  getCurrentUserId(): string | undefined {
-    const auth = getAuth();
-    return auth.currentUser ? auth.currentUser.uid : undefined;
-  }
-
+//  getCurrentUserId(): string | undefined {
+//  const auth = getAuth();
+//   return auth.currentUser ? auth.currentUser.uid : undefined;
+// }
 async loadData() {
-    const uid = this.getCurrentUserId();
-    if (uid) {
-      const users = await this.getDataFromFirestore();
-      this.allUsers = users.filter(user => user.authUserId === uid);
-    }
+   const uid = this.authService.getUserAuthId();
+   if (uid) {
+     const users = await this.getDataFromFirestore();
+     this.allUsers = users.filter(user => user.authUserId === uid);
   }
-  
-
+  }
 }
