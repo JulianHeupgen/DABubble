@@ -54,7 +54,7 @@ export class SidenavComponent {
   online: boolean = true;
   users: User[] = [];
   userId: string = '';
-  allUsers: User[] = [];
+  allUsers: Partial<User>[] = [];
   private unsubscribe!: () => void ;
 
   constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private authService: AuthService, private firestore: Firestore) {
@@ -74,6 +74,8 @@ export class SidenavComponent {
       console.error('Fehler beim Laden:', error);
       this.allUsers = [];
     });
+  
+    console.log('All users loaded:', this.allUsers); // Loggen Sie die geladenen Benutzerdaten
   }
 
 
@@ -144,22 +146,42 @@ export class SidenavComponent {
       console.error('Fehler beim laden:', error);
       this.allUsers = [];
     }
+    console.log(this.allUsers);
+    
   }
 
+  // setupUserSubscription(uid: string) {
+  //   const usersRef = collection(this.firestore, 'users'); // Beziehen der 'users' Kollektion aus Firestore
+  //   const q = query(usersRef, where('authUserId', '==', uid)); // Abfrage erstellen, die auf spezifische UID filtert
+  
+  //   this.unsubscribe = onSnapshot(q, (snapshot) => {
+  //     this.allUsers = snapshot.docs.map(doc => {
+  //       const data = doc.data();
+  //       return {
+  //         ...data, // Spread-Operator, um alle Eigenschaften aus doc.data() zu übernehmen
+  //         id: doc.id // Fügen Sie die Dokument-ID hinzu, wenn Sie diese benötigen
+  //       };
+  //     });
+  //     console.log('Aktualisierte Benutzerdaten:', this.allUsers); // Loggen der aktualisierten Daten
+  //   }, (error) => {
+  //     console.error('Fehler beim Abonnieren der Benutzerdaten:', error);
+  //   });
+  // }
+
   setupUserSubscription(uid: string) {
-    const usersRef = collection(this.firestore, 'users'); // Beziehen der 'users' Kollektion aus Firestore
-    const q = query(usersRef, where('authUserId', '==', uid)); // Abfrage erstellen, die auf spezifische UID filtert
+    const usersRef = collection(this.firestore, 'users');
+    const q = query(usersRef, where('authUserId', '==', uid));
   
     this.unsubscribe = onSnapshot(q, (snapshot) => {
-      this.allUsers = snapshot.docs.map(doc => new User({ // Direkte Umwandlung der Dokumentdaten in User-Objekte
+      this.allUsers = snapshot.docs.map(doc => ({
         id: doc.id,
         name: doc.data()['name'] || 'Unbekannter Name',
-        email: doc.data()['email'] || 'keine-email@example.com',
+        email: doc.data()['email'] || 'Keine Email',
         onlineStatus: doc.data()['onlineStatus'] || 'offline',
         authUserId: doc.data()['authUserId'],
-        imageUrl: doc.data()['imageUrl'] || 'default-image.png',
-        channels: [],  // Angenommen, diese Felder werden initial leer gesetzt oder später gefüllt
-        userChats: []
+        imageUrl: doc.data()['imageUrl'] || 'Kein Bild',
+        channels: doc.data()['channels'] || [],
+        userChats: doc.data()['userChats'] || []
       }));
       console.log('Aktualisierte Benutzerdaten:', this.allUsers);
     }, (error) => {
