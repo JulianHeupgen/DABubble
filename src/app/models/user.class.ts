@@ -14,11 +14,14 @@ export class User {
   imageUrl: string;
 
   constructor(data: {
+    id?: string;
     name: string,
     email: string,
     onlineStatus: 'online' | 'offline',
     authUserId: string,
-    imageUrl: string
+    imageUrl: string,
+    channels?: Channel[],
+    userChats?: UserChat[]
 }) {
     this.id = '';
     this.name = data.name;
