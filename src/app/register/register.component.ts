@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
@@ -40,6 +40,7 @@ export class RegisterComponent {
     private formBuilder: FormBuilder,
     private userRegService: UserRegistrationService,
     private route: Router,
+    private location: Location
   ) {
     this.registerForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+ [a-zA-Z]+$')]],
@@ -47,6 +48,10 @@ export class RegisterComponent {
       password: ['', [Validators.required, Validators.minLength(6)]],
       privacy: ['', Validators.requiredTrue],
     });
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   async onNextStep() {
