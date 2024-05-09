@@ -60,7 +60,7 @@ mat-card {
     h1 {
       font-family: Nunito, sans-serif;
       font-size: 46px;
-      line-height: 46px;
+      line-height: normal;
       font-weight: 700;
       color: #444DF2;
       padding: 0 48px;
@@ -70,6 +70,7 @@ mat-card {
     span {
       font-family: Nunito, sans-serif;
       font-size: 20px;
+      line-height: normal;
       font-weight: 400;
       text-align: center;
     }
@@ -81,8 +82,8 @@ mat-card {
     .input-field-container {
       font-family: Nunito, sans-serif;
       font-size: 18px;
+      line-height: normal;
       font-weight: 500;
-
       display: flex;
       flex-direction: column;
       border-radius: 100px;
@@ -106,6 +107,7 @@ mat-card {
         border: none;
         color: #686868;
         font-size: 18px;
+        line-height: normal;
 
         &:focus {
           outline: none;
@@ -146,7 +148,7 @@ form {
   margin: 0;
   color: #ed1e79;
   font-size: 14px;
-  line-height: 14px;
+  line-height: normal;
 }
 
 .error-container {
@@ -164,7 +166,7 @@ form {
 a {
   color: #797EF3;
   font-size: 18px;
-  line-height: 18px;
+  line-height: normal;
   font-family: Nunito, sans-serif;
   text-decoration: none;
 

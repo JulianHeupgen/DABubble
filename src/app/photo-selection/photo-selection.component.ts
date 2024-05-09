@@ -10,7 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { StorageService } from '../services/storage.service';
 import { User } from '../models/user.class';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-photo-selection',
@@ -22,7 +22,8 @@ import { Router } from '@angular/router';
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    RouterModule
   ],
   templateUrl: './photo-selection.component.html',
   styleUrl: './photo-selection.component.scss'

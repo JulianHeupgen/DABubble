@@ -64,7 +64,7 @@ mat-card {
 a {
   color: #797EF3;
   font-size: 18px;
-  line-height: 18px;
+  line-height: normal;
   font-family: Nunito, sans-serif;
   text-decoration: none;
 
@@ -78,14 +78,14 @@ a {
 h1, p, span {
   font-family: Nunito, sans-serif;
   font-size: 20px;
-  line-height: 20px;
+  line-height: normal;
   font-weight: 400;
   color: #000;
 }
 
 h1 {
   font-size: 46px;
-  line-height: 46px;
+  line-height: normal;
   font-weight: 700;
   color: #444DF2;
 }
