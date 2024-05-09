@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule, MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav';
 import { DataService } from '../../services/data.service';
 import { User } from '../../models/user.class';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { collection, DocumentData, Firestore, onSnapshot, query, where } from '@angular/fire/firestore';
 
@@ -19,7 +19,8 @@ import { collection, DocumentData, Firestore, onSnapshot, query, where } from '@
     MatButtonModule,
     MatDrawer,
     MatDrawerContainer,
-    MatDrawerContent
+    MatDrawerContent,
+    RouterModule
 
   ],
   templateUrl: './sidenav.component.html',
@@ -190,7 +191,7 @@ export class SidenavComponent {
   }
 
   ngOnDestroy() {
-    if (this.unsubscribe) this.unsubscribe(); // Listener bei Bedarf abmelden
+    if (this.unsubscribe) this.unsubscribe();
   }
 
 }
