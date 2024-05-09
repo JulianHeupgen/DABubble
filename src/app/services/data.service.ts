@@ -121,6 +121,7 @@ export class DataService {
   setUserChatObject(id: string, data: any): any {
     return {
       id: id,
+      participants: data.participants,
       messages: data.messages
     }
   }

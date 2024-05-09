@@ -22,10 +22,8 @@ export class ChannelChatComponent {
 
   constructor(private dataService: DataService, private route: ActivatedRoute, private storage: StorageService, private auth: AuthService) {}
 
-  /* Channel Header: Title von Channel rendern und die Participants !
-    dann die Threads (ChannelThreadComponent) rendern (vorher noch getThreadsList() );
-    in html template ergänzen [ngIf]="currentChannel", sodass Inhalte erst gerendert werden sobald currentChannel die
-    Inhalte von Firebase hat
+  /* Channel Header:  die Participants Avatare rendern und Anzahl Participants !
+    dann die Threads des Channels (ChannelThreadComponent) rendern (vorher noch getThreadsList() );
   */ 
 
   userAuthId!: string;
@@ -34,18 +32,23 @@ export class ChannelChatComponent {
   channels: any;
   channelId: string = '';
   currentChannel!: Channel;
+  channelParticipants: any = [];
+  channelParticipantsCounter: number = 0;
   threads: any;
 
   
   async ngOnInit() {
-    await this.checkUserId();
+    await this.checkUserAuthId();
 
     setTimeout(() => {
-      this.checkChannelId();
+      this.searchCurrentChannel();
+      this.showChannelParticipants(this.channelId);
+      this.showChannelParticipantsCounter();
     }, 600);
   }
 
-  async checkUserId() {
+
+  async checkUserAuthId() {
     await this.auth.getUserAuthId().then(userId => {
       if (userId) {
         this.userAuthId = userId;
@@ -57,12 +60,12 @@ export class ChannelChatComponent {
     });
 
     setTimeout(() => {
-     this.findUser(this.userAuthId);
+     this.findCurrentUser(this.userAuthId);
     }, 300);
   }
 
 
-  async findUser(authId: string) {
+  async findCurrentUser(authId: string) {
     await this.dataService.getUsersList();
     this.users = this.dataService.allUsers;
     
@@ -75,7 +78,7 @@ export class ChannelChatComponent {
     }
 
 
-    async checkChannelId() {
+    async searchCurrentChannel() {
     this.route.params.subscribe(params => {   
       this.channelId = params['id'];       
       });
@@ -91,5 +94,24 @@ export class ChannelChatComponent {
         }
     }
 
-  }
+
+    showChannelParticipants(channelId: string) {
+      this.users.forEach((user:any) => {
+        if (user.channels.includes(channelId)) {
+          this.channelParticipants.push( {
+            participantImage: user.imageUrl
+          } 
+        );
+      }
+      });
+    }
+
+
+    showChannelParticipantsCounter() {
+      this.channelParticipantsCounter = this.channelParticipants.length;
+    }
+   
+   
+    
+}
   

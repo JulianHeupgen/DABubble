@@ -1,8 +1,13 @@
 <mat-card class="channel-wrapper">
     <mat-card-header>
       <div class="channel-infos"  *ngIf="currentChannel">
-        <div>{{ currentChannel.title }}</div>
-        <div *ngFor="let participant of currentChannel.participants"> {{ participant }} </div>
+        <div># {{ currentChannel.title }} </div>
+        <div class="header-right-container">
+           <ng-container *ngFor="let participant of channelParticipants"> 
+             <img src="{{participant.participantImage}}"> 
+           </ng-container>
+           <div class="participant-counter">{{channelParticipantsCounter}} Teilnehmer</div>
+        </div>
       </div>
     </mat-card-header>
     <div class="chat-history">
