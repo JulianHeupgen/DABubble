@@ -1,1 +1,27 @@
-<p>imprint works!</p>
+<div class="main-container">
+  <img class="logo" src="./../../assets/img/logo-complete-black.png">
+  <mat-card>
+    <mat-card-content>
+      <img (click)="goBack()" class="back-arrow" src="./../../assets/img/go-back.png">
+      <h1>Impressum</h1>
+      <ul>
+        <li><span>Julian Heupgen</span></li>
+        <li><span>Daniel Schneider</span></li>
+        <li><span>Jan Thorstmann</span></li>
+        <li><span>Hannes Pirhofer</span></li>
+      </ul>
+      <span>Some address</span>
+      <span>39100 Bozen</span>
+      <br>
+      <h1>Kontakt</h1>
+      <span>Email: team(at)dabubble.org</span>
+    </mat-card-content>
+
+  </mat-card>
+
+  <div class="footer-links">
+    <a [routerLink]="['/imprint']">Impressum</a>
+    <a [routerLink]="['/privacy']">Datenschutz</a>
+  </div>
+
+</div>

@@ -3,7 +3,7 @@
   <mat-card>
     <mat-card-content>
       <div class="register-header">
-        <img routerLink="/login" class="back-arrow" src="./../../assets/img/go-back.png">
+        <img (click)="goBack()" class="back-arrow" src="./../../assets/img/go-back.png">
         <h1>
           Konto erstellen
         </h1>
@@ -48,7 +48,7 @@
           </div>
         </div>
 
-        <mat-checkbox formControlName="privacy" color="primary" class="privacy-check"><span>Ich stimme der </span><a href="#">Datenschutzerklärung</a><span> zu.</span></mat-checkbox>
+        <mat-checkbox formControlName="privacy" color="primary" class="privacy-check"><span>Ich stimme der </span><a [routerLink]="['/privacy']">Datenschutzerklärung</a><span> zu.</span></mat-checkbox>
 
         <button type="submit" mat-flat-button color="primary" [disabled]="!registerForm.valid">Weiter</button>
 
@@ -60,8 +60,8 @@
 
 
   <div class="footer-links">
-    <a href="#">Impressum</a>
-    <a href="#">Datenschutz</a>
+    <a [routerLink]="['/imprint']">Impressum</a>
+    <a [routerLink]="['/privacy']">Datenschutz</a>
   </div>
 
   <!-- <div class="devtools">
