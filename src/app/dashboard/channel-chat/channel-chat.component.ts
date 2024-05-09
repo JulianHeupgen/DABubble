@@ -9,6 +9,7 @@ import { DataService } from '../../services/data.service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { ChannelThreadComponent } from './channel-thread/channel-thread.component';
+import { User } from '../../models/user.class';
 
 @Component({
   selector: 'app-channel-chat',
@@ -22,8 +23,6 @@ export class ChannelChatComponent {
   constructor(private dataService: DataService, private route: ActivatedRoute, private storage: StorageService, private auth: AuthService) {}
 
   /* 
-    Daniel Sidenav: Klick auf einen Channel und dieser leitet per routerLink an eine bestimmte URL [routerLink]=["channels", channel.id];
-    authService: authID holen, diese abgleichen mit authent-id aus firebase, damit man weiß welche User angemeldet ist !
     In ChannelChatComponent wird URL ausgelesen (in NgOnInit) und die id geprüft: id ermittelt den gesuchten Channel beim
     angemeldeten User (vorher noch getChannelsList() );
     In Variable "currentChannel" dann korrekten Channel speichern und dann die Threads (ChannelThreadComponent) rendern (vorher noch getThreadsList() );
@@ -37,19 +36,16 @@ export class ChannelChatComponent {
   userAuthId!: string;
   channelId: string = '';
   currentChannel!: Channel;
+  currentUser!: User;
 
-  // mit authService in ngOnInit() prüfen, welcher User eingeloggt ist: Methode getUserAuthId(); dann dessen Channels usw laden
-  // danach die ID aus der URL extrahieren und anahand der id prüfen, welcher Channel angezeigt wird !
-  ngOnInit() {
-    this.checkUserId();
-
-    this.route.params.subscribe(params => {   // Channel-ID aus URL holen
-    this.channelId = params['id'];            
-    });
+  
+  async ngOnInit() {
+    await this.checkUserId();
+    this.checkChannelId();
   }
 
-  checkUserId() {
-    this.auth.getUserAuthId().then(userId => {
+  async checkUserId() {
+    await this.auth.getUserAuthId().then(userId => {
       if (userId) {
         this.userAuthId = userId;
         console.log("User ID:", this.userAuthId);
@@ -59,18 +55,33 @@ export class ChannelChatComponent {
     }).catch(error => {
       console.error("Fehler beim Abrufen der Benutzer-ID:", error);
     });
+
+    setTimeout(() => {
+     this.findUser(this.userAuthId);
+    }, 300);
   }
 
 
-  // Test-Funktion um zu prüfen ob die Daten korrekt von Firestore geladen werden
-  getDataFromFirestore() {                               
-    this.dataService.getUsersList();
-    this.dataService.getChannelsList();
-    this.dataService.getThreadsList();
+  async findUser(authId: string) {
+    await this.dataService.getUsersList();
     this.users = this.dataService.allUsers;
-    this.channels = this.dataService.allChannels;
-    this.threads = this.dataService.allThreads;
-  }             
+    
+    for (let i = 0; i < this.users.length; i++) {
+      if (this.users[i].authUserId === authId) {
+          this.currentUser = new User(this.users[i]);             
+          break; 
+        }
+      }
 
-}
+    }
+
+    checkChannelId() {
+    this.route.params.subscribe(params => {   
+      this.channelId = params['id'];       
+      });
+      console.log(this.channelId);
+    }
+
+
+  }
 

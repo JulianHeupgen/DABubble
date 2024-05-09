@@ -4,7 +4,7 @@ import { Thread } from "./thread.class";
 import { UserChat } from "./user-chat";
 
 export class User {
-  id: string;        //  Firebase docRef id (bei User-Erstellung noch leer, wird erst später von Firestore vergeben und holen wir uns mit DataService)
+  id: string;        
   name: string;
   email: string;
   onlineStatus: 'online' | 'offline';

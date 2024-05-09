@@ -32,7 +32,7 @@ export class DataService {
   allUserChats: UserChat[] = [];
 
 
-  // USER von Firestore laden; Verweis auf Datei 'channel-chat.component.ts' um ein Beispiel zu sehen, wie diese Funktion eingesetzt wird
+  // User von Firestore laden
 
   getUsersList() {
     return onSnapshot(this.getUserCollection(), list => {
