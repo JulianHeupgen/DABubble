@@ -22,33 +22,33 @@ export class ChannelChatComponent {
 
   constructor(private dataService: DataService, private route: ActivatedRoute, private storage: StorageService, private auth: AuthService) {}
 
-  /* 
-    In ChannelChatComponent wird URL ausgelesen (in NgOnInit) und die id geprüft: id ermittelt den gesuchten Channel beim
-    angemeldeten User (vorher noch getChannelsList() );
-    In Variable "currentChannel" dann korrekten Channel speichern und dann die Threads (ChannelThreadComponent) rendern (vorher noch getThreadsList() );
+  /* Channel Header: Title von Channel rendern und die Participants !
+    dann die Threads (ChannelThreadComponent) rendern (vorher noch getThreadsList() );
     in html template ergänzen [ngIf]="currentChannel", sodass Inhalte erst gerendert werden sobald currentChannel die
     Inhalte von Firebase hat
   */ 
 
-  users: any;
-  channels: any;
-  threads: any;
   userAuthId!: string;
+  users: any;
+  currentUser!: User;
+  channels: any;
   channelId: string = '';
   currentChannel!: Channel;
-  currentUser!: User;
+  threads: any;
 
   
   async ngOnInit() {
     await this.checkUserId();
-    this.checkChannelId();
+
+    setTimeout(() => {
+      this.checkChannelId();
+    }, 600);
   }
 
   async checkUserId() {
     await this.auth.getUserAuthId().then(userId => {
       if (userId) {
         this.userAuthId = userId;
-        console.log("User ID:", this.userAuthId);
       } else {
         console.log("Kein Benutzer angemeldet.");
       }
@@ -68,20 +68,28 @@ export class ChannelChatComponent {
     
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].authUserId === authId) {
-          this.currentUser = new User(this.users[i]);             
+          this.currentUser = new User(this.users[i]);            
           break; 
         }
       }
-
     }
 
-    checkChannelId() {
+
+    async checkChannelId() {
     this.route.params.subscribe(params => {   
       this.channelId = params['id'];       
       });
-      console.log(this.channelId);
+
+      await this.dataService.getChannelsList();
+      this.channels = this.dataService.allChannels;
+
+      for (let i = 0; i < this.channels.length; i++) {
+        if (this.channels[i].id === this.channelId) {
+            this.currentChannel = new Channel(this.channels[i]);     
+            break; 
+          }
+        }
     }
 
-
   }
-
+  

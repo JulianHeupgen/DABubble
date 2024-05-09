@@ -76,7 +76,8 @@ export class DataService {
     return {
       id: id,
       title: data.title,
-      participants: data.participants
+      participants: data.participants,
+      threads: data.threads
     }
   }
 

@@ -7,18 +7,25 @@ export class Channel {
   threads: Thread[];
   channelId: string;
 
-  constructor(title: string) {
-    this.title = title;
-    this.participants = [];
-    this.threads = [];
-    this.channelId = '';
+  constructor(data: {
+    id?: string,
+    title?: string,
+    participants?: User[],
+    threads?: Thread[]
+  }) {
+    this.channelId = data.id || '';
+    this.title = data.title || '';
+    this.participants = data.participants || [];
+    this.threads = data.threads || [];
   }
+
 
   addParticipant(user: User): void {
     if (!this.participants.includes(user)) {
       this.participants.push(user);
     }
   }
+
 
   removeParticipant(user: User): void {
     const index = this.participants.indexOf(user);
@@ -27,10 +34,12 @@ export class Channel {
     }
   }
 
+
   addThread(thread: Thread): void {
     this.threads.push(thread);
   }
 
+  
   removeThread(thread: Thread): void {
     const index = this.threads.indexOf(thread);
     if (index !== -1) {

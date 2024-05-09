@@ -7,6 +7,11 @@
 mat-card-header {
     padding: 20px 20px;
     border-bottom: 3px solid rgba(97, 95, 95, 0.1);
+
+    .channel-infos {
+        display: flex;
+        justify-content: space-between;
+    }
 }
 
 .chat-history {
