@@ -1,8 +1,11 @@
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './../services/auth.service';
-import { Component } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { DataService } from '../services/data.service';
+import { Subscription } from 'rxjs';
+import { User } from '../models/user.class';
 
 @Component({
   selector: 'app-test',
@@ -12,8 +15,13 @@ import { RouterModule } from '@angular/router';
   styleUrl: './test.component.scss'
 })
 export class TestComponent {
+  @ViewChild('eMail') emailInput!: ElementRef<HTMLInputElement>
+  @ViewChild('password') passwordInput!: ElementRef<HTMLInputElement>
 
-  constructor( private authService: AuthService ) {}
+  constructor(
+    private authService: AuthService,
+    private data: DataService
+  ) { }
 
   email: string | null = '';
   newEmail: string = '';
@@ -23,24 +31,29 @@ export class TestComponent {
 
   needsReAuthenetication: boolean = false;
 
+
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.setEmail();
     this.setFullname();
-
-    this.addNumbers(5,7, (message:string) => {
-      console.log(message);
-    })
   }
 
-  addNumbers(a: number, b:number, callback: (result:string) => void): void {
-    const result = a+b;
-    if (result > 10) {
-      callback('The sum is greater than 10');
-    } else {
-      callback('The sum is 10 or less');
+  async deleteUser() {
+    const email = this.emailInput.nativeElement.value;
+    const password = this.passwordInput.nativeElement.value;
+    if (email && password) {
+      try {
+        await this.authService.removeUser(email, password);
+        console.log('User deleted');
+      } catch (error) {
+        console.error(error);
+      }
     }
+  }
+
+  async getUsers() {
+    console.log(this.data.allUsers);
   }
 
   async setEmail() {
@@ -70,9 +83,13 @@ export class TestComponent {
    * @returns
    */
   async changeEmail() {
-    if (!this.newEmail) { return; }
+    const email = this.emailInput.nativeElement.value;
+    const password = this.passwordInput.nativeElement.value;
+
+    if (!this.newEmail) { return }
+
     try {
-      await this.authService.updateEmailAddress(this.newEmail);
+      await this.authService.updateEmailAddress(this.newEmail, email, password);
       console.log('Email sucessful changed.');
     } catch (error) {
       if (error instanceof Error && error.message === 'auth/requires-recent-login') {

@@ -1,14 +1,16 @@
 <div>
-  <hr>
+  <br><hr><br>
 
   Check if editing email adress work
   -> Keep in  mind that you must be logged in -> it needs an active Auth Object<br>
   <b>Please reload as its no Snapshot</b><br>
   Actual email adress is: <b>{{ email }}</b><br>
+  <input type="text" #eMail placeholder="Input email">
+  <input type="text" #password placeholder="Input password">
   <input [(ngModel)]="newEmail" type="text" placeholder="Type your new Email"><button (click)="changeEmail()">Change email</button><br>
   <span *ngIf="needsReAuthenetication">Bitte melde dich nochmal neu an um deine Email Adresse zu ändern.<b style="cursor: pointer;" [routerLink]="['/login']">Zum Login</b></span>
 
-  <hr>
+  <br><hr><br>
 
   Check if editing fullname work
   -> Keep in  mind that you must be logged in -> it needs an active Auth Object<br>
@@ -16,5 +18,16 @@
   Actual fullname is: <b>{{ fullname }}</b><br>
   <input [(ngModel)]="newFullname" type="text" placeholder="Type your new Fullname"><button (click)="changeFullname()">Change fullname</button>
 
-  <hr>
+  <br><br><hr><br>
+
+  Load all Users
+  <button (click)="getUsers()">Print all Users from firestore to the console</button>
+
+  <br><br><hr><br>
+
+  Delete the current User<br>
+  Set your login credentials to refresh token<br>
+  <input type="text" #eMail placeholder="Input email">
+  <input type="text" #password placeholder="Input password">
+  <button (click)="deleteUser()">Delete User</button>
 </div>
