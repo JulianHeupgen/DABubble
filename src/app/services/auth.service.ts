@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, fetchSignInMethodsForEmail, updateEmail, onAuthStateChanged, user } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateEmail, onAuthStateChanged, user } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
@@ -31,7 +31,6 @@ export class AuthService {
     try {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
       return userCredential;
-
     } catch (error) {
       throw error;
     }
@@ -189,10 +188,12 @@ export class AuthService {
         if (user) {
           resolve(user.uid);
         } else {
-          console.log('No user signed in.');
-          resolve(null);
+          reject(new Error('No user signed in.'));
         }
-      }, reject);
+      }, (error) => {
+        console.error('Failed to get authenticatin state ', error);
+        reject(error);
+      });
     })
   }
 
@@ -207,10 +208,12 @@ export class AuthService {
         if (user) {
           resolve(user.email);
         } else {
-          console.log('No user signed in.');
-          resolve(null);
+          reject(new Error('No user signed in.'));
         }
-      }, reject);
+      }, (error) => {
+        console.error('Failed to get authenticatin state ', error);
+        reject(error);
+      });
     })
   }
 

@@ -70,7 +70,7 @@ app-channel-chat {
 }
 
 * {
-  font-family: 'Nunito', sans-serif !important;
+  font-family: 'Nunito', sans-serif; /* Dont use !important as the mat icons will nto be shown then */
   box-sizing: border-box;
 }
 

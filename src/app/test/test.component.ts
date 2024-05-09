@@ -28,6 +28,19 @@ export class TestComponent {
     //Add 'implements OnInit' to the class.
     this.setEmail();
     this.setFullname();
+
+    this.addNumbers(5,7, (message:string) => {
+      console.log(message);
+    })
+  }
+
+  addNumbers(a: number, b:number, callback: (result:string) => void): void {
+    const result = a+b;
+    if (result > 10) {
+      callback('The sum is greater than 10');
+    } else {
+      callback('The sum is 10 or less');
+    }
   }
 
   async setEmail() {
@@ -35,6 +48,7 @@ export class TestComponent {
       this.email = await this.authService.getUserEmail();
     } catch (error) {
       console.error('Failed to get email. ', error);
+      this.email = 'undefined';
     }
   }
 
@@ -45,7 +59,8 @@ export class TestComponent {
         this.fullname = await this.authService.getUserFullname(uid);
       }
     } catch (error) {
-      console.error('Failed to get email. ', error);
+      console.error('Failed to get fullname. ', error);
+      this.fullname = 'undefined';
     }
   }
 
