@@ -8,6 +8,7 @@ import { User } from '../../models/user.class';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { collection, DocumentData, Firestore, onSnapshot, query, where } from '@angular/fire/firestore';
+import { Channel } from '../../models/channel.class';
 
 
 @Component({
@@ -56,6 +57,8 @@ export class SidenavComponent {
   users: User[] = [];
   userId: string = '';
   allUsers: Partial<User>[] = [];
+  allChannels: Channel[] = [];
+  // userChannels: { [userId: string]: Channel[] } = {};
   private unsubscribe!: () => void ;
 
   constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private authService: AuthService, private firestore: Firestore) {
@@ -63,7 +66,7 @@ export class SidenavComponent {
   }
 
 
-  ngOnInit() {
+  async ngOnInit() {
     this.authService.getUserAuthId().then(uid => {
       if (uid) {
         this.setupUserSubscription(uid);
@@ -75,8 +78,12 @@ export class SidenavComponent {
       console.error('Fehler beim Laden:', error);
       this.allUsers = [];
     });
-  
-    console.log('All users loaded:', this.allUsers); // Loggen Sie die geladenen Benutzerdaten
+    console.log('All users loaded:', this.allUsers);
+      this.dataService.getChannelsList();
+      this.allChannels = this.dataService.allChannels;
+      console.log("Channels in users:", this.allUsers.map(user => user.channels));
+
+
   }
 
 
@@ -148,50 +155,52 @@ export class SidenavComponent {
       this.allUsers = [];
     }
     console.log(this.allUsers);
-    
   }
-
-  // setupUserSubscription(uid: string) {
-  //   const usersRef = collection(this.firestore, 'users'); // Beziehen der 'users' Kollektion aus Firestore
-  //   const q = query(usersRef, where('authUserId', '==', uid)); // Abfrage erstellen, die auf spezifische UID filtert
-  
-  //   this.unsubscribe = onSnapshot(q, (snapshot) => {
-  //     this.allUsers = snapshot.docs.map(doc => {
-  //       const data = doc.data();
-  //       return {
-  //         ...data, // Spread-Operator, um alle Eigenschaften aus doc.data() zu übernehmen
-  //         id: doc.id // Fügen Sie die Dokument-ID hinzu, wenn Sie diese benötigen
-  //       };
-  //     });
-  //     console.log('Aktualisierte Benutzerdaten:', this.allUsers); // Loggen der aktualisierten Daten
-  //   }, (error) => {
-  //     console.error('Fehler beim Abonnieren der Benutzerdaten:', error);
-  //   });
-  // }
 
   setupUserSubscription(uid: string) {
     const usersRef = collection(this.firestore, 'users');
     const q = query(usersRef, where('authUserId', '==', uid));
-  
     this.unsubscribe = onSnapshot(q, (snapshot) => {
-      this.allUsers = snapshot.docs.map(doc => ({
-        id: doc.id,
-        name: doc.data()['name'] || 'Unbekannter Name',
-        email: doc.data()['email'] || 'Keine Email',
-        onlineStatus: doc.data()['onlineStatus'] || 'offline',
-        authUserId: doc.data()['authUserId'],
-        imageUrl: doc.data()['imageUrl'] || 'Kein Bild',
-        channels: doc.data()['channels'] || [],
-        userChats: doc.data()['userChats'] || []
-      }));
-      console.log('Aktualisierte Benutzerdaten:', this.allUsers);
+      this.allUsers = snapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          ...data,
+          id: doc.id
+        };
+      });
+      console.log('Aktualisierte Benutzerdaten:', this.allUsers); // Loggen der aktualisierten Daten
     }, (error) => {
       console.error('Fehler beim Abonnieren der Benutzerdaten:', error);
     });
   }
 
+  // setupUserSubscription(uid: string) {
+  //   const usersRef = collection(this.firestore, 'users');
+  //   const q = query(usersRef, where('authUserId', '==', uid));
+  //   this.unsubscribe = onSnapshot(q, (snapshot) => {
+  //     this.allUsers = snapshot.docs.map(doc => ({
+  //       id: doc.id,
+  //       name: doc.data()['name'] || 'Unbekannter Name',
+  //       email: doc.data()['email'] || 'Keine Email',
+  //       onlineStatus: doc.data()['onlineStatus'] || 'offline',
+  //       authUserId: doc.data()['authUserId'],
+  //       imageUrl: doc.data()['imageUrl'] || 'Kein Bild',
+  //       channels: doc.data()['channels'] || [],
+  //       userChats: doc.data()['userChats'] || []
+  //     }));
+  //     console.log('Aktualisierte Benutzerdaten:', this.allUsers);
+  //   }, (error) => {
+  //     console.error('Fehler beim Abonnieren der Benutzerdaten:', error);
+  //   });
+  // }
+
   ngOnDestroy() {
     if (this.unsubscribe) this.unsubscribe();
   }
+
+getChannelNameById(channelId: string): string {
+  const channel = this.allChannels.find(c => c.channelId === channelId);
+  return channel ? channel.title : 'No Name';
+}
 
 }
