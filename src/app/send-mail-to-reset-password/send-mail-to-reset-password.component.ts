@@ -53,7 +53,7 @@ export class SendMailToResetPasswordComponent {
 
   }
 
-  async sendEmailResetPassword(/*email: string*/): Promise<void> {
+  async sendEmailResetPassword(): Promise<void> {
     if (this.emailData.valid) {
       const auth = getAuth();
       const email: string = this.emailData.value.email || '';

@@ -14,6 +14,7 @@ import { TestComponent } from './test/test.component';
 
 import { AddChannelComponent } from './dialog/add-channel/add-channel.component';
 import { SendMailToResetPasswordComponent } from './send-mail-to-reset-password/send-mail-to-reset-password.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 
 export const routes: Routes = [
 
@@ -23,6 +24,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'register/next', component: PhotoSelectionComponent },
   { path: 'send-mail-to-reset', component: SendMailToResetPasswordComponent },
+  { path: 'reset-password', component: PasswordResetComponent },
   {
     path: 'dashboard', component: DashboardComponent,
     children: [
