@@ -150,7 +150,7 @@ export class SidenavComponent {
       if (uid) {
         this.setupUserSubscription(uid);
         this.setupChannelsSubscription();
-        setTimeout(() => this.updateChannelTitles(), 1000);
+        setTimeout(() => this.updateChannelTitles(), 500);
       } else {
         console.log('Keine UID verfügbar');
         this.allUsers = [];
