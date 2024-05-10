@@ -8,10 +8,10 @@
 }
 
 .logo {
-  width: 240px;
+  height: 55px;
   position: absolute;
-  top: 75px;
-  left: 75px;
+  left: 32px;
+  top: 32px;
 }
 
 mat-card {
@@ -36,8 +36,10 @@ mat-card {
       top: 0;
       left: 0;
       z-index: 99;
+      border-radius: 50%;
 
       &:hover {
+        background-color: #797df36e;
         cursor: pointer;
       }
     }
@@ -52,7 +54,7 @@ mat-card {
     .card-headline {
       font-family: Nunito, sans-serif;
       font-size: 46px;
-      line-height: 46px;
+      line-height: normal;
       font-weight: 700;
       color: #444DF2;
       padding: 0 48px;
@@ -66,6 +68,7 @@ mat-card {
     .input-field-container {
       font-family: Nunito, sans-serif;
       font-size: 18px;
+      line-height: normal;
       font-weight: 500;
 
       display: flex;
@@ -91,6 +94,7 @@ mat-card {
         border: none;
         color: #686868;
         font-size: 18px;
+        line-height: normal;
 
         &:focus {
           outline: none;
@@ -130,6 +134,7 @@ form {
 a {
   color: #797EF3;
   font-size: 18px;
+  line-height: normal;
   font-family: Nunito, sans-serif;
   text-decoration: none;
 
@@ -141,7 +146,10 @@ a {
 .footer-links {
   display: flex;
   gap: 24px;
-  margin-top: 40px;
+  position: absolute;
+  bottom: 24px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .file-input {
@@ -154,8 +162,8 @@ a {
   padding: 12px 25px;
   font-family: Nunito, sans-serif;
   font-size: 18px;
+  line-height: normal;
   font-weight: 700;
-  line-height: 18px;
   color: #444DF2;
 
 
@@ -178,15 +186,15 @@ a {
     .upload-error {
       color: #ed1e79;
       font-size: 14px;
-      line-height: 14px;
+      line-height: normal;
     }
   }
 
   span {
     font-family: Nunito, sans-serif;
     font-size: 20px;
+    line-height: normal;
     font-weight: 400;
-    line-height: 20px;
   }
 
   .user-data {
@@ -199,7 +207,7 @@ a {
     .name {
       font-family: Nunito, sans-serif;
       font-size: 32px;
-      line-height: 32px;
+      line-height: normal;
       font-weight: 700;
       color: #000;
     }
@@ -216,6 +224,7 @@ a {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    gap: 6px;
     list-style-type: none;
     overflow: auto;
     margin-block-start: 0;
@@ -235,6 +244,7 @@ a {
 
   .personal-upload {
     display: flex;
+    align-items: center;
     gap: 24px;
   }
 }

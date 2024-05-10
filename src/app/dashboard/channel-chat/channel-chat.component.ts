@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatList, MatListModule } from '@angular/material/list';
@@ -9,6 +9,7 @@ import { DataService } from '../../services/data.service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { ChannelThreadComponent } from './channel-thread/channel-thread.component';
+import { User } from '../../models/user.class';
 
 @Component({
   selector: 'app-channel-chat',
@@ -17,60 +18,116 @@ import { ChannelThreadComponent } from './channel-thread/channel-thread.componen
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
 })
-export class ChannelChatComponent {
+export class ChannelChatComponent  {
 
-  constructor(private dataService: DataService, private route: ActivatedRoute, private storage: StorageService, private auth: AuthService) {}
+  constructor(private dataService: DataService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private storage: StorageService,
+              private auth: AuthService) {
+                this.router.events.subscribe(event => {   
+                  if (event instanceof NavigationEnd) {
+                    this.ngOnInit(); 
+                  }
+                });
+              }
 
   /* 
-    Daniel Sidenav: Klick auf einen Channel und dieser leitet per routerLink an eine bestimmte URL [routerLink]=["channels", channel.id];
-    authService: authID holen, diese abgleichen mit authent-id aus firebase, damit man weiß welche User angemeldet ist !
-    In ChannelChatComponent wird URL ausgelesen (in NgOnInit) und die id geprüft: id ermittelt den gesuchten Channel beim
-    angemeldeten User (vorher noch getChannelsList() );
-    In Variable "currentChannel" dann korrekten Channel speichern und dann die Threads (ChannelThreadComponent) rendern (vorher noch getThreadsList() );
-    in html template ergänzen [ngIf]="currentChannel", sodass Inhalte erst gerendert werden sobald currentChannel die
-    Inhalte von Firebase hat
+  Threads des Channels (ChannelThreadComponent) rendern (vorher noch getThreadsList() );
   */ 
 
-  users: any;
-  channels: any;
-  threads: any;
   userAuthId!: string;
+  users: any;
+  currentUser!: User;
+  channels: any;
   channelId: string = '';
   currentChannel!: Channel;
+  channelParticipants: any = [];
+  channelParticipantsCounter: number = 0;
+  threads: any;
 
-  // mit authService in ngOnInit() prüfen, welcher User eingeloggt ist: Methode getUserAuthId(); dann dessen Channels usw laden
-  // danach die ID aus der URL extrahieren und anahand der id prüfen, welcher Channel angezeigt wird !
-  ngOnInit() {
-    this.checkUserId();
+  
+  async ngOnInit() {
+    this.channelParticipants = [];         
+    this.channelParticipantsCounter= 0;
 
-    this.route.params.subscribe(params => {   // Channel-ID aus URL holen
-    this.channelId = params['id'];            
-    });
+    await this.checkUserAuthId();
+
+    setTimeout(() => {
+      this.searchCurrentChannel();
+      this.showChannelParticipants(this.channelId);
+      this.showChannelThreads(this.channelId);
+    }, 600);
   }
 
-  checkUserId() {
-    this.auth.getUserAuthId().then(userId => {
+
+  async checkUserAuthId() {
+    await this.auth.getUserAuthId().then(userId => {
       if (userId) {
         this.userAuthId = userId;
-        console.log("User ID:", this.userAuthId);
       } else {
         console.log("Kein Benutzer angemeldet.");
       }
     }).catch(error => {
       console.error("Fehler beim Abrufen der Benutzer-ID:", error);
     });
+
+    setTimeout(() => {
+     this.findCurrentUser(this.userAuthId);
+    }, 300);
   }
 
 
-  // Test-Funktion um zu prüfen ob die Daten korrekt von Firestore geladen werden
-  getDataFromFirestore() {                               
-    this.dataService.getUsersList();
-    this.dataService.getChannelsList();
-    this.dataService.getThreadsList();
+  async findCurrentUser(authId: string) {
+    await this.dataService.getUsersList();
     this.users = this.dataService.allUsers;
-    this.channels = this.dataService.allChannels;
-    this.threads = this.dataService.allThreads;
-  }             
+    
+    for (let i = 0; i < this.users.length; i++) {
+      if (this.users[i].authUserId === authId) {
+          this.currentUser = new User(this.users[i]);            
+          break; 
+        }
+      }
+    }
 
+
+    async searchCurrentChannel() {
+      this.route.params.subscribe(params => {   
+        this.channelId = params['id'];       
+        });
+
+      await this.dataService.getChannelsList();
+      this.channels = this.dataService.allChannels;
+
+      for (let i = 0; i < this.channels.length; i++) {
+        if (this.channels[i].id === this.channelId) {
+            this.currentChannel = new Channel(this.channels[i]);     
+            break; 
+          }
+        }
+    }
+
+
+    async showChannelParticipants(channelId: string) {
+      await this.users.forEach((user:any) => {
+        if (user.channels && user.channels.includes(channelId)) {
+          this.channelParticipants.push( {
+            participantImage: user.imageUrl
+          } 
+        );
+        this.channelParticipantsCounter++;
+      }
+      });
+    }
+
+
+    async showChannelThreads(channelId: string) {
+      await this.dataService.getChannelsList();
+      this.channels = this.dataService.allChannels;
+    }
+    
+   
+   
+    
 }
-
+  

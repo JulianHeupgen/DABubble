@@ -4,7 +4,7 @@ import { Thread } from "./thread.class";
 import { UserChat } from "./user-chat";
 
 export class User {
-  id: string;        //  Firebase docRef id (bei User-Erstellung noch leer, wird erst später von Firestore vergeben und holen wir uns mit DataService)
+  id: string;        
   name: string;
   email: string;
   onlineStatus: 'online' | 'offline';
@@ -14,11 +14,14 @@ export class User {
   imageUrl: string;
 
   constructor(data: {
+    id?: string;
     name: string,
     email: string,
     onlineStatus: 'online' | 'offline',
     authUserId: string,
-    imageUrl: string
+    imageUrl: string,
+    channels?: Channel[],
+    userChats?: UserChat[]
 }) {
     this.id = '';
     this.name = data.name;
@@ -61,7 +64,7 @@ export class User {
         const newMessage = new Message(this, messageContent);
         replyToThread.messages.push(newMessage);
     } else {                                                // Andernfalls neuen Thread erstellen, Message überreichen und neuen Thread in Channel pushen
-        let newThread = new Thread(channel.channelId);
+        let newThread = new Thread( { channelId: channel.channelId, timestamp: new Date() } );
         const newMessage = new Message(this, messageContent);
         newThread.messages.push(newMessage);
         channel.addThread(newThread);

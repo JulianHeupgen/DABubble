@@ -27,7 +27,7 @@
           <span>Eigenes Bild verwenden</span>
           <label class="upload-btn" mat-mini-fab color="primary">
             <input type="file" class="file-input" (change)="onFileSelected($event)">
-            <span class="file-upload-btn">Datei hochladen</span>
+            <button class="file-upload-btn">Datei hochladen</button>
           </label>
 
           <div class="file-upload" style="display: none;">
@@ -49,8 +49,8 @@
   </mat-card>
 
   <div class="footer-links">
-    <a href="#">Impressum</a>
-    <a href="#">Datenschutz</a>
+    <a [routerLink]="['/imprint']">Impressum</a>
+    <a [routerLink]="['/privacy']">Datenschutz</a>
   </div>
 
 </div>

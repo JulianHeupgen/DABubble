@@ -37,7 +37,7 @@
                     <div class="channels-container">
                         <!-- <div *ngFor="let user of getDataFromFirestore()" class="channel"> -->
                         <div *ngFor="let user of allUsers">
-                            <div *ngFor="let channel of user.channels" class="channel">
+                            <div *ngFor="let channel of user.channels" class="channel" [routerLink]="['/dashboard/channel', channel]">
                                 <img class="tag-img" src="./assets/img/tag.png">
                                 <p>{{ channel }}</p>
                             </div>
@@ -116,8 +116,12 @@
     (click)="toggleSidenav()">
 }
 
-<div *ngFor="let user of allUsers">
-    {{ user.channels }}
-</div>
+<!-- <div *ngFor="let user of allUsers"> -->
+    <div *ngFor="let channelID of allChannels">
+        {{ channelID.title }}
+        <!-- {{ getChannelNameById(channelID) }} -->
+    </div>
 
-<button (click)="loadData()">INDEXED</button>
+<!-- </div> -->
+
+<!-- <button (click)="loadData()">INDEXED</button> -->

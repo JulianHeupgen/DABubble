@@ -4,9 +4,28 @@
     border-radius: 30px;
 }
 
+.mat-mdc-card-header {
+     display: unset;
+}
+
 mat-card-header {
     padding: 20px 20px;
     border-bottom: 3px solid rgba(97, 95, 95, 0.1);
+
+    .channel-infos {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.header-right-container {
+    display: flex;
+    align-items: center;
+}
+
+.participant-counter {
+    margin-left: 10px;
 }
 
 .chat-history {
@@ -15,7 +34,7 @@ mat-card-header {
 
 input {
     height: 100px;
-    margin: 0 20px 0 20px;
+    margin: 0 20px 15px 20px;
     border-radius: 12px;
     border: 3px solid rgba(49, 49, 49, 0.3);
 }

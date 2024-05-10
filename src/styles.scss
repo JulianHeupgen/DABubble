@@ -71,10 +71,36 @@ app-channel-chat {
 }
 
 * {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito', sans-serif; /* Dont use !important as the mat icons will not be shown then */
   box-sizing: border-box;
+  margin-block-start: 0;
+  margin-block-end: 0;
 }
 
 .d-none {
   display: none;
+}
+
+/* Custom Scrollbar */
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #4a93f1;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+  background: #444df2;
 }

@@ -1,10 +1,25 @@
 <mat-card class="channel-wrapper">
-    <mat-card-header>#Entwicklerteam</mat-card-header>
+    <mat-card-header>
+      <div class="channel-infos"  *ngIf="currentChannel">
+        <div># {{ currentChannel.title }} </div>
+        <div class="header-right-container">
+           <ng-container *ngFor="let participant of channelParticipants"> 
+             <img src="{{participant.participantImage}}"> 
+           </ng-container>
+           <div class="participant-counter">{{channelParticipantsCounter}} Teilnehmer</div>
+        </div>
+      </div>
+    </mat-card-header>
     <div class="chat-history">
 
       <!--Mit Schleife in diesen Container die ChannelThreadComponents rendern (immer nur erste Nachricht des jeweiligen Threads anzeigen): 
         Wenn Klick auf einen Thread, dann wird dieser rechts geöffnet mit dem kompletten Chatverlauf ( FullThreadComponent )
       -->
+
+      <div *ngFor="let thread of threads">
+        <app-channel-thread></app-channel-thread>
+      </div>
+
 
     </div>
     <input matInput placeholder="Nachricht an Entwicklerteam">  

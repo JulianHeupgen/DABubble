@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, fetchSignInMethodsForEmail, updateEmail, onAuthStateChanged, user } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateEmail, onAuthStateChanged, user, EmailAuthProvider, reauthenticateWithCredential, deleteUser, signInWithCredential } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
@@ -31,7 +31,6 @@ export class AuthService {
     try {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
       return userCredential;
-
     } catch (error) {
       throw error;
     }
@@ -70,6 +69,31 @@ export class AuthService {
   }
 
   /**
+   * This function reauthenticates the User first- then it deletes it from firebase Auth.
+   * Todo deleting all user entries and firestore user doc.
+   * @param email
+   * @param password
+   */
+  async removeUser(email: string, password: string) {
+    const user = this.auth.currentUser;
+    const credential = await EmailAuthProvider.credential(email, password);
+    try {
+      if (user && credential) {
+        await reauthenticateWithCredential(user, credential);
+        await deleteUser(user);
+        console.log('User successfully deleted');
+      }
+    } catch (error) {
+      console.error('Failed to delete user:', error);
+      // Handle specific error codes
+      if (typeof error === 'object' && error !== null && 'code' in error && error.code === 'auth/user-mismatch') {
+        console.error('Cannot delete user: the provided credentials do not match the current user.');
+      }
+      throw error;
+    }
+  }
+
+  /**
    * This is the main function to call when changing email address.
    * @param newmail this is the new mail to update to
    */
@@ -94,17 +118,20 @@ export class AuthService {
    * This is the main function to call when changing email address.
    * @param newmail this is the new mail to update to
    */
-  async updateEmailAddress(newmail: string) {
-    const currentUser = this.auth.currentUser;
-    if (!currentUser) { return }
-    const oldEmail = currentUser.email;
-    if (!oldEmail) {
-      throw new Error('Current user have no email set.');
-    }
-    try {
-      await this.updateEmailAllRefs(currentUser, newmail);
-    } catch (error) {
-      await this.rollbackUser(currentUser, oldEmail, error);
+  async updateEmailAddress(newmail: string, email: string, password: string) {
+
+    const user = this.auth.currentUser;
+    const credential = await EmailAuthProvider.credential(email, password);
+    if (user && (user.email === null || user.email === undefined)) { return; }
+    const oldEmail = user?.email as string;
+
+    if (user && credential) {
+      try {
+        await reauthenticateWithCredential(user, credential);
+        await this.updateEmailAllRefs(user, newmail);
+      } catch (error) {
+        await this.rollbackUser(user, oldEmail, error);
+      }
     }
   }
 
@@ -189,10 +216,12 @@ export class AuthService {
         if (user) {
           resolve(user.uid);
         } else {
-          console.log('No user signed in.');
-          resolve(null);
+          reject(new Error('No user signed in.'));
         }
-      }, reject);
+      }, (error) => {
+        console.error('Failed to get authenticatin state ', error);
+        reject(error);
+      });
     })
   }
 
@@ -207,10 +236,12 @@ export class AuthService {
         if (user) {
           resolve(user.email);
         } else {
-          console.log('No user signed in.');
-          resolve(null);
+          reject(new Error('No user signed in.'));
         }
-      }, reject);
+      }, (error) => {
+        console.error('Failed to get authenticatin state ', error);
+        reject(error);
+      });
     })
   }
 
