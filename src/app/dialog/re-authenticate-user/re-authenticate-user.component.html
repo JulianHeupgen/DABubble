@@ -1,0 +1,21 @@
+<div class="reauth-container">
+  <form [formGroup]="reAuthForm" (ngSubmit)="reAuthenticateUser()">
+    <div>
+      <label for="email">Email</label>
+      <input name="email" formControlName="email" type="email">
+      <div class="error-container">
+        <p class="input-feedback" *ngIf="reAuthForm.get('email')?.errors && reAuthForm.get('email')?.dirty">Diese E-Mail Adresse ist leider ungültig.</p>
+      </div>
+    </div>
+
+    <div>
+      <label for="password">Password</label>
+      <input name="password" formControlName="password" type="password">
+      <div class="error-container">
+        <p class="input-feedback" *ngIf="reAuthForm.get('password')?.errors && reAuthForm.get('password')?.dirty">Bitte geben sie ein Passwort mit mind. 6 Zeichen ein.</p>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="!reAuthForm.valid">Login</button>
+  </form>
+</div>

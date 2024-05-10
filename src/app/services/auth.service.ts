@@ -153,6 +153,7 @@ export class AuthService {
       await updateDoc(userRef, { 'name': name });
     } catch (error) {
       console.error('Error updating user name to firestore. ', error);
+      throw error;
     }
   }
 

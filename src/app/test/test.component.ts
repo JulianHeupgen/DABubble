@@ -3,57 +3,119 @@ import { AuthService } from './../services/auth.service';
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { DataService } from '../services/data.service';
-import { Subscription } from 'rxjs';
-import { User } from '../models/user.class';
+import { MatDialog, MatDialogModule, MatDialogClose } from '@angular/material/dialog';
+import { ReAuthenticateUserComponent } from '../dialog/re-authenticate-user/re-authenticate-user.component';
+import { Observable, firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-test',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterModule],
+  imports: [FormsModule, CommonModule, RouterModule, MatDialogModule, MatDialogClose],
   templateUrl: './test.component.html',
   styleUrl: './test.component.scss'
 })
 export class TestComponent {
-  @ViewChild('eMail') emailInput!: ElementRef<HTMLInputElement>
-  @ViewChild('password') passwordInput!: ElementRef<HTMLInputElement>
 
   constructor(
     private authService: AuthService,
-    private data: DataService
+    public dialog: MatDialog
   ) { }
 
+  // Actual values from firestore
   email: string | null = '';
-  newEmail: string = '';
-
   fullname: string | null = '';
-  newFullname: string = '';
 
-  needsReAuthenetication: boolean = false;
+  // New values from user input
+  newEmail: string = '';
+  newFullname: string = '';
 
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.setEmail();
     this.setFullname();
   }
 
-  async deleteUser() {
-    const email = this.emailInput.nativeElement.value;
-    const password = this.passwordInput.nativeElement.value;
-    if (email && password) {
-      try {
-        await this.authService.removeUser(email, password);
-        console.log('User deleted');
-      } catch (error) {
-        console.error(error);
-      }
+  /**
+   * Open the login modal which is used for the reauthentification
+   * @returns Login Form value as Promise
+   */
+  openLoginModal(): Promise<any> {
+    const dialogRef = this.dialog.open(ReAuthenticateUserComponent);
+    return firstValueFrom(dialogRef.afterClosed());
+  }
+
+  /**
+   * Reauthenticates the user by email and password
+   * Is needed for sensible firebase actions like updating email, password or delete whole user
+   * @param email
+   * @param password
+   */
+  async reAuthenticate(email: string, password: string) {
+    try {
+      await this.authService.reAuthenticateUser(email, password);
+      console.log('User reauthenticated with success');
+    } catch (error) {
+      console.error('Error reauthenticating the user. ', error);
     }
   }
 
-  async getUsers() {
-    console.log(this.data.allUsers);
+  /**
+   * Deletes a User from Auth and from Firestore
+   * Step 1. reAuthenticateUser(email: string, password: string)
+   * Step 2. removeAuthUser()
+   * Step 3. removeFirestoreUser()
+   */
+  async deleteUser() {
+    try {
+      const formData = await this.openLoginModal();
+      if (formData) {
+        await this.reAuthenticate(formData.email, formData.password);
+        await this.authService.removeAuthUser();
+        await this.authService.removeFirestoreUser();
+        console.log('User deleted with success.');
+      } else {
+        console.log('Form data not provided');
+      }
+    } catch (error) {
+      console.error('Error during deletion process: ', error);
+    }
+  }
+
+  /**
+   * Take this function to update users email address
+   * Step 1. reAuthenticateUser(email: string, password: string)
+   * Step 2. updateEmailAddress(newmail: string)
+   *         this updates email on firestore and auth - rollback when needed
+   * @returns
+   */
+  async changeEmail() {
+    try {
+      const formData = await this.openLoginModal();
+      if (formData) {
+        await this.reAuthenticate(formData.email, formData.password);
+        if (!this.newEmail) { return; }
+        await this.authService.updateEmailAddress(this.newEmail);
+        console.log('User Email updated with success.');
+      } else {
+        console.log('Form data not provided');
+      }
+    } catch (error) {
+      console.error('Error during updating email process: ', error);
+    }
+  }
+
+  /**
+   * Take this function to update users fullname on firestore
+   * @returns A log or an error log. In hope for just a log.
+   */
+  async changeFullname() {
+    if (!this.newFullname) { return; }
+    try {
+      await this.authService.updateName(this.newFullname);
+      console.log('Name successfull changed.');
+    } catch (error) {
+      console.error('Error while updating the name.', error);
+    }
   }
 
   async setEmail() {
@@ -77,42 +139,6 @@ export class TestComponent {
     }
   }
 
-  /**
-   * Take this function to update users email address
-   * TODO: Add Email validation before sending to update method to prevent firestore error warnings
-   * @returns
-   */
-  async changeEmail() {
-    const email = this.emailInput.nativeElement.value;
-    const password = this.passwordInput.nativeElement.value;
-
-    if (!this.newEmail) { return }
-
-    try {
-      await this.authService.updateEmailAddress(this.newEmail, email, password);
-      console.log('Email sucessful changed.');
-    } catch (error) {
-      if (error instanceof Error && error.message === 'auth/requires-recent-login') {
-        this.needsReAuthenetication = true;
-      }
-      console.error('Error while updating the email adress to auth and db.');
-    }
-  }
-
-
-  /**
-   * Take this function to update users fullname on firestore
-   * @returns A log or an error log. In hope for just a log.
-   */
-  async changeFullname() {
-    if (!this.newFullname) { return; }
-    try {
-      await this.authService.updateName(this.newFullname);
-      console.log('Name successfull changed.');
-    } catch (error) {
-      console.error('Error while updating the name.');
-    }
-  }
 
 
 }
