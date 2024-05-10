@@ -3,9 +3,9 @@ import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updat
 import { Router } from '@angular/router';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
-import { Firestore, doc, addDoc, collection, updateDoc, query, where, getDocs, getDoc } from '@angular/fire/firestore';
+import { Firestore, doc, addDoc, collection, updateDoc, query, where, getDocs, getDoc, deleteDoc } from '@angular/fire/firestore';
 import { User } from '../models/user.class';
-import { FirebaseError } from '@angular/fire/app';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -69,26 +69,68 @@ export class AuthService {
   }
 
   /**
-   * This function reauthenticates the User first- then it deletes it from firebase Auth.
-   * Todo deleting all user entries and firestore user doc.
-   * @param email
-   * @param password
+   * This reauthenticates the user - for sensitive actions needed
+   * @param email Email to log in
+   * @param password Password to log in
+   * @returns Boolean - true when successful
    */
-  async removeUser(email: string, password: string) {
+  async reAuthenticateUser(email: string, password: string) {
     const user = this.auth.currentUser;
     const credential = await EmailAuthProvider.credential(email, password);
+
+    if (!user || !credential) {
+      console.error('Authentication failed. No User or credential.');
+      return false;
+    }
+
     try {
-      if (user && credential) {
-        await reauthenticateWithCredential(user, credential);
-        await deleteUser(user);
-        console.log('User successfully deleted');
-      }
+      await reauthenticateWithCredential(user, credential);
+      return true;
+    } catch (error) {
+      console.error('Re-authentication error: ', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Deletes the current user from Firebase Authentication.
+   * Attention: Make sure to re-authenticate the user with reAuthenticateUser() before calling this function.
+   * @returns Boolean - true on success
+   */
+  async removeAuthUser() {
+    const user = this.auth.currentUser;
+    if (!user) {
+      console.error('User not found');
+      return false;
+    }
+    try {
+      await deleteUser(user);
+      console.log('User Auth successfully deleted');
+      return true;
     } catch (error) {
       console.error('Failed to delete user:', error);
-      // Handle specific error codes
-      if (typeof error === 'object' && error !== null && 'code' in error && error.code === 'auth/user-mismatch') {
-        console.error('Cannot delete user: the provided credentials do not match the current user.');
+      throw error;
+    }
+  }
+
+  /**
+   * This function deletes the user document
+   */
+  async removeFirestoreUser() {
+    const user = this.auth.currentUser;
+    if (!user) {
+      throw new Error('No UID found for current user.');
+    }
+    const uid = user.uid; //this gets the auth id from the current logged user
+    try {
+      const docId = await this.getDocIdFromAuthUserId(uid);
+      if (!docId) {
+        throw new Error ('User docId not found by Auth ID.')
       }
+      await deleteDoc(doc(this.firestore, 'users', docId));
+      console.log('User doc in Firestore successfully deleted');
+    } catch (error) {
+      console.error('Couldnt delete firestore user.', error);
       throw error;
     }
   }
@@ -115,76 +157,91 @@ export class AuthService {
   }
 
   /**
-   * This is the main function to call when changing email address.
-   * @param newmail this is the new mail to update to
+   * Updates email of the current user from Firebase Authentication and Firestore
+   * Make sure to re-authenticate the user with reAuthenticateUser() before calling this function.
+   * @returns Boolean - true on success
    */
-  async updateEmailAddress(newmail: string, email: string, password: string) {
-
+  async updateEmailAddress(newmail: string): Promise<boolean> {
     const user = this.auth.currentUser;
-    const credential = await EmailAuthProvider.credential(email, password);
-    if (user && (user.email === null || user.email === undefined)) { return; }
-    const oldEmail = user?.email as string;
-
-    if (user && credential) {
-      try {
-        await reauthenticateWithCredential(user, credential);
-        await this.updateEmailAllRefs(user, newmail);
-      } catch (error) {
-        await this.rollbackUser(user, oldEmail, error);
-      }
+    if (!user) {
+      console.error('No user found.');
+      return false;
+    }
+    const oldEmail = user.email as string;
+    try {
+      await this.updateEmailAllRefs(user, newmail);
+      return true;
+    } catch (error) {
+      console.log('Error updating email, rolling back');
+      await this.rollbackUser(user, oldEmail);
+      throw error;
     }
   }
 
-  async rollbackUser(currentUser: any, oldEmail: string, error: any) {
-    // Attempt to rollback
+  /**
+   * Rollback function to set the old email if any resetting fails
+   * @param currentUser
+   * @param oldEmail
+   */
+  async rollbackUser(currentUser: any, oldEmail: string) {
     try {
       await updateEmail(currentUser, oldEmail);
       console.warn('Reverted back to old email.');
     } catch (revertError) {
       console.error('Failed to revert email in Auth: ', revertError);
-      throw new Error('An error happened when udpating email, and reverting it also failed. ');
+      throw new Error('Critical failure. email update and rollback both failed!');
     }
-    throw error;
   }
 
+  /**
+   * Bundled functions to update users email on auth and firestore
+   * @param currentUser
+   * @param newmail
+   */
   async updateEmailAllRefs(currentUser: any, newmail: string) {
     try {
-      await updateEmail(currentUser, newmail);
-      await this.updateFSUser(newmail);
+      await updateEmail(currentUser, newmail); //updates email in auth
+      await this.updateEmailUsingUID(newmail); //updates email in firestore db
     } catch (error) {
-      if (error instanceof FirebaseError && error.code === 'auth/requires-recent-login') {
-        throw new Error('auth/requires-recent-login');
-      } else {
-        console.error('Failed to update email or Firestore due to:', error);
-        throw error;
-      }
+
     }
   }
 
-  async updateFSUser(email: string) {
-    const uid = this.auth.currentUser?.uid;
-    if (!uid) {
+  /**
+   *
+   * Gets the docId and calls the set method with the docid and the email
+   * @param email Email to set in firestore
+   */
+  async updateEmailUsingUID(email: string) {
+    const user = this.auth.currentUser;
+    if (!user) {
       throw new Error('No UID found for current user.');
     }
+    const uid = user.uid; //this gets the auth id from the current logged user
     try {
-      this.getIdFromUidAndUpdate(email, uid);
+      const docId = await this.getDocIdFromAuthUserId(uid);
+      if (!docId) {
+        throw new Error ('User not found by Auth ID.')
+      }
+      await this.setFirestoreUserEmail(docId, email);
     } catch (error) {
       console.error('Couldnt update email on the firestore user.', error);
       throw error;
     }
   }
 
-  async getIdFromUidAndUpdate(email: string, uid: string) {
+  /**
+   * Sets the users email in Firestore
+   * @param docId
+   * @param email
+   */
+  async setFirestoreUserEmail(docId: string, email: string) {
     try {
-      const docId = await this.getDocIdFromAuthUserId(uid);
-      if (!docId) {
-        console.log('No user found for given UID.');
-        return;
-      }
       const userRef = doc(this.firestore, 'users', docId);
       await updateDoc(userRef, { 'email': email });
     } catch (error) {
-      console.error('Error updating user email to this.firestore. ', error);
+      console.error('Error updating user email to this firestore. ', error);
+      throw error;
     }
   }
 
@@ -246,14 +303,14 @@ export class AuthService {
   }
 
   /**
-   * This function returns the fullnamer of the logged in user
-   * @returns Logged in User' s Fullname or null if not found
+   * This function returns the fullname of the logged in user
+   * @returns String - Full Name of the user in firestore
    */
   async getUserFullname(uid: string) {
     const docId = await this.getDocIdFromAuthUserId(uid);
     if (!docId) {
-      console.log('No such user found.');
-      return;
+      console.log('No doc found by Auth ID.');
+      throw new Error ('No document exist with given Auth UID.');
     }
     const docRef = doc(this.firestore, "users", docId);
     const docSnap = await getDoc(docRef);
@@ -271,7 +328,7 @@ export class AuthService {
       await addDoc(collection(this.firestore, 'users'), strUser);
     } catch (error) {
       console.error('Error uploading user to firebase: ', error);
-      throw new Error('Failed to create user in firebase.')
+      throw error;
     }
   }
 
