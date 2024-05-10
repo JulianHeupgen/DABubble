@@ -55,7 +55,7 @@ export class TestComponent {
       await this.authService.reAuthenticateUser(email, password);
       console.log('User reauthenticated with success');
     } catch (error) {
-      console.error('Error reauthenticating the user. ', error);
+      throw new Error('Couldnt authenticate the user.');
     }
   }
 
@@ -70,8 +70,9 @@ export class TestComponent {
       const formData = await this.openLoginModal();
       if (formData) {
         await this.reAuthenticate(formData.email, formData.password);
-        await this.authService.removeAuthUser();
+        // delete firestore user first as auth uid is needed to track the firestore user
         await this.authService.removeFirestoreUser();
+        await this.authService.removeAuthUser();
         console.log('User deleted with success.');
       } else {
         console.log('Form data not provided');
@@ -122,7 +123,7 @@ export class TestComponent {
     try {
       this.email = await this.authService.getUserEmail();
     } catch (error) {
-      console.error('Failed to get email. ', error);
+      console.warn('Failed to get Email. Please log in or register.');
       this.email = 'undefined';
     }
   }
@@ -134,7 +135,7 @@ export class TestComponent {
         this.fullname = await this.authService.getUserFullname(uid);
       }
     } catch (error) {
-      console.error('Failed to get fullname. ', error);
+      console.warn('Failed to get Fullname. Please log in or register.');
       this.fullname = 'undefined';
     }
   }

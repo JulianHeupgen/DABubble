@@ -79,13 +79,11 @@ export class AuthService {
     const credential = await EmailAuthProvider.credential(email, password);
 
     if (!user || !credential) {
-      console.error('Authentication failed. No User or credential.');
-      return false;
+      throw new Error('Authentication failed. User or Credentials wrong.');
     }
 
     try {
       await reauthenticateWithCredential(user, credential);
-      return true;
     } catch (error) {
       console.error('Re-authentication error: ', error);
       throw error;
@@ -105,7 +103,7 @@ export class AuthService {
     }
     try {
       await deleteUser(user);
-      console.log('User Auth successfully deleted');
+      console.log('Auth User successfully deleted');
       return true;
     } catch (error) {
       console.error('Failed to delete user:', error);
@@ -128,7 +126,7 @@ export class AuthService {
         throw new Error ('User docId not found by Auth ID.')
       }
       await deleteDoc(doc(this.firestore, 'users', docId));
-      console.log('User doc in Firestore successfully deleted');
+      console.log('Firestore User successfully deleted');
     } catch (error) {
       console.error('Couldnt delete firestore user.', error);
       throw error;
