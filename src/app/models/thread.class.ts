@@ -7,11 +7,16 @@ export class Thread {
   messages: Message[];
   timestamp: Date;
 
-  constructor(channelId: string) {
-    this.threadId = '';
-    this.channelId = channelId;
-    this.messages = [];
-    this.timestamp = new Date();
+  constructor(data: {
+    threadId?: string,
+    channelId: string,
+    messages?: Message[],
+    timestamp: Date
+  }) {
+    this.threadId = data.threadId || '';
+    this.channelId = data.channelId;
+    this.messages = data.messages || [];
+    this.timestamp = data.timestamp;
   }
 
 }

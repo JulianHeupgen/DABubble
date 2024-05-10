@@ -16,6 +16,11 @@
         Wenn Klick auf einen Thread, dann wird dieser rechts geöffnet mit dem kompletten Chatverlauf ( FullThreadComponent )
       -->
 
+      <div *ngFor="let thread of threads">
+        <app-channel-thread></app-channel-thread>
+      </div>
+
+
     </div>
     <input matInput placeholder="Nachricht an Entwicklerteam">  
 </mat-card>
