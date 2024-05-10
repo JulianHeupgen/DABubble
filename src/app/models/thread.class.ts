@@ -8,12 +8,12 @@ export class Thread {
   timestamp: Date;
 
   constructor(data: {
-    threadId?: string,
+    id?: string,
     channelId: string,
     messages?: Message[],
     timestamp: Date
   }) {
-    this.threadId = data.threadId || '';
+    this.threadId = data.id || '';
     this.channelId = data.channelId;
     this.messages = data.messages || [];
     this.timestamp = data.timestamp;
