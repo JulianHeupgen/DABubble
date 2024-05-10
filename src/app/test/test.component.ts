@@ -21,6 +21,8 @@ export class TestComponent {
     public dialog: MatDialog
   ) { }
 
+  userAuthId!: string | null;
+
   // Actual values from firestore
   email: string | null = '';
   fullname: string | null = '';
@@ -31,8 +33,17 @@ export class TestComponent {
 
 
   ngOnInit(): void {
+    this.getUserAuthId();
     this.setEmail();
     this.setFullname();
+  }
+
+  async getUserAuthId() {
+    try {
+      this.userAuthId = await this.authService.getUserAuthId();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   /**
