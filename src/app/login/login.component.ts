@@ -56,7 +56,7 @@ export class LoginComponent {
     let logInSuccess = await this.signIn(email, password);
     if (logInSuccess) {
       this.logInFalse = false;
-      this.router.navigate(['/dashboard/', logInSuccess.uid]);
+      this.router.navigate(['/dashboard/']);
     } else {
       this.logInFalse = true;
       console.log('Anmeldung fehlgeschlagen');
@@ -64,14 +64,6 @@ export class LoginComponent {
   }
 
   async guestLogin() {
-    // let logInSuccess = await this.signIn('guest@guest.com', '123456');
-    // console.log('guest login', logInSuccess);
-    // if (logInSuccess) {
-    //   this.router.navigate(['/dashboard/', logInSuccess.uid]);
-    // } else {
-    //   console.log('Anmeldung fehlgeschlagen');
-    // }
-
     const auth = getAuth();
     signInAnonymously(auth)
       .then(() => {
@@ -82,7 +74,6 @@ export class LoginComponent {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // ...
       });
   }
 

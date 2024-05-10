@@ -46,7 +46,8 @@ body {
 }
 
 app-login,
-app-send-mail-to-reset-password {
+app-send-mail-to-reset-password,
+app-password-reset {
   height: 100%;
   display: flex;
   align-items: center;
@@ -54,15 +55,15 @@ app-send-mail-to-reset-password {
   flex-direction: column;
 }
 
-html,
-body {
-  height: 100%;
-}
+// html,
+// body {
+//   height: 100%;
+// }
 
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
+// body {
+//   margin: 0;
+//   font-family: Roboto, "Helvetica Neue", sans-serif;
+// }
 
 app-channel-chat {
   width: 100%;
