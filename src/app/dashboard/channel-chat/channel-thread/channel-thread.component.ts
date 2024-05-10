@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Thread } from '../../../models/thread.class';
 
 @Component({
   selector: 'app-channel-thread',
@@ -8,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrl: './channel-thread.component.scss'
 })
 export class ChannelThreadComponent {
+
+  @Input() thread!: Thread;
 
 }

@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { ChannelThreadComponent } from './channel-thread/channel-thread.component';
 import { User } from '../../models/user.class';
+import { Thread } from '../../models/thread.class';
 
 @Component({
   selector: 'app-channel-chat',
@@ -31,10 +32,7 @@ export class ChannelChatComponent  {
                   }
                 });
               }
-
-  /* 
-  Threads des Channels (ChannelThreadComponent) rendern (vorher noch getThreadsList() );
-  */ 
+ 
 
   userAuthId!: string;
   users: any;
@@ -45,6 +43,7 @@ export class ChannelChatComponent  {
   channelParticipants: any = [];
   channelParticipantsCounter: number = 0;
   threads: any;
+  channelThreads!: Thread[];
 
   
   async ngOnInit() {
@@ -56,7 +55,7 @@ export class ChannelChatComponent  {
     setTimeout(() => {
       this.searchCurrentChannel();
       this.showChannelParticipants(this.channelId);
-      this.showChannelThreads(this.channelId);
+      this.getChannelThreads(this.channelId);
     }, 600);
   }
 
@@ -121,9 +120,17 @@ export class ChannelChatComponent  {
     }
 
 
-    async showChannelThreads(channelId: string) {
-      await this.dataService.getChannelsList();
-      this.channels = this.dataService.allChannels;
+    async getChannelThreads(channelId: string) {
+      await this.dataService.getThreadsList();
+      this.threads = this.dataService.allThreads;
+
+      this.channelThreads = [];
+
+      for (let i=0; i < this.threads.length; i++) {
+        if (this.threads[i].channelId === channelId ) {
+          this.channelThreads.push(new Thread( this.threads[i] ));
+        }
+      }
     }
     
    

@@ -16,8 +16,8 @@
         Wenn Klick auf einen Thread, dann wird dieser rechts geöffnet mit dem kompletten Chatverlauf ( FullThreadComponent )
       -->
 
-      <div *ngFor="let thread of threads">
-        <app-channel-thread></app-channel-thread>
+      <div *ngFor="let thread of channelThreads">
+        <app-channel-thread [thread]="thread"></app-channel-thread>
       </div>
 
 
