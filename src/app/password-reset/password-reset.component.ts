@@ -9,6 +9,7 @@ import { AuthService } from '../services/auth.service';
 import { Auth, confirmPasswordReset} from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-password-reset',
@@ -22,11 +23,29 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
     MatIcon,
   ],
   templateUrl: './password-reset.component.html',
-  styleUrl: './password-reset.component.scss'
+  styleUrl: './password-reset.component.scss',
+  animations: [
+    trigger('resetBanner', [
+      state('showBanner', style({
+        opacity: 1,
+      })),
+      state('fadeUp', style({
+        opacity: 1,
+        bottom: '50%',
+      })),
+      transition('void => showBanner', [
+        animate('0.1s')
+      ]),
+      transition('showBanner => fadeUp', [
+        animate('0.3s')
+      ])
+    ])
+  ]
 })
 export class PasswordResetComponent {
 
   passwordData!: FormGroup;
+  bannerState = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -56,14 +75,19 @@ export class PasswordResetComponent {
     if (this.passwordData.valid) {
       const newPassword = this.passwordData.value.password;
       const actionCode = this.activatedRoute.snapshot.queryParams['oobCode'];
-      confirmPasswordReset(this.auth, actionCode, newPassword)
-      .then(() => {
-        console.log('password is reseted');
-        this.router.navigate(['login']);
-      })
-      .catch(() => {
-        console.log('password is not reseted');
-      })
+      // confirmPasswordReset(this.auth, actionCode, newPassword)
+      // .then(() => {
+        this.bannerState = 'showBanner';
+        setTimeout(() => {
+          this.bannerState = 'fadeUp';
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 1000);
+        }, 500);
+      // })
+      // .catch(() => {
+      //   console.log('password is not reseted');
+      // })
     }
   }
 }
