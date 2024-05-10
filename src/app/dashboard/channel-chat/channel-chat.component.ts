@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatList, MatListModule } from '@angular/material/list';
@@ -18,12 +18,22 @@ import { User } from '../../models/user.class';
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
 })
-export class ChannelChatComponent {
+export class ChannelChatComponent  {
 
-  constructor(private dataService: DataService, private route: ActivatedRoute, private storage: StorageService, private auth: AuthService) {}
+  constructor(private dataService: DataService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private storage: StorageService,
+              private auth: AuthService) {
+                this.router.events.subscribe(event => {   
+                  if (event instanceof NavigationEnd) {
+                    this.ngOnInit(); 
+                  }
+                });
+              }
 
-  /* Channel Header:  die Participants Avatare rendern und Anzahl Participants !
-    dann die Threads des Channels (ChannelThreadComponent) rendern (vorher noch getThreadsList() );
+  /* 
+  Threads des Channels (ChannelThreadComponent) rendern (vorher noch getThreadsList() );
   */ 
 
   userAuthId!: string;
@@ -38,6 +48,9 @@ export class ChannelChatComponent {
 
   
   async ngOnInit() {
+    this.channelParticipants = [];         
+    this.channelParticipantsCounter= 0;
+
     await this.checkUserAuthId();
 
     setTimeout(() => {
@@ -79,9 +92,9 @@ export class ChannelChatComponent {
 
 
     async searchCurrentChannel() {
-    this.route.params.subscribe(params => {   
-      this.channelId = params['id'];       
-      });
+      this.route.params.subscribe(params => {   
+        this.channelId = params['id'];       
+        });
 
       await this.dataService.getChannelsList();
       this.channels = this.dataService.allChannels;
@@ -97,7 +110,7 @@ export class ChannelChatComponent {
 
     showChannelParticipants(channelId: string) {
       this.users.forEach((user:any) => {
-        if (user.channels.includes(channelId)) {
+        if (user.channels && user.channels.includes(channelId)) {
           this.channelParticipants.push( {
             participantImage: user.imageUrl
           } 
