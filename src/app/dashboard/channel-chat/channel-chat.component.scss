@@ -1,3 +1,5 @@
+@import '../../../mixin.scss';
+
 .channel-wrapper {
     height: 100%;
     margin: 20px 25px 20px 30px;
@@ -5,7 +7,7 @@
 }
 
 .mat-mdc-card-header {
-     display: unset;
+    display: unset;
 }
 
 mat-card-header {
@@ -32,10 +34,76 @@ mat-card-header {
     height: 75%;
 }
 
-input {
-    height: 100px;
-    margin: 0 20px 15px 20px;
-    border-radius: 12px;
-    border: 3px solid rgba(49, 49, 49, 0.3);
+.text-box {
+    padding: 0 35px 35px 35px;
+    width: 100%;
+
+    textarea {
+        resize: none;
+        height: 145px;
+        width: 100%;
+        padding: 20px;
+        border: 1px solid #ADB0D9;
+        border-radius: 20px;
+        @include font-size-weight-color();
+
+        &::placeholder {
+            @include font-size-weight-color($cl: #686868);
+        }
+
+        &:hover {
+            border: 1px solid #797EF3;
+        }
+
+        &:focus {
+            outline: 1px solid #535AF1;
+        }
+    }
 }
 
+.interactiv-btn-box {
+    margin-top: -60px;
+    @include flex-align-justify($jc: space-between);
+    gap: 10px;
+    width: 100%;
+    padding: 0 20px
+}
+
+.interactive-btns {
+    @include flex-align-justify();
+    gap: 5px;
+}
+
+.border-line {
+    height: 40px;
+    border: 1px solid #ADB0D9
+
+}
+
+.add-text,
+.add-emoticons,
+.address-message-to-user,
+.send-message {
+    @include flex-align-justify();
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+
+    .hover-icon {
+        display: none;
+    }
+
+    &:hover {
+        border-radius: 100%;
+        background-color: #ECEEFE;
+
+        .not-hover-icon {
+            display: none;
+        }
+
+        .hover-icon {
+            display: block;
+        }
+    }
+
+}

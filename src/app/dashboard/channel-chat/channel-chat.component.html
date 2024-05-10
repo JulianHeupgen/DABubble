@@ -1,26 +1,54 @@
 <mat-card class="channel-wrapper">
-    <mat-card-header>
-      <div class="channel-infos"  *ngIf="currentChannel">
-        <div># {{ currentChannel.title }} </div>
-        <div class="header-right-container">
-           <ng-container *ngFor="let participant of channelParticipants"> 
-             <img src="{{participant.participantImage}}"> 
-           </ng-container>
-           <div class="participant-counter">{{channelParticipantsCounter}} Teilnehmer</div>
-        </div>
+  <mat-card-header>
+    <div class="channel-infos" *ngIf="currentChannel">
+      <div># {{ currentChannel.title }} </div>
+      <div class="header-right-container">
+        <ng-container *ngFor="let participant of channelParticipants">
+          <img src="{{participant.participantImage}}">
+        </ng-container>
+        <div class="participant-counter">{{channelParticipantsCounter}} Teilnehmer</div>
       </div>
-    </mat-card-header>
-    <div class="chat-history">
+    </div>
+  </mat-card-header>
+  <div class="chat-history">
 
-      <!--Mit Schleife in diesen Container die ChannelThreadComponents rendern (immer nur erste Nachricht des jeweiligen Threads anzeigen): 
+    <!--Mit Schleife in diesen Container die ChannelThreadComponents rendern (immer nur erste Nachricht des jeweiligen Threads anzeigen): 
         Wenn Klick auf einen Thread, dann wird dieser rechts geöffnet mit dem kompletten Chatverlauf ( FullThreadComponent )
       -->
 
-      <div *ngFor="let thread of channelThreads">
-        <app-channel-thread [thread]="thread"></app-channel-thread>
+    <div *ngFor="let thread of channelThreads">
+      <app-channel-thread [thread]="thread"></app-channel-thread>
+    </div>
+
+
+  </div>
+  <!-- <input matInput *ngIf="currentChannel" placeholder="Nachricht an {{currentChannel.title}}">   -->
+  <div class="text-box">
+    <textarea *ngIf="currentChannel" placeholder="Nachricht an #{{currentChannel.title}}"></textarea>
+    <div class="interactiv-btn-box">
+      <div class="interactive-btns">
+
+        <div class="add-text">
+          <img class="not-hover-icon" src="../../../assets/img/add.png" alt="">
+          <img class="hover-icon" src="../../../assets/img/add_hover.png" alt="">
+        </div>
+        <div class="border-line"></div>
+        <div class="add-emoticons">
+          <img class="not-hover-icon" src="../../../assets/img/emoticon.png" alt="">
+          <img class="hover-icon" src="../../../assets/img/emoticon-hover.png" alt="">
+        </div>
+        <div class="address-message-to-user">
+          <img class="not-hover-icon" src="../../../assets/img/ping-user.png" alt="">
+          <img class="hover-icon" src="../../../assets/img/ping-user-hover.png" alt="">
+        </div>
+
       </div>
 
 
+      <div class="send-message">
+        <img class="not-hover-icon" src="../../../assets/img/send-message.png" alt="">
+        <img class="hover-icon" src="../../../assets/img/send-message-hover.png" alt="">
+      </div>
     </div>
-    <input matInput *ngIf="currentChannel" placeholder="Nachricht an {{currentChannel.title}}">  
+  </div>
 </mat-card>
