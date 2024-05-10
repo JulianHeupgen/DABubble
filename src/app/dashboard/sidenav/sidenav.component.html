@@ -26,20 +26,21 @@
                                 <h2 class="private-headline font-nunito">Channels</h2>
                             </div>
 
-                            
+
                         </div>
 
                         <img class="add-icon" [src]="add"
-                                (mouseenter)="hoverEdit('add', './assets/img/add_channel_hover.png')"
-                                (mouseleave)="resetHoverEdit('add', './assets/img/add_channel.png')">
+                            (mouseenter)="hoverEdit('add', './assets/img/add_channel_hover.png')"
+                            (mouseleave)="resetHoverEdit('add', './assets/img/add_channel.png')">
                     </div>
 
                     <div class="channels-container">
                         <!-- <div *ngFor="let user of getDataFromFirestore()" class="channel"> -->
                         <div *ngFor="let user of allUsers">
-                            <div *ngFor="let channel of user.channels" class="channel" [routerLink]="['/dashboard/channel', channel]">
+                            <div *ngFor="let channel of channelTitles" class="channel"
+                                [routerLink]="['/dashboard/channel', channel.channelId]">
                                 <img class="tag-img" src="./assets/img/tag.png">
-                                <p>{{ channel }}</p>
+                                <p>{{ channel.title }}</p>
                             </div>
                         </div>
 
@@ -117,10 +118,10 @@
 }
 
 <!-- <div *ngFor="let user of allUsers"> -->
-    <div *ngFor="let channelID of allChannels">
-        {{ channelID.title }}
-        <!-- {{ getChannelNameById(channelID) }} -->
-    </div>
+<div *ngFor="let channelID of channelTitles">
+    {{ channelID.channelId }}
+    <!-- {{ getChannelNameById(channelID) }} -->
+</div>
 
 <!-- </div> -->
 
