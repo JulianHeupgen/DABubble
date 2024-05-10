@@ -58,6 +58,8 @@ export class SidenavComponent {
   userId: string = '';
   allUsers: Partial<User>[] = [];
   allChannels: Partial<Channel>[] = [];
+  // channelTitles = [];
+  channelTitles: { channelId: string, title: string }[] = [];
   // userChannels: { [userId: string]: Channel[] } = {};
   private unsubscribe!: () => void;
   private unsubscribeChannels!: () => void;
@@ -148,6 +150,7 @@ export class SidenavComponent {
       if (uid) {
         this.setupUserSubscription(uid);
         this.setupChannelsSubscription();
+        setTimeout(() => this.updateChannelTitles(), 1000);
       } else {
         console.log('Keine UID verfügbar');
         this.allUsers = [];
@@ -173,7 +176,7 @@ export class SidenavComponent {
       });
       console.log('Aktualisierte Benutzerdaten:', this.allUsers);
       console.log('TESTTEST', this.allUsers[0].channels);
-      console.log('CHANNELS', this.allChannels);
+      console.log('ALL CHANNELS', this.allChannels);
       
       
     }, (error) => {
@@ -219,6 +222,26 @@ export class SidenavComponent {
     });
 }
 
+// setupChannelsSubscription() {
+//   const channelsRef = collection(this.firestore, 'channels');
+//   this.unsubscribeChannels = onSnapshot(channelsRef, (snapshot) => {
+//     this.allChannels = snapshot.docs.map(doc => {
+//       const data = doc.data();
+//       return {
+//         docId: doc.id,  // Dokument-ID hinzufügen
+//         data: {  // Daten des Dokuments
+//           channelId: doc.id,
+//           title: data['title'] || '',
+//           participants: data['participants'] || [],
+//           threads: data['threads'] || []
+//         }
+//       };
+//     });
+//     console.log('Aktualisierte Kanaldaten:', this.allChannels);
+//   }, (error) => {
+//     console.error('Fehler beim Abonnieren der Kanaldaten:', error);
+//   });
+// }
 
   ngOnDestroy() {
     if (this.unsubscribe) this.unsubscribe();
@@ -229,5 +252,53 @@ export class SidenavComponent {
   //   const channel = this.allChannels.find(c => c.channelId === channelId);
   //   return channel ? channel.title : 'No Name';
   // }
+
+  // getChannelTitleByDocId(docId: string): string | null {
+  //   for (const user of this.allUsers) {
+  //     if (user.channels?.some(channel => channel.channelId === docId)) {
+  //       const channel = this.allChannels.find(channel => channel.docId === docId);
+  //       // Typüberprüfung, um sicherzustellen, dass `data` das erwartete Objekt ist
+  //       if (channel && typeof channel.data === 'object' && channel.data !== null && 'title' in channel.data) {
+  //         return channel.data.title;
+  //       }
+  //       break;
+  //     }
+  //   }
+  //   return null;
+  // }
+
+  // updateUserChannelTitles() {
+  //   // Benutzerdaten anreichern mit den Kanaltiteln
+  //   this.allUsers = this.allUsers.map(user => {
+  //     const channelTitles = (user.channels || []).map(channelId => {
+  //       const channel = this.allChannels.find(ch => ch.docId === channelId);
+  //       return channel ? channel.data.title : 'Unbekannter Kanal';
+  //     });
+  //     return {
+  //       ...user,
+  //       channelTitles  // Array von Kanaltiteln hinzufügen
+  //     };
+  //   });
+  // }
+
+  updateChannelTitles() {
+    this.channelTitles = [];
+    this.allUsers.forEach(user => {
+      if (user.channels && Array.isArray(user.channels)) {
+        user.channels.forEach(userChannelId => {
+          if (typeof userChannelId === 'string') {
+            const matchedChannel = this.allChannels.find(channel => channel.channelId === userChannelId);
+            if (matchedChannel && matchedChannel.channelId && matchedChannel.title) {
+              this.channelTitles.push({
+                channelId: matchedChannel.channelId,
+                title: matchedChannel.title
+              });
+            }
+          }
+        });
+      }
+    });
+    console.log('Aktualisierte Kanaltitel:', this.channelTitles);
+  }
 
 }

@@ -7,19 +7,22 @@ export class Channel {
   threads: Thread[];
   channelId: string;
   docId: string;
+  data: string;
 
   constructor(data: {
     id?: string,
     title?: string,
     participants?: User[],
     threads?: Thread[],
-    docId?: string
+    docId?: string,
+    data?: string
   }) {
     this.channelId = data.id || '';
     this.title = data.title || '';
     this.participants = data.participants || [];
     this.threads = data.threads || [];
     this.docId = data.docId || '';
+    this.data = data.data || '';
   }
 
 

@@ -116,11 +116,12 @@
     (click)="toggleSidenav()">
 }
 
-<div *ngFor="let user of allUsers">
+<!-- <div *ngFor="let user of allUsers"> -->
     <div *ngFor="let channelID of allChannels">
+        {{ channelID.title }}
         <!-- {{ getChannelNameById(channelID) }} -->
     </div>
 
-</div>
+<!-- </div> -->
 
 <!-- <button (click)="loadData()">INDEXED</button> -->
