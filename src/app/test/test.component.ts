@@ -39,8 +39,8 @@ export class TestComponent {
    * Open the login modal which is used for the reauthentification
    * @returns Login Form value as Promise
    */
-  openLoginModal(): Promise<any> {
-    const dialogRef = this.dialog.open(ReAuthenticateUserComponent);
+  openLoginModal(source: string): Promise<any> {
+    const dialogRef = this.dialog.open(ReAuthenticateUserComponent, {data: { from: source }});
     return firstValueFrom(dialogRef.afterClosed());
   }
 
@@ -67,7 +67,7 @@ export class TestComponent {
    */
   async deleteUser() {
     try {
-      const formData = await this.openLoginModal();
+      const formData = await this.openLoginModal('User löschen');
       if (formData) {
         await this.reAuthenticate(formData.email, formData.password);
         // delete firestore user first as auth uid is needed to track the firestore user
@@ -91,7 +91,7 @@ export class TestComponent {
    */
   async changeEmail() {
     try {
-      const formData = await this.openLoginModal();
+      const formData = await this.openLoginModal('E-Mail ändern');
       if (formData) {
         await this.reAuthenticate(formData.email, formData.password);
         if (!this.newEmail) { return; }

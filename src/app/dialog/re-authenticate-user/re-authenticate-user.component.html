@@ -1,21 +1,49 @@
-<div class="reauth-container">
-  <form [formGroup]="reAuthForm" (ngSubmit)="reAuthenticateUser()">
-    <div>
+<mat-card>
+  <mat-card-content>
+    <div class="register-header">
+      <h1>
+        Login
+      </h1>
+      <span>Melde dich bitte nochmals an um die gewünschte Aktion <b>{{ data.from }}</b> durchzuführen.</span>
+    </div>
+    <form [formGroup]="reAuthForm" (ngSubmit)="reAuthenticateUser()">
+
+      <!-- <div>
       <label for="email">Email</label>
       <input name="email" formControlName="email" type="email">
       <div class="error-container">
         <p class="input-feedback" *ngIf="reAuthForm.get('email')?.errors && reAuthForm.get('email')?.dirty">Diese E-Mail Adresse ist leider ungültig.</p>
       </div>
-    </div>
+    </div> -->
 
-    <div>
-      <label for="password">Password</label>
-      <input name="password" formControlName="password" type="password">
-      <div class="error-container">
-        <p class="input-feedback" *ngIf="reAuthForm.get('password')?.errors && reAuthForm.get('password')?.dirty">Bitte geben sie ein Passwort mit mind. 6 Zeichen ein.</p>
+      <div class="input-container">
+        <div class="input-field-container">
+          <div>
+            <mat-icon>mail</mat-icon>
+            <input formControlName="email" type="email" placeholder="beispielname@email.com">
+          </div>
+        </div>
+        <div class="error-container">
+          <p class="input-feedback" *ngIf="reAuthForm.get('email')?.errors && reAuthForm.get('email')?.dirty">*Diese
+            E-Mail Adresse ist leider ungültig.</p>
+        </div>
       </div>
-    </div>
 
-    <button type="submit" [disabled]="!reAuthForm.valid">Login</button>
-  </form>
-</div>
+
+      <div class="input-container">
+        <div class="input-field-container">
+          <div>
+            <mat-icon>lock</mat-icon>
+            <input formControlName="password" type="password" placeholder="Password">
+          </div>
+        </div>
+        <div class="error-container">
+          <p class="input-feedback" *ngIf="reAuthForm.get('password')?.errors && reAuthForm.get('password')?.dirty">Bitte geben sie ein Passwort mit mind. 6 Zeichen ein.</p>
+        </div>
+      </div>
+
+      <button type="submit" mat-flat-button color="primary" [disabled]="!reAuthForm.valid">Login</button>
+
+    </form>
+  </mat-card-content>
+</mat-card>
