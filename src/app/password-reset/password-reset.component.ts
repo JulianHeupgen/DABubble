@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
@@ -6,12 +6,9 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 
 
 import { AuthService } from '../services/auth.service';
-import { Auth, confirmPasswordReset, getAuth, onAuthStateChanged, updatePassword, verifyPasswordResetCode } from '@angular/fire/auth';
+import { Auth, confirmPasswordReset} from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
-import { initializeApp } from 'firebase-admin/app';
-import { signInWithEmailLink } from '@firebase/auth';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-password-reset',
