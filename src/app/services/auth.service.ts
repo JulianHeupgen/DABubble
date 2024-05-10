@@ -3,8 +3,9 @@ import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updat
 import { Router } from '@angular/router';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
-import { Firestore, doc, addDoc, collection, updateDoc, query, where, getDocs, getDoc, deleteDoc } from '@angular/fire/firestore';
+import { Firestore, doc, addDoc, collection, updateDoc, query, where, getDocs, getDoc, deleteDoc, onSnapshot } from '@angular/fire/firestore';
 import { User } from '../models/user.class';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,45 @@ export class AuthService {
     private firestore: Firestore,
     private router: Router,
   ) { }
+
+
+
+
+  /* TEST SPACE */
+
+  getUsersList() {
+    return new Observable((subscriber) => {
+      const q = query(collection(this.firestore, 'users'));
+      const mohnkuchen = onSnapshot(q, (qS) => {
+        let arr: any = [];
+        qS.forEach((doc) => {
+          arr.push(doc.data()['name']);
+        });
+        subscriber.next(arr);
+      });
+      return function unsubscribe() {
+        mohnkuchen();
+      }
+    });
+  }
+
+
+  /* END TEST SPACE */
+
+
+  isAuthenticated(): Observable<boolean> {
+    return new Observable((subscriber) => {
+      const unsubscribe = this.auth.onAuthStateChanged(user => {
+        subscriber.next(!!user);
+      }, err => {
+        subscriber.error(err);
+      });
+
+      // Cleanup
+      return unsubscribe;
+    });
+  }
+
 
   async signUp(email: string, password: string, name: string) {
     try {
@@ -123,7 +163,7 @@ export class AuthService {
     try {
       const docId = await this.getDocIdFromAuthUserId(uid);
       if (!docId) {
-        throw new Error ('User docId not found by Auth ID.')
+        throw new Error('User docId not found by Auth ID.')
       }
       await deleteDoc(doc(this.firestore, 'users', docId));
       console.log('Firestore User successfully deleted');
@@ -220,7 +260,7 @@ export class AuthService {
     try {
       const docId = await this.getDocIdFromAuthUserId(uid);
       if (!docId) {
-        throw new Error ('User not found by Auth ID.')
+        throw new Error('User not found by Auth ID.')
       }
       await this.setFirestoreUserEmail(docId, email);
     } catch (error) {
@@ -309,7 +349,7 @@ export class AuthService {
     const docId = await this.getDocIdFromAuthUserId(uid);
     if (!docId) {
       console.log('No doc found by Auth ID.');
-      throw new Error ('No document exist with given Auth UID.');
+      throw new Error('No document exist with given Auth UID.');
     }
     const docRef = doc(this.firestore, "users", docId);
     const docSnap = await getDoc(docRef);

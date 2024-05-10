@@ -11,10 +11,10 @@ import { PhotoSelectionComponent } from './photo-selection/photo-selection.compo
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { TestComponent } from './test/test.component';
 
-
 import { AddChannelComponent } from './dialog/add-channel/add-channel.component';
 import { SendMailToResetPasswordComponent } from './send-mail-to-reset-password/send-mail-to-reset-password.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
 
@@ -35,7 +35,7 @@ export const routes: Routes = [
   { path: 'privacy', component: PrivacyComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'logo', component: LogoComponent },
-  { path: 'test', component: TestComponent },
+  { path: 'test', component: TestComponent, canActivate: [authGuard]},
   { path: '**', component: PageNotFoundComponent }
 ];
 

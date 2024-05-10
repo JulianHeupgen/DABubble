@@ -22,6 +22,7 @@ export class TestComponent {
   ) { }
 
   userAuthId!: string | null;
+  users: any;
 
   // Actual values from firestore
   email: string | null = '';
@@ -36,7 +37,27 @@ export class TestComponent {
     this.getUserAuthId();
     this.setEmail();
     this.setFullname();
+    this.getUsers();
   }
+
+  getUsers() {
+    const subscription = this.authService.getUsersList().subscribe( value => console.log(value)
+      /* {
+      next(arr) {
+        console.log('Subscription active');
+        console.log(arr);
+      },
+      error(err) {
+        console.error(err);
+      }
+    } */
+  )
+    setTimeout(() => {
+      subscription.unsubscribe();
+      console.log('unsubscribed');
+    }, 15000);
+  }
+
 
   async getUserAuthId() {
     try {
