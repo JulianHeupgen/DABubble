@@ -66,14 +66,12 @@ export class SendMailToResetPasswordComponent {
       sendPasswordResetEmail(auth, email)
         .then(() => {
           this.bannerState = 'showBanner';
-
-          // After the animation is finished, navigate to login
           setTimeout(() => {
             this.bannerState = 'fadeUp';
             setTimeout(() => {
               this.router.navigate(['/login']);
-            }, 1000); // Adjust the timeout according to your animation duration
-          }, 500); // Adjust the timeout according to your animation duration
+            }, 1000);
+          }, 500);
         })
         .catch ((error) => {
       const errorCode = error.code;
