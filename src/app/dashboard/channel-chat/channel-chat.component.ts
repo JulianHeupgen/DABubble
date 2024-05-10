@@ -56,7 +56,6 @@ export class ChannelChatComponent  {
     setTimeout(() => {
       this.searchCurrentChannel();
       this.showChannelParticipants(this.channelId);
-      this.showChannelParticipantsCounter();
     }, 600);
   }
 
@@ -115,14 +114,13 @@ export class ChannelChatComponent  {
             participantImage: user.imageUrl
           } 
         );
+        this.channelParticipantsCounter++;
       }
       });
     }
 
 
-    showChannelParticipantsCounter() {
-      this.channelParticipantsCounter = this.channelParticipants.length;
-    }
+    
    
    
     
