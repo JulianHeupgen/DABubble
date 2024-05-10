@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../services/auth.service';
 import { Auth, confirmPasswordReset} from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-password-reset',
@@ -16,6 +16,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   imports: [
     CommonModule,
     MatCardModule,
+    RouterModule,
     ReactiveFormsModule,
     MatIconModule,
     MatIcon,

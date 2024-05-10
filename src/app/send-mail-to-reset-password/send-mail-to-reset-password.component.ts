@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MatCommonModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../services/data.service';
-import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { Firestore, getDocs } from '@angular/fire/firestore';
 import { getAuth, sendPasswordResetEmail } from '@angular/fire/auth';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-send-mail-to-reset-password',
@@ -17,41 +18,44 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
     MatCardModule,
     MatIconModule,
     ReactiveFormsModule,
+    RouterModule,
   ],
   templateUrl: './send-mail-to-reset-password.component.html',
-  styleUrl: './send-mail-to-reset-password.component.scss'
+  styleUrl: './send-mail-to-reset-password.component.scss',
+  animations: [
+    trigger('emailBanner', [
+      state('showBanner', style({
+        opacity: 1,
+      })),
+      state('fadeUp', style({
+        opacity: 1,
+        bottom: '50%',
+      })),
+      transition('void => showBanner', [
+        animate('0.1s')
+      ]),
+      transition('showBanner => fadeUp', [
+        animate('0.3s')
+      ])
+    ])
+  ]
 })
 export class SendMailToResetPasswordComponent {
 
   logInFalse: boolean = false;
+  bannerState = '';
 
   constructor(
     private firestore: Firestore,
     private authService: AuthService,
     private dataService: DataService,
     private formBuilder: FormBuilder,
+    private router: Router
   ) { }
 
   emailData = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
   })
-
-  ngOnInit() {
-    // this.getIdFromMail();
-    // this.sendEmailResetPassword('janhorstmann@yahoo.de');
-  }
-
-  async getIdFromMail() {
-    const querySnapshot = await getDocs(this.dataService.getUserCollection());
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data()['email']);
-    });
-  }
-
-  mailForResetPassword() {
-
-  }
 
   async sendEmailResetPassword(): Promise<void> {
     if (this.emailData.valid) {
@@ -61,15 +65,21 @@ export class SendMailToResetPasswordComponent {
 
       sendPasswordResetEmail(auth, email)
         .then(() => {
-          // Password reset email sent!
-          // ..
-          console.log('Password reset email sent!', auth);
+          this.bannerState = 'showBanner';
+
+          // After the animation is finished, navigate to login
+          setTimeout(() => {
+            this.bannerState = 'fadeUp';
+            setTimeout(() => {
+              this.router.navigate(['/login']);
+            }, 1000); // Adjust the timeout according to your animation duration
+          }, 500); // Adjust the timeout according to your animation duration
         })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // ..
-        });
-    }
+        .catch ((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
   }
+}
 }
