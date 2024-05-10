@@ -22,5 +22,5 @@
 
 
     </div>
-    <input matInput placeholder="Nachricht an Entwicklerteam">  
+    <input matInput *ngIf="currentChannel" placeholder="Nachricht an {{currentChannel.title}}">  
 </mat-card>
