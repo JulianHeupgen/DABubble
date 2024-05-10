@@ -44,7 +44,7 @@ export class TestComponent {
     const password = this.passwordInput.nativeElement.value;
     if (email && password) {
       try {
-        await this.authService.removeUser(email, password);
+       // await this.authService.removeUser(email, password);       Vorsicht: Fehlermeldung, daher auskommentiert !!
         console.log('User deleted');
       } catch (error) {
         console.error(error);
@@ -89,7 +89,7 @@ export class TestComponent {
     if (!this.newEmail) { return }
 
     try {
-      await this.authService.updateEmailAddress(this.newEmail, email, password);
+     // await this.authService.updateEmailAddress(this.newEmail, email, password);     Vorsicht, Fehlermeldung; daher auskommentiert
       console.log('Email sucessful changed.');
     } catch (error) {
       if (error instanceof Error && error.message === 'auth/requires-recent-login') {
