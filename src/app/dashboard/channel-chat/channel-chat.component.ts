@@ -56,6 +56,7 @@ export class ChannelChatComponent  {
     setTimeout(() => {
       this.searchCurrentChannel();
       this.showChannelParticipants(this.channelId);
+      this.showChannelThreads(this.channelId);
     }, 600);
   }
 
@@ -107,8 +108,8 @@ export class ChannelChatComponent  {
     }
 
 
-    showChannelParticipants(channelId: string) {
-      this.users.forEach((user:any) => {
+    async showChannelParticipants(channelId: string) {
+      await this.users.forEach((user:any) => {
         if (user.channels && user.channels.includes(channelId)) {
           this.channelParticipants.push( {
             participantImage: user.imageUrl
@@ -120,6 +121,10 @@ export class ChannelChatComponent  {
     }
 
 
+    async showChannelThreads(channelId: string) {
+      await this.dataService.getChannelsList();
+      this.channels = this.dataService.allChannels;
+    }
     
    
    
