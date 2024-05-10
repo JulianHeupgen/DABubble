@@ -1,13 +1,13 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule, MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav';
 import { DataService } from '../../services/data.service';
 import { User } from '../../models/user.class';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { collection, DocumentData, Firestore, onSnapshot, query, where } from '@angular/fire/firestore';
+import { collection, Firestore, onSnapshot, query, where } from '@angular/fire/firestore';
 import { Channel } from '../../models/channel.class';
 
 
@@ -58,9 +58,7 @@ export class SidenavComponent {
   userId: string = '';
   allUsers: Partial<User>[] = [];
   allChannels: Partial<Channel>[] = [];
-  // channelTitles = [];
   channelTitles: { channelId: string, title: string }[] = [];
-  // userChannels: { [userId: string]: Channel[] } = {};
   private unsubscribe!: () => void;
   private unsubscribeChannels!: () => void;
 
@@ -128,22 +126,6 @@ export class SidenavComponent {
   }
 
 
-  // async loadData() {
-  //   try {
-  //     const uid = await this.authService.getUserAuthId();
-  //     if (uid) {
-  //       const users = await this.getDataFromFirestore();
-  //       this.allUsers = users.filter(user => user.authUserId === uid);
-  //     } else {
-  //       console.log('Keine UID verfügbar');
-  //       this.allUsers = [];
-  //     }
-  //   } catch (error) {
-  //     console.error('Fehler beim laden der Daten', error);
-  //     this.allUsers = [];
-  //   }
-  // }
-
   async loadData() {
     try {
       const uid = await this.authService.getUserAuthId();
@@ -162,6 +144,7 @@ export class SidenavComponent {
       this.allChannels = [];
     }
   }
+
 
   setupUserSubscription(uid: string) {
     const usersRef = collection(this.firestore, 'users');
@@ -184,25 +167,6 @@ export class SidenavComponent {
     });
   }
 
-  // setupUserSubscription(uid: string) {
-  //   const usersRef = collection(this.firestore, 'users');
-  //   const q = query(usersRef, where('authUserId', '==', uid));
-  //   this.unsubscribe = onSnapshot(q, (snapshot) => {
-  //     this.allUsers = snapshot.docs.map(doc => ({
-  //       id: doc.id,
-  //       name: doc.data()['name'] || 'Unbekannter Name',
-  //       email: doc.data()['email'] || 'Keine Email',
-  //       onlineStatus: doc.data()['onlineStatus'] || 'offline',
-  //       authUserId: doc.data()['authUserId'],
-  //       imageUrl: doc.data()['imageUrl'] || 'Kein Bild',
-  //       channels: doc.data()['channels'] || [],
-  //       userChats: doc.data()['userChats'] || []
-  //     }));
-  //     console.log('Aktualisierte Benutzerdaten:', this.allUsers);
-  //   }, (error) => {
-  //     console.error('Fehler beim Abonnieren der Benutzerdaten:', error);
-  //   });
-  // }
 
   setupChannelsSubscription() {
     const channelsRef = collection(this.firestore, 'channels');
@@ -222,64 +186,10 @@ export class SidenavComponent {
     });
 }
 
-// setupChannelsSubscription() {
-//   const channelsRef = collection(this.firestore, 'channels');
-//   this.unsubscribeChannels = onSnapshot(channelsRef, (snapshot) => {
-//     this.allChannels = snapshot.docs.map(doc => {
-//       const data = doc.data();
-//       return {
-//         docId: doc.id,  // Dokument-ID hinzufügen
-//         data: {  // Daten des Dokuments
-//           channelId: doc.id,
-//           title: data['title'] || '',
-//           participants: data['participants'] || [],
-//           threads: data['threads'] || []
-//         }
-//       };
-//     });
-//     console.log('Aktualisierte Kanaldaten:', this.allChannels);
-//   }, (error) => {
-//     console.error('Fehler beim Abonnieren der Kanaldaten:', error);
-//   });
-// }
-
   ngOnDestroy() {
     if (this.unsubscribe) this.unsubscribe();
     if (this.unsubscribeChannels) this.unsubscribeChannels();
   }
-
-  // getChannelNameById(channelId: string): string {
-  //   const channel = this.allChannels.find(c => c.channelId === channelId);
-  //   return channel ? channel.title : 'No Name';
-  // }
-
-  // getChannelTitleByDocId(docId: string): string | null {
-  //   for (const user of this.allUsers) {
-  //     if (user.channels?.some(channel => channel.channelId === docId)) {
-  //       const channel = this.allChannels.find(channel => channel.docId === docId);
-  //       // Typüberprüfung, um sicherzustellen, dass `data` das erwartete Objekt ist
-  //       if (channel && typeof channel.data === 'object' && channel.data !== null && 'title' in channel.data) {
-  //         return channel.data.title;
-  //       }
-  //       break;
-  //     }
-  //   }
-  //   return null;
-  // }
-
-  // updateUserChannelTitles() {
-  //   // Benutzerdaten anreichern mit den Kanaltiteln
-  //   this.allUsers = this.allUsers.map(user => {
-  //     const channelTitles = (user.channels || []).map(channelId => {
-  //       const channel = this.allChannels.find(ch => ch.docId === channelId);
-  //       return channel ? channel.data.title : 'Unbekannter Kanal';
-  //     });
-  //     return {
-  //       ...user,
-  //       channelTitles  // Array von Kanaltiteln hinzufügen
-  //     };
-  //   });
-  // }
 
   updateChannelTitles() {
     this.channelTitles = [];
