@@ -45,23 +45,24 @@ export class ChannelChatComponent  {
   threads: any;
   channelThreads!: Thread[];
 
+
   
   async ngOnInit() {
     this.channelParticipants = [];         
-    this.channelParticipantsCounter= 0;
+    this.channelParticipantsCounter = 0;
 
     await this.checkUserAuthId();
-
+      
     setTimeout(() => {
       this.searchCurrentChannel();
       this.showChannelParticipants(this.channelId);
       this.getChannelThreads(this.channelId);
-    }, 600);
+    }, 600); 
   }
 
 
-  async checkUserAuthId() {
-    await this.auth.getUserAuthId().then(userId => {
+   async checkUserAuthId() {
+     await this.auth.getUserAuthId().then(userId => {
       if (userId) {
         this.userAuthId = userId;
       } else {
@@ -79,7 +80,7 @@ export class ChannelChatComponent  {
 
   async findCurrentUser(authId: string) {
     await this.dataService.getUsersList();
-    this.users = this.dataService.allUsers;
+    this.users = this.dataService.allUsers;      
     
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].authUserId === authId) {
@@ -131,10 +132,7 @@ export class ChannelChatComponent  {
           this.channelThreads.push(new Thread( this.threads[i] ));
         }
       }
-    }
-    
-   
-   
+    } 
     
 }
   
