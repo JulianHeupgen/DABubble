@@ -57,9 +57,10 @@ export class SidenavComponent {
   users: User[] = [];
   userId: string = '';
   allUsers: Partial<User>[] = [];
-  allChannels: Channel[] = [];
+  allChannels: Partial<Channel>[] = [];
   // userChannels: { [userId: string]: Channel[] } = {};
-  private unsubscribe!: () => void ;
+  private unsubscribe!: () => void;
+  private unsubscribeChannels!: () => void;
 
   constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private authService: AuthService, private firestore: Firestore) {
     this.loadData();
@@ -79,9 +80,9 @@ export class SidenavComponent {
       this.allUsers = [];
     });
     console.log('All users loaded:', this.allUsers);
-      this.dataService.getChannelsList();
-      this.allChannels = this.dataService.allChannels;
-      console.log("Channels in users:", this.allUsers.map(user => user.channels));
+    this.dataService.getChannelsList();
+    this.allChannels = this.dataService.allChannels;
+    console.log("Channels in users:", this.allUsers.map(user => user.channels));
 
 
   }
@@ -146,15 +147,17 @@ export class SidenavComponent {
       const uid = await this.authService.getUserAuthId();
       if (uid) {
         this.setupUserSubscription(uid);
+        this.setupChannelsSubscription();
       } else {
         console.log('Keine UID verfügbar');
         this.allUsers = [];
+        this.allChannels = [];
       }
     } catch (error) {
       console.error('Fehler beim laden:', error);
       this.allUsers = [];
+      this.allChannels = [];
     }
-    console.log(this.allUsers);
   }
 
   setupUserSubscription(uid: string) {
@@ -168,7 +171,11 @@ export class SidenavComponent {
           id: doc.id
         };
       });
-      console.log('Aktualisierte Benutzerdaten:', this.allUsers); // Loggen der aktualisierten Daten
+      console.log('Aktualisierte Benutzerdaten:', this.allUsers);
+      console.log('TESTTEST', this.allUsers[0].channels);
+      console.log('CHANNELS', this.allChannels);
+      
+      
     }, (error) => {
       console.error('Fehler beim Abonnieren der Benutzerdaten:', error);
     });
@@ -194,13 +201,33 @@ export class SidenavComponent {
   //   });
   // }
 
+  setupChannelsSubscription() {
+    const channelsRef = collection(this.firestore, 'channels');
+    this.unsubscribeChannels = onSnapshot(channelsRef, (snapshot) => {
+      this.allChannels = snapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          channelId: doc.id,
+          title: data['title'] || '',
+          participants: data['participants'] || [],
+          threads: data['threads'] || []
+        };
+      });
+      console.log('Aktualisierte Kanaldaten:', this.allChannels);
+    }, (error) => {
+      console.error('Fehler beim Abonnieren der Kanaldaten:', error);
+    });
+}
+
+
   ngOnDestroy() {
     if (this.unsubscribe) this.unsubscribe();
+    if (this.unsubscribeChannels) this.unsubscribeChannels();
   }
 
-getChannelNameById(channelId: string): string {
-  const channel = this.allChannels.find(c => c.channelId === channelId);
-  return channel ? channel.title : 'No Name';
-}
+  // getChannelNameById(channelId: string): string {
+  //   const channel = this.allChannels.find(c => c.channelId === channelId);
+  //   return channel ? channel.title : 'No Name';
+  // }
 
 }
