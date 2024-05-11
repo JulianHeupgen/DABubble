@@ -47,5 +47,5 @@ Firestore Collections
 HANNES
 - wer macht password-reset und email update component
 - Jan: reset password
-- Hannes: impressum, delete user
+- Hannes: firebase onlinestatus updaten (timestamp); fix upload on register/next
 - ChannelThreads (oder -list) für die thred Liste, ChannelThread für den Single Thread

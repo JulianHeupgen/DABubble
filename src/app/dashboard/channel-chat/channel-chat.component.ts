@@ -11,6 +11,7 @@ import { AuthService } from '../../services/auth.service';
 import { ChannelThreadComponent } from './channel-thread/channel-thread.component';
 import { User } from '../../models/user.class';
 import { Thread } from '../../models/thread.class';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-channel-chat',
@@ -26,13 +27,13 @@ export class ChannelChatComponent  {
               private router: Router,
               private storage: StorageService,
               private auth: AuthService) {
-                this.router.events.subscribe(event => {   
+                this.router.events.subscribe(event => {
                   if (event instanceof NavigationEnd) {
-                    this.ngOnInit(); 
+                    this.ngOnInit();
                   }
                 });
               }
- 
+
 
   userAuthId!: string;
   users: any;
@@ -46,18 +47,18 @@ export class ChannelChatComponent  {
   channelThreads!: Thread[];
 
 
-  
+
   async ngOnInit() {
-    this.channelParticipants = [];         
+    this.channelParticipants = [];
     this.channelParticipantsCounter = 0;
 
     await this.checkUserAuthId();
-      
+
     setTimeout(() => {
       this.searchCurrentChannel();
       this.showChannelParticipants(this.channelId);
       this.getChannelThreads(this.channelId);
-    }, 600); 
+    }, 600);
   }
 
 
@@ -80,20 +81,20 @@ export class ChannelChatComponent  {
 
   async findCurrentUser(authId: string) {
     await this.dataService.getUsersList();
-    this.users = this.dataService.allUsers;      
-    
+    this.users = this.dataService.allUsers;
+
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].authUserId === authId) {
-          this.currentUser = new User(this.users[i]);            
-          break; 
+          this.currentUser = new User(this.users[i]);
+          break;
         }
       }
     }
 
 
     async searchCurrentChannel() {
-      this.route.params.subscribe(params => {   
-        this.channelId = params['id'];       
+      this.route.params.subscribe(params => {
+        this.channelId = params['id'];
         });
 
       await this.dataService.getChannelsList();
@@ -101,8 +102,8 @@ export class ChannelChatComponent  {
 
       for (let i = 0; i < this.channels.length; i++) {
         if (this.channels[i].id === this.channelId) {
-            this.currentChannel = new Channel(this.channels[i]);     
-            break; 
+            this.currentChannel = new Channel(this.channels[i]);
+            break;
           }
         }
     }
@@ -113,7 +114,7 @@ export class ChannelChatComponent  {
         if (user.channels && user.channels.includes(channelId)) {
           this.channelParticipants.push( {
             participantImage: user.imageUrl
-          } 
+          }
         );
         this.channelParticipantsCounter++;
       }
@@ -132,7 +133,5 @@ export class ChannelChatComponent  {
           this.channelThreads.push(new Thread( this.threads[i] ));
         }
       }
-    } 
-    
+    }
 }
-  

@@ -1,11 +1,12 @@
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './../services/auth.service';
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatDialog, MatDialogModule, MatDialogClose } from '@angular/material/dialog';
 import { ReAuthenticateUserComponent } from '../dialog/re-authenticate-user/re-authenticate-user.component';
-import { Observable, firstValueFrom } from 'rxjs';
+import { Subscription, firstValueFrom } from 'rxjs';
+import { User } from '../models/user.class';
 
 @Component({
   selector: 'app-test',
@@ -22,42 +23,43 @@ export class TestComponent {
   ) { }
 
   userAuthId!: string | null;
-  users: any;
-
-  // Actual values from firestore
-  email: string | null = '';
-  fullname: string | null = '';
+  users: User[] | undefined;
+  user: User | undefined;
 
   // New values from user input
   newEmail: string = '';
   newFullname: string = '';
 
+  private usersSub: Subscription = new Subscription();
+  private userSub: Subscription = new Subscription();
+
 
   ngOnInit(): void {
+    // one time getter
     this.getUserAuthId();
-    this.setEmail();
-    this.setFullname();
+
+    // observable streams
     this.getUsers();
+    this.getUser();
   }
 
   getUsers() {
-    const subscription = this.authService.getUsersList().subscribe( value => console.log(value)
-      /* {
-      next(arr) {
-        console.log('Subscription active');
-        console.log(arr);
-      },
-      error(err) {
-        console.error(err);
-      }
-    } */
-  )
-    setTimeout(() => {
-      subscription.unsubscribe();
-      console.log('unsubscribed');
-    }, 15000);
+    this.usersSub = this.authService.getUsersList().subscribe({
+      next: (users) => this.users = users,
+      error: (err) => console.error('Falied to fetch Users List. ', err)
+    });
   }
 
+  getUser() {
+    //this.userSub = this.authService.getUser().subscribe(user => this.user = user);
+    this.userSub = this.authService.getUser().subscribe({
+      next: (user) => {
+        this.user = user;
+        console.log(this.user);
+      },
+      error: (err) => console.error('Failed to fetch user: ', err)
+    });
+  }
 
   async getUserAuthId() {
     try {
@@ -72,7 +74,7 @@ export class TestComponent {
    * @returns Login Form value as Promise
    */
   openLoginModal(source: string): Promise<any> {
-    const dialogRef = this.dialog.open(ReAuthenticateUserComponent, {data: { from: source }});
+    const dialogRef = this.dialog.open(ReAuthenticateUserComponent, { data: { from: source } });
     return firstValueFrom(dialogRef.afterClosed());
   }
 
@@ -151,27 +153,11 @@ export class TestComponent {
     }
   }
 
-  async setEmail() {
-    try {
-      this.email = await this.authService.getUserEmail();
-    } catch (error) {
-      console.warn('Failed to get Email. Please log in or register.');
-      this.email = 'undefined';
-    }
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.usersSub.unsubscribe();
+    this.userSub.unsubscribe();
   }
-
-  async setFullname() {
-    try {
-      const uid = await this.authService.getUserAuthId();
-      if (uid) {
-        this.fullname = await this.authService.getUserFullname(uid);
-      }
-    } catch (error) {
-      console.warn('Failed to get Fullname. Please log in or register.');
-      this.fullname = 'undefined';
-    }
-  }
-
-
 
 }
