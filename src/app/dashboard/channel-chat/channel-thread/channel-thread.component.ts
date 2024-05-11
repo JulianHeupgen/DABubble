@@ -12,5 +12,9 @@ export class ChannelThreadComponent {
 
   @Input() thread!: Thread;
 
+  formattedTimestamp(): any {
+    return this.thread.getFormattedTimestamp();
+  }
+
 }
 

@@ -59,7 +59,7 @@ export class ChannelChatComponent {
 
     setTimeout(() => {
       this.getChannelInfos();
-    }, 300);
+    }, 600);
   }
 
 
@@ -95,7 +95,7 @@ export class ChannelChatComponent {
 
     setTimeout(() => {
       this.findCurrentUser(this.userAuthId);
-    }, 300);
+    }, 500);
   }
 
 
