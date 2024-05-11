@@ -59,7 +59,7 @@ export class ChannelChatComponent {
 
     setTimeout(() => {
       this.getChannelInfos();
-    }, 600);
+    }, 300);
   }
 
 
