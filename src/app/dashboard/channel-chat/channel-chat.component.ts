@@ -53,17 +53,19 @@ export class ChannelChatComponent {
 
 
   async ngOnInit() {
-    this.channelParticipants = [];
-    this.channelParticipantsCounter = 0;
-
+    this.resetParticipantsData();
     this.dataSubscriptions();
     await this.checkUserAuthId();
 
     setTimeout(() => {
-      this.searchCurrentChannel();
-      this.showChannelParticipants(this.channelId);
-      this.getChannelThreads(this.channelId);
+      this.getChannelInfos();
     }, 600);
+  }
+
+
+  resetParticipantsData() {
+    this.channelParticipants = [];
+    this.channelParticipantsCounter = 0;
   }
 
 
@@ -107,10 +109,15 @@ export class ChannelChatComponent {
   }
 
 
-  async searchCurrentChannel() {
-    this.route.params.subscribe(params => {
-      this.channelId = params['id'];
-    });
+  getChannelInfos() {
+    this.getCurrentChannel();
+    this.showChannelParticipants(this.channelId);
+    this.getChannelThreads(this.channelId);
+  }
+
+
+  async getCurrentChannel() {
+    this.getChannelIdFromURL();
 
     for (let i = 0; i < this.channels.length; i++) {
       if (this.channels[i].id === this.channelId) {
@@ -118,6 +125,13 @@ export class ChannelChatComponent {
         break;
       }
     }
+  }
+
+
+  getChannelIdFromURL() {
+    this.route.params.subscribe(params => {
+      this.channelId = params['id'];
+    });
   }
 
 
