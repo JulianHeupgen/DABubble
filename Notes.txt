@@ -49,6 +49,5 @@ HANNES
 - Jan: reset password
 - Hannes:
   firebase onlinestatus updaten (timestamp);
-  fix upload on register/next
   mat-dialog from menu implement in dash header for profile
 - ChannelThreads (oder -list) für die thred Liste, ChannelThread für den Single Thread
