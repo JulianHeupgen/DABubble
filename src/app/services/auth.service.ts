@@ -38,7 +38,6 @@ export class AuthService {
     try {
       const docId = await this.getDocIdfromAuthenticatedUser();
       if (!docId) {
-        newStatus = 'offline';
         throw new Error('No docId found for this user.');
       }
       await updateDoc(doc(this.firestore, 'users', docId), {

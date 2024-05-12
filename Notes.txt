@@ -48,6 +48,6 @@ HANNES
 - wer macht password-reset und email update component
 - Jan: reset password
 - Hannes:
-  firebase onlinestatus updaten (timestamp);
+  on Logout -> please make sure to update onlineStatus then! important as the event handler doesnt get it
   mat-dialog from menu implement in dash header for profile
 - ChannelThreads (oder -list) für die thred Liste, ChannelThread für den Single Thread

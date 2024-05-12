@@ -25,7 +25,7 @@ export class TestComponent {
    * @param event
    */
   @HostListener('document:visibilitychange', ['$event'])
-  onVisibilityChange(event: Event) {
+  onVisibilityChange() {
     if (document.visibilityState === 'visible') {
       this.authService.updateUserOnlineStatus('online');
     } else if (document.visibilityState === 'hidden') {
