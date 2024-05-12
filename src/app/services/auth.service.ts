@@ -20,6 +20,37 @@ export class AuthService {
 
   /* TEST SPACE */
 
+  async getDocIdfromAuthenticatedUser() {
+    try {
+      const auth = this.auth.currentUser?.uid;
+      if (auth) {
+        const docId = await this.getDocIdFromAuthUserId(auth);
+        return docId;
+      }
+      return undefined;
+    } catch (error) {
+      console.error('Couldnt provide the doc Id. ', error);
+      throw error;
+    }
+  }
+
+  async updateUserOnlineStatus(newStatus: string) {
+    try {
+      const docId = await this.getDocIdfromAuthenticatedUser();
+      if (!docId) {
+        newStatus = 'offline';
+        throw new Error('No docId found for this user.');
+      }
+      await updateDoc(doc(this.firestore, 'users', docId), {
+        onlineStatus: newStatus
+      })
+
+    } catch (error) {
+      console.error('Error updating user online Status.');
+      throw error;
+    }
+  }
+
 
   /* END TEST SPACE */
 

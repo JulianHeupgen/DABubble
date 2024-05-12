@@ -1,6 +1,6 @@
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './../services/auth.service';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatDialog, MatDialogModule, MatDialogClose } from '@angular/material/dialog';
@@ -15,7 +15,24 @@ import { User } from '../models/user.class';
   templateUrl: './test.component.html',
   styleUrl: './test.component.scss'
 })
+
+
 export class TestComponent {
+
+  /**
+   * This Event listener sets the user onlineStatus
+   * UPDATE: update Model - away when only doc.hidden and offline when no auth object
+   * @param event
+   */
+  @HostListener('document:visibilitychange', ['$event'])
+  onVisibilityChange(event: Event) {
+    if (document.visibilityState === 'visible') {
+      this.authService.updateUserOnlineStatus('online');
+    } else if (document.visibilityState === 'hidden') {
+      this.authService.updateUserOnlineStatus('offline');
+    }
+  }
+
 
   constructor(
     private authService: AuthService,
@@ -41,6 +58,9 @@ export class TestComponent {
     // observable streams
     this.getUsers();
     this.getUser();
+
+    console.log(new Date(1715526182180));
+
   }
 
   getUsers() {
@@ -55,7 +75,6 @@ export class TestComponent {
     this.userSub = this.authService.getUser().subscribe({
       next: (user) => {
         this.user = user;
-        console.log(this.user);
       },
       error: (err) => console.error('Failed to fetch user: ', err)
     });

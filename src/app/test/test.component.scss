@@ -1,0 +1,22 @@
+
+.status-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.active {
+  width: 8px;
+  height: 8px;
+  background-color: greenyellow;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+.inactive {
+  width: 8px;
+  height: 8px;
+  background-color: red;
+  border-radius: 50%;
+  border: 1px solid black;
+}

@@ -31,6 +31,7 @@
     <th>Name</th>
     <th>UID</th>
     <th>Image</th>
+    <th>Status</th>
   </tr>
   @for (user of users; track $index) {
     <tr>
@@ -39,6 +40,9 @@
       <td>{{ user.name }}</td>
       <td>{{ user.authUserId }}</td>
       <td><a href="{{ user.imageUrl }}" target="_blank">Image</a></td>
+      <td class="status-container">
+        <div [class.active]="user.onlineStatus === 'online'" [class.inactive]="user.onlineStatus === 'offline'"></div>
+      </td>
     </tr>
   }
 </table>
