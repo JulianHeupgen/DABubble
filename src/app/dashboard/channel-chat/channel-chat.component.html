@@ -23,8 +23,8 @@
 
   </div>
   <!-- <input matInput *ngIf="currentChannel" placeholder="Nachricht an {{currentChannel.title}}">   -->
-  <div class="text-box">
-    <textarea *ngIf="currentChannel" placeholder="Nachricht an #{{currentChannel.title}}"></textarea>
+  <form [formGroup]="channelThreadMessage" class="text-box" (ngSubmit)="sendThreadinChannel()">
+    <textarea formControlName="channelMessage" *ngIf="currentChannel" placeholder="Nachricht an #{{currentChannel.title}}"></textarea>
     <div class="interactiv-btn-box">
       <div class="interactive-btns">
 
@@ -46,9 +46,15 @@
 
 
       <div class="send-message">
-        <img class="not-hover-icon" src="../../../assets/img/send-message.png" alt="">
-        <img class="hover-icon" src="../../../assets/img/send-message-hover.png" alt="">
+
+        <button class="not-hover-icon">
+          <img src="../../../assets/img/send-message.png" alt="">
+        </button>
+        <button type="submit" class="hover-icon">
+          <img src="../../../assets/img/send-message-hover.png" alt="">
+        </button>
+
       </div>
     </div>
-  </div>
+  </form>
 </mat-card>
