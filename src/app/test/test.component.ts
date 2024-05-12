@@ -2,7 +2,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from './../services/auth.service';
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatDialog, MatDialogModule, MatDialogClose } from '@angular/material/dialog';
 import { ReAuthenticateUserComponent } from '../dialog/re-authenticate-user/re-authenticate-user.component';
 import { Subscription, firstValueFrom } from 'rxjs';
@@ -35,7 +35,8 @@ export class TestComponent {
 
     constructor(
       private authService: AuthService,
-      public dialog: MatDialog
+      public dialog: MatDialog,
+      private router: Router
     ) { }
 
   userAuthId!: string | null;
@@ -58,6 +59,18 @@ export class TestComponent {
     this.getUsers();
     this.getUser();
 
+  }
+
+  async logoutUser() {
+    try {
+      const tryLogout = await this.authService.logout();
+      if (tryLogout === true) {
+        this.router.navigate(['/login']);
+      }
+      console.log('User logged out.');
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   getUsers() {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateEmail, onAuthStateChanged, user, EmailAuthProvider, reauthenticateWithCredential, deleteUser, signInWithCredential } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateEmail, onAuthStateChanged, user, EmailAuthProvider, reauthenticateWithCredential, deleteUser, signInWithCredential, signOut } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
@@ -73,6 +73,19 @@ export class AuthService {
       'channels': [],
       'uid': userData.uid,
     });
+  }
+
+  /**
+   * Logout the actual logged in user
+   */
+  async logout() {
+    try {
+      await signOut(this.auth);
+      return true;
+    } catch (error) {
+      console.error('Error logging out.');
+      return false;
+    }
   }
 
   /**
