@@ -11,23 +11,13 @@ import { AuthService } from '../../services/auth.service';
 import { ChannelThreadComponent } from './channel-thread/channel-thread.component';
 import { User } from '../../models/user.class';
 import { Thread } from '../../models/thread.class';
+import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-channel-chat',
   standalone: true,
-  imports: [
-    MatCard,
-    MatCardHeader,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatList,
-    MatListModule,
-    CommonModule,
-    ChannelThreadComponent,
-    ReactiveFormsModule,
-  ],
+  imports: [MatCard, MatCardHeader, MatCardContent, MatFormField, MatLabel, MatList, MatListModule, CommonModule, ChannelThreadComponent, ReactiveFormsModule,],
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
 })
@@ -38,7 +28,7 @@ export class ChannelChatComponent {
     private router: Router,
     private storage: StorageService,
     private auth: AuthService,
-    private formBuilder: FormBuilder,) {
+    private formBuilder: FormBuilder) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.ngOnInit();
@@ -59,18 +49,38 @@ export class ChannelChatComponent {
   channelThreads!: Thread[];
 
 
+  private userSub: Subscription = new Subscription();
+  private channelSub: Subscription = new Subscription();
+  private threadsSub: Subscription = new Subscription();
+
 
   async ngOnInit() {
-    this.channelParticipants = [];
-    this.channelParticipantsCounter = 0;
-
+    this.resetParticipantsData();
+    this.dataSubscriptions();
     await this.checkUserAuthId();
 
     setTimeout(() => {
-      this.searchCurrentChannel();
-      this.showChannelParticipants(this.channelId);
-      this.getChannelThreads(this.channelId);
+      this.getChannelInfos();
     }, 600);
+  }
+
+
+  resetParticipantsData() {
+    this.channelParticipants = [];
+    this.channelParticipantsCounter = 0;
+  }
+
+
+  dataSubscriptions() {
+    this.userSub = this.dataService.getUsersList().subscribe(users => {
+      this.users = users;
+    });
+    this.channelSub = this.dataService.getChannelsList().subscribe(channels => {
+      this.channels = channels;
+    });
+    this.threadsSub = this.dataService.getThreadsList().subscribe(threads => {
+      this.threads = threads;
+    });
   }
 
 
@@ -87,14 +97,11 @@ export class ChannelChatComponent {
 
     setTimeout(() => {
       this.findCurrentUser(this.userAuthId);
-    }, 300);
+    }, 500);
   }
 
 
   async findCurrentUser(authId: string) {
-    await this.dataService.getUsersList();
-    this.users = this.dataService.allUsers;
-
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].authUserId === authId) {
         this.currentUser = new User(this.users[i]);
@@ -104,13 +111,15 @@ export class ChannelChatComponent {
   }
 
 
-  async searchCurrentChannel() {
-    this.route.params.subscribe(params => {
-      this.channelId = params['id'];
-    });
+  getChannelInfos() {
+    this.getCurrentChannel();
+    this.showChannelParticipants(this.channelId);
+    this.getChannelThreads(this.channelId);
+  }
 
-    await this.dataService.getChannelsList();
-    this.channels = this.dataService.allChannels;
+
+  async getCurrentChannel() {
+    this.getChannelIdFromURL();
 
     for (let i = 0; i < this.channels.length; i++) {
       if (this.channels[i].id === this.channelId) {
@@ -118,6 +127,14 @@ export class ChannelChatComponent {
         break;
       }
     }
+  }
+
+
+
+  getChannelIdFromURL() {
+    this.route.params.subscribe(params => {
+      this.channelId = params['id'];
+    });
   }
 
 
@@ -135,9 +152,6 @@ export class ChannelChatComponent {
 
 
   async getChannelThreads(channelId: string) {
-    await this.dataService.getThreadsList();
-    this.threads = this.dataService.allThreads;
-
     this.channelThreads = [];
 
     for (let i = 0; i < this.threads.length; i++) {
@@ -158,5 +172,12 @@ export class ChannelChatComponent {
 
   }
 
+
+
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
+    this.channelSub.unsubscribe();
+    this.threadsSub.unsubscribe();
+  }
 }
 

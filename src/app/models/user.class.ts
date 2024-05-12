@@ -4,7 +4,7 @@ import { Thread } from "./thread.class";
 import { UserChat } from "./user-chat";
 
 export class User {
-  id: string;        
+  id: string;
   name: string;
   email: string;
   onlineStatus: 'online' | 'offline';
@@ -14,7 +14,7 @@ export class User {
   imageUrl: string;
 
   constructor(data: {
-    id?: string;
+    id: string | undefined;
     name: string,
     email: string,
     onlineStatus: 'online' | 'offline',
@@ -29,8 +29,8 @@ export class User {
     this.onlineStatus = data.onlineStatus;
     this.authUserId = data.authUserId;
     this.imageUrl = data.imageUrl;
-    this.channels = [];  
-    this.userChats = []; 
+    this.channels = [];
+    this.userChats = [];
 }
 
 

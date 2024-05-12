@@ -4,10 +4,14 @@ import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { enableIndexedDbPersistence, getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
+import { Subscription } from 'rxjs';
 
 export const appConfig: ApplicationConfig = {
+
+
+
   providers: [
     provideRouter(routes),
     provideAnimations(),
@@ -20,6 +24,13 @@ export const appConfig: ApplicationConfig = {
       "messagingSenderId":"554696271521"}))),
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),
-    importProvidersFrom(provideStorage(() => getStorage()))
+    importProvidersFrom(provideStorage(() => getStorage())),
+
+    // Test below - uncomment above line if fails
+    /* importProvidersFrom(provideFirestore(() => {
+      const firestore = getFirestore();
+      enableIndexedDbPersistence(firestore);
+      return firestore;
+    })), */
   ]
 };

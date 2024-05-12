@@ -4,6 +4,7 @@ import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
 import { Thread } from '../models/thread.class';
 import { UserChat } from '../models/user-chat';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +13,14 @@ export class DataService {
 
   firestore: Firestore = inject(Firestore);
 
-  unsubUsers;
-  unsubChannels;
-  unsubThreads;
-  unsubUserChats;
 
   constructor() {
-    this.unsubUsers = this.getUsersList();
-    this.unsubChannels = this.getChannelsList();
-    this.unsubThreads = this.getThreadsList();
-    this.unsubUserChats = this.getUserChatsList();
+    this.getUsersList();
+    this.getChannelsList();
+    this.getThreadsList();
+    this.getUserChatsList();
   }
 
-  // in die nachfolgenden Arrays werden alle User/Channels/Threads/UserChats von Firebase gepusht
 
   allUsers: User[] = [];
   allChannels: Channel[] = [];
@@ -35,11 +31,14 @@ export class DataService {
   // User von Firestore laden
 
   getUsersList() {
-    return onSnapshot(this.getUserCollection(), list => {
-      this.allUsers = [];
-      list.forEach(user =>  this.allUsers.push(this.setUserObject(user.id, user.data())))
-    }
-  )};
+    return new Observable(observer => {
+      const unsubscribe = onSnapshot(this.getUserCollection(), list => {
+        this.allUsers = [];
+        list.forEach(user => this.allUsers.push(this.setUserObject(user.id, user.data())))
+        observer.next(this.allUsers); 
+      });
+    });
+  }
 
   getUserCollection() {
     return collection(this.firestore, 'users');
@@ -62,11 +61,14 @@ export class DataService {
   // CHANNELS von Firestore laden
 
   getChannelsList() {
-    return onSnapshot(this.getChannelCollection(), list => {
-      this.allChannels = [];
-      list.forEach(channel =>  this.allChannels.push(this.setChannelObject(channel.id, channel.data())))
-    }
-  )};
+    return new Observable(observer => {
+      const unsubscribe = onSnapshot(this.getChannelCollection(), list => {
+        this.allChannels = [];
+        list.forEach(channel => this.allChannels.push(this.setChannelObject(channel.id, channel.data())))
+        observer.next(this.allChannels); 
+      });
+    });
+  }
 
   getChannelCollection() {
     return collection(this.firestore, 'channels');
@@ -85,11 +87,14 @@ export class DataService {
   // THREADS von Firestore laden
 
   getThreadsList() {
-    return onSnapshot(this.getThreadCollection(), list => {
-      this.allThreads = [];
-      list.forEach(thread =>  this.allThreads.push(this.setThreadObject(thread.id, thread.data())))
-    }
-  )};
+    return new Observable(observer => {
+      const unsubscribe = onSnapshot(this.getThreadCollection(), list => {
+        this.allThreads = [];
+        list.forEach(thread => this.allThreads.push(this.setThreadObject(thread.id, thread.data())))
+        observer.next(this.allThreads); 
+      });
+    });
+  }
 
   getThreadCollection() {
     return collection(this.firestore, 'threads');
@@ -108,11 +113,14 @@ export class DataService {
   // UserChats von Firestore laden
 
   getUserChatsList() {
-    return onSnapshot(this.getUserChatsCollection(), list => {
-      this.allUserChats = [];
-      list.forEach(userChat =>  this.allUserChats.push(this.setUserChatObject(userChat.id, userChat.data())))
-    }
-  )};
+    return new Observable(observer => {
+      const unsubscribe = onSnapshot(this.getUserChatsCollection(), list => {
+        this.allUserChats = [];
+        list.forEach(userChat => this.allUserChats.push(this.setUserChatObject(userChat.id, userChat.data())))
+        observer.next(this.allUserChats); 
+      });
+    });
+  }
 
   getUserChatsCollection() {
     return collection(this.firestore, 'directMessages');
@@ -127,16 +135,6 @@ export class DataService {
   }
 
 
-  ngOnDestroy() {
-    this.unsubUsers();
-    this.unsubChannels();
-    this.unsubThreads();
-    this.unsubUserChats();
-  }
-
-
-
-
-
+  
 }
 

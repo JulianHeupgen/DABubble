@@ -12,14 +12,12 @@
   </mat-card-header>
   <div class="chat-history">
 
-    <!--Mit Schleife in diesen Container die ChannelThreadComponents rendern (immer nur erste Nachricht des jeweiligen Threads anzeigen): 
+    <!--ChannelThreadComponents rendern (immer nur erste Nachricht des jeweiligen Threads anzeigen): 
         Wenn Klick auf einen Thread, dann wird dieser rechts geöffnet mit dem kompletten Chatverlauf ( FullThreadComponent )
       -->
-
     <div *ngFor="let thread of channelThreads">
       <app-channel-thread [thread]="thread"></app-channel-thread>
     </div>
-
 
   </div>
   <!-- <input matInput *ngIf="currentChannel" placeholder="Nachricht an {{currentChannel.title}}">   -->

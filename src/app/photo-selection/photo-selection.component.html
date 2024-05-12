@@ -26,8 +26,8 @@
         <div class="personal-upload">
           <span>Eigenes Bild verwenden</span>
           <label class="upload-btn" mat-mini-fab color="primary">
-            <input type="file" class="file-input" (change)="onFileSelected($event)">
-            <button class="file-upload-btn">Datei hochladen</button>
+            <input type="file" #fileInput class="file-input" (change)="onFileSelected($event)">
+            <button class="file-upload-btn" (click)="fileInput.click()">Datei hochladen</button>
           </label>
 
           <div class="file-upload" style="display: none;">
