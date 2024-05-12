@@ -18,40 +18,11 @@ export class AuthService {
     private router: Router,
   ) { }
 
+
   /* TEST SPACE */
 
-  async getDocIdfromAuthenticatedUser() {
-    try {
-      const auth = this.auth.currentUser?.uid;
-      if (auth) {
-        const docId = await this.getDocIdFromAuthUserId(auth);
-        return docId;
-      }
-      return undefined;
-    } catch (error) {
-      console.error('Couldnt provide the doc Id. ', error);
-      throw error;
-    }
-  }
+   /* END TEST SPACE */
 
-  async updateUserOnlineStatus(newStatus: string) {
-    try {
-      const docId = await this.getDocIdfromAuthenticatedUser();
-      if (!docId) {
-        throw new Error('No docId found for this user.');
-      }
-      await updateDoc(doc(this.firestore, 'users', docId), {
-        onlineStatus: newStatus
-      })
-
-    } catch (error) {
-      console.error('Error updating user online Status.');
-      throw error;
-    }
-  }
-
-
-  /* END TEST SPACE */
 
   async signUp(email: string, password: string, name: string) {
     try {
@@ -102,6 +73,44 @@ export class AuthService {
       'channels': [],
       'uid': userData.uid,
     });
+  }
+
+  /**
+   * Get the docId from the actual logged User by the auth id
+   * @returns firestore docId
+   */
+  async getDocIdfromAuthenticatedUser(): Promise<string | undefined> {
+    try {
+      const auth = this.auth.currentUser?.uid;
+      if (auth) {
+        const docId = await this.getDocIdFromAuthUserId(auth);
+        return docId;
+      }
+      return undefined;
+    } catch (error) {
+      console.error('Couldnt provide the doc Id. ', error);
+      throw error;
+    }
+  }
+
+  /**
+   * This function can be used to update firestore onlineStatus
+   * @param newStatus New Status which can be set (only use 'online' | 'offline')
+   */
+  async updateUserOnlineStatus(newStatus: 'online' | 'offline' | 'away'): Promise<void> {
+    try {
+      const docId = await this.getDocIdfromAuthenticatedUser();
+      if (!docId) {
+        throw new Error('No docId found for this user.');
+      }
+      await updateDoc(doc(this.firestore, 'users', docId), {
+        onlineStatus: newStatus
+      })
+
+    } catch (error) {
+      console.error('Error updating user online Status.');
+      throw error;
+    }
   }
 
   /**

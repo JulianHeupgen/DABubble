@@ -7,7 +7,7 @@ export class User {
   id: string;
   name: string;
   email: string;
-  onlineStatus: 'online' | 'offline';
+  onlineStatus: 'online' | 'offline' | 'away';
   channels: Channel[];
   userChats: UserChat[];
   authUserId: string;
@@ -17,7 +17,7 @@ export class User {
     id: string | undefined;
     name: string,
     email: string,
-    onlineStatus: 'online' | 'offline',
+    onlineStatus: 'online' | 'offline' | 'away',
     authUserId: string,
     imageUrl: string,
     channels?: Channel[],

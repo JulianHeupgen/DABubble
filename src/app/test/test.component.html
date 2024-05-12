@@ -1,27 +1,31 @@
 <br>
 <span>User Auth Id: {{ userAuthId }}</span>
 <div *ngIf="userAuthId">
-  <br><hr><br>
+  <br>
+  <hr><br>
 
   Check if editing email adress work<br>
   Actual email adress is: <b>{{ user?.email }}</b><br>
   <input [(ngModel)]="newEmail" type="text" #mailInput placeholder="Type your new Email">
   <button (click)="changeEmail()" [disabled]="!mailInput.value">Change email</button><br>
 
-  <br><hr><br>
+  <br>
+  <hr><br>
 
   Check if editing fullname work<br>
   Actual fullname is: <b>{{ user?.name }}</b><br>
   <input [(ngModel)]="newFullname" #nameInput type="text" placeholder="Type your new Fullname">
   <button (click)="changeFullname()" [disabled]="!nameInput.value">Change fullname</button>
 
-  <br><br><hr><br>
+  <br><br>
+  <hr><br>
 
   Delete the current User
   <button (click)="deleteUser()">Delete User</button>
 </div>
 
-<br><hr><br>
+<br>
+<hr><br>
 
 <h2>Firestore Users</h2>
 <table>
@@ -34,15 +38,16 @@
     <th>Status</th>
   </tr>
   @for (user of users; track $index) {
-    <tr>
-      <td>{{ $index }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.name }}</td>
-      <td>{{ user.authUserId }}</td>
-      <td><a href="{{ user.imageUrl }}" target="_blank">Image</a></td>
-      <td class="status-container">
-        <div [class.active]="user.onlineStatus === 'online'" [class.inactive]="user.onlineStatus === 'offline'"></div>
-      </td>
-    </tr>
+  <tr>
+    <td>{{ $index }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.name }}</td>
+    <td>{{ user.authUserId }}</td>
+    <td><a href="{{ user.imageUrl }}" target="_blank">Image</a></td>
+    <td class="status-container">
+      <div [class.active]="user.onlineStatus === 'online'" [class.inactive]="user.onlineStatus === 'offline'"
+        [class.away]="user.onlineStatus === 'away'"></div>
+    </td>
+  </tr>
   }
 </table>

@@ -46,8 +46,16 @@ Firestore Collections
 
 HANNES
 - wer macht password-reset und email update component
+
 - Jan: reset password
+
 - Hannes:
-  on Logout -> please make sure to update onlineStatus then! important as the event handler doesnt get it
+  on Logout -> please make sure to update onlineStatus then!
+  on Login -> set Online onlineStatus
+  eventually add 'away' too for tab switching status (this would fit better for the event handler)
+  ---> important as the event handler doesnt get it
+
+
   mat-dialog from menu implement in dash header for profile
+
 - ChannelThreads (oder -list) für die thred Liste, ChannelThread für den Single Thread

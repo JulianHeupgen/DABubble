@@ -29,15 +29,14 @@ export class TestComponent {
     if (document.visibilityState === 'visible') {
       this.authService.updateUserOnlineStatus('online');
     } else if (document.visibilityState === 'hidden') {
-      this.authService.updateUserOnlineStatus('offline');
+      this.authService.updateUserOnlineStatus('away');
     }
   }
 
-
-  constructor(
-    private authService: AuthService,
-    public dialog: MatDialog
-  ) { }
+    constructor(
+      private authService: AuthService,
+      public dialog: MatDialog
+    ) { }
 
   userAuthId!: string | null;
   users: User[] | undefined;
@@ -58,8 +57,6 @@ export class TestComponent {
     // observable streams
     this.getUsers();
     this.getUser();
-
-    console.log(new Date(1715526182180));
 
   }
 
