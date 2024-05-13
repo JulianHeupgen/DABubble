@@ -66,7 +66,9 @@ export class PhotoSelectionComponent {
     this._userData = this.userRegService.getSavedUserData();
   }
 
-  // On next button when picture has been set
+  /**
+   * Finalize the User Registration process when next button is clicked
+   */
   async onRegistrationFinished() {
     if (this.uploadedFile && this.uploadedFile instanceof File) {
       try {

@@ -14,14 +14,14 @@ export class User {
   imageUrl: string;
 
   constructor(data: {
-    id: string | undefined;
+    id: string,
     name: string,
     email: string,
     onlineStatus: 'online' | 'offline' | 'away',
     authUserId: string,
     imageUrl: string,
-    channels?: Channel[],
-    userChats?: UserChat[]
+    channels: Channel[],
+    userChats: UserChat[]
 }) {
     this.id = '';
     this.name = data.name;
@@ -65,8 +65,8 @@ export class User {
         replyToThread.messages.push(newMessage);
         console.log('newMessage:', newMessage);
         console.log('replyToThread', replyToThread);
-        
-        
+
+
     } else {                                                // Andernfalls neuen Thread erstellen, Message überreichen und neuen Thread in Channel pushen
         let newThread = new Thread( { channelId: channel.channelId, timestamp: new Date().getTime() } );
         const newMessage = new Message(this, messageContent);

@@ -50,8 +50,7 @@ HANNES
 - Jan: reset password
 
 - Hannes:
-  on Logout -> please make sure to update onlineStatus then!
-  on Login -> set Online onlineStatus
+  on Delete -> authGuard not working on test: check
   eventually add 'away' too for tab switching status (this would fit better for the event handler)
   ---> important as the event handler doesnt get it
 

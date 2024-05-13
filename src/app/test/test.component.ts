@@ -66,8 +66,8 @@ export class TestComponent {
 
   async logoutUser() {
     try {
-      const tryLogout = await this.authService.logout();
       await this.authService.updateUserOnlineStatus('offline');
+      const tryLogout = await this.authService.logout();
       if (tryLogout === true) {
         this.router.navigate(['/login']);
       }
