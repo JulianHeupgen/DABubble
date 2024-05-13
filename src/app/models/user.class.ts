@@ -8,20 +8,20 @@ export class User {
   name: string;
   email: string;
   onlineStatus: 'online' | 'offline' | 'away';
-  channels: Channel[];
-  userChats: UserChat[];
+  channels: string[]; //docIds from channels
+  userChats: UserChat[]; //docIds from directMessages
   authUserId: string;
   imageUrl: string;
 
   constructor(data: {
-    id: string | undefined;
+    id: string,
     name: string,
     email: string,
     onlineStatus: 'online' | 'offline' | 'away',
     authUserId: string,
     imageUrl: string,
-    channels?: Channel[],
-    userChats?: UserChat[]
+    channels: string[],
+    userChats: UserChat[]
 }) {
     this.id = '';
     this.name = data.name;
@@ -29,21 +29,21 @@ export class User {
     this.onlineStatus = data.onlineStatus;
     this.authUserId = data.authUserId;
     this.imageUrl = data.imageUrl;
-    this.channels = [];
+    this.channels = data.channels;
     this.userChats = [];
 }
 
 
-  joinChannel(channel: Channel): void {
-    if (!this.channels.includes(channel)) {
-      this.channels.push(channel);
+  joinChannel(channelId: string, channel: Channel): void {
+    if (!this.channels.includes(channelId)) {
+      this.channels.push(channelId);
       channel.addParticipant(this);
     }
   }
 
 
-  leaveChannel(channel: Channel): void {
-    const index = this.channels.indexOf(channel);
+  leaveChannel(channelId: string, channel: Channel): void {
+    const index = this.channels.indexOf(channelId);
     if (index !== -1) {
       this.channels.splice(index, 1);
       channel.removeParticipant(this);
@@ -65,8 +65,8 @@ export class User {
         replyToThread.messages.push(newMessage);
         console.log('newMessage:', newMessage);
         console.log('replyToThread', replyToThread);
-        
-        
+
+
     } else {                                                // Andernfalls neuen Thread erstellen, Message überreichen und neuen Thread in Channel pushen
         let newThread = new Thread( { channelId: channel.channelId, timestamp: new Date().getTime() } );
         const newMessage = new Message(this, messageContent);

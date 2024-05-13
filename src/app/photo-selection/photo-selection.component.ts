@@ -66,7 +66,9 @@ export class PhotoSelectionComponent {
     this._userData = this.userRegService.getSavedUserData();
   }
 
-  // On next button when picture has been set
+  /**
+   * Finalize the User Registration process when next button is clicked
+   */
   async onRegistrationFinished() {
     if (this.uploadedFile && this.uploadedFile instanceof File) {
       try {
@@ -77,15 +79,18 @@ export class PhotoSelectionComponent {
       }
     }
     this.updateUserObject('imageUrl', this.imgSrcUrl as string);
-    // Authenticate User and when successfull add User Object to Firestore
+    this.updateUserObject('onlineStatus', 'online');
+    this.updateUserObject('channels', ['Yk2dgejx9yy7iHLij1Qj']);
+    // Authenticate User and when successfull update User Object and set it to Firestore
     this.signUpAndCreateUser();
   }
 
   signUpAndCreateUser() {
+    // first we signup the user
     this.authService.signUp(this._userData.email, this._userData.password, this._userData.fullname)
       .then(user => {
+        //update the firebase user model with the auth id and store it
         this.updateUserObject('authUserId', user.user.uid);
-        this.updateUserObject('onlineStatus', 'online');
         this.createUserObject();
       })
       .catch(error => {
@@ -93,11 +98,11 @@ export class PhotoSelectionComponent {
       })
   }
 
-  createUserObject() {
+  async createUserObject() {
     this.removePasswordFromUserObject();
     const user = new User(this._userData);
     // Connect firebase and set Doc User HERE
-    this.saveUserToFirebase(user)
+    await this.saveUserToFirebase(user)
       .then(() => {
         this.router.navigate(['dashboard']);
       })
@@ -120,7 +125,7 @@ export class PhotoSelectionComponent {
     }
   }
 
-  updateUserObject(key: string, data: string) {
+  updateUserObject(key: string, data: string | string[]) {
     this._userData = { ...this._userData, [key]: data };
   }
 

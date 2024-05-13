@@ -33,11 +33,13 @@ export class TestComponent {
     }
   }
 
-    constructor(
-      private authService: AuthService,
-      public dialog: MatDialog,
-      private router: Router
-    ) { }
+  constructor(
+    private authService: AuthService,
+    public dialog: MatDialog,
+    private router: Router
+  ) { }
+
+  date: number = 0;
 
   userAuthId!: string | null;
   users: User[] | undefined;
@@ -59,10 +61,12 @@ export class TestComponent {
     this.getUsers();
     this.getUser();
 
+    this.date = new Date().getTime();
   }
 
   async logoutUser() {
     try {
+      await this.authService.updateUserOnlineStatus('offline');
       const tryLogout = await this.authService.logout();
       if (tryLogout === true) {
         this.router.navigate(['/login']);
