@@ -43,6 +43,7 @@ export class AuthService {
   async signIn(email: string, password: string) {
     try {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      await this.updateUserOnlineStatus('online')
       return userCredential;
     } catch (error) {
       throw error;
@@ -65,21 +66,21 @@ export class AuthService {
       });
   }
 
-  async setUserToFirestore(userData: any, name: string) {
-    // let user = new User(
-    //   name,
-    //   userData.email,
-    //   'offline',
-    //   userData.uid,
-    // )
-    const docRef = await addDoc(collection(this.firestore, "users"), {
-      'name': name,
-      'email': userData.email,
-      'onlineStatus': 'offline',
-      'channels': [],
-      'uid': userData.uid,
-    });
-  }
+  // async setUserToFirestore(userData: any, name: string) {
+  //   // let user = new User(
+  //   //   name,
+  //   //   userData.email,
+  //   //   'offline',
+  //   //   userData.uid,
+  //   // )
+  //   const docRef = await addDoc(collection(this.firestore, "users"), {
+  //     'name': name,
+      // 'email': userData.email,
+  //     'onlineStatus': 'offline',
+  //     'channels': [],
+  //     'uid': userData.uid,
+  //   });
+  // }
 
   /**
    * Logout the actual logged in user
