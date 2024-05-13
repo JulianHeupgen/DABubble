@@ -8,7 +8,7 @@ export class User {
   name: string;
   email: string;
   onlineStatus: 'online' | 'offline' | 'away';
-  channels: Channel[];
+  channels: string[];
   userChats: UserChat[];
   authUserId: string;
   imageUrl: string;
@@ -34,16 +34,16 @@ export class User {
 }
 
 
-  joinChannel(channel: Channel): void {
-    if (!this.channels.includes(channel)) {
-      this.channels.push(channel);
+  joinChannel(channelId: string, channel: Channel): void {
+    if (!this.channels.includes(channelId)) {
+      this.channels.push(channelId);
       channel.addParticipant(this);
     }
   }
 
 
-  leaveChannel(channel: Channel): void {
-    const index = this.channels.indexOf(channel);
+  leaveChannel(channelId: string, channel: Channel): void {
+    const index = this.channels.indexOf(channelId);
     if (index !== -1) {
       this.channels.splice(index, 1);
       channel.removeParticipant(this);
