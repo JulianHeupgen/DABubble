@@ -153,13 +153,13 @@ export class SidenavComponent {
 
   updateChannelTitles() {
     this.channelTitles = [];
-    console.log('CHANNELS GELADEN?', this.dataService.allChannels);
+    console.log('CHANNELS GELADEN?', this.channels);
     
     this.allUsers.forEach(user => {
       if (user.channels && Array.isArray(user.channels)) {
         user.channels.forEach(userChannelId => {
           console.log('USERCHANNELID', userChannelId);
-          const matchedChannel = this.dataService.allChannels.find((channel: Channel) => {
+          const matchedChannel = this.channels.find((channel: Channel) => {
             console.log('CHANNEL VARIABLE', channel);
             if (!channel.channelId) {
               console.warn('CHANNEL VARIABLE', channel);  
