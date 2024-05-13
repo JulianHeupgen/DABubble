@@ -10,14 +10,14 @@ export class Channel {
   data: string;
 
   constructor(data: {
-    id?: string,
+    channelId?: string,
     title?: string,
     participants?: User[],
     threads?: Thread[],
     docId?: string,
     data?: string
   }) {
-    this.channelId = data.id || '';
+    this.channelId = data.channelId || '';
     this.title = data.title || '';
     this.participants = data.participants || [];
     this.threads = data.threads || [];

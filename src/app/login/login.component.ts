@@ -42,7 +42,7 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authservice: AuthService,
+    public authservice: AuthService,
     private auth: Auth,
     private firebase: Firestore,
     private router: Router,
@@ -86,7 +86,7 @@ export class LoginComponent {
   //   }
   // }
 
-  signInWidthGoogle() {
-    this.authservice.signInWidthGoogle();
-  }
+  // signInWidthGoogle() {
+  //   this.authservice.signInWidthGoogle();
+  // }
 }
