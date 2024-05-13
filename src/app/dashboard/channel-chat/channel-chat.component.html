@@ -22,7 +22,8 @@
   </div>
   <!-- <input matInput *ngIf="currentChannel" placeholder="Nachricht an {{currentChannel.title}}">   -->
   <form [formGroup]="channelThreadMessage" class="text-box" (ngSubmit)="sendThreadinChannel()">
-    <textarea formControlName="channelMessage" *ngIf="currentChannel" placeholder="Nachricht an #{{currentChannel.title}}"></textarea>
+    <textarea formControlName="channelMessage" *ngIf="currentChannel"
+      placeholder="Nachricht an #{{currentChannel.title}}"></textarea>
     <div class="interactiv-btn-box">
       <div class="interactive-btns">
 
@@ -33,7 +34,14 @@
         <div class="border-line"></div>
         <div class="add-emoticons">
           <img class="not-hover-icon" src="../../../assets/img/emoticon.png" alt="">
-          <img class="hover-icon" src="../../../assets/img/emoticon-hover.png" alt="">
+
+
+          <button class="hover-icon" mat-button [matMenuTriggerFor]="menu" #menuTrigger>
+            <img  src="../../../assets/img/emoticon-hover.png" alt="">
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>Open dialog😂</button>
+          </mat-menu>
         </div>
         <div class="address-message-to-user">
           <img class="not-hover-icon" src="../../../assets/img/ping-user.png" alt="">

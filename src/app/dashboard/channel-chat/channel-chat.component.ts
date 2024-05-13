@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
@@ -13,11 +13,29 @@ import { User } from '../../models/user.class';
 import { Thread } from '../../models/thread.class';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Message } from '../../models/message.class';
 
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
+// import 'emoji-picker-element';
 @Component({
   selector: 'app-channel-chat',
   standalone: true,
-  imports: [MatCard, MatCardHeader, MatCardContent, MatFormField, MatLabel, MatList, MatListModule, CommonModule, ChannelThreadComponent, ReactiveFormsModule,],
+  imports: [
+    MatCard,
+    MatCardHeader,
+    MatCardContent,
+    MatFormField,
+    MatLabel,
+    MatList,
+    MatListModule,
+    CommonModule,
+    ChannelThreadComponent,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatMenuTrigger,
+    MatMenuModule,
+  ],
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
 })
@@ -166,9 +184,17 @@ export class ChannelChatComponent {
   })
 
   sendThreadinChannel() {
-    console.log('User:', this.currentUser);
+    const message: Message = new Message(this.currentUser, this.channelThreadMessage.value.channelMessage);
+    const threadMessage = {
+      id: '',
+      channelId: this.channelId,
+      message: message,
+      timestamp: message.timestamp,
+    };
+    console.log('threadMessage:', threadMessage);
+    // const thread: Thread = new Thread(message)
 
-    console.log('Messasge:', this.channelThreadMessage.value.channelMessage);
+    console.log('Messasge:', message);
 
   }
 
