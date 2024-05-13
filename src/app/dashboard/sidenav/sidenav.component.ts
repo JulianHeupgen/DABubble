@@ -97,6 +97,9 @@ export class SidenavComponent {
   }
 
 
+/**
+ * Checking the validity of the data of users and channels from the Observable 
+ */
   checkDataForChannelNames() {
     if (this.users && this.channels) {
       this.updateChannelTitles();
@@ -104,6 +107,12 @@ export class SidenavComponent {
   }
 
 
+  /**
+   * Read out the user data based on the user authentication id
+   * 
+   * @param uid - User authentication id from firestore authentication
+   * @returns - Return if error exists
+   */
   setUserData(uid: string) {
     if (!this.users) {
       console.error('Benutzerdaten sind noch nicht geladen.');
@@ -120,6 +129,9 @@ export class SidenavComponent {
   }
 
 
+  /**
+   * Set and Update the channel titles for the sidenav rendering
+   */
   updateChannelTitles() {
     this.channelTitles = [];
     this.allUsers.forEach(user => {
@@ -138,6 +150,9 @@ export class SidenavComponent {
   }
 
 
+  /**
+   * Toggle variable for sidenav to open or close
+   */
   toggleSidenav() {
     this.opened = !this.opened;
   }
