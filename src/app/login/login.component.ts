@@ -53,7 +53,7 @@ export class LoginComponent {
     let email = this.loginData.value.email || '';
     let password = this.loginData.value.password || '';
     event.preventDefault();
-    let logInSuccess = await this.signIn(email, password);
+    let logInSuccess = await this.authservice.signIn(email, password);
     if (logInSuccess) {
       this.logInFalse = false;
       this.router.navigate(['/dashboard/']);
@@ -77,14 +77,14 @@ export class LoginComponent {
       });
   }
 
-  async signIn(email: string, password: string) {
-    try {
-      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
-      return userCredential.user;
-    } catch (error) {
-      return null;
-    }
-  }
+  // async signIn(email: string, password: string) {
+  //   try {
+  //     const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+  //     return userCredential.user;
+  //   } catch (error) {
+  //     return null;
+  //   }
+  // }
 
   signInWidthGoogle() {
     this.authservice.signInWidthGoogle();

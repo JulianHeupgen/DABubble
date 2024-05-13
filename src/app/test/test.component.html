@@ -43,7 +43,7 @@ Logout the current User
   </tr>
   @for (user of users; track $index) {
   <tr>
-    <td>{{ $index }}</td>
+    <td>{{ $index +1 }}</td>
     <td>{{ user.email }}</td>
     <td>{{ user.name }}</td>
     <td>{{ user.authUserId }}</td>
@@ -55,3 +55,7 @@ Logout the current User
   </tr>
   }
 </table>
+
+<br><hr><br>
+
+<span>Actual Date is: {{ date | date }}</span>
