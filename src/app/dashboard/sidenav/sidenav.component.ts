@@ -153,24 +153,12 @@ export class SidenavComponent {
 
   updateChannelTitles() {
     this.channelTitles = [];
-    console.log('CHANNELS GELADEN?', this.dataService.allChannels);
-    
     this.allUsers.forEach(user => {
       if (user.channels && Array.isArray(user.channels)) {
         user.channels.forEach(userChannelId => {
-          console.log('USERCHANNELID', userChannelId);
-          const matchedChannel = this.dataService.allChannels.find((channel: Channel) => {
-            console.log('CHANNEL VARIABLE', channel);
-            if (!channel.channelId) {
-              console.warn('CHANNEL VARIABLE', channel);  
-            }
-            console.log('CHANNEL VARIABLE', channel);
-            
+          const matchedChannel = this.channels.find((channel: Channel) => {
             return channel.channelId === userChannelId
           });
-          
-          
-          console.log('match', matchedChannel);
           if (matchedChannel && matchedChannel.channelId && matchedChannel.title) {
             this.channelTitles.push({
               channelId: matchedChannel.channelId,
@@ -182,10 +170,7 @@ export class SidenavComponent {
     });
     console.log('Aktualisierte Kanaltitel:', this.channelTitles);
   }
-  
 
-
-  
 
   toggleSidenav() {
     this.opened = !this.opened;
