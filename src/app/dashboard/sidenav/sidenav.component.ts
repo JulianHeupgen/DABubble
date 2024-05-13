@@ -56,9 +56,10 @@ export class SidenavComponent {
   users: any;
   channels: any;
   userId: string = '';
-  allUsers: Partial<User>[] = [];
+  selectedUser: Partial<User>[] = [];
   allChannels: Partial<Channel>[] = [];
   channelTitles: { channelId: string, title: string }[] = [];
+  directMessageTitle: { imageUrl: string, onlineStatus: string, name: string }[] = [];
 
   private userSub: Subscription = new Subscription();
   private channelSub: Subscription = new Subscription();
@@ -103,6 +104,7 @@ export class SidenavComponent {
   checkDataForChannelNames() {
     if (this.users && this.channels) {
       this.updateChannelTitles();
+      this.getUserDirectMessages();
     }
   }
 
@@ -121,8 +123,8 @@ export class SidenavComponent {
     const user = this.users.find((user: User) => user.authUserId === uid);
     if (user) {
       console.log('User gefunden', user);
-      this.allUsers = [];
-      this.allUsers.push(user);
+      this.selectedUser = [];
+      this.selectedUser.push(user);
     } else {
       console.log('Kein User gefunden', uid);
     }
@@ -134,7 +136,7 @@ export class SidenavComponent {
    */
   updateChannelTitles() {
     this.channelTitles = [];
-    this.allUsers.forEach(user => {
+    this.selectedUser.forEach(user => {
       if (user.channels && Array.isArray(user.channels)) {
         user.channels.forEach(userChannelId => {
           const matchedChannel = this.channels.find((channel: Channel) => channel.channelId === userChannelId);
@@ -147,6 +149,16 @@ export class SidenavComponent {
         });
       }
     });
+  }
+
+
+  getUserDirectMessages() {
+    console.log('getUserDirectMessage', this.users);
+    this.directMessageTitle = [];
+    this.selectedUser.forEach(user => {
+      console.log('USER', user.userChats);
+      
+    })
   }
 
 

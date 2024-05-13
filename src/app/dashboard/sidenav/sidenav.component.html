@@ -36,7 +36,7 @@
 
                     <div class="channels-container">
                         <!-- <div *ngFor="let user of getDataFromFirestore()" class="channel"> -->
-                        <div *ngFor="let user of allUsers">
+                        <div *ngFor="let user of selectedUser">
                             <div *ngFor="let channel of channelTitles" class="channel"
                                 [routerLink]="['/dashboard/channel', channel.channelId]">
                                 <img class="tag-img" src="./assets/img/tag.png">
@@ -76,7 +76,7 @@
 
 
                     <div class="direct-message-user-container">
-                        <div *ngFor="let user of allUsers">
+                        <div *ngFor="let user of selectedUser">
                             <div *ngFor="let chat of user.userChats" class="user-container">
 
                                 <div class="profile-img-container">
