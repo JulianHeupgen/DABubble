@@ -79,7 +79,9 @@ export class PhotoSelectionComponent {
       }
     }
     this.updateUserObject('imageUrl', this.imgSrcUrl as string);
-    // Authenticate User and when successfull add User Object to Firestore
+    this.updateUserObject('onlineStatus', 'online');
+    this.updateUserObject('channels', ['Yk2dgejx9yy7iHLij1Qj']);
+    // Authenticate User and when successfull update User Object and set it to Firestore
     this.signUpAndCreateUser();
   }
 
@@ -87,10 +89,8 @@ export class PhotoSelectionComponent {
     // first we signup the user
     this.authService.signUp(this._userData.email, this._userData.password, this._userData.fullname)
       .then(user => {
-        // create the firebase user model and store it
+        //update the firebase user model with the auth id and store it
         this.updateUserObject('authUserId', user.user.uid);
-        this.updateUserObject('onlineStatus', 'online');
-        this.updateUserObject('channels', ['Yk2dgejx9yy7iHLij1Qj']);
         this.createUserObject();
       })
       .catch(error => {
