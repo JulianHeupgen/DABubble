@@ -102,7 +102,7 @@ export class DataService {
 
   setThreadObject(id: string, data: any): any {
     return {
-      id: id,
+      threadId: id,
       channelId: data.channelId,
       messages: data.messages,
       timestamp: data.timestamp
@@ -128,7 +128,7 @@ export class DataService {
 
   setUserChatObject(id: string, data: any): any {
     return {
-      id: id,
+      userChatId: id,
       participants: data.participants,
       messages: data.messages
     }
@@ -139,7 +139,7 @@ export class DataService {
 
 
 
-  // Channels, Threads oder UserChats in Firebase hinzufügen
+  // Channels, Threads oder UserChats in den Firebase Collections hinzufügen
 
    async addChannel(channel: Channel) {
     await addDoc(this.getChannelCollection(), channel.toJSON() ).catch((err) => {
@@ -150,7 +150,7 @@ export class DataService {
   }
 
   async addThread(thread: Thread) {
-    await addDoc(this.getThreadCollection(), thread ).catch((err) => {
+    await addDoc(this.getThreadCollection(), thread.toJSON() ).catch((err) => {
       console.error(err)
     }).then((docRef) => {
       console.log("Document written with ID: ", docRef?.id)
@@ -158,7 +158,7 @@ export class DataService {
   }
 
   async addUserChat(userChat: UserChat) {
-    await addDoc(this.getUserChatsCollection(), userChat ).catch((err) => {
+    await addDoc(this.getUserChatsCollection(), userChat.toJSON() ).catch((err) => {
       console.error(err)
     }).then((docRef) => {
       console.log("Document written with ID: ", docRef?.id)

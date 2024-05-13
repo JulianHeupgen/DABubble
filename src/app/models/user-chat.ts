@@ -12,8 +12,18 @@ export class UserChat {
     this.messages = [];
   }
 
+
   addMessage(message: Message): void {
     this.messages.push(message);
+  }
+
+
+  toJSON() {
+    return {
+      userChatId: this.userChatId,
+      participants: this.participants,
+      messages: this.messages
+    }
   }
 
 }
