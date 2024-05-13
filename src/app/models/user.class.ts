@@ -20,7 +20,7 @@ export class User {
     onlineStatus: 'online' | 'offline' | 'away',
     authUserId: string,
     imageUrl: string,
-    channels: Channel[],
+    channels: string[],
     userChats: UserChat[]
 }) {
     this.id = '';
@@ -29,7 +29,7 @@ export class User {
     this.onlineStatus = data.onlineStatus;
     this.authUserId = data.authUserId;
     this.imageUrl = data.imageUrl;
-    this.channels = [];
+    this.channels = data.channels;
     this.userChats = [];
 }
 
