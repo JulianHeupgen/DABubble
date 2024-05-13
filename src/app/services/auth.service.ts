@@ -140,7 +140,7 @@ export class AuthService {
   getUsersList(): Observable<User[]> {
     return new Observable((subscriber) => {
       const q = query(collection(this.firestore, 'users'));
-      onSnapshot(q, (qS) => {
+      const unsubscribe = onSnapshot(q, (qS) => {
         let arr: User[] = [];
         qS.forEach((doc) => {
           const user = doc.data() as User;
@@ -148,6 +148,12 @@ export class AuthService {
         });
         subscriber.next(arr);
       });
+
+      //Return a teardown logic function that will be called when
+      //the Observable is unsubscribed
+      return () => {
+        unsubscribe(); //This will stop listening to changes from firestore
+      }
     });
   }
 
