@@ -5,12 +5,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule, MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav';
 import { DataService } from '../../services/data.service';
 import { User } from '../../models/user.class';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { collection, Firestore, onSnapshot, query, where } from '@angular/fire/firestore';
 import { Channel } from '../../models/channel.class';
 import { Subscription } from 'rxjs';
-import { user } from '@angular/fire/auth';
 
 
 @Component({
@@ -24,7 +22,6 @@ import { user } from '@angular/fire/auth';
     MatDrawerContainer,
     MatDrawerContent,
     RouterModule
-
   ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
@@ -62,13 +59,12 @@ export class SidenavComponent {
   allUsers: Partial<User>[] = [];
   allChannels: Partial<Channel>[] = [];
   channelTitles: { channelId: string, title: string }[] = [];
-  // private unsubscribe!: () => void;
-  // private unsubscribeChannels!: () => void;
 
   private userSub: Subscription = new Subscription();
   private channelSub: Subscription = new Subscription();
 
-  constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private authService: AuthService, private firestore: Firestore) {
+
+  constructor(private dataService: DataService, private authService: AuthService) {
     this.users = [];
   }
 
@@ -77,12 +73,16 @@ export class SidenavComponent {
     this.dataSubscriptions();
   }
 
+
+  /**
+   * Subscribe users and channels from DataService
+   */
   dataSubscriptions() {
     this.userSub = this.dataService.getUsersList().subscribe(users => {
       this.users = users;
       this.authService.getUserAuthId().then(uid => {
         if (uid) {
-          this.setupUserSubscription(uid);
+          this.setUserData(uid);
         } else {
           console.log('Keine UID verfügbar');
         }
@@ -90,12 +90,12 @@ export class SidenavComponent {
         console.error('Fehler beim Laden der UID:', error);
       });
     });
-
     this.channelSub = this.dataService.getChannelsList().subscribe(channels => {
       this.channels = channels;
       this.checkDataForChannelNames();
     });
   }
+
 
   checkDataForChannelNames() {
     if (this.users && this.channels) {
@@ -103,18 +103,13 @@ export class SidenavComponent {
     }
   }
 
-  getDataFromFirestore(): User[] {
-    return this.dataService.allUsers;
-  }
 
-  setupUserSubscription(uid: string) {
+  setUserData(uid: string) {
     if (!this.users) {
       console.error('Benutzerdaten sind noch nicht geladen.');
       return;
     }
-
     const user = this.users.find((user: User) => user.authUserId === uid);
-
     if (user) {
       console.log('User gefunden', user);
       this.allUsers = [];
@@ -130,9 +125,7 @@ export class SidenavComponent {
     this.allUsers.forEach(user => {
       if (user.channels && Array.isArray(user.channels)) {
         user.channels.forEach(userChannelId => {
-          const matchedChannel = this.channels.find((channel: Channel) => {
-            return channel.channelId === userChannelId
-          });
+          const matchedChannel = this.channels.find((channel: Channel) => channel.channelId === userChannelId);
           if (matchedChannel && matchedChannel.channelId && matchedChannel.title) {
             this.channelTitles.push({
               channelId: matchedChannel.channelId,
@@ -178,8 +171,6 @@ export class SidenavComponent {
   }
 
 
-
-
   ngOnDestroy() {
     if (this.userSub) {
       this.userSub.unsubscribe();
@@ -188,5 +179,4 @@ export class SidenavComponent {
       this.channelSub.unsubscribe();
     }
   }
-
 }
