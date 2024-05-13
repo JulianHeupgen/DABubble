@@ -195,7 +195,6 @@ export class ChannelChatComponent {
     // const thread: Thread = new Thread(message)
 
     console.log('Messasge:', message);
-
   }
 
 

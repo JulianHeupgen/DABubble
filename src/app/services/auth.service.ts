@@ -21,13 +21,19 @@ export class AuthService {
 
   /* TEST SPACE */
 
-   /* END TEST SPACE */
+  /* END TEST SPACE */
 
 
+  /**
+   * This function performs a signup using email and password.
+   * @param email
+   * @param password
+   * @param name
+   * @returns User Object to store data in firestore DB.
+   */
   async signUp(email: string, password: string, name: string) {
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
-      //this.setUserToFirestore(userCredential.user, name);
       return userCredential;
     } catch (error) {
       throw error;
@@ -375,6 +381,11 @@ export class AuthService {
     }
   }
 
+  /**
+   * Searches the users collection for a given uid
+   * @param uid The Authid of the user to serach for
+   * @returns docId of the User doc with the given UID
+   */
   async getDocIdFromAuthUserId(uid: string): Promise<string> {
     const usersRef = collection(this.firestore, "users");
     const q = query(usersRef, where("authUserId", "==", uid));

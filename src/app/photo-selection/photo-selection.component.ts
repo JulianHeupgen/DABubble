@@ -82,8 +82,10 @@ export class PhotoSelectionComponent {
   }
 
   signUpAndCreateUser() {
+    // first we signup the user
     this.authService.signUp(this._userData.email, this._userData.password, this._userData.fullname)
       .then(user => {
+        // create the firebase user model and store it
         this.updateUserObject('authUserId', user.user.uid);
         this.updateUserObject('onlineStatus', 'online');
         this.createUserObject();
@@ -93,11 +95,11 @@ export class PhotoSelectionComponent {
       })
   }
 
-  createUserObject() {
+  async createUserObject() {
     this.removePasswordFromUserObject();
     const user = new User(this._userData);
     // Connect firebase and set Doc User HERE
-    this.saveUserToFirebase(user)
+    await this.saveUserToFirebase(user)
       .then(() => {
         this.router.navigate(['dashboard']);
       })
