@@ -8,8 +8,8 @@ export class User {
   name: string;
   email: string;
   onlineStatus: 'online' | 'offline' | 'away';
-  channels: string[];
-  userChats: UserChat[];
+  channels: string[]; //docIds from channels
+  userChats: UserChat[]; //docIds from directMessages
   authUserId: string;
   imageUrl: string;
 

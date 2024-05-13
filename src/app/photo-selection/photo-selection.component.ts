@@ -90,6 +90,7 @@ export class PhotoSelectionComponent {
         // create the firebase user model and store it
         this.updateUserObject('authUserId', user.user.uid);
         this.updateUserObject('onlineStatus', 'online');
+        this.updateUserObject('channels', ['Yk2dgejx9yy7iHLij1Qj']);
         this.createUserObject();
       })
       .catch(error => {
@@ -124,7 +125,7 @@ export class PhotoSelectionComponent {
     }
   }
 
-  updateUserObject(key: string, data: string) {
+  updateUserObject(key: string, data: string | string[]) {
     this._userData = { ...this._userData, [key]: data };
   }
 
