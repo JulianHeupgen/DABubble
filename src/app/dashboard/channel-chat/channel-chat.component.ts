@@ -144,7 +144,7 @@ export class ChannelChatComponent {
     this.getChannelIdFromURL();
 
     for (let i = 0; i < this.channels.length; i++) {
-      if (this.channels[i].id === this.channelId) {
+      if (this.channels[i].channelId === this.channelId) {
         this.currentChannel = new Channel(this.channels[i]);
         break;
       }

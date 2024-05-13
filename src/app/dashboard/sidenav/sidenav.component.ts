@@ -9,6 +9,8 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { collection, Firestore, onSnapshot, query, where } from '@angular/fire/firestore';
 import { Channel } from '../../models/channel.class';
+import { Subscription } from 'rxjs';
+import { user } from '@angular/fire/auth';
 
 
 @Component({
@@ -54,37 +56,92 @@ export class SidenavComponent {
   add: string = './assets/img/add_channel.png';
   addCircle: string = './assets/img/add_circle.png';
   online: boolean = true;
-  users: User[] = [];
+  users: any;
+  channels: any;
   userId: string = '';
   allUsers: Partial<User>[] = [];
   allChannels: Partial<Channel>[] = [];
   channelTitles: { channelId: string, title: string }[] = [];
-  private unsubscribe!: () => void;
-  private unsubscribeChannels!: () => void;
+  // private unsubscribe!: () => void;
+  // private unsubscribeChannels!: () => void;
+
+  private userSub: Subscription = new Subscription();
+  private channelSub: Subscription = new Subscription();
 
   constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private authService: AuthService, private firestore: Firestore) {
-    this.loadData();
+    this.users = [];
   }
 
 
   async ngOnInit() {
-    this.authService.getUserAuthId().then(uid => {
-      if (uid) {
-        this.setupUserSubscription(uid);
-      } else {
-        console.log('Keine UID verfügbar');
-        this.allUsers = [];
-      }
-    }).catch(error => {
-      console.error('Fehler beim Laden:', error);
-      this.allUsers = [];
+    this.dataSubscriptions();
+  }
+
+  dataSubscriptions() {
+    this.userSub = this.dataService.getUsersList().subscribe(users => {
+      this.users = users;
+      this.authService.getUserAuthId().then(uid => {
+        if (uid) {
+          this.setupUserSubscription(uid);
+        } else {
+          console.log('Keine UID verfügbar');
+        }
+      }).catch(error => {
+        console.error('Fehler beim Laden der UID:', error);
+      });
     });
-    console.log('All users loaded:', this.allUsers);
-    this.dataService.getChannelsList();
-    this.allChannels = this.dataService.allChannels;
-    console.log("Channels in users:", this.allUsers.map(user => user.channels));
+
+    this.channelSub = this.dataService.getChannelsList().subscribe(channels => {
+      this.channels = channels;
+      this.checkDataForChannelNames();
+    });
+  }
+
+  checkDataForChannelNames() {
+    if (this.users && this.channels) {
+      this.updateChannelTitles();
+    }
+  }
+
+  getDataFromFirestore(): User[] {
+    return this.dataService.allUsers;
+  }
+
+  setupUserSubscription(uid: string) {
+    if (!this.users) {
+      console.error('Benutzerdaten sind noch nicht geladen.');
+      return;
+    }
+
+    const user = this.users.find((user: User) => user.authUserId === uid);
+
+    if (user) {
+      console.log('User gefunden', user);
+      this.allUsers = [];
+      this.allUsers.push(user);
+    } else {
+      console.log('Kein User gefunden', uid);
+    }
+  }
 
 
+  updateChannelTitles() {
+    this.channelTitles = [];
+    this.allUsers.forEach(user => {
+      if (user.channels && Array.isArray(user.channels)) {
+        user.channels.forEach(userChannelId => {
+          const matchedChannel = this.channels.find((channel: Channel) => {
+            return channel.channelId === userChannelId
+          });
+          if (matchedChannel && matchedChannel.channelId && matchedChannel.title) {
+            this.channelTitles.push({
+              channelId: matchedChannel.channelId,
+              title: matchedChannel.title
+            });
+          }
+        });
+      }
+    });
   }
 
 
@@ -121,94 +178,15 @@ export class SidenavComponent {
   }
 
 
-  getDataFromFirestore(): User[] {
-    return this.dataService.allUsers;
-  }
 
-
-  async loadData() {
-    try {
-      const uid = await this.authService.getUserAuthId();
-      if (uid) {
-        this.setupUserSubscription(uid);
-        this.setupChannelsSubscription();
-        setTimeout(() => this.updateChannelTitles(), 500);
-      } else {
-        console.log('Keine UID verfügbar');
-        this.allUsers = [];
-        this.allChannels = [];
-      }
-    } catch (error) {
-      console.error('Fehler beim laden:', error);
-      this.allUsers = [];
-      this.allChannels = [];
-    }
-  }
-
-
-  setupUserSubscription(uid: string) {
-    const usersRef = collection(this.firestore, 'users');
-    const q = query(usersRef, where('authUserId', '==', uid));
-    this.unsubscribe = onSnapshot(q, (snapshot) => {
-      this.allUsers = snapshot.docs.map(doc => {
-        const data = doc.data();
-        return {
-          ...data,
-          id: doc.id
-        };
-      });
-      console.log('Aktualisierte Benutzerdaten:', this.allUsers);
-      console.log('TESTTEST', this.allUsers[0].channels);
-      console.log('ALL CHANNELS', this.allChannels);
-      
-      
-    }, (error) => {
-      console.error('Fehler beim Abonnieren der Benutzerdaten:', error);
-    });
-  }
-
-
-  setupChannelsSubscription() {
-    const channelsRef = collection(this.firestore, 'channels');
-    this.unsubscribeChannels = onSnapshot(channelsRef, (snapshot) => {
-      this.allChannels = snapshot.docs.map(doc => {
-        const data = doc.data();
-        return {
-          channelId: doc.id,
-          title: data['title'] || '',
-          participants: data['participants'] || [],
-          threads: data['threads'] || []
-        };
-      });
-      console.log('Aktualisierte Kanaldaten:', this.allChannels);
-    }, (error) => {
-      console.error('Fehler beim Abonnieren der Kanaldaten:', error);
-    });
-}
 
   ngOnDestroy() {
-    if (this.unsubscribe) this.unsubscribe();
-    if (this.unsubscribeChannels) this.unsubscribeChannels();
-  }
-
-  updateChannelTitles() {
-    this.channelTitles = [];
-    this.allUsers.forEach(user => {
-      if (user.channels && Array.isArray(user.channels)) {
-        user.channels.forEach(userChannelId => {
-          if (typeof userChannelId === 'string') {
-            const matchedChannel = this.allChannels.find(channel => channel.channelId === userChannelId);
-            if (matchedChannel && matchedChannel.channelId && matchedChannel.title) {
-              this.channelTitles.push({
-                channelId: matchedChannel.channelId,
-                title: matchedChannel.title
-              });
-            }
-          }
-        });
-      }
-    });
-    console.log('Aktualisierte Kanaltitel:', this.channelTitles);
+    if (this.userSub) {
+      this.userSub.unsubscribe();
+    }
+    if (this.channelSub) {
+      this.channelSub.unsubscribe();
+    }
   }
 
 }

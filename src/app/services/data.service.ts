@@ -76,7 +76,7 @@ export class DataService {
 
   setChannelObject(id: string, data: any): any {
     return {
-      id: id,
+      channelId: id,
       title: data.title,
       participants: data.participants,
       threads: data.threads
