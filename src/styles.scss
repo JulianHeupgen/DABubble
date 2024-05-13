@@ -32,7 +32,7 @@ $dabubble-theme: mat.define-light-theme((color: (primary: $dabubble-primary,
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($dabubble-theme);
-
+@import '@ctrl/ngx-emoji-mart/picker';
 /* You can add global styles to this file, and also import other style files */
 html,
 body {
@@ -103,4 +103,26 @@ app-channel-chat {
 ::-webkit-scrollbar-thumb:hover {
   cursor: pointer;
   background: #444df2;
+}
+
+/* Emoji bar*/
+.emoji-mart {
+  border: none !important;
+  border-radius: 20px !important;
+  z-index: 99 !important;
+}
+
+.mat-mdc-menu-panel {
+  max-width: unset !important;
+  border-radius: 20px !important;
+  border: 1px solid #797EF3;
+}
+
+.mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+.mat-mdc-menu-item {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }

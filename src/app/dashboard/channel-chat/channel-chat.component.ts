@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
@@ -17,6 +17,7 @@ import { Message } from '../../models/message.class';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 // import 'emoji-picker-element';
 @Component({
   selector: 'app-channel-chat',
@@ -35,11 +36,14 @@ import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
     MatDialogModule,
     MatMenuTrigger,
     MatMenuModule,
+    PickerComponent,
   ],
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
 })
 export class ChannelChatComponent {
+
+  @ViewChild('threadMessageBox') threadMessageBox!: ElementRef;
 
   constructor(private dataService: DataService,
     private route: ActivatedRoute,
@@ -195,6 +199,12 @@ export class ChannelChatComponent {
     // const thread: Thread = new Thread(message)
 
     console.log('Messasge:', message);
+  }
+
+  addEmoji(event: any) {
+    console.log('Emoji:', event.emoji.native);
+    let textAreaElement = this.threadMessageBox.nativeElement;
+    textAreaElement.value += event.emoji.native;
   }
 
 
