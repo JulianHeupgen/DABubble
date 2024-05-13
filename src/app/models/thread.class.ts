@@ -34,5 +34,15 @@ export class Thread {
     return formattedDate;
   }
 
+
+  toJSON() {
+    return {
+      threadId: this.threadId,
+      channelId: this.channelId,
+      messages: this.messages,
+      timestamp: this.timestamp
+    }
+  }
+
 }
 

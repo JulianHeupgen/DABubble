@@ -142,7 +142,7 @@ export class DataService {
   // Channels, Threads oder UserChats in Firebase hinzufügen
 
    async addChannel(channel: Channel) {
-    await addDoc(this.getChannelCollection(), channel ).catch((err) => {
+    await addDoc(this.getChannelCollection(), channel.toJSON() ).catch((err) => {
       console.error(err)
     }).then((docRef) => {
       console.log("Document written with ID: ", docRef?.id)
