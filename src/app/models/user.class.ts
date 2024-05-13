@@ -51,7 +51,7 @@ export class User {
   }
 
 
-  changeStatus(status: 'online' | 'offline'): void {
+  changeStatus(status: 'online' | 'offline' | 'away'): void {
     this.onlineStatus = status;
   }
 
@@ -63,11 +63,18 @@ export class User {
     if (replyToThread) {                                      // Antwort auf bestehenden Thread: Neue Message wird dem bestehenden Thread überreicht
         const newMessage = new Message(this, messageContent);
         replyToThread.messages.push(newMessage);
+        console.log('newMessage:', newMessage);
+        console.log('replyToThread', replyToThread);
+        
+        
     } else {                                                // Andernfalls neuen Thread erstellen, Message überreichen und neuen Thread in Channel pushen
-        let newThread = new Thread( { channelId: channel.channelId, timestamp: new Date() } );
+        let newThread = new Thread( { channelId: channel.channelId, timestamp: new Date().getTime() } );
         const newMessage = new Message(this, messageContent);
         newThread.messages.push(newMessage);
         channel.addThread(newThread);
+        console.log('newMessage:', newMessage);
+        console.log('Date:', new Date().getTime());
+        console.log('newThread:', channel.threads);
     }
   }
 
