@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, onSnapshot } from '@angular/fire/firestore';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
 import { Thread } from '../models/thread.class';
@@ -138,21 +138,36 @@ export class DataService {
 
 
 
-  
 
-  /* async addNote(item: Note) {
-    await addDoc(this.getNotesRef(), item ).catch((err) => {
+  // Channels, Threads oder UserChats in Firebase hinzufügen
+
+   async addChannel(channel: Channel) {
+    await addDoc(this.getChannelCollection(), channel ).catch((err) => {
       console.error(err)
     }).then((docRef) => {
       console.log("Document written with ID: ", docRef?.id)
     });
   }
 
-  
+  async addThread(thread: Thread) {
+    await addDoc(this.getThreadCollection(), thread ).catch((err) => {
+      console.error(err)
+    }).then((docRef) => {
+      console.log("Document written with ID: ", docRef?.id)
+    });
+  }
+
+  async addUserChat(userChat: UserChat) {
+    await addDoc(this.getUserChatsCollection(), userChat ).catch((err) => {
+      console.error(err)
+    }).then((docRef) => {
+      console.log("Document written with ID: ", docRef?.id)
+    });
+  }
 
 
 
-
+/*
 
   // Daten aktualisieren: updateDoc() von Firebase benötigt ein docRef (das was geupdatet werden soll) und die neuen Daten 
   async updateNote(note: Note ) {
@@ -201,6 +216,7 @@ export class DataService {
   }
 
 }
+
  */
   
 }
