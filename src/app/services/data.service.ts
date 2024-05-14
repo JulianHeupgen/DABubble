@@ -139,7 +139,7 @@ export class DataService {
 
 
 
-  // Channels, Threads oder UserChats in den Firebase Collections hinzufügen
+  // Neue Channels, Threads oder UserChats in den Firebase Collections hinzufügen
 
    async addChannel(channel: Channel) {
     await addDoc(this.getChannelCollection(), channel.toJSON() ).catch((err) => {
@@ -169,7 +169,7 @@ export class DataService {
 
 
 
-  // Channel updaten
+  // Einen Channel updaten
 
   async updateChannel(channel: Channel ) {
     let docRef = this.getChannelDocRef(channel.channelId);
@@ -183,9 +183,7 @@ export class DataService {
   }
 
 
-
-
-  // Thread updaten
+  // Einen Thread updaten
 
   async updateThread(thread: Thread ) {
     let docRef = this.getThreadDocRef(thread.threadId);
@@ -199,8 +197,7 @@ export class DataService {
   }
 
 
-
-  // UserChat updaten
+  // Einen UserChat updaten
   
   async updateUserChat(userChat: UserChat ) {
     let docRef = this.getUserChatDocRef(userChat.userChatId);
@@ -212,6 +209,8 @@ export class DataService {
   getUserChatDocRef(userChatId: string) {
     return doc(collection(this.firestore, 'directMessages'), userChatId)
   }
+
+
 
 
   // Einzelnen UserChat löschen
