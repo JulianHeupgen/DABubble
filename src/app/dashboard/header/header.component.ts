@@ -8,6 +8,7 @@ import { User } from '../../models/user.class';
 import { Subscription } from 'rxjs';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +18,8 @@ import { Router } from '@angular/router';
     MatIconModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    CommonModule
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
@@ -27,7 +29,7 @@ export class HeaderComponent {
   constructor(private auth: AuthService, private router: Router) {}
 
   user!: User;
-  online = true;
+  isProfileOpen = false;
 
   private userSub = new Subscription();
 
@@ -41,8 +43,14 @@ export class HeaderComponent {
     })
   }
 
-  openProfile() {
+  openProfile(event: Event) {
+    event.stopPropagation();
+    this.isProfileOpen = true;
+  }
 
+  closeProfile(event: Event) {
+    event.stopPropagation();
+    this.isProfileOpen = false;
   }
 
   async logoutUser() {

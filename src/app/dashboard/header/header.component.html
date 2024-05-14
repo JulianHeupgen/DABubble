@@ -7,19 +7,70 @@
   </div>
 
   @if (user) {
-  <div [matMenuTriggerFor]="profileMenu" class="header-profile">
+  <div [matMenuTriggerFor]="menu" class="header-profile">
     <p>{{ user.name }}</p>
     <div class="profile-img-container">
-      <img class="profile-img" src="./assets/img/avatar_1.png">
-      <div class="online-status" [class.online]="user.onlineStatus == 'online'" [class.offline]="user.onlineStatus == 'offline'" [class.away]="user.onlineStatus == 'away'"></div>
+      <img class="profile-img" [src]="user.imageUrl">
+      <div class="online-status" [class.online]="user.onlineStatus == 'online'"
+        [class.offline]="user.onlineStatus == 'offline'" [class.away]="user.onlineStatus == 'away'"></div>
     </div>
     <img class="arrow-down" src="./assets/img/header_arrow_down.png">
   </div>
 
-  <mat-menu #profileMenu="matMenu" xPosition="before" class="profile-menu">
-    <button class="profile mat-button" mat-menu-item>Profil</button>
-    <button (click)="logoutUser()" class="logout mat-button" mat-menu-item>Logout</button>
+  <mat-menu #menu xPosition="before" class="profile-menu">
+
+    <ng-container *ngIf="!isProfileOpen; else profileContent">
+      <button (click)="openProfile($event)" class="profile mat-button" mat-menu-item>Profil</button>
+      <button (click)="logoutUser()" class="logout mat-button" mat-menu-item>Logout</button>
+    </ng-container>
+
+    <ng-template #profileContent>
+      <!-- Here comes the user content, the form and all -->
+      <div class="profile-menu-data" (click)="$event.stopPropagation()">
+        <div class="p-head">
+          <span>Profil</span>
+          <img (click)="closeProfile($event)" src="./../../../assets/img/close.png">
+        </div>
+        <div class="p-img">
+          <img [src]="user.imageUrl">
+        </div>
+        <div class="p-name-edit">
+          <span>{{ user.name }}</span>
+          <a>Bearbeiten</a>
+        </div>
+        <div class="p-status">
+          @if (user.onlineStatus === 'online') {
+            <div class="status-point status-online"></div>
+            <span class="text-online">Aktiv</span>
+          }
+          @if (user.onlineStatus === 'offline') {
+            <div class="status-point status-offline"></div>
+            <span class="textoffline">Inaktiv</span>
+          }
+          @if (user.onlineStatus === 'away') {
+            <div class="status-point status-away"></div>
+            <span class="text-away">Nicht am PC</span>
+          }
+        </div>
+        <div class="p-email">
+          <div class="email-first">
+            <img src="./../../../assets/img/mail.png">
+          </div>
+          <div class="email-last">
+            <span>E-Mail-Adresse</span>
+            <a [href]="user.email">{{ user.email }}</a>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+
+
   </mat-menu>
+
+  }
+  @else {
+  <div class="profile-placeholder"></div>
   }
 
 </div>
