@@ -5,23 +5,21 @@
     <input type="text" placeholder="Code learning durchsuchen">
     <img src="./assets/img/search.png">
   </div>
+
+  @if (user) {
   <div [matMenuTriggerFor]="profileMenu" class="header-profile">
-    <p>{{ user?.name }}</p>
+    <p>{{ user.name }}</p>
     <div class="profile-img-container">
       <img class="profile-img" src="./assets/img/avatar_1.png">
-      @if (online) {
-      <img class="online-status" src="./assets/img/online.png">
-      }
-      @if (!online) {
-      <img class="online-status" src="./assets/img/offline.png">
-      }
+      <div class="online-status" [class.online]="user.onlineStatus == 'online'" [class.offline]="user.onlineStatus == 'offline'" [class.away]="user.onlineStatus == 'away'"></div>
     </div>
     <img class="arrow-down" src="./assets/img/header_arrow_down.png">
   </div>
 
-  <mat-menu #profileMenu="matMenu" xPosition="before" class="profileMenu">
-    <button class="item" mat-menu-item>Profil</button>
-    <button (click)="logoutUser()" class="item" mat-menu-item>Logout</button>
+  <mat-menu #profileMenu="matMenu" xPosition="before" class="profile-menu">
+    <button class="profile mat-button" mat-menu-item>Profil</button>
+    <button (click)="logoutUser()" class="logout mat-button" mat-menu-item>Logout</button>
   </mat-menu>
+  }
 
 </div>

@@ -26,7 +26,7 @@ export class HeaderComponent {
 
   constructor(private auth: AuthService, private router: Router) {}
 
-  user?: User;
+  user!: User;
   online = true;
 
   private userSub = new Subscription();
