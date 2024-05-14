@@ -31,6 +31,7 @@
 }
 
 .img-as-button {
+    height: 270px;
     position: fixed;
     left: 0;
     top: 70%;
@@ -70,6 +71,7 @@
 .profile-img {
     height: 60px;
     width: 60px;
+    border-radius: 100%;
 }
 
 .tag-img {
@@ -178,6 +180,13 @@
     }
 }
 
+.active-channel {
+    border-radius: 20px;
+    background-color: $backgroundHover;
+    height: 33px;
+    cursor: pointer;
+}
+
 .headline-subcontainer {
     display: flex;
     align-items: center;
@@ -213,4 +222,10 @@
         border-radius: 30px;
         cursor: pointer;
     }
+}
+
+.active-user {
+    background-color: $backgroundHover;
+    border-radius: 30px;
+    cursor: pointer;
 }
