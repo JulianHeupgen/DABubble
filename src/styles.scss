@@ -108,21 +108,21 @@ app-channel-chat {
 /* Emoji bar*/
 .emoji-mart {
   border: none !important;
-  border-radius: 20px !important;
-  z-index: 99 !important;
+  // border-radius: 20px !important;
+  // z-index: 99 !important;
 }
 
 .mat-mdc-menu-panel {
   max-width: unset !important;
-  border-radius: 20px !important;
-  border: 1px solid #797EF3;
+  // border-radius: 20px !important;
+  // border: 1px solid #797EF3;
 }
 
-.mat-mdc-menu-content {
-  padding: 0 !important;
-}
+// .mat-mdc-menu-content {
+//   padding: 0 !important;
+// }
 
-.mat-mdc-menu-item {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
+// .mat-mdc-menu-item {
+//   padding-left: 0 !important;
+//   padding-right: 0 !important;
+// }

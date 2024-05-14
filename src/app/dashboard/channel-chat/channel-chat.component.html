@@ -66,12 +66,13 @@
                      placeholder="Pick one"
                      aria-label="User"
                      matInput
+                     [formControl]="pingUserControl"
                      [matAutocomplete]="auto">
-              <mat-autocomplete #auto="matAutocomplete">
-                
-                  <mat-option *ngFor="let user of dataService.allUsers" [value]="user.name">{{ user.name }}</mat-option>
-                
-              </mat-autocomplete>
+                     <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option *ngFor="let user of filteredUsers | async" [value]="user.name" (click)="addUserToMessage(user)">
+                        {{ user.name }}
+                      </mat-option>
+                    </mat-autocomplete>
             </mat-form-field>
           </mat-menu>
 

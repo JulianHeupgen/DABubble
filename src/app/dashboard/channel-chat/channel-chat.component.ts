@@ -6,13 +6,13 @@ import { MatList, MatListModule } from '@angular/material/list';
 import { Channel } from '../../models/channel.class';
 import { StorageService } from '../../services/storage.service';
 import { DataService } from '../../services/data.service';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { ChannelThreadComponent } from './channel-thread/channel-thread.component';
 import { User } from '../../models/user.class';
 import { Thread } from '../../models/thread.class';
-import { Subscription } from 'rxjs';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Observable, Subscription, map, startWith } from 'rxjs';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Message } from '../../models/message.class';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -41,7 +41,8 @@ import { MatInputModule } from '@angular/material/input';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    AsyncPipe,
   ],
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
@@ -49,6 +50,7 @@ import { MatInputModule } from '@angular/material/input';
 export class ChannelChatComponent {
 
   @ViewChild('threadMessageBox') threadMessageBox!: ElementRef;
+  @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
 
   constructor(public dataService: DataService,
     private route: ActivatedRoute,
@@ -61,6 +63,8 @@ export class ChannelChatComponent {
         this.ngOnInit();
       }
     });
+
+
   }
 
 
@@ -81,16 +85,41 @@ export class ChannelChatComponent {
   private threadsSub: Subscription = new Subscription();
 
 
+
+
+  //-------------------//
+
+  pingUserControl = new FormControl('');
+  filteredUsers!: Observable<any[]>;
+
+
+
+  //------------------//
+
+
   async ngOnInit() {
     this.resetParticipantsData();
     this.dataSubscriptions();
     await this.checkUserAuthId();
 
+
+
     setTimeout(() => {
       this.getChannelInfos();
+
+      this.filteredUsers = this.pingUserControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filterUsers(value || ''))
+      );
     }, 600);
+
   }
 
+
+  private _filterUsers(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.users.filter((user: any) => user.name.toLowerCase().startsWith(filterValue));
+  }
 
   resetParticipantsData() {
     this.channelParticipants = [];
@@ -99,7 +128,7 @@ export class ChannelChatComponent {
 
 
   dataSubscriptions() {
-    this.userSub = this.dataService.getUsersList().subscribe(users => {
+    this.userSub = this.dataService.getUsersList().subscribe((users: any) => {
       this.users = users;
     });
     this.channelSub = this.dataService.getChannelsList().subscribe(channels => {
@@ -212,7 +241,13 @@ export class ChannelChatComponent {
     textAreaElement.value += event.emoji.native;
   }
 
-
+  addUserToMessage(user: any) {
+    if (this.threadMessageBox && user) {
+      this.threadMessageBox.nativeElement.value += user.name + '';
+      this.pingUserControl.setValue('');
+      this.menuTrigger.closeMenu();
+    }
+  }
 
   ngOnDestroy() {
     this.userSub.unsubscribe();
@@ -220,4 +255,5 @@ export class ChannelChatComponent {
     this.threadsSub.unsubscribe();
   }
 }
+
 
