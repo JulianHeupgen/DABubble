@@ -192,8 +192,8 @@ export class DataService {
     });
   }
 
-  getThreadDocRef(channelId: string ) {
-    return doc(collection(this.firestore, 'threads'), channelId);
+  getThreadDocRef(threadId: string ) {
+    return doc(collection(this.firestore, 'threads'), threadId);
   }
 
 
