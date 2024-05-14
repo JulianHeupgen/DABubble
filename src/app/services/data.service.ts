@@ -211,42 +211,7 @@ export class DataService {
 
   getUserChatDocRef(userChatId: string) {
     return doc(collection(this.firestore, 'directMessages'), userChatId)
-/*
-
-  // Daten aktualisieren: updateDoc() von Firebase benötigt ein docRef (das was geupdatet werden soll) und die neuen Daten
-  async updateNote(note: Note ) {
-    if(note.id){
-      let docRef = this.getSingleDocRef(this.getColIdFromNote(note), note.id);
-      await updateDoc(docRef, this.getCleanJSON(note)).catch((err) => {
-        console.error(err)
-      });
-    }
   }
-
-  // richtige Collection
-  getColIdFromNote(note: Note) {
-    if(note.type == 'note') {
-      return 'notes'
-    } else {
-      return 'trash'
-    }
-  }
-
-  // das Update
-  getCleanJSON(note: Note):{} {
-    return {
-      type: note.type,
-      title: note.title,
-      content: note.content,
-      marked: note.marked,
-    }
-  }
-
-  // Document welches geändert werden soll
-  getSingleDocRef(colId: string, docId: string ) {
-    return doc(collection(this.firestore, colId), docId);
-  }
-
 
 
   // Einzelnen UserChat löschen
