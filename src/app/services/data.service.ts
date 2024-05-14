@@ -220,7 +220,5 @@ export class DataService {
     return doc(collection(this.firestore, 'directMessages'), userChatId)
   }
 
- */
-
 }
 
