@@ -36,10 +36,10 @@
           <img class="not-hover-icon" src="../../../assets/img/emoticon.png" alt="">
 
 
-          <button class="hover-icon" mat-button [matMenuTriggerFor]="menu" #menuTrigger>
+          <button class="hover-icon" mat-button [matMenuTriggerFor]="emoji">
             <img src="../../assets/img/emoticon-hover.png" alt="">
           </button>
-          <mat-menu #menu="matMenu" class="mat-menu">
+          <mat-menu #emoji="matMenu" class="mat-menu">
             <button mat-menu-item (click)="$event.stopPropagation()">
               <emoji-mart 
                 class="emoji-mart" 
@@ -53,13 +53,35 @@
         </div>
         <div class="address-message-to-user">
           <img class="not-hover-icon" src="../../../assets/img/ping-user.png" alt="">
-          <img class="hover-icon" src="../../../assets/img/ping-user-hover.png" alt="">
+          <!-- <img class="hover-icon" src="../../../assets/img/ping-user-hover.png" alt=""> -->
+
+
+          <button class="hover-icon" mat-button [matMenuTriggerFor]="pingUser">
+            <img src="../../../assets/img/ping-user-hover.png" alt="">
+          </button>
+          <mat-menu #pingUser="matMenu" class="mat-menu">
+            <mat-form-field class="example-full-width" (click)="$event.stopPropagation()">
+              <mat-label>User</mat-label>
+              <input type="text"
+                     placeholder="Pick one"
+                     aria-label="User"
+                     matInput
+                     [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                
+                  <mat-option *ngFor="let user of dataService.allUsers" [value]="user.name">{{ user.name }}</mat-option>
+                
+              </mat-autocomplete>
+            </mat-form-field>
+          </mat-menu>
+
+
+
         </div>
       </div>
 
 
       <div class="send-message">
-
         <button class="not-hover-icon">
           <img src="../../../assets/img/send-message.png" alt="">
         </button>

@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatList, MatListModule } from '@angular/material/list';
 import { Channel } from '../../models/channel.class';
 import { StorageService } from '../../services/storage.service';
@@ -12,12 +12,13 @@ import { ChannelThreadComponent } from './channel-thread/channel-thread.componen
 import { User } from '../../models/user.class';
 import { Thread } from '../../models/thread.class';
 import { Subscription } from 'rxjs';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Message } from '../../models/message.class';
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { MatInputModule } from '@angular/material/input';
 // import 'emoji-picker-element';
 @Component({
   selector: 'app-channel-chat',
@@ -37,6 +38,10 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
     MatMenuTrigger,
     MatMenuModule,
     PickerComponent,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule
   ],
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
@@ -45,17 +50,17 @@ export class ChannelChatComponent {
 
   @ViewChild('threadMessageBox') threadMessageBox!: ElementRef;
 
-  constructor(private dataService: DataService,
+  constructor(public dataService: DataService,
     private route: ActivatedRoute,
     private router: Router,
     private storage: StorageService,
     private auth: AuthService,
     private formBuilder: FormBuilder) {
-      this.router.events.subscribe(event => {
-        if (event instanceof NavigationEnd) {
-          this.ngOnInit();
-        }
-      });
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.ngOnInit();
+      }
+    });
   }
 
 
