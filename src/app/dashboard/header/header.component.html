@@ -74,7 +74,7 @@
             <form [formGroup]="nameEditForm" (submit)="updateName()">
               <div class="input-field-container">
                 <div>
-                  <input formControlName="name" type="text" (value)="user.name" placeholder="{{user.name}}">
+                  <input formControlName="name" type="text">
                 </div>
               </div>
               <div class="error-container">
@@ -91,7 +91,7 @@
             <form [formGroup]="emailEditForm" (submit)="updateEmail()">
               <div class="input-field-container">
                 <div>
-                  <input formControlName="email" type="email" (value)="user.email" placeholder="{{user.email}}">
+                  <input formControlName="email" type="email">
                 </div>
               </div>
               <div class="error-container">

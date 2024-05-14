@@ -52,8 +52,18 @@ export class HeaderComponent {
     this.userSub = this.auth.getUser().subscribe(user => {
       if (user) {
         this.user = user;
+        this.updateFormValues()
       }
     })
+  }
+
+  updateFormValues() {
+    this.emailEditForm.patchValue({
+      email: this.user.email
+    });
+    this.nameEditForm.patchValue({
+      name: this.user.name
+    });
   }
 
   updateEmail() {
