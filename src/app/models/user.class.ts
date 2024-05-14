@@ -9,7 +9,7 @@ export class User {
   email: string;
   onlineStatus: 'online' | 'offline' | 'away';
   channels: string[]; 
-  userChats: string[]; 
+  userChats: UserChat[]; 
   authUserId: string;
   imageUrl: string;
   userChatId: string[];
@@ -22,7 +22,7 @@ export class User {
     authUserId: string,
     imageUrl: string,
     channels: string[],
-    userChats: string[],
+    userChats: UserChat[],
     userChatId: string[]
 }) {
     this.id = data.id;
@@ -86,19 +86,19 @@ export class User {
 
   sendDirectMessage(recipient: User, messageContent: string): void {
 
-    // const existingUserChat = this.userChats.find(chat =>
-    //     chat.participants.includes(recipient));                   // Prüfen ob Chat zwischen den beiden schon existiert !
+    const existingUserChat = this.userChats.find(chat =>
+        chat.participants.includes(recipient));                   // Prüfen ob Chat zwischen den beiden schon existiert !
 
-    // if (existingUserChat) {                                       // UserChat existiert, also Message einfach dort einfügen
-    //     const newMessage = new Message(this, messageContent);
-    //     existingUserChat.addMessage(newMessage);
-    // } else {                                                      // UserChat existiert noch nicht, also UserChat erstellen und beiden Usern hinzufügen
-    //     const newUserChat = new UserChat([this, recipient]);
-    //     const newMessage = new Message(this, messageContent);
-    //     newUserChat.addMessage(newMessage);
-    //     this.userChats.push(newUserChat);
-    //     recipient.userChats.push(newUserChat);
-    // }
+    if (existingUserChat) {                                       // UserChat existiert, also Message einfach dort einfügen
+        const newMessage = new Message(this, messageContent);
+        existingUserChat.addMessage(newMessage);
+    } else {                                                      // UserChat existiert noch nicht, also UserChat erstellen und beiden Usern hinzufügen
+        const newUserChat = new UserChat([this, recipient]);
+        const newMessage = new Message(this, messageContent);
+        newUserChat.addMessage(newMessage);
+        this.userChats.push(newUserChat);
+        recipient.userChats.push(newUserChat);
+    }
 }
 
 

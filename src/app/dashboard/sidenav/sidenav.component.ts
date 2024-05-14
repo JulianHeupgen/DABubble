@@ -165,6 +165,8 @@ export class SidenavComponent {
         });
       }
     });
+    console.log("TESTTEST", this.users.userChats);
+    
   }
 
   // getUserDirectMessages(): void {
@@ -193,12 +195,7 @@ export class SidenavComponent {
   getUserDirectMessages(): void {
     this.directMessageTitle = [];  // Initialisiert das Ergebnis-Array
     this.selectedUser.forEach((selected: User) => {
-      console.log('SELECTED', this.selectedUser);
-      console.log('USERS', this.users);
-      console.log(selected.id, selected.userChatId);
-      
-      
-      
+
       // Verwende `userChatId` statt `userChats`
       if (selected.userChatId && Array.isArray(selected.userChatId)) {
         selected.userChatId.forEach(chatId => {  // chatId ist bereits die ID
