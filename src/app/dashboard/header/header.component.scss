@@ -7,15 +7,26 @@
     padding-right: 20px;
 }
 
+.mat-mdc-menu-content {
+  padding: 8px !important;
+}
+
 .header-profile {
     display: flex;
     align-items: center;
     gap: 16px;
+    padding: 8px 0;
+    box-sizing: border-box;
 
     p {
         margin: 0;
         font-size: 32px;
         font-weight: 700;
+        line-height: normal;
+    }
+
+    &:hover {
+      cursor: pointer;
     }
 }
 

@@ -1,21 +1,27 @@
 <div class="header">
-    <img class="logo" src="./assets/img/dabubble_header_logo.png">
+  <img class="logo" src="./assets/img/dabubble_header_logo.png">
 
-<div class="search-bar">
+  <div class="search-bar">
     <input type="text" placeholder="Code learning durchsuchen">
     <img src="./assets/img/search.png">
-</div>    
-<div class="header-profile">
-    <p>Frederik Beck</p>
+  </div>
+  <div [matMenuTriggerFor]="profileMenu" class="header-profile">
+    <p>{{ user?.name }}</p>
     <div class="profile-img-container">
-        <img class="profile-img" src="./assets/img/avatar_1.png">
-        @if (online) {
-            <img class="online-status" src="./assets/img/online.png">
-        }
-        @if (!online) {
-            <img class="online-status" src="./assets/img/offline.png">
-        }
+      <img class="profile-img" src="./assets/img/avatar_1.png">
+      @if (online) {
+      <img class="online-status" src="./assets/img/online.png">
+      }
+      @if (!online) {
+      <img class="online-status" src="./assets/img/offline.png">
+      }
     </div>
     <img class="arrow-down" src="./assets/img/header_arrow_down.png">
-</div>
+  </div>
+
+  <mat-menu #profileMenu="matMenu" xPosition="before">
+    <button mat-menu-item>Profil</button>
+    <button mat-menu-item>Logout</button>
+  </mat-menu>
+
 </div>

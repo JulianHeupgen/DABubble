@@ -4,7 +4,8 @@ import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
 import { Thread } from '../models/thread.class';
 import { UserChat } from '../models/user-chat';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +14,12 @@ export class DataService {
 
   firestore: Firestore = inject(Firestore);
 
-
   constructor() {
     this.getUsersList();
     this.getChannelsList();
     this.getThreadsList();
     this.getUserChatsList();
   }
-
 
   allUsers: User[] = [];
   allChannels: Channel[] = [];
@@ -35,7 +34,7 @@ export class DataService {
       const unsubscribe = onSnapshot(this.getUserCollection(), list => {
         this.allUsers = [];
         list.forEach(user => this.allUsers.push(this.setUserObject(user.id, user.data())))
-        observer.next(this.allUsers); 
+        observer.next(this.allUsers);
       });
     });
   }
@@ -65,7 +64,7 @@ export class DataService {
       const unsubscribe = onSnapshot(this.getChannelCollection(), list => {
         this.allChannels = [];
         list.forEach(channel => this.allChannels.push(this.setChannelObject(channel.id, channel.data())))
-        observer.next(this.allChannels); 
+        observer.next(this.allChannels);
       });
     });
   }
@@ -91,7 +90,7 @@ export class DataService {
       const unsubscribe = onSnapshot(this.getThreadCollection(), list => {
         this.allThreads = [];
         list.forEach(thread => this.allThreads.push(this.setThreadObject(thread.id, thread.data())))
-        observer.next(this.allThreads); 
+        observer.next(this.allThreads);
       });
     });
   }
@@ -117,7 +116,7 @@ export class DataService {
       const unsubscribe = onSnapshot(this.getUserChatsCollection(), list => {
         this.allUserChats = [];
         list.forEach(userChat => this.allUserChats.push(this.setUserChatObject(userChat.id, userChat.data())))
-        observer.next(this.allUserChats); 
+        observer.next(this.allUserChats);
       });
     });
   }
@@ -169,7 +168,7 @@ export class DataService {
 
 /*
 
-  // Daten aktualisieren: updateDoc() von Firebase benötigt ein docRef (das was geupdatet werden soll) und die neuen Daten 
+  // Daten aktualisieren: updateDoc() von Firebase benötigt ein docRef (das was geupdatet werden soll) und die neuen Daten
   async updateNote(note: Note ) {
     if(note.id){
       let docRef = this.getSingleDocRef(this.getColIdFromNote(note), note.id);
@@ -179,7 +178,7 @@ export class DataService {
     }
   }
 
-  // richtige Collection 
+  // richtige Collection
   getColIdFromNote(note: Note) {
     if(note.type == 'note') {
       return 'notes'
@@ -198,7 +197,7 @@ export class DataService {
     }
   }
 
-  // Document welches geändert werden soll 
+  // Document welches geändert werden soll
   getSingleDocRef(colId: string, docId: string ) {
     return doc(collection(this.firestore, colId), docId);
   }
@@ -218,6 +217,6 @@ export class DataService {
 }
 
  */
-  
+
 }
 
