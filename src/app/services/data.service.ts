@@ -4,8 +4,8 @@ import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
 import { Thread } from '../models/thread.class';
 import { UserChat } from '../models/user-chat';
-import { Observable, Subscription } from 'rxjs';
-import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -222,4 +222,5 @@ export class DataService {
 
 
 }
+
 
