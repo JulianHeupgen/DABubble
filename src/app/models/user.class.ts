@@ -21,16 +21,16 @@ export class User {
     authUserId: string,
     imageUrl: string,
     channels: string[],
-    userChats: UserChat[]
+    userChats: UserChat[],
 }) {
-    this.id = '';
+    this.id = data.id;
     this.name = data.name;
     this.email = data.email;
     this.onlineStatus = data.onlineStatus;
     this.authUserId = data.authUserId;
     this.imageUrl = data.imageUrl;
     this.channels = data.channels;
-    this.userChats = [];
+    this.userChats = data.userChats || [];
 }
 
 

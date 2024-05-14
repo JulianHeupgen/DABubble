@@ -85,7 +85,7 @@ export class AuthService {
   /**
    * Logout the actual logged in user
    */
-  async logout() {
+  async logout(): Promise<boolean> {
     try {
       await signOut(this.auth);
       return true;
@@ -151,9 +151,9 @@ export class AuthService {
 
       //Return a teardown logic function that will be called when
       //the Observable is unsubscribed
-      return () => {
-        unsubscribe(); //This will stop listening to changes from firestore
-      }
+      subscriber.add(() => {
+        unsubscribe();
+      })
     });
   }
 
@@ -176,7 +176,7 @@ export class AuthService {
             return;
           }
           // Use the docId to get onsnapShot data
-          onSnapshot(doc(this.firestore, 'users', docId), docSnapshots => {
+          const unsubscribe = onSnapshot(doc(this.firestore, 'users', docId), docSnapshots => {
             if (docSnapshots.exists()) {
               const user = new User(docSnapshots.data() as User);
               subscriber.next(user);
@@ -186,12 +186,19 @@ export class AuthService {
           }, error => {
             subscriber.error(error);
           });
+
+          subscriber.add(() => {
+            unsubscribe();
+          });
+
         }).catch(error => {
           subscriber.error(error);
         });
+
       }).catch(error => {
         subscriber.error(error);
       });
+
     });
   }
 
@@ -206,9 +213,10 @@ export class AuthService {
       }, err => {
         subscriber.error(err);
       });
-
-      // Cleanup
-      return unsubscribe;
+      // Cleanup logic
+      subscriber.add(() => {
+        unsubscribe();
+      })
     });
   }
 
