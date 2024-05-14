@@ -5,8 +5,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.class';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MatMenuModule } from '@angular/material/menu';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +24,7 @@ import { MatMenuModule } from '@angular/material/menu';
 })
 export class HeaderComponent {
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   user?: User;
   online = true;
@@ -38,6 +39,23 @@ export class HeaderComponent {
         this.user = user;
       }
     })
+  }
+
+  openProfile() {
+
+  }
+
+  async logoutUser() {
+    try {
+      await this.auth.updateUserOnlineStatus('offline');
+      const tryLogout = await this.auth.logout();
+      if (tryLogout === true) {
+        this.router.navigate(['/login']);
+      }
+      console.log('User logged out.');
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   ngOnDestroy(): void {

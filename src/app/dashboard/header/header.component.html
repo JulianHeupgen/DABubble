@@ -19,9 +19,9 @@
     <img class="arrow-down" src="./assets/img/header_arrow_down.png">
   </div>
 
-  <mat-menu #profileMenu="matMenu" xPosition="before">
-    <button mat-menu-item>Profil</button>
-    <button mat-menu-item>Logout</button>
+  <mat-menu #profileMenu="matMenu" xPosition="before" class="profileMenu">
+    <button class="item" mat-menu-item>Profil</button>
+    <button (click)="logoutUser()" class="item" mat-menu-item>Logout</button>
   </mat-menu>
 
 </div>

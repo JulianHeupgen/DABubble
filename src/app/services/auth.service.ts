@@ -85,7 +85,7 @@ export class AuthService {
   /**
    * Logout the actual logged in user
    */
-  async logout() {
+  async logout(): Promise<boolean> {
     try {
       await signOut(this.auth);
       return true;
