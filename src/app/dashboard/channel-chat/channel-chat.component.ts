@@ -1,22 +1,24 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatList, MatListModule } from '@angular/material/list';
 import { Channel } from '../../models/channel.class';
 import { StorageService } from '../../services/storage.service';
 import { DataService } from '../../services/data.service';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { ChannelThreadComponent } from './channel-thread/channel-thread.component';
 import { User } from '../../models/user.class';
 import { Thread } from '../../models/thread.class';
-import { Subscription } from 'rxjs';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Observable, Subscription, map, startWith } from 'rxjs';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Message } from '../../models/message.class';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { MatInputModule } from '@angular/material/input';
 // import 'emoji-picker-element';
 @Component({
   selector: 'app-channel-chat',
@@ -36,6 +38,11 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
     MatMenuTrigger,
     MatMenuModule,
     PickerComponent,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    AsyncPipe,
   ],
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
@@ -43,18 +50,21 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 export class ChannelChatComponent {
 
   @ViewChild('threadMessageBox') threadMessageBox!: ElementRef;
+  @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
 
-  constructor(private dataService: DataService,
+  constructor(public dataService: DataService,
     private route: ActivatedRoute,
     private router: Router,
     private storage: StorageService,
     private auth: AuthService,
     private formBuilder: FormBuilder) {
-      this.router.events.subscribe(event => {
-        if (event instanceof NavigationEnd) {
-          this.ngOnInit();
-        }
-      });
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.ngOnInit();
+      }
+    });
+
+
   }
 
 
@@ -75,16 +85,41 @@ export class ChannelChatComponent {
   private threadsSub: Subscription = new Subscription();
 
 
+
+
+  //-------------------//
+
+  pingUserControl = new FormControl('');
+  filteredUsers!: Observable<any[]>;
+
+
+
+  //------------------//
+
+
   async ngOnInit() {
     this.resetParticipantsData();
     this.dataSubscriptions();
     await this.checkUserAuthId();
 
+
+
     setTimeout(() => {
       this.getChannelInfos();
+
+      this.filteredUsers = this.pingUserControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filterUsers(value || ''))
+      );
     }, 600);
+
   }
 
+
+  private _filterUsers(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.users.filter((user: any) => user.name.toLowerCase().startsWith(filterValue));
+  }
 
   resetParticipantsData() {
     this.channelParticipants = [];
@@ -93,7 +128,7 @@ export class ChannelChatComponent {
 
 
   dataSubscriptions() {
-    this.userSub = this.dataService.getUsersList().subscribe(users => {
+    this.userSub = this.dataService.getUsersList().subscribe((users: any) => {
       this.users = users;
     });
     this.channelSub = this.dataService.getChannelsList().subscribe(channels => {
@@ -206,7 +241,13 @@ export class ChannelChatComponent {
     textAreaElement.value += event.emoji.native;
   }
 
-
+  addUserToMessage(user: any) {
+    if (this.threadMessageBox && user) {
+      this.threadMessageBox.nativeElement.value += user.name + '';
+      this.pingUserControl.setValue('');
+      this.menuTrigger.closeMenu();
+    }
+  }
 
   ngOnDestroy() {
     this.userSub.unsubscribe();
@@ -214,4 +255,5 @@ export class ChannelChatComponent {
     this.threadsSub.unsubscribe();
   }
 }
+
 

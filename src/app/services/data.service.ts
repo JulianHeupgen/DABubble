@@ -1,11 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, collection, deleteDoc, doc, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, deleteDoc, doc, onSnapshot, updateDoc } from '@angular/fire/firestore';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
 import { Thread } from '../models/thread.class';
 import { UserChat } from '../models/user-chat';
-import { Observable, Subscription } from 'rxjs';
-import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +52,7 @@ export class DataService {
       channels: data.channels,
       userChats: data.userChats,
       authUserId: data.authUserId,
-      imageUrl: data.imageUrl
+      imageUrl: data.imageUrl,
     }
   }
 
@@ -138,7 +138,7 @@ export class DataService {
 
 
 
-  // Channels, Threads oder UserChats in den Firebase Collections hinzufügen
+  // Neue Channels, Threads oder UserChats in den Firebase Collections hinzufügen
 
    async addChannel(channel: Channel) {
     await addDoc(this.getChannelCollection(), channel.toJSON() ).catch((err) => {
@@ -166,44 +166,48 @@ export class DataService {
 
 
 
-/*
 
-  // Daten aktualisieren: updateDoc() von Firebase benötigt ein docRef (das was geupdatet werden soll) und die neuen Daten
-  async updateNote(note: Note ) {
-    if(note.id){
-      let docRef = this.getSingleDocRef(this.getColIdFromNote(note), note.id);
-      await updateDoc(docRef, this.getCleanJSON(note)).catch((err) => {
-        console.error(err)
-      });
-    }
+
+  // Einen Channel updaten
+
+  async updateChannel(channel: Channel ) {
+    let docRef = this.getChannelDocRef(channel.channelId);
+    await updateDoc(docRef, channel.toJSON()).catch((err) => {
+       console.error(err)
+    });
   }
 
-  // richtige Collection
-  getColIdFromNote(note: Note) {
-    if(note.type == 'note') {
-      return 'notes'
-    } else {
-      return 'trash'
-    }
-  }
-
-  // das Update
-  getCleanJSON(note: Note):{} {
-    return {
-      type: note.type,
-      title: note.title,
-      content: note.content,
-      marked: note.marked,
-    }
-  }
-
-  // Document welches geändert werden soll
-  getSingleDocRef(colId: string, docId: string ) {
-    return doc(collection(this.firestore, colId), docId);
+  getChannelDocRef(channelId: string ) {
+    return doc(collection(this.firestore, 'channels'), channelId);
   }
 
 
- */
+  // Einen Thread updaten
+
+  async updateThread(thread: Thread ) {
+    let docRef = this.getThreadDocRef(thread.threadId);
+    await updateDoc(docRef, thread.toJSON()).catch((err) => {
+       console.error(err)
+    });
+  }
+
+  getThreadDocRef(threadId: string ) {
+    return doc(collection(this.firestore, 'threads'), threadId);
+  }
+
+
+  // Einen UserChat updaten
+  
+  async updateUserChat(userChat: UserChat ) {
+    let docRef = this.getUserChatDocRef(userChat.userChatId);
+    await updateDoc(docRef, userChat.toJSON()).catch((err) => {
+       console.error(err)
+    });
+  }
+
+  getUserChatDocRef(userChatId: string) {
+    return doc(collection(this.firestore, 'directMessages'), userChatId)
+  }
 
 
 
@@ -211,14 +215,12 @@ export class DataService {
   // Einzelnen UserChat löschen
 
   async deleteUserChat(userChatId: string) {
-    await deleteDoc(this.getSingleDocRef(userChatId)).catch((err) => {
+    await deleteDoc(this.getUserChatDocRef(userChatId)).catch((err) => {
       console.error(err)
     });
   }
 
-  getSingleDocRef(userChatId: string) {
-    return doc(collection(this.firestore, 'directMessages'), userChatId)
-  }
 
 }
+
 
