@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Channel } from '../../models/channel.class';
 import { Subscription } from 'rxjs';
+import { UserChat } from '../../models/user-chat';
 
 
 @Component({
@@ -56,10 +57,11 @@ export class SidenavComponent {
   users: any;
   channels: any;
   userId: string = '';
-  selectedUser: Partial<User>[] = [];
+  // selectedUser: Partial<User>[] = [];
+  selectedUser: User[] = [];
   allChannels: Partial<Channel>[] = [];
   channelTitles: { channelId: string, title: string }[] = [];
-  directMessageTitle: { imageUrl: string, onlineStatus: string, name: string }[] = [];
+  directMessageTitle: { imageUrl: string, onlineStatus: string, name: string, id: string }[] = [];
 
   private userSub: Subscription = new Subscription();
   private channelSub: Subscription = new Subscription();
@@ -130,6 +132,20 @@ export class SidenavComponent {
     }
   }
 
+  // setUserData(uid: string) {
+  //   if (!this.users || this.users.length === 0) {
+  //     console.error('Benutzerdaten sind noch nicht geladen oder die Liste ist leer.');
+  //     return;
+  //   }
+  //   const user = this.users.find((user: User) => user.authUserId === uid);
+  //   if (user) {
+  //     console.log('User gefunden', user);
+  //     this.selectedUser = [user];  // Direktes Setzen als Array mit einem Eintrag
+  //   } else {
+  //     console.log('Kein User gefunden für UID:', uid);
+  //   }
+  // }
+
 
   /**
    * Set and Update the channel titles for the sidenav rendering
@@ -151,15 +167,75 @@ export class SidenavComponent {
     });
   }
 
+  // getUserDirectMessages(): void {
+  //   this.directMessageTitle = [];  // Initialisiert das Ergebnis-Array
+  //   this.selectedUser.forEach((selected: User) => {
+  //     if (selected.userChats && Array.isArray(selected.userChats)) {
+  //       selected.userChats.forEach(chatId => {  // chatId ist bereits die ID
+  //         const matchedUser = this.users.find((user: User) => user.id === chatId);
+  //         if (matchedUser) {
+  //           // Fügt den gefundenen Benutzer zum Ergebnis-Array hinzu, falls nicht bereits vorhanden
+  //           if (!this.directMessageTitle.some(dm => dm.id === matchedUser.id)) {
+  //             this.directMessageTitle.push({
+  //               id: matchedUser.id,
+  //               imageUrl: matchedUser.imageUrl,
+  //               name: matchedUser.name,
+  //               onlineStatus: matchedUser.onlineStatus
+  //             });
+  //           }
+  //         }
+  //       });
+  //     }
+  //   });
+  //   console.log('Direct Message Titles:', this.directMessageTitle);
+  // }
 
-  getUserDirectMessages() {
-    console.log('getUserDirectMessage', this.users);
-    this.directMessageTitle = [];
-    this.selectedUser.forEach(user => {
-      console.log('USER', user.userChats);
+  getUserDirectMessages(): void {
+    this.directMessageTitle = [];  // Initialisiert das Ergebnis-Array
+    this.selectedUser.forEach((selected: User) => {
+      console.log('SELECTED', this.selectedUser);
+      console.log('USERS', this.users);
+      console.log(selected.id, selected.userChatId);
       
-    })
+      
+      
+      // Verwende `userChatId` statt `userChats`
+      if (selected.userChatId && Array.isArray(selected.userChatId)) {
+        selected.userChatId.forEach(chatId => {  // chatId ist bereits die ID
+          const matchedUser = this.users.find((user: User) => user.id === chatId);
+          if (matchedUser) {
+            // Fügt den gefundenen Benutzer zum Ergebnis-Array hinzu, falls nicht bereits vorhanden
+            if (!this.directMessageTitle.some(dm => dm.id === matchedUser.id)) {
+              this.directMessageTitle.push({
+                id: matchedUser.id,
+                imageUrl: matchedUser.imageUrl,
+                name: matchedUser.name,
+                onlineStatus: matchedUser.onlineUserStatus
+              });
+            }
+          }
+        });
+      }
+    });
+    console.log('Direct Message Titles:', this.directMessageTitle);
   }
+  
+
+
+  // getUserDirectMessages() {
+  //   this.directMessageTitle = [];
+  //   this.selectedUser.forEach(user => {
+  //     if (user.userChats && Array.isArray(user.userChats)) {
+  //       user.userChats.forEach(userChats => {
+  //         const matchedUsers = this.users.find(userChat => userChat.id === userChats);
+  //         console.log('CHATS', userChats);
+  //         console.log('USERS', this.users);
+          
+          
+  //       })
+  //     }
+  //   })
+  // }
 
 
   /**
