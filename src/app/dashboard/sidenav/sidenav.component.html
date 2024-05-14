@@ -77,21 +77,22 @@
 
                     <div class="direct-message-user-container">
                         <div *ngFor="let user of selectedUser">
-                            <div *ngFor="let chat of user.userChats" class="user-container">
+                            <div *ngFor="let chat of directMessageTitle" class="user-container" [routerLink]="['/dashboard/chat', chat.id]">
 
-                                <div class="profile-img-container">
+                                <div class="profile-img-container" [routerLink]="['/dashboard/chat', chat.id]">
+                                    
                                     <!-- <img class="profile-img" src="./assets/img/avatar_1.png"> -->
-                                    <img class="profile-img" src="{{ user.imageUrl }}">
-                                    @if (user.onlineStatus === 'online') {
+                                    <img class="profile-img" src="{{ chat.imageUrl }}">
+                                    @if (chat.onlineStatus === 'online') {
                                     <img class="online-status" src="./assets/img/online.png">
                                     }
-                                    @if (user.onlineStatus === 'offline') {
+                                    @if (chat.onlineStatus === 'offline') {
                                     <img class="online-status" src="./assets/img/offline.png">
                                     }
 
                                 </div>
                                 <div>
-                                    <p>{{ chat }}</p>
+                                    <p>{{ chat.name }}</p>
                                 </div>
                             </div>
                         </div>
@@ -116,7 +117,3 @@
 <img class="img-as-button" (mouseenter)="hoverMenuButton()" (mouseleave)="resetHover()" [src]="imageSrc"
     (click)="toggleSidenav()">
 }
-
-<div *ngFor="let test of directMessageTitle">
-    {{ test.name }}
-</div>

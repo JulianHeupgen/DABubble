@@ -100,9 +100,9 @@ export class SidenavComponent {
   }
 
 
-/**
- * Checking the validity of the data of users and channels from the Observable 
- */
+  /**
+   * Checking the validity of the data of users and channels from the Observable 
+   */
   checkDataForChannelNames() {
     if (this.users && this.channels) {
       this.updateChannelTitles();
@@ -165,27 +165,26 @@ export class SidenavComponent {
         });
       }
     });
-    console.log("TESTTEST", this.selectedUser[0].userChats[0].userChatId);
-    
   }
 
   getUserDirectMessages(): void {
-    this.directMessageTitle = [];  // Initialisiert das Ergebnis-Array
-  
-    // Gehe durch alle Benutzer, starte jedoch zuerst mit einer Überprüfung, ob überhaupt ein Benutzer ausgewählt wurde
+    this.directMessageTitle = [];
     if (this.selectedUser && this.selectedUser.length > 0) {
       this.selectedUser.forEach((selected: User) => {
         if (selected.userChats && Array.isArray(selected.userChats)) {
           selected.userChats.forEach(chat => {
-            const chatId = chat.userChatId;  // Zugriff auf die userChatId jedes userChats-Elements
+            const chatId = chat.userChatId;
             const matchedUser = this.users.find((user: User) => user.id === chatId);
             if (matchedUser) {
-              // Fügt den gefundenen Benutzer zum Ergebnis-Array hinzu, falls nicht bereits vorhanden
+              let displayName = matchedUser.name;
+              if (matchedUser.id === this.selectedUser[0].id) {
+                displayName += " (Du)";
+              }
               if (!this.directMessageTitle.some(dm => dm.id === matchedUser.id)) {
                 this.directMessageTitle.push({
                   id: matchedUser.id,
                   imageUrl: matchedUser.imageUrl,
-                  name: matchedUser.name,
+                  name: displayName,
                   onlineStatus: matchedUser.onlineStatus
                 });
               }
@@ -196,10 +195,51 @@ export class SidenavComponent {
     } else {
       console.log('Keine ausgewählten Benutzer vorhanden.');
     }
-  
+    this.sortDirectMessageUsers();
     console.log('Direct Message Titles:', this.directMessageTitle);
   }
 
+  sortDirectMessageUsers() {
+    this.directMessageTitle.sort((a, b) => {
+      if (a.id === this.selectedUser[0].id) return -1;
+      if (b.id === this.selectedUser[0].id) return 1;
+      return 0;
+    });
+  }
+
+
+  // getUserDirectMessages() {
+  //   this.directMessageTitle = [];
+  //   if (this.selectedUser && this.selectedUser.length > 0) {
+  //     this.selectedUser.forEach((selected: User) => {
+  //       if (selected.userChats && Array.isArray(selected.userChats)) {
+  //         selected.userChats.forEach(chat => {
+  //           const chatId = chat.userChatId;
+  //           const matchedUser = this.users.find((user: User) => user.id === chatId);
+  //           if (matchedUser) {
+  //             if (!this.directMessageTitle.some(dm => dm.id === matchedUser.id)) {
+  //               this.directMessageTitle.push({
+  //                 id: matchedUser.id,
+  //                 imageUrl: matchedUser.imageUrl,
+  //                 name: matchedUser.name,
+  //                 onlineStatus: matchedUser.onlineStatus
+  //               });
+  //             }
+  //           }
+  //         });
+  //       }
+  //     });
+  //   } else {
+  //     console.log('Keine ausgewählten Benutzer vorhanden.');
+  //   }
+
+  //   console.log('Direct Message Titles:', this.directMessageTitle);
+  // }
+
+
+  /**
+   * Dies war ein Test mit einer getrennten userChatId
+   */
   // getUserDirectMessages(): void {
   //   this.directMessageTitle = [];  // Initialisiert das Ergebnis-Array
   //   this.selectedUser.forEach((selected: User) => {
@@ -223,23 +263,6 @@ export class SidenavComponent {
   //     }
   //   });
   //   console.log('Direct Message Titles:', this.directMessageTitle);
-  // }
-  
-
-
-  // getUserDirectMessages() {
-  //   this.directMessageTitle = [];
-  //   this.selectedUser.forEach(user => {
-  //     if (user.userChats && Array.isArray(user.userChats)) {
-  //       user.userChats.forEach(userChats => {
-  //         const matchedUsers = this.users.find(userChat => userChat.id === userChats);
-  //         console.log('CHATS', userChats);
-  //         console.log('USERS', this.users);
-          
-          
-  //       })
-  //     }
-  //   })
   // }
 
 
