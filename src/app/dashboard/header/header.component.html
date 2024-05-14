@@ -14,7 +14,7 @@
       <div class="online-status" [class.online]="user.onlineStatus == 'online'"
         [class.offline]="user.onlineStatus == 'offline'" [class.away]="user.onlineStatus == 'away'"></div>
     </div>
-    <img class="arrow-down" src="./assets/img/header_arrow_down.png">
+    <img class="arrow-down" src="./../../../assets/img/header_arrow_down.png">
   </div>
 
   <mat-menu #menu xPosition="before" class="profile-menu">
@@ -34,22 +34,24 @@
         <div class="p-img">
           <img [src]="user.imageUrl">
         </div>
+
+        @if (!isProfileEdit) {
         <div class="p-name-edit">
           <span>{{ user.name }}</span>
-          <a>Bearbeiten</a>
+          <a (click)="editProfile()">Bearbeiten</a>
         </div>
         <div class="p-status">
           @if (user.onlineStatus === 'online') {
-            <div class="status-point status-online"></div>
-            <span class="text-online">Aktiv</span>
+          <div class="status-point status-online"></div>
+          <span class="text-online">Aktiv</span>
           }
           @if (user.onlineStatus === 'offline') {
-            <div class="status-point status-offline"></div>
-            <span class="textoffline">Inaktiv</span>
+          <div class="status-point status-offline"></div>
+          <span class="textoffline">Inaktiv</span>
           }
           @if (user.onlineStatus === 'away') {
-            <div class="status-point status-away"></div>
-            <span class="text-away">Nicht am PC</span>
+          <div class="status-point status-away"></div>
+          <span class="text-away">Nicht am PC</span>
           }
         </div>
         <div class="p-email">
@@ -58,9 +60,49 @@
           </div>
           <div class="email-last">
             <span>E-Mail-Adresse</span>
-            <a [href]="user.email">{{ user.email }}</a>
+            <a href="mailto: {{ user.email }}">{{ user.email }}</a>
           </div>
         </div>
+        }
+        @else if (isProfileEdit) {
+        <div class="profile-edit">
+          <div class="name-edit">
+            <div class="edit-label">
+              <img src="./../../../assets/img/account_circle.png">
+              <span>Vollständiger Name</span>
+            </div>
+            <form [formGroup]="nameEditForm" (submit)="updateName()">
+              <div class="input-field-container">
+                <div>
+                  <input formControlName="name" type="text" (value)="user.name" placeholder="{{user.name}}">
+                </div>
+              </div>
+              <div class="error-container">
+                <p class="input-feedback" *ngIf="nameEditForm.get('name')?.errors && nameEditForm.get('name')?.dirty">*Dieser Name ist leider ungültig. Bitte Vor Anchname eingeben.</p>
+              </div>
+              <button type="submit" mat-flat-button color="primary" [disabled]="!nameEditForm.valid">Update Name</button>
+            </form>
+          </div>
+          <div class="email-edit">
+            <div class="edit-label">
+              <img src="./../../../assets/img/mail.png">
+              <span>E-Mail-Adresse</span>
+            </div>
+            <form [formGroup]="emailEditForm" (submit)="updateEmail()">
+              <div class="input-field-container">
+                <div>
+                  <input formControlName="email" type="email" (value)="user.email" placeholder="{{user.email}}">
+                </div>
+              </div>
+              <div class="error-container">
+                <p class="input-feedback" *ngIf="emailEditForm.get('email')?.errors && emailEditForm.get('email')?.dirty">*Diese
+                  E-Mail Adresse ist leider ungültig.</p>
+              </div>
+              <button type="submit" mat-flat-button color="primary" [disabled]="!emailEditForm.valid">Update E-Mail</button>
+            </form>
+          </div>
+        </div>
+        }
       </div>
     </ng-template>
 

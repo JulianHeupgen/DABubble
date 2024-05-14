@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
@@ -19,17 +20,29 @@ import { CommonModule } from '@angular/common';
     MatFormFieldModule,
     MatButtonModule,
     MatMenuModule,
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
 
-  constructor(private auth: AuthService, private router: Router) {}
-
   user!: User;
   isProfileOpen = false;
+  isProfileEdit = false;
+
+  emailEditForm: FormGroup;
+  nameEditForm: FormGroup;
+
+  constructor(private auth: AuthService, private router: Router, private formBuilder: FormBuilder) {
+    this.emailEditForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]]
+    });
+    this.nameEditForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+ [a-zA-Z]+$')]]
+    });
+  }
 
   private userSub = new Subscription();
 
@@ -41,6 +54,18 @@ export class HeaderComponent {
         this.user = user;
       }
     })
+  }
+
+  updateEmail() {
+    console.log('email form submitted');
+  }
+
+  updateName() {
+
+  }
+
+  editProfile() {
+    this.isProfileEdit = true;
   }
 
   openProfile(event: Event) {
