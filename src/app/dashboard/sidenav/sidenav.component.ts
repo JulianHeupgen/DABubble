@@ -56,9 +56,10 @@ export class SidenavComponent {
   users: any;
   channels: any;
   userId: string = '';
-  allUsers: Partial<User>[] = [];
+  selectedUser: Partial<User>[] = [];
   allChannels: Partial<Channel>[] = [];
   channelTitles: { channelId: string, title: string }[] = [];
+  directMessageTitle: { imageUrl: string, onlineStatus: string, name: string }[] = [];
 
   private userSub: Subscription = new Subscription();
   private channelSub: Subscription = new Subscription();
@@ -97,13 +98,23 @@ export class SidenavComponent {
   }
 
 
+/**
+ * Checking the validity of the data of users and channels from the Observable 
+ */
   checkDataForChannelNames() {
     if (this.users && this.channels) {
       this.updateChannelTitles();
+      this.getUserDirectMessages();
     }
   }
 
 
+  /**
+   * Read out the user data based on the user authentication id
+   * 
+   * @param uid - User authentication id from firestore authentication
+   * @returns - Return if error exists
+   */
   setUserData(uid: string) {
     if (!this.users) {
       console.error('Benutzerdaten sind noch nicht geladen.');
@@ -112,17 +123,20 @@ export class SidenavComponent {
     const user = this.users.find((user: User) => user.authUserId === uid);
     if (user) {
       console.log('User gefunden', user);
-      this.allUsers = [];
-      this.allUsers.push(user);
+      this.selectedUser = [];
+      this.selectedUser.push(user);
     } else {
       console.log('Kein User gefunden', uid);
     }
   }
 
 
+  /**
+   * Set and Update the channel titles for the sidenav rendering
+   */
   updateChannelTitles() {
     this.channelTitles = [];
-    this.allUsers.forEach(user => {
+    this.selectedUser.forEach(user => {
       if (user.channels && Array.isArray(user.channels)) {
         user.channels.forEach(userChannelId => {
           const matchedChannel = this.channels.find((channel: Channel) => channel.channelId === userChannelId);
@@ -138,6 +152,19 @@ export class SidenavComponent {
   }
 
 
+  getUserDirectMessages() {
+    console.log('getUserDirectMessage', this.users);
+    this.directMessageTitle = [];
+    this.selectedUser.forEach(user => {
+      console.log('USER', user.userChats);
+      
+    })
+  }
+
+
+  /**
+   * Toggle variable for sidenav to open or close
+   */
   toggleSidenav() {
     this.opened = !this.opened;
   }

@@ -6,23 +6,17 @@ export class Channel {
   participants: User[];
   threads: Thread[];
   channelId: string;
-  docId: string;
-  data: string;
 
   constructor(data: {
     channelId?: string,
     title?: string,
     participants?: User[],
-    threads?: Thread[],
-    docId?: string,
-    data?: string
+    threads?: Thread[]
   }) {
     this.channelId = data.channelId || '';
     this.title = data.title || '';
     this.participants = data.participants || [];
-    this.threads = data.threads || [];
-    this.docId = data.docId || '';
-    this.data = data.data || '';
+    this.threads = data.threads || []
   }
 
 
@@ -51,6 +45,16 @@ export class Channel {
     if (index !== -1) {
       this.threads.splice(index, 1);
     }
+  }
+
+  
+  toJSON() {
+    return {
+        channelId: this.channelId,
+        title: this.title,
+        participants: this.participants,
+        threads: this.threads
+    };
   }
 
 }
