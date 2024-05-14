@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, collection, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, deleteDoc, doc, onSnapshot } from '@angular/fire/firestore';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
 import { Thread } from '../models/thread.class';
@@ -203,18 +203,22 @@ export class DataService {
   }
 
 
+ */
 
 
 
 
-  // Einzelnes Document löschen
-  async deleteNote(colId: string, docId: string) {
-    await deleteDoc(this.getSingleDocRef(colId, docId)).catch((err) => {
+  // Einzelnen UserChat löschen
+
+  async deleteUserChat(userChatId: string) {
+    await deleteDoc(this.getSingleDocRef(userChatId)).catch((err) => {
       console.error(err)
     });
   }
 
-}
+  getSingleDocRef(userChatId: string) {
+    return doc(collection(this.firestore, 'directMessages'), userChatId)
+  }
 
  */
 
