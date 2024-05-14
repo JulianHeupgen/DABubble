@@ -52,7 +52,8 @@ export class DataService {
       channels: data.channels,
       userChats: data.userChats,
       authUserId: data.authUserId,
-      imageUrl: data.imageUrl
+      imageUrl: data.imageUrl,
+      userChatId: data.userChatId
     }
   }
 
