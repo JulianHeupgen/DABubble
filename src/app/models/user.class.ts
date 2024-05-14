@@ -12,7 +12,6 @@ export class User {
   userChats: UserChat[]; 
   authUserId: string;
   imageUrl: string;
-  userChatId: string[];
 
   constructor(data: {
     id: string,
@@ -23,7 +22,6 @@ export class User {
     imageUrl: string,
     channels: string[],
     userChats: UserChat[],
-    userChatId: string[]
 }) {
     this.id = data.id;
     this.name = data.name;
@@ -33,7 +31,6 @@ export class User {
     this.imageUrl = data.imageUrl;
     this.channels = data.channels;
     this.userChats = data.userChats || [];
-    this.userChatId = data.userChatId || [];
 }
 
 

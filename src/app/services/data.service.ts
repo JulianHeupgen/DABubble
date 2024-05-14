@@ -53,7 +53,6 @@ export class DataService {
       userChats: data.userChats,
       authUserId: data.authUserId,
       imageUrl: data.imageUrl,
-      userChatId: data.userChatId
     }
   }
 
