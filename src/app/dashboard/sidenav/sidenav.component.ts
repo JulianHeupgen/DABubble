@@ -45,6 +45,8 @@ import { UserChat } from '../../models/user-chat';
 export class SidenavComponent {
 
   opened: boolean = true;
+  showChannels: boolean = true;
+  showDirectMessages: boolean = true;
   imageSrc: string = './assets/img/sidemenu_close_normal.png';
   editSrc: string = './assets/img/edit_square.png';
   arrowSrc: string = './assets/img/arrow_drop_down.png';
@@ -269,8 +271,16 @@ export class SidenavComponent {
   /**
    * Toggle variable for sidenav to open or close
    */
-  toggleSidenav() {
-    this.opened = !this.opened;
+  toggleSidenav(value: string) {
+    if (value === 'sidenav'){
+      this.opened = !this.opened;
+    }
+    if (value === 'channels') {
+      this.showChannels = !this.showChannels;
+    }
+    if (value === 'private') {
+      this.showDirectMessages = !this.showDirectMessages;
+    }
   }
 
 

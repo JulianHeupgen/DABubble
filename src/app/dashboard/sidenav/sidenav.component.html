@@ -5,17 +5,13 @@
                 <div class="headline-container">
                     <img src="./assets/img/devspace_logo.png">
                     <h1 class="devspace-headline font-nunito">Devspace</h1>
-                    <!-- Hier muss noch der Variable Text rein später -->
-                    <!-- <div style="height: 40px; width: 40px;"> -->
                     <img class="edit-square-img" [src]="editSrc"
                         (mouseenter)="hoverEdit('editSrc', './assets/img/edit_square_hover.png')"
                         (mouseleave)="resetHoverEdit('editSrc', './assets/img/edit_square.png')">
-                    <!-- </div> -->
                 </div>
-
                 <div class="private-message-container">
                     <div class="private-message-headline-container">
-                        <div class="dF">
+                        <div class="dF" (click)="toggleSidenav('channels')">
                             <img class="img-arrow" [src]="arrowSrcWs"
                                 (mouseenter)="hoverEdit('arrowSrcWs', './assets/img/arrow_drop_down_hover.png')"
                                 (mouseleave)="resetHoverEdit('arrowSrcWs', './assets/img/arrow_drop_down.png')">
@@ -25,29 +21,22 @@
                                 <img class="img-logo" [src]="logoSrcWs">
                                 <h2 class="private-headline font-nunito">Channels</h2>
                             </div>
-
-
                         </div>
-
                         <img class="add-icon" [src]="add"
                             (mouseenter)="hoverEdit('add', './assets/img/add_channel_hover.png')"
                             (mouseleave)="resetHoverEdit('add', './assets/img/add_channel.png')">
                     </div>
-
-                    <div class="channels-container">
-                        <!-- <div *ngFor="let user of getDataFromFirestore()" class="channel"> -->
+                    <div *ngIf="showChannels" class="channels-container">
                         <div *ngFor="let user of selectedUser">
                             <div *ngFor="let channel of channelTitles" class="channel"
-                                [routerLink]="['/dashboard/channel', channel.channelId]">
+                                [routerLink]="['/dashboard/channel', channel.channelId]"
+                                [routerLinkActive]="['active-channel']">
                                 <img class="tag-img" src="./assets/img/tag.png">
                                 <p>{{ channel.title }}</p>
                             </div>
                         </div>
-
-
-
                     </div>
-                    <div class="add-channel-container">
+                    <div *ngIf="showChannels" class="add-channel-container">
                         <div class="add-channel-subcontainer">
                             <img class="add-circle-icon" [src]="addCircle"
                                 (mouseenter)="hoverEdit('addCircle', './assets/img/add_circle_hover.png')"
@@ -60,9 +49,8 @@
 
                     </div>
                 </div>
-
                 <div class="private-message-container">
-                    <div class="private-message-headline-container">
+                    <div class="private-message-headline-container" (click)="toggleSidenav('private')">
                         <img class="img-arrow" [src]="arrowSrc"
                             (mouseenter)="hoverEdit('arrowSrc', './assets/img/arrow_drop_down_hover.png')"
                             (mouseleave)="resetHoverEdit('arrowSrc', './assets/img/arrow_drop_down.png')">
@@ -73,15 +61,11 @@
                             <h2 class="private-headline font-nunito">Direktnachrichten</h2>
                         </div>
                     </div>
-
-
-                    <div class="direct-message-user-container">
+                    <div class="direct-message-user-container" *ngIf="showDirectMessages">
                         <div *ngFor="let user of selectedUser">
-                            <div *ngFor="let chat of directMessageTitle" class="user-container" [routerLink]="['/dashboard/chat', chat.id]">
-
+                            <div *ngFor="let chat of directMessageTitle" class="user-container"
+                                [routerLink]="['/dashboard/chat', chat.id]" [routerLinkActive]="['active-user']">
                                 <div class="profile-img-container" [routerLink]="['/dashboard/chat', chat.id]">
-                                    
-                                    <!-- <img class="profile-img" src="./assets/img/avatar_1.png"> -->
                                     <img class="profile-img" src="{{ chat.imageUrl }}">
                                     @if (chat.onlineStatus === 'online') {
                                     <img class="online-status" src="./assets/img/online.png">
@@ -89,31 +73,23 @@
                                     @if (chat.onlineStatus === 'offline') {
                                     <img class="online-status" src="./assets/img/offline.png">
                                     }
-
                                 </div>
                                 <div>
                                     <p>{{ chat.name }}</p>
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
-
                 </div>
-
             </div>
         </mat-drawer>
-        <!-- <mat-drawer-content class="sidenav-content">Inhalt hier...</mat-drawer-content> -->
     </mat-drawer-container>
 </div>
-
 @if (opened) {
 <img class="img-as-button" (mouseenter)="hoverMenuButton()" (mouseleave)="resetHover()" [src]="imageSrc"
-    (click)="toggleSidenav()">
+    (click)="toggleSidenav('sidenav')">
 }
 @if (!opened) {
 <img class="img-as-button" (mouseenter)="hoverMenuButton()" (mouseleave)="resetHover()" [src]="imageSrc"
-    (click)="toggleSidenav()">
+    (click)="toggleSidenav('sidenav')">
 }
