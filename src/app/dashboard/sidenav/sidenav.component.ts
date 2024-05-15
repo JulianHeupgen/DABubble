@@ -10,6 +10,8 @@ import { AuthService } from '../../services/auth.service';
 import { Channel } from '../../models/channel.class';
 import { Subscription } from 'rxjs';
 import { UserChat } from '../../models/user-chat';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { AddChannelComponent } from '../../dialog/add-channel/add-channel.component';
 
 
 @Component({
@@ -22,7 +24,8 @@ import { UserChat } from '../../models/user-chat';
     MatDrawer,
     MatDrawerContainer,
     MatDrawerContent,
-    RouterModule
+    RouterModule,
+    MatDialogModule
   ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
@@ -69,7 +72,7 @@ export class SidenavComponent {
   private channelSub: Subscription = new Subscription();
 
 
-  constructor(private dataService: DataService, private authService: AuthService) {
+  constructor(private dataService: DataService, private authService: AuthService, public dialog: MatDialog) {
     this.users = [];
   }
 
@@ -309,6 +312,10 @@ export class SidenavComponent {
 
   resetHoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs' | 'add' | 'addCircle', url: string) {
     this[originalSrc] = url;
+  }
+
+  openDialog() {
+    this.dialog.open(AddChannelComponent);
   }
 
 

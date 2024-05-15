@@ -25,7 +25,8 @@
                         </div>
                         <img class="add-icon" [src]="add"
                             (mouseenter)="hoverEdit('add', './assets/img/add_channel_hover.png')"
-                            (mouseleave)="resetHoverEdit('add', './assets/img/add_channel.png')">
+                            (mouseleave)="resetHoverEdit('add', './assets/img/add_channel.png')"
+                            (click)="openDialog()">
                     </div>
                     <div *ngIf="showChannels" class="channels-container">
                         <div *ngFor="let user of selectedUser">
@@ -38,7 +39,7 @@
                         </div>
                     </div>
                     <div *ngIf="showChannels" class="add-channel-container">
-                        <div class="add-channel-subcontainer">
+                        <div class="add-channel-subcontainer" (click)="openDialog()">
                             <img class="add-circle-icon" [src]="addCircle"
                                 (mouseenter)="hoverEdit('addCircle', './assets/img/add_circle_hover.png')"
                                 (mouseleave)="resetHoverEdit('addCircle', './assets/img/add_circle.png')">
