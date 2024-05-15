@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,6 +13,8 @@ import { ProfileEditComponent } from '../../menus/profile-edit/profile-edit.comp
 import { ProfileViewComponent } from '../../menus/profile-view/profile-view.component';
 import { HeaderProfileService } from '../../services/header-profile.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
@@ -25,7 +27,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     MatMenuModule,
     CommonModule,
     ProfileEditComponent,
-    ProfileViewComponent
+    ProfileViewComponent,
+    MatAutocompleteModule,
+    ReactiveFormsModule
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -42,10 +46,17 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
         animate('0ms', style({ opacity: 0 }))
       ]),
     ])
-  ]
+  ],
+  encapsulation: ViewEncapsulation.None
 })
 
 export class HeaderComponent {
+
+  // Test search component
+  control = new FormControl('');
+  streets: string[] = ['Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue'];
+
+  isPanelOpen: boolean = false;
 
   user?: User;
   isProfileView?: boolean;
