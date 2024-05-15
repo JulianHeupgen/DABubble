@@ -11,6 +11,8 @@ import {
   MatDialogActions,
   MatDialogClose,  
 } from '@angular/material/dialog';
+import { DataService } from '../../services/data.service';
+import { Channel } from '../../models/channel.class';
 
 @Component({
   selector: 'app-add-channel',
@@ -27,7 +29,41 @@ export class AddChannelComponent {
   channelName: string = '';
   channelDescription: string = '';
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private dataService: DataService) { }
+
+
+  async createChannel() {
+    if (!this.channelName.trim()) {
+      alert('Bitte gib einen Kanalnamen ein');
+      return;
+    }
+
+    const newChannelData = {
+      title: this.channelName,
+      description: this.channelDescription,
+      participant: [],
+      threads: []
+    };
+
+    const newChannel = this.dataService.setChannelObject('', newChannelData);
+
+    try {
+      await this.dataService.addChannel(new Channel(newChannel));
+      console.log('Erfolgreich erstellt');
+      this.resetForm();
+      
+    } catch (error) {
+      console.warn('Fehler beim erstellen', error);
+      
+    }
+
+  }
+
+  private resetForm() {
+    this.channelName = '';
+    this.channelDescription = '';
+    this.dialog.closeAll();
+  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddChannelComponent, {
@@ -36,5 +72,9 @@ export class AddChannelComponent {
       
     });
     // dialogRef.addPanelClass('border-radius-30');
+  }
+
+  closeDialog() {
+    this.dialog.closeAll();
   }
 }
