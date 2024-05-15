@@ -1,0 +1,45 @@
+<div class="profile-menu-data" (click)="$event.stopPropagation()">
+  <div class="p-head">
+    <span>Profil</span>
+    <img src="./../../../assets/img/close.png">
+  </div>
+  <div class="p-img">
+    <img [src]="user.imageUrl">
+  </div><div class="profile-edit">
+    <div class="name-edit">
+      <div class="edit-label">
+        <img src="./../../../assets/img/account_circle.png">
+        <span>Vollständiger Name</span>
+      </div>
+      <form [formGroup]="nameEditForm" (submit)="updateName()">
+        <div class="input-field-container">
+          <div>
+            <input formControlName="name" type="text">
+          </div>
+        </div>
+        <div class="error-container">
+          <p class="input-feedback" *ngIf="nameEditForm.get('name')?.errors && nameEditForm.get('name')?.dirty">*Dieser Name ist leider ungültig. Bitte Vor Anchname eingeben.</p>
+        </div>
+        <button type="submit" mat-flat-button color="primary" [disabled]="!nameEditForm.valid">Update Name</button>
+      </form>
+    </div>
+    <div class="email-edit">
+      <div class="edit-label">
+        <img src="./../../../assets/img/mail.png">
+        <span>E-Mail-Adresse</span>
+      </div>
+      <form [formGroup]="emailEditForm" (submit)="updateEmail()">
+        <div class="input-field-container">
+          <div>
+            <input formControlName="email" type="email">
+          </div>
+        </div>
+        <div class="error-container">
+          <p class="input-feedback" *ngIf="emailEditForm.get('email')?.errors && emailEditForm.get('email')?.dirty">*Diese
+            E-Mail Adresse ist leider ungültig.</p>
+        </div>
+        <button type="submit" mat-flat-button color="primary" [disabled]="!emailEditForm.valid">Update E-Mail</button>
+      </form>
+    </div>
+  </div>
+</div>

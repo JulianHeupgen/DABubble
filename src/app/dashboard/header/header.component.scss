@@ -145,131 +145,131 @@
   }
 }
 
-/* Profile Menu Styling */
-
-.profile-menu-data {
+/* Profile Menu Styling - moved to menu/profile-view */
+/* .profile-menu-data {
   display: flex;
   flex-direction: column;
   gap: 24px;
-}
 
-.p-head {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  font-size: 24px;
-  font-weight: 700;
-
-  img {
-    width: 24px;
-    height: 24px;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-}
-
-.p-img {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-
-  img {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-  }
-}
-
-.p-name-edit {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 16px;
-
-  span {
-    font-weight: 700;
-    font-size: 32px;
-    line-height: normal;
-    max-width: 250px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-  }
-
-  a {
-    font-weight: 600;
-    font-size: 18px;
-    color: #535AF1;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-}
-
-.p-status {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 16px;
-
-  .status-point {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-  }
-
-  .status-online {
-    background-color: greenyellow;
-  }
-
-  .status-offline {
-    background-color: red;
-  }
-
-  .status-away {
-    background-color: grey;
-  }
-
-  .text-online {
-    color: greenyellow;
-  }
-}
-
-.p-email {
-  display: flex;
-  flex-direction: row;
-  align-items: self-start;
-  gap: 16px;
-
-  .email-last {
+  .p-head {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    gap: 8px;
+    justify-content: space-between;
+    font-size: 24px;
+    font-weight: 700;
 
-    span {
-      font-size: 20px;
-      font-weight: 700;
-    }
-
-    a {
-      text-decoration: none;
-      color: #1381FF;
-      font-size: 18px;
-      font-weight: 500;
+    img {
+      width: 24px;
+      height: 24px;
 
       &:hover {
-        text-decoration: underline;
         cursor: pointer;
       }
     }
   }
-}
 
-.profile-edit {
+  .p-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+
+    img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+    }
+  }
+
+  .p-name-edit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+
+    span {
+      font-weight: 700;
+      font-size: 32px;
+      line-height: normal;
+      max-width: 250px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+    }
+
+    a {
+      font-weight: 600;
+      font-size: 18px;
+      color: #535AF1;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .p-status {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+
+    .status-point {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+    }
+
+    .status-online {
+      background-color: greenyellow;
+    }
+
+    .status-offline {
+      background-color: red;
+    }
+
+    .status-away {
+      background-color: grey;
+    }
+
+    .text-online {
+      color: greenyellow;
+    }
+  }
+
+  .p-email {
+    display: flex;
+    flex-direction: row;
+    align-items: self-start;
+    gap: 16px;
+
+    .email-last {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      span {
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      a {
+        text-decoration: none;
+        color: #1381FF;
+        font-size: 18px;
+        font-weight: 500;
+
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+} */
+
+/* Profile Update Styling - moved to menu/profile-edit */
+/* .profile-edit {
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -374,4 +374,4 @@
   }
 
 
-}
+} */

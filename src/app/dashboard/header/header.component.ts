@@ -9,7 +9,8 @@ import { Subscription } from 'rxjs';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ProfileEditComponent } from '../../menus/profile-edit/profile-edit.component';
+import { ProfileViewComponent } from '../../menus/profile-view/profile-view.component';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +22,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
     MatButtonModule,
     MatMenuModule,
     CommonModule,
-    ReactiveFormsModule
+    ProfileEditComponent,
+    ProfileViewComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
@@ -32,46 +34,16 @@ export class HeaderComponent {
   isProfileOpen = false;
   isProfileEdit = false;
 
-  emailEditForm: FormGroup;
-  nameEditForm: FormGroup;
-
-  constructor(private auth: AuthService, private router: Router, private formBuilder: FormBuilder) {
-    this.emailEditForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]]
-    });
-    this.nameEditForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+ [a-zA-Z]+$')]]
-    });
-  }
+  constructor(private auth: AuthService, private router: Router) {}
 
   private userSub = new Subscription();
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.userSub = this.auth.getUser().subscribe(user => {
       if (user) {
         this.user = user;
-        this.updateFormValues()
       }
     })
-  }
-
-  updateFormValues() {
-    this.emailEditForm.patchValue({
-      email: this.user.email
-    });
-    this.nameEditForm.patchValue({
-      name: this.user.name
-    });
-  }
-
-  updateEmail() {
-    console.log('email form submitted');
-  }
-
-  updateName() {
-
   }
 
   editProfile() {
@@ -102,8 +74,6 @@ export class HeaderComponent {
   }
 
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
     if (this.userSub) {
       this.userSub.unsubscribe();
     }
