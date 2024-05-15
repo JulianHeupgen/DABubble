@@ -6,17 +6,21 @@ export class Channel {
   participants: User[];
   threads: Thread[];
   channelId: string;
+  description: string;
 
   constructor(data: {
     channelId?: string,
     title?: string,
     participants?: User[],
-    threads?: Thread[]
+    threads?: Thread[],
+    description?: string
+
   }) {
     this.channelId = data.channelId || '';
     this.title = data.title || '';
     this.participants = data.participants || [];
-    this.threads = data.threads || []
+    this.threads = data.threads || [];
+    this.description = data.description || '';
   }
 
 
@@ -53,7 +57,8 @@ export class Channel {
         channelId: this.channelId,
         title: this.title,
         participants: this.participants,
-        threads: this.threads
+        threads: this.threads,
+        description: this.description
     };
   }
 

@@ -1,6 +1,6 @@
 <div class="add-channel-card">
     <div>
-        <h2>Channel erstellen</h2>
+        <h2 class="project-font">Channel erstellen</h2>
     </div>
     <span>
         Channels dienen deinem Team zur Kommunikation.
@@ -8,14 +8,18 @@
         Beispiel.
     </span>
     <div class="input-section">
-        <h3>Channel-Name</h3>
-        <input [(ngModel)]="channelName" type="text" placeholder="z.B. Kooperationsprojekte">
+        <h3 class="project-font">Channel-Name</h3>
+        <div class="input-channel-name">
+            <img src="./assets/img/tag_light.png">
+            <input [(ngModel)]="channelName" type="text"
+                placeholder="z.B. Kooperationsprojekte">
+        </div>
     </div>
     <div class="input-section">
-        <h3>Beschreibung <span>(optional)</span></h3>
+        <h3 class="project-font">Beschreibung <span>(optional)</span></h3>
         <input [(ngModel)]="channelDescription" type="text" placeholder="Dein Text hier">
     </div>
     <div class="btn-section">
-        <button (click)="openDialog()">Erstellen</button>
+        <button (click)="createChannel()">Erstellen</button>
     </div>
 </div>

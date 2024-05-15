@@ -12,6 +12,9 @@ import { CommonModule } from '@angular/common';
 import { ProfileEditComponent } from '../../menus/profile-edit/profile-edit.component';
 import { ProfileViewComponent } from '../../menus/profile-view/profile-view.component';
 import { HeaderProfileService } from '../../services/header-profile.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
@@ -24,12 +27,36 @@ import { HeaderProfileService } from '../../services/header-profile.service';
     MatMenuModule,
     CommonModule,
     ProfileEditComponent,
-    ProfileViewComponent
+    ProfileViewComponent,
+    MatAutocompleteModule,
+    ReactiveFormsModule
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({
+        opacity: 0
+      })),
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('400ms ease-in', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        animate('0ms', style({ opacity: 0 }))
+      ]),
+    ])
+  ]
 })
+
 export class HeaderComponent {
+
+  // Test search component START
+  control = new FormControl('');
+  streets: string[] = ['Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue'];
+  // Test Search END
+
+  isPanelOpen: boolean = false;
 
   user?: User;
   isProfileView?: boolean;
@@ -39,6 +66,12 @@ export class HeaderComponent {
   private profileViewSub = new Subscription();
   private profileEditSub = new Subscription();
 
+  /**
+   * Init AuthService, Router and ProfileService and starting subscribtion for Profile Views and User Data
+   * @param auth
+   * @param router
+   * @param profileService
+   */
   constructor(
     private auth: AuthService,
     private router: Router,
@@ -47,6 +80,14 @@ export class HeaderComponent {
     this.subProfileView();
     this.subProfileEdit();
     this.subUserData();
+  }
+
+  /**
+   * This function resets the profile menu panel state when it gets reopened
+   * Gets fired by the (menuOpened) trigger
+   */
+  resetMenuState(): void {
+    this.profileService.switchToMenu();
   }
 
   /**
@@ -78,20 +119,32 @@ export class HeaderComponent {
     })
   }
 
+  /**
+   * Switch Profile Menu to Edit Profile View
+   */
   switchToEdit() {
     this.profileService.switchToEdit();
   }
 
+  /**
+   * Closes Profile Menu and switches to default menu
+   */
   closeProfile(event: Event) {
     event.stopPropagation();
     this.profileService.switchToMenu();
   }
 
+  /**
+   * Open Profile View
+   */
   openProfile(event: Event) {
     event.stopPropagation();
     this.profileService.switchToView();
   }
 
+  /**
+   * Logout User
+   */
   async logoutUser() {
     try {
       await this.auth.updateUserOnlineStatus('offline');
@@ -105,6 +158,9 @@ export class HeaderComponent {
     }
   }
 
+  /**
+   * Destroy all Active Subscriptions
+   */
   ngOnDestroy(): void {
     if (this.userSub) {
       this.userSub.unsubscribe();

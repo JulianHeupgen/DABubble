@@ -1,14 +1,21 @@
 <div class="header">
   <img class="logo" src="./assets/img/dabubble_header_logo.png">
 
-  <div class="search-bar">
-    <input type="text" placeholder="Code learning durchsuchen">
+  <form class="search-bar">
+    <input type="text" placeholder="Code learning durchsuchen" [formControl]="control" [matAutocomplete]="auto"
+      class="example-input" [class.mat-autocomplete-panel-open]="isPanelOpen">
+    <mat-autocomplete #auto="matAutocomplete" (opened)="isPanelOpen = true" (closed)="isPanelOpen = false">
+      @for (street of streets; track street) {
+      <mat-option [value]="street">{{street}}</mat-option>
+      }
+    </mat-autocomplete>
     <img src="./assets/img/search.png">
-  </div>
+  </form>
+
 
   @if (user) {
-  <div [matMenuTriggerFor]="menu" class="header-profile">
-    <p>{{ user.name }}</p>
+  <div [matMenuTriggerFor]="menu" (menuOpened)="resetMenuState()" class="header-profile">
+    <span>{{ user.name }}</span>
     <div class="profile-img-container">
       <img class="profile-img" [src]="user.imageUrl">
       <div class="online-status" [class.online]="user.onlineStatus === 'online'"
@@ -19,28 +26,25 @@
 
   <mat-menu #menu xPosition="before" class="profile-menu">
 
-    <ng-container *ngIf="!isProfileView; else profileContent">
+    <div *ngIf="!isProfileView && !isProfileEditView">
       <button (click)="openProfile($event)" class="profile mat-button" mat-menu-item>Profil</button>
       <button (click)="logoutUser()" class="logout mat-button" mat-menu-item>Logout</button>
-    </ng-container>
+    </div>
 
-    <ng-template #profileContent>
+    <div *ngIf="isProfileView && !isProfileEditView">
+      <app-profile-view [@fadeInOut] (editClicked)="switchToEdit()"></app-profile-view>
+    </div>
 
-      <ng-container *ngIf="isProfileView && !isProfileEditView; else editProfile">
-        <app-profile-view (editClicked)="switchToEdit()"></app-profile-view>
-      </ng-container>
+    <div *ngIf="!isProfileView && isProfileEditView">
+      <app-profile-edit></app-profile-edit>
+    </div>
 
-      <ng-template #editProfile>
-        <app-profile-edit></app-profile-edit>
-      </ng-template>
-
-    </ng-template>
 
   </mat-menu>
 
   }
   @else {
-    <div class="profile-placeholder"></div>
+  <div class="profile-placeholder"></div>
   }
 
 </div>
