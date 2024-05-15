@@ -116,6 +116,36 @@ mat-card-header {
     }
 }
 
+::ng-deep .emoji-menu {
+
+    .emoji-mart {
+        border: none ;
+        border-radius: 20px ;
+      }
+
+    .mat-mdc-menu-content {
+        padding: 0;
+    }
+    .mat-mdc-menu-item {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .mat-mdc-menu-panel {
+        border-radius: 30px;
+    }
+}
+
+::ng-deep .address-message-to-user-menu {
+    .mat-mdc-menu-content {
+        padding: 0;
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+    }
+}
+
 .add-file-img-box {
     width: 100%;
     height: 10px;
@@ -126,7 +156,7 @@ mat-card-header {
     position: relative;
     display: inline-block;
     margin: 0 8px;
-    
+
 
     input[type="file"] {
         cursor: pointer;
@@ -145,7 +175,8 @@ mat-card-header {
         content: 'Datei auswählen';
         display: block;
         padding: 10px;
-        background-color: #eceeef;
+        background-color: rgba(236, 238, 239, 0.5);
+        color: #686868;
         border: 1px dotted #686868;
         border-radius: 5px;
         text-align: center;
