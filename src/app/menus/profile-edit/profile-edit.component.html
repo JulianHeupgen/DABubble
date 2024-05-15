@@ -1,14 +1,15 @@
+@if (user) {
 <div class="profile-menu-data" (click)="$event.stopPropagation()">
   <div class="p-head">
-    <span>Profil</span>
+    <span>Profil bearbeiten</span>
     <img (click)="closeEdit($event)" src="./../../../assets/img/close.png">
   </div>
   <div class="p-img">
     <img [src]="user.imageUrl">
   </div>
   <div class="profile-edit">
-    <form [formGroup]="editUserForm" (ngSubmit)="saveUser()">
-      <div class="name-edit">
+    <form [formGroup]="editUserForm" (ngSubmit)="save()">
+      <div class="input-container">
         <div class="edit-label">
           <img src="./../../../assets/img/account_circle.png">
           <span>Vollständiger Name</span>
@@ -24,7 +25,7 @@
           </p>
         </div>
       </div>
-      <div class="email-edit">
+      <div class="input-container">
         <div class="edit-label">
           <img src="./../../../assets/img/mail.png">
           <span>E-Mail-Adresse</span>
@@ -41,9 +42,10 @@
         </div>
       </div>
       <div class="buttons">
-        <button class="cancel" type="button" (click)="closeEdit($event)">Abbrechen</button>
-        <button class="save" type="submit">Speichern</button>
+        <button class="dark" type="button" (click)="closeEdit($event)">Abbrechen</button>
+        <button class="light" mat-flat-button type="submit" [disabled]="!editUserForm.valid">Speichern</button>
     </div>
     </form>
   </div>
 </div>
+}

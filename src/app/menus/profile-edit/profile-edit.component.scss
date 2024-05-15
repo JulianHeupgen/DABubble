@@ -1,106 +1,266 @@
+.profile-menu-data {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .p-head {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;
+    font-weight: 700;
+
+    img {
+      width: 24px;
+      height: 24px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .p-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+
+    img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+    }
+  }
+
+  .p-name-edit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+
+    span {
+      font-weight: 700;
+      font-size: 32px;
+      line-height: normal;
+      max-width: 250px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+    }
+
+    a {
+      font-weight: 600;
+      font-size: 18px;
+      color: #535AF1;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .p-status {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+
+    .status-point {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+    }
+
+    .status-online {
+      background-color: greenyellow;
+    }
+
+    .status-offline {
+      background-color: red;
+    }
+
+    .status-away {
+      background-color: grey;
+    }
+
+    .text-online {
+      color: greenyellow;
+    }
+  }
+
+  .p-email {
+    display: flex;
+    flex-direction: row;
+    align-items: self-start;
+    gap: 16px;
+
+    .email-last {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      span {
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      a {
+        text-decoration: none;
+        color: #1381FF;
+        font-size: 18px;
+        font-weight: 500;
+
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
 .profile-edit {
   display: flex;
   flex-direction: column;
   gap: 24px;
   min-width: 350px;
 
-  .edit-label {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 24px;
-    align-items: center;
-    font-size: 20px;
-    font-weight: 700;
-  }
-
-
-  .name-edit {
+  form {
     display: flex;
     flex-direction: column;
     gap: 16px;
 
-    .edit-label img {
-      width: 25px;
-      height: 25px;
-    }
-
-  }
-
-  .email-edit {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-
-    .edit-label img {
-      width: 25px;
-      height: 20px;
-    }
-  }
-
-  .input-field-container {
-    font-family: Nunito, sans-serif;
-    font-size: 18px;
-    line-height: normal;
-    font-weight: 500;
-    display: flex;
-    flex-direction: column;
-    border-radius: 100px;
-    padding: 16px 24px;
-    background-color: #ECEEFE;
-    box-sizing: border-box;
-
-    mat-icon {
-      color: #686868;
-      height: 24px;
-    }
-
-    div {
+    .edit-label {
+      width: 100%;
       display: flex;
       flex-direction: row;
-      gap: 16px;
+      gap: 24px;
+      align-items: center;
+      font-size: 20px;
+      font-weight: 700;
     }
 
-    input {
-      background-color: #ECEEFE;
-      border: none;
-      color: #686868;
+    .input-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      .edit-label img {
+        width: 25px;
+        height: 25px;
+      }
+
+    }
+
+    .input-field-container {
+      font-family: Nunito, sans-serif;
       font-size: 18px;
       line-height: normal;
+      font-weight: 500;
+      display: flex;
+      flex-direction: column;
+      border-radius: 100px;
+      padding: 16px 24px;
+      background-color: #ECEEFE;
+      box-sizing: border-box;
 
+      div {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+      }
+
+      input {
+        background-color: #ECEEFE;
+        border: none;
+        color: #686868;
+        font-size: 18px;
+        line-height: normal;
+
+        &:focus {
+          outline: none;
+        }
+      }
+
+      &:hover {
+        outline: 1px solid #686868;
+      }
+
+      &:focus-within,
       &:focus {
-        outline: none;
+        outline: 1px solid #535AF1;
+      }
+
+    }
+
+    .input-feedback {
+      margin: 0;
+      color: #ed1e79;
+      font-size: 14px;
+      line-height: normal;
+    }
+
+    .error-container {
+      display: flex;
+      margin-top: 4px;
+      max-width: 350px;
+
+      p {
+        overflow-wrap: break-word;
+        white-space: normal;
       }
     }
 
-    &:hover {
-      outline: 1px solid #686868;
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+
+      button {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        padding: 12px 25px;
+        border-radius: 25px;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: normal;
+        border: none;
+
+        &.dark {
+          color: white;
+          background-color: #444DF2;
+
+          &:hover {
+            cursor: pointer;
+            background-color: #797EF3;
+          }
+        }
+
+        &.light {
+
+          &:enabled {
+            color: #797EF3;
+            border: 1px solid #797EF3;
+            background-color: white;
+
+            &:hover {
+              cursor: pointer;
+              background-color: #535AF1;
+              border: 1px solid #535AF1;
+              color: white;
+            }
+          }
+
+          &:disabled {
+            background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(19, 1, 1, 0.3));
+            color: light-dark(rgba(16, 16, 16, 0.3), rgba(255, 255, 255, 0.3));
+            border-color: light-dark(rgba(118, 118, 118, 0.3), rgba(195, 195, 195, 0.3));
+          }
+
+        }
+      }
     }
-
-    &:focus-within,
-    &:focus {
-      outline: 1px solid #535AF1;
-    }
-
   }
-
-  .input-feedback {
-    margin: 0;
-    color: #ed1e79;
-    font-size: 14px;
-    line-height: normal;
-  }
-
-  .error-container {
-    display: flex;
-    margin-top: 4px;
-    max-width: 350px;
-
-    p {
-      overflow-wrap: break-word;
-      white-space: normal;
-    }
-  }
-
-
 }
