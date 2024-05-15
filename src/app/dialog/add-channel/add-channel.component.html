@@ -9,7 +9,11 @@
     </span>
     <div class="input-section">
         <h3>Channel-Name</h3>
-        <input [(ngModel)]="channelName" type="text" placeholder="z.B. Kooperationsprojekte">
+        <div class="input-channel-name">
+            <img src="./assets/img/tag_light.png">
+            <input [(ngModel)]="channelName" type="text"
+                placeholder="z.B. Kooperationsprojekte">
+        </div>
     </div>
     <div class="input-section">
         <h3>Beschreibung <span>(optional)</span></h3>
