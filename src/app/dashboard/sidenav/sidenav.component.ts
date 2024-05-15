@@ -51,11 +51,13 @@ export class SidenavComponent {
   showChannels: boolean = true;
   showDirectMessages: boolean = true;
   imageSrc: string = './assets/img/sidemenu_close_normal.png';
+  imageSrcOpen: string = './assets/img/sidemenu_open_normal.png';
   editSrc: string = './assets/img/edit_square.png';
   arrowSrc: string = './assets/img/arrow_drop_down.png';
   arrowSrcWs: string = './assets/img/arrow_drop_down.png';
   logoSrc: string = './assets/img/private_message_logo.png';
   logoSrcWs: string = './assets/img/workspaces.png';
+  tagImg: string = './assets/img/tag.png';
   add: string = './assets/img/add_channel.png';
   addCircle: string = './assets/img/add_circle.png';
   online: boolean = true;
@@ -220,52 +222,6 @@ export class SidenavComponent {
     if (value === 'private') {
       this.showDirectMessages = !this.showDirectMessages;
     }
-  }
-
-
-  /**
-   * Hover function for the button to show and hide the sidenav.
-   */
-  hoverSidenavButton() {
-    if (this.opened) {
-      this.imageSrc = './assets/img/sidemenu_close_hover.png';
-    } else {
-      this.imageSrc = './assets/img/sidemenu_open_hover.png';
-    }
-  }
-
-
-  /**
-   * Reset the hover function for the button to show and hide the sidenav.
-   */
-  resetHoverSidenavButton() {
-    if (!this.opened) {
-      this.imageSrc = './assets/img/sidemenu_open_normal.png';
-    } else {
-      this.imageSrc = './assets/img/sidemenu_close_normal.png';
-    }
-  }
-
-
-  /**
-   * Hover function to hover the img for the buttons of the sidenav.
-   * 
-   * @param originalSrc - Original source of the img to get an image when loading the page.
-   * @param url - Url of the img which is displayed when the function is executed.
-   */
-  hoverImg(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs' | 'add' | 'addCircle', url: string) {
-    this[originalSrc] = url;
-  }
-
-
-  /**
-   * Reset the hover function to hover the img for the buttons of the sidenav.
-   * 
-   * @param originalSrc - Original source of the img to get an image when loading the page.
-   * @param url - Url of the img which is displayed when the function is executed.
-   */
-  resetHoverImg(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs' | 'add' | 'addCircle', url: string) {
-    this[originalSrc] = url;
   }
 
 
