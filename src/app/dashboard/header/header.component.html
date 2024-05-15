@@ -14,7 +14,7 @@
 
 
   @if (user) {
-  <div [matMenuTriggerFor]="menu" class="header-profile">
+  <div [matMenuTriggerFor]="menu" (menuOpened)="resetMenuState()" class="header-profile">
     <span>{{ user.name }}</span>
     <div class="profile-img-container">
       <img class="profile-img" [src]="user.imageUrl">
@@ -26,22 +26,19 @@
 
   <mat-menu #menu xPosition="before" class="profile-menu">
 
-    <ng-container *ngIf="!isProfileView; else profileContent">
+    <ng-container *ngIf="!isProfileView && !isProfileEditView">
       <button (click)="openProfile($event)" class="profile mat-button" mat-menu-item>Profil</button>
       <button (click)="logoutUser()" class="logout mat-button" mat-menu-item>Logout</button>
     </ng-container>
 
-    <ng-template #profileContent>
+    <ng-container *ngIf="isProfileView && !isProfileEditView">
+      <app-profile-view [@fadeInOut] (editClicked)="switchToEdit()"></app-profile-view>
+    </ng-container>
 
-      <ng-container *ngIf="isProfileView && !isProfileEditView; else editProfile">
-        <app-profile-view [@fadeInOut] (editClicked)="switchToEdit()"></app-profile-view>
-      </ng-container>
+    <ng-container *ngIf="!isProfileView && isProfileEditView">
+      <app-profile-edit></app-profile-edit>
+    </ng-container>
 
-      <ng-template #editProfile>
-        <app-profile-edit></app-profile-edit>
-      </ng-template>
-
-    </ng-template>
 
   </mat-menu>
 

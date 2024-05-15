@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -46,8 +46,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
         animate('0ms', style({ opacity: 0 }))
       ]),
     ])
-  ],
-  encapsulation: ViewEncapsulation.None
+  ]
 })
 
 export class HeaderComponent {
@@ -74,6 +73,10 @@ export class HeaderComponent {
     this.subProfileView();
     this.subProfileEdit();
     this.subUserData();
+  }
+
+  resetMenuState(): void {
+    this.profileService.switchToMenu();
   }
 
   /**

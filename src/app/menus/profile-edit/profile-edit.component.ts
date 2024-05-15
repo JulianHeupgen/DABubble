@@ -142,7 +142,7 @@ export class ProfileEditComponent {
 
   closeEdit(event: Event) {
     event.stopPropagation();
-    this.profileService.switchToView();
+    this.profileService.switchToMenu();
   }
 
   updateFormValues() {

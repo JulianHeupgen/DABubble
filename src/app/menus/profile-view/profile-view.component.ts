@@ -30,7 +30,7 @@ export class ProfileViewComponent {
     })
   }
 
-  closeEdit(event: Event) {
+  closeView(event: Event) {
     event.stopPropagation();
     this.profileService.switchToMenu();
   }

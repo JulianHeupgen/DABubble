@@ -14,6 +14,7 @@ export class HeaderProfileService {
 
   switchToMenu() {
     this.profileViewState.next(false);
+    this.profileEditState.next(false);
   }
 
   switchToView() {
@@ -23,6 +24,7 @@ export class HeaderProfileService {
 
   switchToEdit() {
     this.profileEditState.next(true);
+    this.profileViewState.next(false);
   }
 
 }
