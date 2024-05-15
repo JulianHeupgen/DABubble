@@ -2,24 +2,25 @@
 
 .header {
   @include flex-align-justify(center, space-between);
-  padding-top: 24px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 24px 24px 0 24px;
+  box-sizing: border-box;
+  min-height: 120px;
   gap: 32px;
 }
 
 .header-profile {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 16px;
-  padding: 8px 0;
-  box-sizing: border-box;
+  width: 400px;
 
   span {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 700;
     line-height: normal;
     white-space: nowrap;
+    overflow: auto;
   }
 
   .online-status {
@@ -118,7 +119,7 @@
 }
 
 .profile-placeholder {
-  width: 350px;
+  width: 400px;
 }
 
 /* Header Mat Menu Styling */

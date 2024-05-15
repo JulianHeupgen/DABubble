@@ -40,7 +40,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
       })),
       transition(':enter', [
         style({ opacity: 0 }),
-        animate('300ms ease-in', style({ opacity: 1 }))
+        animate('400ms ease-in', style({ opacity: 1 }))
       ]),
       transition(':leave', [
         animate('0ms', style({ opacity: 0 }))

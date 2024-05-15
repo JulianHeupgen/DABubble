@@ -26,18 +26,18 @@
 
   <mat-menu #menu xPosition="before" class="profile-menu">
 
-    <ng-container *ngIf="!isProfileView && !isProfileEditView">
+    <div *ngIf="!isProfileView && !isProfileEditView">
       <button (click)="openProfile($event)" class="profile mat-button" mat-menu-item>Profil</button>
       <button (click)="logoutUser()" class="logout mat-button" mat-menu-item>Logout</button>
-    </ng-container>
+    </div>
 
-    <ng-container *ngIf="isProfileView && !isProfileEditView">
+    <div *ngIf="isProfileView && !isProfileEditView">
       <app-profile-view [@fadeInOut] (editClicked)="switchToEdit()"></app-profile-view>
-    </ng-container>
+    </div>
 
-    <ng-container *ngIf="!isProfileView && isProfileEditView">
+    <div *ngIf="!isProfileView && isProfileEditView">
       <app-profile-edit></app-profile-edit>
-    </ng-container>
+    </div>
 
 
   </mat-menu>
