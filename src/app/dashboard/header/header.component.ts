@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProfileEditComponent } from '../../menus/profile-edit/profile-edit.component';
 import { ProfileViewComponent } from '../../menus/profile-view/profile-view.component';
+import { HeaderProfileService } from '../../services/header-profile.service';
 
 @Component({
   selector: 'app-header',
@@ -30,15 +31,46 @@ import { ProfileViewComponent } from '../../menus/profile-view/profile-view.comp
 })
 export class HeaderComponent {
 
-  user!: User;
-  isProfileOpen = false;
-  isProfileEdit = false;
-
-  constructor(private auth: AuthService, private router: Router) {}
+  user?: User;
+  isProfileView?: boolean;
+  isProfileEditView?: boolean;
 
   private userSub = new Subscription();
+  private profileViewSub = new Subscription();
+  private profileEditSub = new Subscription();
 
-  ngOnInit(): void {
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private profileService: HeaderProfileService
+  ) {
+    this.subProfileView();
+    this.subProfileEdit();
+    this.subUserData();
+  }
+
+  /**
+   * Subscribe to profile view observable
+   */
+  subProfileView() {
+    this.profileViewSub = this.profileService.profileViewState$.subscribe(state => {
+      this.isProfileView = state;
+    });
+  }
+
+  /**
+   * Subscribe to profile edit observable
+   */
+  subProfileEdit() {
+    this.profileEditSub = this.profileService.profileEditState$.subscribe(state => {
+      this.isProfileEditView = state;
+    });
+  }
+
+  /**
+   * Subscribe to user data
+   */
+  subUserData() {
     this.userSub = this.auth.getUser().subscribe(user => {
       if (user) {
         this.user = user;
@@ -46,18 +78,18 @@ export class HeaderComponent {
     })
   }
 
-  editProfile() {
-    this.isProfileEdit = true;
-  }
-
-  openProfile(event: Event) {
-    event.stopPropagation();
-    this.isProfileOpen = true;
+  switchToEdit() {
+    this.profileService.switchToEdit();
   }
 
   closeProfile(event: Event) {
     event.stopPropagation();
-    this.isProfileOpen = false;
+    this.profileService.switchToMenu();
+  }
+
+  openProfile(event: Event) {
+    event.stopPropagation();
+    this.profileService.switchToView();
   }
 
   async logoutUser() {
@@ -76,6 +108,12 @@ export class HeaderComponent {
   ngOnDestroy(): void {
     if (this.userSub) {
       this.userSub.unsubscribe();
+    }
+    if (this.profileViewSub) {
+      this.profileViewSub.unsubscribe();
+    }
+    if (this.profileEditSub) {
+      this.profileEditSub.unsubscribe();
     }
   }
 }

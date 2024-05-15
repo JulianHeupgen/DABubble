@@ -11,85 +11,36 @@
     <p>{{ user.name }}</p>
     <div class="profile-img-container">
       <img class="profile-img" [src]="user.imageUrl">
-      <div class="online-status" [class.online]="user.onlineStatus == 'online'"
-        [class.offline]="user.onlineStatus == 'offline'" [class.away]="user.onlineStatus == 'away'"></div>
+      <div class="online-status" [class.online]="user.onlineStatus === 'online'"
+        [class.offline]="user.onlineStatus === 'offline'" [class.away]="user.onlineStatus === 'away'"></div>
     </div>
     <img class="arrow-down" src="./../../../assets/img/header_arrow_down.png">
   </div>
 
   <mat-menu #menu xPosition="before" class="profile-menu">
 
-    <ng-container *ngIf="!isProfileOpen; else profileContent">
+    <ng-container *ngIf="!isProfileView; else profileContent">
       <button (click)="openProfile($event)" class="profile mat-button" mat-menu-item>Profil</button>
       <button (click)="logoutUser()" class="logout mat-button" mat-menu-item>Logout</button>
     </ng-container>
 
     <ng-template #profileContent>
 
+      <ng-container *ngIf="isProfileView && !isProfileEditView; else editProfile">
+        <app-profile-view (editClicked)="switchToEdit()"></app-profile-view>
+      </ng-container>
 
-      @if (!isProfileEdit) {
-      <app-profile-view></app-profile-view>
-      }
-      @else if (isProfileEdit) {
-      <app-profile-edit></app-profile-edit>
-      <!--
-        <div class="profile-menu-data" (click)="$event.stopPropagation()">
-        <div class="p-head">
-          <span>Profil</span>
-          <img (click)="closeProfile($event)" src="./../../../assets/img/close.png">
-        </div>
-        <div class="p-img">
-          <img [src]="user.imageUrl">
-        </div><div class="profile-edit">
-          <div class="name-edit">
-            <div class="edit-label">
-              <img src="./../../../assets/img/account_circle.png">
-              <span>Vollständiger Name</span>
-            </div>
-            <form [formGroup]="nameEditForm" (submit)="updateName()">
-              <div class="input-field-container">
-                <div>
-                  <input formControlName="name" type="text">
-                </div>
-              </div>
-              <div class="error-container">
-                <p class="input-feedback" *ngIf="nameEditForm.get('name')?.errors && nameEditForm.get('name')?.dirty">*Dieser Name ist leider ungültig. Bitte Vor Anchname eingeben.</p>
-              </div>
-              <button type="submit" mat-flat-button color="primary" [disabled]="!nameEditForm.valid">Update Name</button>
-            </form>
-          </div>
-          <div class="email-edit">
-            <div class="edit-label">
-              <img src="./../../../assets/img/mail.png">
-              <span>E-Mail-Adresse</span>
-            </div>
-            <form [formGroup]="emailEditForm" (submit)="updateEmail()">
-              <div class="input-field-container">
-                <div>
-                  <input formControlName="email" type="email">
-                </div>
-              </div>
-              <div class="error-container">
-                <p class="input-feedback" *ngIf="emailEditForm.get('email')?.errors && emailEditForm.get('email')?.dirty">*Diese
-                  E-Mail Adresse ist leider ungültig.</p>
-              </div>
-              <button type="submit" mat-flat-button color="primary" [disabled]="!emailEditForm.valid">Update E-Mail</button>
-            </form>
-          </div>
-        </div>
-      </div>-->
-
-      }
+      <ng-template #editProfile>
+        <app-profile-edit></app-profile-edit>
+      </ng-template>
 
     </ng-template>
-
-
 
   </mat-menu>
 
   }
   @else {
-  <div class="profile-placeholder"></div>
+    <div class="profile-placeholder"></div>
   }
 
 </div>
