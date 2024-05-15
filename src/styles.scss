@@ -33,6 +33,7 @@ $dabubble-theme: mat.define-light-theme((color: (primary: $dabubble-primary,
 // that you are using.
 @include mat.all-component-themes($dabubble-theme);
 @import '@ctrl/ngx-emoji-mart/picker';
+
 /* You can add global styles to this file, and also import other style files */
 html,
 body {
@@ -71,7 +72,8 @@ app-channel-chat {
 }
 
 * {
-  font-family: 'Nunito', sans-serif; /* Dont use !important as the mat icons will not be shown then */
+  font-family: 'Nunito', sans-serif;
+  /* Dont use !important as the mat icons will not be shown then */
   box-sizing: border-box;
   margin-block-start: 0;
   margin-block-end: 0;
@@ -106,11 +108,14 @@ app-channel-chat {
 }
 
 /* Emoji bar*/
+
+
 .emoji-mart {
   border: none !important;
-  // border-radius: 20px !important;
-  // z-index: 99 !important;
+  border-radius: 20px !important;
+  z-index: 99 !important;
 }
+
 
 .mat-mdc-menu-panel {
   max-width: unset !important;
@@ -118,9 +123,11 @@ app-channel-chat {
   // border: 1px solid #797EF3;
 }
 
-/* .mat-mdc-menu-content {
-  padding: 0 !important;
-} */
+.address-message-to-user {
+  .mat-mdc-menu-content {
+    padding: 0 !important;
+  }
+}
 
 .mat-mdc-menu-item {
   padding-left: 0 !important;
@@ -141,3 +148,12 @@ app-channel-chat {
 }
 
 /* Styles for the Header Mat Menu END */
+
+
+.img-file {
+  width: 200px;
+  position: absolute;
+  bottom: 5px;
+  border-radius: 10px;
+  border: 5px solid rgba(68, 77, 242, 0.5);
+}

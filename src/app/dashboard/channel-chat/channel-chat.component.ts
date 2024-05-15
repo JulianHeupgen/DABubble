@@ -50,6 +50,7 @@ import { MatInputModule } from '@angular/material/input';
 export class ChannelChatComponent {
 
   @ViewChild('threadMessageBox') threadMessageBox!: ElementRef;
+  @ViewChild('imgBox') imgBox!: ElementRef;
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
 
   constructor(public dataService: DataService,
@@ -78,6 +79,7 @@ export class ChannelChatComponent {
   channelParticipantsCounter: number = 0;
   threads: any;
   channelThreads!: Thread[];
+  imgFile: any = ''
 
 
   private userSub: Subscription = new Subscription();
@@ -254,6 +256,36 @@ export class ChannelChatComponent {
     this.channelSub.unsubscribe();
     this.threadsSub.unsubscribe();
   }
+
+  handleFileInput(event: any) {
+    const file: File = event.target.files[0];
+    const reader: FileReader = new FileReader();
+    // this.imgBox.nativeElement = '<img src="' + reader.result + '">';
+    reader.onloadend = () => {
+      // Erstellen Sie ein img-Element
+      const imgElement = document.createElement('img');
+      imgElement.src = reader.result as string;
+      imgElement.classList.add('img-file')
+      // Leeren Sie zunächst die Div, um sicherzustellen, dass nur das neu geladene Bild angezeigt wird
+      this.imgBox.nativeElement.innerHTML = '';
+
+      // Fügen Sie das img-Element der Div hinzu
+      this.imgBox.nativeElement.appendChild(imgElement);
+      imgElement.addEventListener('click', this.removeImage.bind(this));
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+      this.imgFile = file;
+      console.log('File is:', this.imgFile);
+
+    }
+  }
+
+  removeImage() {
+    // Leeren Sie die Div, um das Bild zu entfernen
+    this.imgBox.nativeElement.innerHTML = '';
+    this.imgFile = '';
+    console.log('File is:', this.imgFile);
+  }
 }
-
-
