@@ -8,7 +8,7 @@
 
   @if (user) {
   <div [matMenuTriggerFor]="menu" class="header-profile">
-    <p>{{ user.name }}</p>
+    <span>{{ user.name }}</span>
     <div class="profile-img-container">
       <img class="profile-img" [src]="user.imageUrl">
       <div class="online-status" [class.online]="user.onlineStatus === 'online'"
@@ -27,7 +27,7 @@
     <ng-template #profileContent>
 
       <ng-container *ngIf="isProfileView && !isProfileEditView; else editProfile">
-        <app-profile-view (editClicked)="switchToEdit()"></app-profile-view>
+        <app-profile-view [@fadeInOut] (editClicked)="switchToEdit()"></app-profile-view>
       </ng-container>
 
       <ng-template #editProfile>

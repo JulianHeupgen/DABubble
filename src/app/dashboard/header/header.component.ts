@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { ProfileEditComponent } from '../../menus/profile-edit/profile-edit.component';
 import { ProfileViewComponent } from '../../menus/profile-view/profile-view.component';
 import { HeaderProfileService } from '../../services/header-profile.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-header',
@@ -27,8 +28,23 @@ import { HeaderProfileService } from '../../services/header-profile.service';
     ProfileViewComponent
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({
+        opacity: 0
+      })),
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms ease-in', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        animate('0ms', style({ opacity: 0 }))
+      ]),
+    ])
+  ]
 })
+
 export class HeaderComponent {
 
   user?: User;

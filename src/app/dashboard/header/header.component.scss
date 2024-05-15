@@ -5,6 +5,7 @@
   padding-top: 24px;
   padding-left: 20px;
   padding-right: 20px;
+  gap: 32px;
 }
 
 .header-profile {
@@ -14,11 +15,11 @@
   padding: 8px 0;
   box-sizing: border-box;
 
-  p {
-    margin: 0;
+  span {
     font-size: 32px;
     font-weight: 700;
     line-height: normal;
+    white-space: nowrap;
   }
 
   .online-status {
@@ -78,18 +79,18 @@
 
 .search-bar {
   display: flex;
+  flex-grow: 1;
+  max-width: 800px;
   align-items: center;
-  border: unset;
-  padding: 5px;
   position: relative;
 
   input {
+    width: 100%;
     flex-grow: 1;
     border: none;
     outline: none;
     padding: 8px 32px;
     border-radius: 42px;
-    width: 50vw;
     height: 60px;
     font-size: 24px;
   }
