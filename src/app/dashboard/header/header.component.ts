@@ -51,9 +51,10 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 export class HeaderComponent {
 
-  // Test search component
+  // Test search component START
   control = new FormControl('');
   streets: string[] = ['Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue'];
+  // Test Search END
 
   isPanelOpen: boolean = false;
 
@@ -65,6 +66,12 @@ export class HeaderComponent {
   private profileViewSub = new Subscription();
   private profileEditSub = new Subscription();
 
+  /**
+   * Init AuthService, Router and ProfileService and starting subscribtion for Profile Views and User Data
+   * @param auth
+   * @param router
+   * @param profileService
+   */
   constructor(
     private auth: AuthService,
     private router: Router,
@@ -75,6 +82,10 @@ export class HeaderComponent {
     this.subUserData();
   }
 
+  /**
+   * This function resets the profile menu panel state when it gets reopened
+   * Gets fired by the (menuOpened) trigger
+   */
   resetMenuState(): void {
     this.profileService.switchToMenu();
   }
@@ -108,20 +119,32 @@ export class HeaderComponent {
     })
   }
 
+  /**
+   * Switch Profile Menu to Edit Profile View
+   */
   switchToEdit() {
     this.profileService.switchToEdit();
   }
 
+  /**
+   * Closes Profile Menu and switches to default menu
+   */
   closeProfile(event: Event) {
     event.stopPropagation();
     this.profileService.switchToMenu();
   }
 
+  /**
+   * Open Profile View
+   */
   openProfile(event: Event) {
     event.stopPropagation();
     this.profileService.switchToView();
   }
 
+  /**
+   * Logout User
+   */
   async logoutUser() {
     try {
       await this.auth.updateUserOnlineStatus('offline');
@@ -135,6 +158,9 @@ export class HeaderComponent {
     }
   }
 
+  /**
+   * Destroy all Active Subscriptions
+   */
   ngOnDestroy(): void {
     if (this.userSub) {
       this.userSub.unsubscribe();
