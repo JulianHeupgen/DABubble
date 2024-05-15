@@ -32,6 +32,7 @@ mat-card-header {
 
 .chat-history {
     height: 75%;
+    overflow-y: auto;
 }
 
 .text-box {
