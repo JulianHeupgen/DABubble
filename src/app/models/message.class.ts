@@ -5,14 +5,16 @@ export class Message {
   content: string;
   timestamp: Number;
   replies: Message[];      
-  emojiReactions: string[];    
+  emojiReactions: string[]; 
+  imgFileURL: string;   
 
-  constructor(sender: User, content: string) {
+  constructor(sender: User, content: string, imgFileUrl?: string) {
     this.sender = sender;
     this.content = content;
     this.timestamp = new Date().getTime();
     this.replies = [];
     this.emojiReactions = [];
+    this.imgFileURL = imgFileUrl !== undefined ? imgFileUrl : '';
   }
 }
 

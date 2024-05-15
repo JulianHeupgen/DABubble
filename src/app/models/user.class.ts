@@ -60,17 +60,17 @@ export class User {
   // Diese Funktion hier nutzen, wenn in einem Channel ein Beitrag verfasst oder dort auf einen Thread geantwortet wird
 
  async sendChannelMessage(channel: Channel, messageContent: string, imgFile?: File, replyToThread?: Thread) {        // 3. Parameter (Thread) ist optional !
-     
+     let imgFileURL;
     if (imgFile) {                                          // fügt eine Bilddatei hinzu wenn eine in der Nachricht vorhanden ist
       let storage: StorageService = new StorageService;
-      let imgFileURL = await storage.uploadFile(imgFile) as string;
-      // let fileURL = imgFileURL;
-      console.log('imgFileURL:', imgFileURL);
+      let imgURL = await storage.uploadFile(imgFile) as string;
+      imgFileURL = imgURL
+      // console.log('imgFileURL:', imgFileURL);
     }
 
 
     if (replyToThread) {                                      // Antwort auf bestehenden Thread: Neue Message wird dem bestehenden Thread überreicht
-      const newMessage = new Message(this, messageContent);
+      const newMessage = new Message(this, messageContent, imgFileURL);
       replyToThread.messages.push(newMessage);
       console.log('newMessage:', newMessage);
       console.log('replyToThread', replyToThread);
@@ -78,7 +78,7 @@ export class User {
 
     } else {                                                // Andernfalls neuen Thread erstellen, Message überreichen und neuen Thread in Channel pushen
       let newThread = new Thread({ channelId: channel.channelId, timestamp: new Date().getTime() });
-      const newMessage = new Message(this, messageContent);
+      const newMessage = new Message(this, messageContent, imgFileURL);
       newThread.messages.push(newMessage);
       channel.addThread(newThread);
       console.log('newMessage:', newMessage);
