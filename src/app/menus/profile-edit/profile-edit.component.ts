@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { User } from '../../models/user.class';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { HeaderProfileService } from '../../services/header-profile.service';
 
 @Component({
   selector: 'app-profile-edit',
@@ -15,25 +16,30 @@ import { CommonModule } from '@angular/common';
 })
 export class ProfileEditComponent {
 
-  emailEditForm: FormGroup;
-  nameEditForm: FormGroup;
+  editUserForm: FormGroup;
 
   user!: User;
 
-  constructor(private auth: AuthService, private router: Router, private formBuilder: FormBuilder) {
-    this.emailEditForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]]
-    });
-    this.nameEditForm = this.formBuilder.group({
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private profileService: HeaderProfileService
+  ) {
+    this.editUserForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
       name: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+ [a-zA-Z]+$')]]
     });
+    this.getUser();
   }
 
   private userSub = new Subscription();
 
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+  saveUser() {
+    console.log('saving user');
+  }
+
+  getUser() {
     this.userSub = this.auth.getUser().subscribe(user => {
       if (user) {
         this.user = user;
@@ -42,26 +48,19 @@ export class ProfileEditComponent {
     })
   }
 
-  updateEmail() {
-    console.log('email form submitted');
-  }
-
-  updateName() {
-
+  closeEdit(event: Event) {
+    event.stopPropagation();
+    this.profileService.switchToView();
   }
 
   updateFormValues() {
-    this.emailEditForm.patchValue({
-      email: this.user.email
-    });
-    this.nameEditForm.patchValue({
+    this.editUserForm.patchValue({
+      email: this.user.email,
       name: this.user.name
     });
   }
 
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
     if (this.userSub) {
       this.userSub.unsubscribe();
     }
