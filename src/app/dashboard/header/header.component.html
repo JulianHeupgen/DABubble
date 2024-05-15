@@ -1,10 +1,17 @@
 <div class="header">
   <img class="logo" src="./assets/img/dabubble_header_logo.png">
 
-  <div class="search-bar">
-    <input type="text" placeholder="Code learning durchsuchen">
+  <form class="search-bar">
+    <input type="text" placeholder="Code learning durchsuchen" [formControl]="control" [matAutocomplete]="auto"
+      class="example-input" [class.mat-autocomplete-panel-open]="isPanelOpen">
+    <mat-autocomplete #auto="matAutocomplete" (opened)="isPanelOpen = true" (closed)="isPanelOpen = false">
+      @for (street of streets; track street) {
+      <mat-option [value]="street">{{street}}</mat-option>
+      }
+    </mat-autocomplete>
     <img src="./assets/img/search.png">
-  </div>
+  </form>
+
 
   @if (user) {
   <div [matMenuTriggerFor]="menu" class="header-profile">
@@ -40,7 +47,7 @@
 
   }
   @else {
-    <div class="profile-placeholder"></div>
+  <div class="profile-placeholder"></div>
   }
 
 </div>
