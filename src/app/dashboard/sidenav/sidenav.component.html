@@ -14,7 +14,8 @@
                         <div class="dF" (click)="toggleSidenav('channels')">
                             <img class="img-arrow" [src]="arrowSrcWs"
                                 (mouseenter)="hoverEdit('arrowSrcWs', './assets/img/arrow_drop_down_hover.png')"
-                                (mouseleave)="resetHoverEdit('arrowSrcWs', './assets/img/arrow_drop_down.png')">
+                                (mouseleave)="resetHoverEdit('arrowSrcWs', './assets/img/arrow_drop_down.png')"
+                                [ngStyle]="{'transform': showChannels ? 'rotate(0deg)' : 'rotate(270deg)'}">
                             <div class="headline-subcontainer"
                                 (mouseenter)="hoverEdit('logoSrcWs', './assets/img/workspaces_hover.png')"
                                 (mouseleave)="resetHoverEdit('logoSrcWs', './assets/img/workspaces.png')">
@@ -53,7 +54,8 @@
                     <div class="private-message-headline-container" (click)="toggleSidenav('private')">
                         <img class="img-arrow" [src]="arrowSrc"
                             (mouseenter)="hoverEdit('arrowSrc', './assets/img/arrow_drop_down_hover.png')"
-                            (mouseleave)="resetHoverEdit('arrowSrc', './assets/img/arrow_drop_down.png')">
+                            (mouseleave)="resetHoverEdit('arrowSrc', './assets/img/arrow_drop_down.png')"
+                            [ngStyle]="{'transform': showDirectMessages ? 'rotate(0deg)' : 'rotate(270deg)'}">
                         <div class="headline-subcontainer"
                             (mouseenter)="hoverEdit('logoSrc', './assets/img/private_message_logo_hover.png')"
                             (mouseleave)="resetHoverEdit('logoSrc', './assets/img/private_message_logo.png')">
