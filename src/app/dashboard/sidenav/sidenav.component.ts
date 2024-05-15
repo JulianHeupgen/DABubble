@@ -9,7 +9,6 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Channel } from '../../models/channel.class';
 import { Subscription } from 'rxjs';
-import { UserChat } from '../../models/user-chat';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddChannelComponent } from '../../dialog/add-channel/add-channel.component';
 
@@ -45,6 +44,7 @@ import { AddChannelComponent } from '../../dialog/add-channel/add-channel.compon
   ]
 })
 
+
 export class SidenavComponent {
 
   opened: boolean = true;
@@ -62,11 +62,11 @@ export class SidenavComponent {
   users: any;
   channels: any;
   userId: string = '';
-  // selectedUser: Partial<User>[] = [];
   selectedUser: User[] = [];
   allChannels: Partial<Channel>[] = [];
   channelTitles: { channelId: string, title: string }[] = [];
   directMessageTitle: { imageUrl: string, onlineStatus: string, name: string, id: string }[] = [];
+
 
   private userSub: Subscription = new Subscription();
   private channelSub: Subscription = new Subscription();
@@ -77,7 +77,7 @@ export class SidenavComponent {
   }
 
 
-  async ngOnInit() {
+  ngOnInit() {
     this.dataSubscriptions();
   }
 
@@ -137,20 +137,6 @@ export class SidenavComponent {
     }
   }
 
-  // setUserData(uid: string) {
-  //   if (!this.users || this.users.length === 0) {
-  //     console.error('Benutzerdaten sind noch nicht geladen oder die Liste ist leer.');
-  //     return;
-  //   }
-  //   const user = this.users.find((user: User) => user.authUserId === uid);
-  //   if (user) {
-  //     console.log('User gefunden', user);
-  //     this.selectedUser = [user];  // Direktes Setzen als Array mit einem Eintrag
-  //   } else {
-  //     console.log('Kein User gefunden für UID:', uid);
-  //   }
-  // }
-
 
   /**
    * Set and Update the channel titles for the sidenav rendering
@@ -172,6 +158,10 @@ export class SidenavComponent {
     });
   }
 
+
+  /**
+   * Get and set direct messages to display in the sidenav
+   */
   getUserDirectMessages(): void {
     this.directMessageTitle = [];
     if (this.selectedUser && this.selectedUser.length > 0) {
@@ -204,6 +194,10 @@ export class SidenavComponent {
     console.log('Direct Message Titles:', this.directMessageTitle);
   }
 
+
+  /**
+   * Fetching and sorting the user list for the sidenav. Main reason to display yourself at the top.
+   */
   sortDirectMessageUsers() {
     this.directMessageTitle.sort((a, b) => {
       if (a.id === this.selectedUser[0].id) return -1;
@@ -213,69 +207,11 @@ export class SidenavComponent {
   }
 
 
-  // getUserDirectMessages() {
-  //   this.directMessageTitle = [];
-  //   if (this.selectedUser && this.selectedUser.length > 0) {
-  //     this.selectedUser.forEach((selected: User) => {
-  //       if (selected.userChats && Array.isArray(selected.userChats)) {
-  //         selected.userChats.forEach(chat => {
-  //           const chatId = chat.userChatId;
-  //           const matchedUser = this.users.find((user: User) => user.id === chatId);
-  //           if (matchedUser) {
-  //             if (!this.directMessageTitle.some(dm => dm.id === matchedUser.id)) {
-  //               this.directMessageTitle.push({
-  //                 id: matchedUser.id,
-  //                 imageUrl: matchedUser.imageUrl,
-  //                 name: matchedUser.name,
-  //                 onlineStatus: matchedUser.onlineStatus
-  //               });
-  //             }
-  //           }
-  //         });
-  //       }
-  //     });
-  //   } else {
-  //     console.log('Keine ausgewählten Benutzer vorhanden.');
-  //   }
-
-  //   console.log('Direct Message Titles:', this.directMessageTitle);
-  // }
-
-
-  /**
-   * Dies war ein Test mit einer getrennten userChatId
-   */
-  // getUserDirectMessages(): void {
-  //   this.directMessageTitle = [];  // Initialisiert das Ergebnis-Array
-  //   this.selectedUser.forEach((selected: User) => {
-
-  //     // Verwende `userChatId` statt `userChats`
-  //     if (selected.userChatId && Array.isArray(selected.userChatId)) {
-  //       selected.userChatId.forEach(chatId => {  // chatId ist bereits die ID
-  //         const matchedUser = this.users.find((user: User) => user.id === chatId);
-  //         if (matchedUser) {
-  //           // Fügt den gefundenen Benutzer zum Ergebnis-Array hinzu, falls nicht bereits vorhanden
-  //           if (!this.directMessageTitle.some(dm => dm.id === matchedUser.id)) {
-  //             this.directMessageTitle.push({
-  //               id: matchedUser.id,
-  //               imageUrl: matchedUser.imageUrl,
-  //               name: matchedUser.name,
-  //               onlineStatus: matchedUser.onlineUserStatus
-  //             });
-  //           }
-  //         }
-  //       });
-  //     }
-  //   });
-  //   console.log('Direct Message Titles:', this.directMessageTitle);
-  // }
-
-
   /**
    * Toggle variable for sidenav to open or close
    */
   toggleSidenav(value: string) {
-    if (value === 'sidenav'){
+    if (value === 'sidenav') {
       this.opened = !this.opened;
     }
     if (value === 'channels') {
@@ -287,7 +223,10 @@ export class SidenavComponent {
   }
 
 
-  hoverMenuButton() {
+  /**
+   * Hover function for the button to show and hide the sidenav.
+   */
+  hoverSidenavButton() {
     if (this.opened) {
       this.imageSrc = './assets/img/sidemenu_close_hover.png';
     } else {
@@ -296,7 +235,10 @@ export class SidenavComponent {
   }
 
 
-  resetHover() {
+  /**
+   * Reset the hover function for the button to show and hide the sidenav.
+   */
+  resetHoverSidenavButton() {
     if (!this.opened) {
       this.imageSrc = './assets/img/sidemenu_open_normal.png';
     } else {
@@ -305,15 +247,31 @@ export class SidenavComponent {
   }
 
 
-  hoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs' | 'add' | 'addCircle', url: string) {
+  /**
+   * Hover function to hover the img for the buttons of the sidenav.
+   * 
+   * @param originalSrc - Original source of the img to get an image when loading the page.
+   * @param url - Url of the img which is displayed when the function is executed.
+   */
+  hoverImg(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs' | 'add' | 'addCircle', url: string) {
     this[originalSrc] = url;
   }
 
 
-  resetHoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs' | 'add' | 'addCircle', url: string) {
+  /**
+   * Reset the hover function to hover the img for the buttons of the sidenav.
+   * 
+   * @param originalSrc - Original source of the img to get an image when loading the page.
+   * @param url - Url of the img which is displayed when the function is executed.
+   */
+  resetHoverImg(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs' | 'add' | 'addCircle', url: string) {
     this[originalSrc] = url;
   }
 
+
+  /**
+   * Open AddChannelComponent per material dialog
+   */
   openDialog() {
     this.dialog.open(AddChannelComponent);
   }
