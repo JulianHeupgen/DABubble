@@ -1,0 +1,38 @@
+@if (user) {
+<div class="profile-menu-data" (click)="$event.stopPropagation()">
+  <div class="p-head">
+    <span>Profil</span>
+    <img (click)="closeEdit($event)" src="./../../../assets/img/close.png">
+  </div>
+  <div class="p-img">
+    <img [src]="user.imageUrl">
+  </div>
+  <div class="p-name-edit">
+    <span>{{ user.name }}</span>
+    <a (click)="editUser($event)">Bearbeiten</a>
+  </div>
+  <div class="p-status">
+    @if (user.onlineStatus === 'online') {
+    <div class="status-point status-online"></div>
+    <span class="text-online">Aktiv</span>
+    }
+    @if (user.onlineStatus === 'offline') {
+    <div class="status-point status-offline"></div>
+    <span class="textoffline">Inaktiv</span>
+    }
+    @if (user.onlineStatus === 'away') {
+    <div class="status-point status-away"></div>
+    <span class="text-away">Nicht am PC</span>
+    }
+  </div>
+  <div class="p-email">
+    <div class="email-first">
+      <img src="./../../../assets/img/mail.png">
+    </div>
+    <div class="email-last">
+      <span>E-Mail-Adresse</span>
+      <a href="mailto: {{ user.email }}">{{ user.email }}</a>
+    </div>
+  </div>
+</div>
+}

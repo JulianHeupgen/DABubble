@@ -5,23 +5,42 @@
     <input type="text" placeholder="Code learning durchsuchen">
     <img src="./assets/img/search.png">
   </div>
-  <div [matMenuTriggerFor]="profileMenu" class="header-profile">
-    <p>{{ user?.name }}</p>
+
+  @if (user) {
+  <div [matMenuTriggerFor]="menu" class="header-profile">
+    <p>{{ user.name }}</p>
     <div class="profile-img-container">
-      <img class="profile-img" src="./assets/img/avatar_1.png">
-      @if (online) {
-      <img class="online-status" src="./assets/img/online.png">
-      }
-      @if (!online) {
-      <img class="online-status" src="./assets/img/offline.png">
-      }
+      <img class="profile-img" [src]="user.imageUrl">
+      <div class="online-status" [class.online]="user.onlineStatus === 'online'"
+        [class.offline]="user.onlineStatus === 'offline'" [class.away]="user.onlineStatus === 'away'"></div>
     </div>
-    <img class="arrow-down" src="./assets/img/header_arrow_down.png">
+    <img class="arrow-down" src="./../../../assets/img/header_arrow_down.png">
   </div>
 
-  <mat-menu #profileMenu="matMenu" xPosition="before" class="profileMenu">
-    <button class="item" mat-menu-item>Profil</button>
-    <button (click)="logoutUser()" class="item" mat-menu-item>Logout</button>
+  <mat-menu #menu xPosition="before" class="profile-menu">
+
+    <ng-container *ngIf="!isProfileView; else profileContent">
+      <button (click)="openProfile($event)" class="profile mat-button" mat-menu-item>Profil</button>
+      <button (click)="logoutUser()" class="logout mat-button" mat-menu-item>Logout</button>
+    </ng-container>
+
+    <ng-template #profileContent>
+
+      <ng-container *ngIf="isProfileView && !isProfileEditView; else editProfile">
+        <app-profile-view (editClicked)="switchToEdit()"></app-profile-view>
+      </ng-container>
+
+      <ng-template #editProfile>
+        <app-profile-edit></app-profile-edit>
+      </ng-template>
+
+    </ng-template>
+
   </mat-menu>
+
+  }
+  @else {
+    <div class="profile-placeholder"></div>
+  }
 
 </div>

@@ -9,7 +9,8 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Channel } from '../../models/channel.class';
 import { Subscription } from 'rxjs';
-import { UserChat } from '../../models/user-chat';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { AddChannelComponent } from '../../dialog/add-channel/add-channel.component';
 
 
 @Component({
@@ -22,7 +23,8 @@ import { UserChat } from '../../models/user-chat';
     MatDrawer,
     MatDrawerContainer,
     MatDrawerContent,
-    RouterModule
+    RouterModule,
+    MatDialogModule
   ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
@@ -42,37 +44,42 @@ import { UserChat } from '../../models/user-chat';
   ]
 })
 
+
 export class SidenavComponent {
 
   opened: boolean = true;
+  showChannels: boolean = true;
+  showDirectMessages: boolean = true;
   imageSrc: string = './assets/img/sidemenu_close_normal.png';
+  imageSrcOpen: string = './assets/img/sidemenu_open_normal.png';
   editSrc: string = './assets/img/edit_square.png';
   arrowSrc: string = './assets/img/arrow_drop_down.png';
   arrowSrcWs: string = './assets/img/arrow_drop_down.png';
   logoSrc: string = './assets/img/private_message_logo.png';
   logoSrcWs: string = './assets/img/workspaces.png';
+  tagImg: string = './assets/img/tag.png';
   add: string = './assets/img/add_channel.png';
   addCircle: string = './assets/img/add_circle.png';
   online: boolean = true;
   users: any;
   channels: any;
   userId: string = '';
-  // selectedUser: Partial<User>[] = [];
   selectedUser: User[] = [];
   allChannels: Partial<Channel>[] = [];
   channelTitles: { channelId: string, title: string }[] = [];
   directMessageTitle: { imageUrl: string, onlineStatus: string, name: string, id: string }[] = [];
 
+
   private userSub: Subscription = new Subscription();
   private channelSub: Subscription = new Subscription();
 
 
-  constructor(private dataService: DataService, private authService: AuthService) {
+  constructor(private dataService: DataService, private authService: AuthService, public dialog: MatDialog) {
     this.users = [];
   }
 
 
-  async ngOnInit() {
+  ngOnInit() {
     this.dataSubscriptions();
   }
 
@@ -100,9 +107,9 @@ export class SidenavComponent {
   }
 
 
-/**
- * Checking the validity of the data of users and channels from the Observable 
- */
+  /**
+   * Checking the validity of the data of users and channels from the Observable 
+   */
   checkDataForChannelNames() {
     if (this.users && this.channels) {
       this.updateChannelTitles();
@@ -132,20 +139,6 @@ export class SidenavComponent {
     }
   }
 
-  // setUserData(uid: string) {
-  //   if (!this.users || this.users.length === 0) {
-  //     console.error('Benutzerdaten sind noch nicht geladen oder die Liste ist leer.');
-  //     return;
-  //   }
-  //   const user = this.users.find((user: User) => user.authUserId === uid);
-  //   if (user) {
-  //     console.log('User gefunden', user);
-  //     this.selectedUser = [user];  // Direktes Setzen als Array mit einem Eintrag
-  //   } else {
-  //     console.log('Kein User gefunden für UID:', uid);
-  //   }
-  // }
-
 
   /**
    * Set and Update the channel titles for the sidenav rendering
@@ -165,27 +158,30 @@ export class SidenavComponent {
         });
       }
     });
-    console.log("TESTTEST", this.selectedUser[0].userChats[0].userChatId);
-    
   }
 
+
+  /**
+   * Get and set direct messages to display in the sidenav
+   */
   getUserDirectMessages(): void {
-    this.directMessageTitle = [];  // Initialisiert das Ergebnis-Array
-  
-    // Gehe durch alle Benutzer, starte jedoch zuerst mit einer Überprüfung, ob überhaupt ein Benutzer ausgewählt wurde
+    this.directMessageTitle = [];
     if (this.selectedUser && this.selectedUser.length > 0) {
       this.selectedUser.forEach((selected: User) => {
         if (selected.userChats && Array.isArray(selected.userChats)) {
           selected.userChats.forEach(chat => {
-            const chatId = chat.userChatId;  // Zugriff auf die userChatId jedes userChats-Elements
+            const chatId = chat.userChatId;
             const matchedUser = this.users.find((user: User) => user.id === chatId);
             if (matchedUser) {
-              // Fügt den gefundenen Benutzer zum Ergebnis-Array hinzu, falls nicht bereits vorhanden
+              let displayName = matchedUser.name;
+              if (matchedUser.id === this.selectedUser[0].id) {
+                displayName += " (Du)";
+              }
               if (!this.directMessageTitle.some(dm => dm.id === matchedUser.id)) {
                 this.directMessageTitle.push({
                   id: matchedUser.id,
                   imageUrl: matchedUser.imageUrl,
-                  name: matchedUser.name,
+                  name: displayName,
                   onlineStatus: matchedUser.onlineStatus
                 });
               }
@@ -196,86 +192,44 @@ export class SidenavComponent {
     } else {
       console.log('Keine ausgewählten Benutzer vorhanden.');
     }
-  
+    this.sortDirectMessageUsers();
     console.log('Direct Message Titles:', this.directMessageTitle);
   }
 
-  // getUserDirectMessages(): void {
-  //   this.directMessageTitle = [];  // Initialisiert das Ergebnis-Array
-  //   this.selectedUser.forEach((selected: User) => {
 
-  //     // Verwende `userChatId` statt `userChats`
-  //     if (selected.userChatId && Array.isArray(selected.userChatId)) {
-  //       selected.userChatId.forEach(chatId => {  // chatId ist bereits die ID
-  //         const matchedUser = this.users.find((user: User) => user.id === chatId);
-  //         if (matchedUser) {
-  //           // Fügt den gefundenen Benutzer zum Ergebnis-Array hinzu, falls nicht bereits vorhanden
-  //           if (!this.directMessageTitle.some(dm => dm.id === matchedUser.id)) {
-  //             this.directMessageTitle.push({
-  //               id: matchedUser.id,
-  //               imageUrl: matchedUser.imageUrl,
-  //               name: matchedUser.name,
-  //               onlineStatus: matchedUser.onlineUserStatus
-  //             });
-  //           }
-  //         }
-  //       });
-  //     }
-  //   });
-  //   console.log('Direct Message Titles:', this.directMessageTitle);
-  // }
-  
-
-
-  // getUserDirectMessages() {
-  //   this.directMessageTitle = [];
-  //   this.selectedUser.forEach(user => {
-  //     if (user.userChats && Array.isArray(user.userChats)) {
-  //       user.userChats.forEach(userChats => {
-  //         const matchedUsers = this.users.find(userChat => userChat.id === userChats);
-  //         console.log('CHATS', userChats);
-  //         console.log('USERS', this.users);
-          
-          
-  //       })
-  //     }
-  //   })
-  // }
+  /**
+   * Fetching and sorting the user list for the sidenav. Main reason to display yourself at the top.
+   */
+  sortDirectMessageUsers() {
+    this.directMessageTitle.sort((a, b) => {
+      if (a.id === this.selectedUser[0].id) return -1;
+      if (b.id === this.selectedUser[0].id) return 1;
+      return 0;
+    });
+  }
 
 
   /**
    * Toggle variable for sidenav to open or close
    */
-  toggleSidenav() {
-    this.opened = !this.opened;
-  }
-
-
-  hoverMenuButton() {
-    if (this.opened) {
-      this.imageSrc = './assets/img/sidemenu_close_hover.png';
-    } else {
-      this.imageSrc = './assets/img/sidemenu_open_hover.png';
+  toggleSidenav(value: string) {
+    if (value === 'sidenav') {
+      this.opened = !this.opened;
+    }
+    if (value === 'channels') {
+      this.showChannels = !this.showChannels;
+    }
+    if (value === 'private') {
+      this.showDirectMessages = !this.showDirectMessages;
     }
   }
 
 
-  resetHover() {
-    if (!this.opened) {
-      this.imageSrc = './assets/img/sidemenu_open_normal.png';
-    } else {
-      this.imageSrc = './assets/img/sidemenu_close_normal.png';
-    }
-  }
-
-
-  hoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs' | 'add' | 'addCircle', url: string) {
-    this[originalSrc] = url;
-  }
-
-
-  resetHoverEdit(originalSrc: 'editSrc' | 'arrowSrc' | 'logoSrc' | 'logoSrcWs' | 'arrowSrcWs' | 'add' | 'addCircle', url: string) {
-    this[originalSrc] = url;
+  /**
+   * Open AddChannelComponent per material dialog
+   */
+  openDialog() {
+    this.dialog.open(AddChannelComponent);
   }
 
 

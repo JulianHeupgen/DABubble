@@ -31,12 +31,32 @@
 }
 
 .img-as-button {
+    height: 270px;
     position: fixed;
     left: 0;
     top: 70%;
     transform: translateY(-50%);
     z-index: 10;
     cursor: pointer;
+
+    &:hover {
+        content: url('./../../../assets/img/sidemenu_close_hover.png');
+    }
+}
+
+.img-as-button-open {
+    height: 270px;
+    position: fixed;
+    left: 0;
+    top: 70%;
+    transform: translateY(-50%);
+    z-index: 10;
+    cursor: pointer;
+
+    &:hover {
+        content: url('./../../../assets/img/sidemenu_open_hover.png');
+    }
+    
 }
 
 .devspace-headline {
@@ -59,6 +79,10 @@
     position: absolute;
     right: 0;
     cursor: pointer;
+
+    &:hover {
+        content: url('./../../../assets/img/edit_square_hover.png');
+    }
 }
 
 .profile-img-container {
@@ -70,6 +94,7 @@
 .profile-img {
     height: 60px;
     width: 60px;
+    border-radius: 100%;
 }
 
 .tag-img {
@@ -101,10 +126,14 @@
     position: relative;
 }
 
-.img-arrow {
+.img-arrow-channels, .img-arrow {
     height: 30px;
     width: 30px;
     cursor: pointer;
+
+    &:hover {
+        content: url('./../../../assets/img/arrow_drop_down_hover.png');
+    }
 }
 
 .img-logo {
@@ -118,6 +147,10 @@
     position: absolute;
     right: 36px;
     cursor: pointer;
+
+    &:hover {
+        content: url(./../../../assets/img/add_channel_hover.png);
+    }
 }
 
 .add-channel-container {
@@ -138,6 +171,9 @@
     }
 
     &:hover {
+        img {
+            content: url('./../../../assets/img/add_circle_hover.png');
+        }
         p {
             color: $fontHover;
         }
@@ -178,16 +214,47 @@
     }
 }
 
-.headline-subcontainer {
+.channel-subcontainer, .user-subcontainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.active-channel {
+    border-radius: 20px;
+    background-color: $backgroundHover;
+    height: 33px;
+    cursor: pointer;
+
+    p {
+        color: $fontHover;
+        font-weight: 800;
+    }
+
+    .tag-img {
+        content: url('./../../../assets/img/tag_hover.png');
+    }
+}
+
+.headline-subcontainer, .headline-subcontainer-channels {
     display: flex;
     align-items: center;
     gap: 16px;
     cursor: pointer;
 
     &:hover {
+        img {
+            content: url('./../../../assets/img/private_message_logo_hover.png');
+        }
         h2 {
             color: $fontHover;
         }
+    }
+}
+
+.headline-subcontainer-channels:hover {
+    img {
+        content: url('./../../../assets/img/workspaces_hover.png');
     }
 }
 
@@ -214,3 +281,13 @@
         cursor: pointer;
     }
 }
+
+.active-user {
+    background-color: $backgroundHover;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.rotate-90 {
+    transform: rotate(90deg);
+  }
