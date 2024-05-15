@@ -163,3 +163,7 @@ app-channel-chat {
   border-radius: 10px;
   border: 5px solid rgba(68, 77, 242, 0.5);
 }
+
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: 30px;
+}

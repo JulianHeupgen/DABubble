@@ -21,7 +21,7 @@ h3 {
     box-shadow: 0px 6px 10px 0px #00000033;
     max-width: 872px;
     max-height: 514px;
-    // border-radius: 30px;
+    border-radius: 30px;
     background-color: #FFFFFF;
     padding: 40px;
     @include flex-align-justify($ai: start, $jc: space-between);
@@ -68,3 +68,7 @@ h3 {
         }
     }
 }
+
+.mat-mdc-dialog-container {
+    --mdc-dialog-container-shape: 30px; /* Setzt den border-radius auf 8px */
+  }
