@@ -1,18 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  MatDialog,
-  MatDialogModule,
-  MAT_DIALOG_DATA,
-  MatDialogRef,
-  MatDialogTitle,
-  MatDialogContent,
-  MatDialogActions,
-  MatDialogClose,  
-} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DataService } from '../../services/data.service';
 import { Channel } from '../../models/channel.class';
+import { ChannelMembersComponent } from '../channel-members/channel-members.component';
 
 @Component({
   selector: 'app-add-channel',
@@ -28,6 +20,7 @@ export class AddChannelComponent {
 
   channelName: string = '';
   channelDescription: string = '';
+  createdChannelId: string | null = null;
 
   constructor(public dialog: MatDialog, private dataService: DataService) { }
 
@@ -38,25 +31,21 @@ export class AddChannelComponent {
       return;
     }
 
-    const newChannelData = {
+    const newChannelData = new Channel({
       title: this.channelName,
       description: this.channelDescription,
-      participant: [],
+      participants: [],
       threads: []
-    };
-
-    const newChannel = this.dataService.setChannelObject('', newChannelData);
+    });
 
     try {
-      await this.dataService.addChannel(new Channel(newChannel));
-      console.log('Erfolgreich erstellt');
+      this.createdChannelId = await this.dataService.addChannel(newChannelData);
+      console.log('Erfolgreich erstellt', this.createdChannelId);
       this.resetForm();
-      
+      this.openChannelMembersDialog();
     } catch (error) {
-      console.warn('Fehler beim erstellen', error);
-      
+      console.warn('Fehler beim Erstellen', error);
     }
-
   }
 
   private resetForm() {
@@ -65,16 +54,13 @@ export class AddChannelComponent {
     this.dialog.closeAll();
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(AddChannelComponent, {
-      data: {channelName: this.channelName, channelDescription: this.channelDescription},
-      // panelClass: 'border-radius-30',        
-      
-    });
-    // dialogRef.addPanelClass('border-radius-30');
-  }
-
-  closeDialog() {
-    this.dialog.closeAll();
+  openChannelMembersDialog() {
+    if (this.createdChannelId) {
+      setTimeout(() => {
+        this.dialog.open(ChannelMembersComponent, {
+          data: { channelId: this.createdChannelId }
+        });
+      }, 500);
+    }
   }
 }

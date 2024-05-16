@@ -1,1 +1,22 @@
-<p>channel-members works!</p>
+<div class="add-channel-card">
+    <div>
+        <h2 class="project-font">Leute hinzufügen</h2>
+    </div>
+    <div class="input-section">
+        <div class="input-channel-name">
+            <mat-radio-group [(ngModel)]="selectedOption">
+                <mat-radio-button value="all">Alle Mitglieder von DevTeam hinzufügen</mat-radio-button>
+                <mat-radio-button value="specific">Bestimmte Leute hinzufügen</mat-radio-button>
+              </mat-radio-group>
+            
+            <!-- <input [(ngModel)]="channelName" type="text"> -->
+                
+        </div>
+    </div>
+    <div class="input-section">
+        <!-- <input [(ngModel)]="channelDescription" type="text" placeholder="Dein Text hier"> -->
+    </div>
+    <div class="btn-section">
+        <button (click)="save()">Erstellen</button>
+    </div>
+</div>

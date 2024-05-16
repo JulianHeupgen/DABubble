@@ -96,7 +96,6 @@ input {
     }
 }
 
-.mat-mdc-dialog-container {
+::ng-deep .mat-mdc-dialog-container {
     --mdc-dialog-container-shape: 30px;
-    /* Setzt den border-radius auf 8px */
 }
