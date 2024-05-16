@@ -28,6 +28,7 @@ export class ChannelMembersComponent {
   constructor(
     private firestore: Firestore,
     private dialogRef: MatDialogRef<ChannelMembersComponent>,
+    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: { channelId: string }
   ) { }
 

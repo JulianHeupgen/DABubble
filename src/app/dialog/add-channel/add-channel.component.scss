@@ -36,6 +36,7 @@ input {
     @include flex-align-justify($ai: start, $jc: space-between);
     flex-direction: column;
     gap: 20px;
+    position: relative;
 
     span {
         @include font-size-weight-color();
@@ -43,6 +44,14 @@ input {
 
     div {
         width: 100%;
+    }
+
+    img {
+        position: absolute;
+        right: 32px;
+        height: 24px;
+        width: 24px;
+        cursor: pointer;
     }
 }
 

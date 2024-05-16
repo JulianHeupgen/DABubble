@@ -49,7 +49,7 @@ export class AddChannelComponent {
     }
   }
 
-  private resetForm() {
+  resetForm() {
     this.channelName = '';
     this.channelDescription = '';
     this.dialog.closeAll();

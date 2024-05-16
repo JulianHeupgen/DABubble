@@ -36,6 +36,7 @@ input {
     @include flex-align-justify($ai: start, $jc: space-between);
     flex-direction: column;
     gap: 20px;
+    position: relative;
 
     span {
         @include font-size-weight-color();
@@ -43,6 +44,14 @@ input {
 
     div {
         width: 100%;
+    }
+
+    img {
+        position: absolute;
+        right: 32px;
+        height: 24px;
+        width: 24px;
+        cursor: pointer;
     }
 }
 
@@ -116,4 +125,19 @@ input {
     --mdc-radio-unselected-hover-icon-color: #444DF2;
     --mdc-radio-unselected-icon-color: #ADB0D9;
     --mdc-radio-unselected-pressed-icon-color: none;
+}
+
+.checkbox-inputs {
+    display: flex;
+    flex-direction: column;
+
+    p {
+        font-size: 18px;
+        margin: 0;
+
+        span {
+            font-size: 18px;
+            color: $fontHover;
+        }
+    }    
 }

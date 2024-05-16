@@ -1,12 +1,13 @@
 <div class="add-channel-card">
+    <img src="./assets/img/close.png" (click)="this.dialog.closeAll()">
     <div>
         <h2 class="project-font">Leute hinzufügen</h2>
     </div>
     <div class="input-section">
         <div class="input-channel-name">
-            <mat-radio-group [(ngModel)]="selectedOption">
-                <mat-radio-button value="all">Alle Mitglieder von DevTeam hinzufügen</mat-radio-button>
-                <mat-radio-button value="specific">Bestimmte Leute hinzufügen</mat-radio-button>
+            <mat-radio-group [(ngModel)]="selectedOption" class="checkbox-inputs">
+                <mat-radio-button value="all"><p>Alle Mitglieder von <span>DevTeam</span> hinzufügen</p></mat-radio-button>
+                <mat-radio-button value="specific"><p>Bestimmte Leute hinzufügen</p></mat-radio-button>
               </mat-radio-group>
             
             <!-- <input [(ngModel)]="channelName" type="text"> -->
