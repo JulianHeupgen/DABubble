@@ -189,3 +189,12 @@ mat-card-header {
         /* Optional: Highlight when focused */
     }
 }
+
+/* Fix Emoji Background */
+::ng-deep .mat-mdc-menu-item {
+  &:not(:disabled) {
+    &:hover {
+      background-color: unset !important;
+    }
+  }
+}
