@@ -26,7 +26,7 @@
 
   <mat-menu #menu xPosition="before" class="profile-menu">
 
-    <div *ngIf="!isProfileView && !isProfileEditView; else profileContent">
+    <div class="small-menu" *ngIf="!isProfileView && !isProfileEditView; else profileContent">
       <button (click)="openProfile($event)" class="profile mat-button" mat-menu-item>Profil</button>
       <button (click)="logoutUser()" class="logout mat-button" mat-menu-item>Logout</button>
     </div>
