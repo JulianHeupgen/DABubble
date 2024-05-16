@@ -85,7 +85,7 @@
         <button class="not-hover-icon">
           <img src="../../../assets/img/send-message.png" alt="">
         </button>
-        <button type="submit" class="hover-icon" (click)="currentUser.sendChannelMessage(currentChannel, channelThreadMessage.value.channelMessage, imgFile)">
+        <button type="submit" class="hover-icon" (click)="currentUser.sendChannelMessage(currentChannel, channelThreadMessage.value.channelMessage, imgFile); removeChatInput()">
           <img src="../../../assets/img/send-message-hover.png" alt="">
         </button>
 

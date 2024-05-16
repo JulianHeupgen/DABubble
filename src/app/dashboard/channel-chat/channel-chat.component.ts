@@ -277,6 +277,11 @@ export class ChannelChatComponent {
     }
   }
 
+  removeChatInput() {
+    this.channelThreadMessage.reset();
+    this.removeImage();
+  }
+
   removeImage() {
     this.imgBox.nativeElement.innerHTML = '';
     this.fileInput.nativeElement.value = '';

@@ -59,7 +59,7 @@ export class User {
 
   // Diese Funktion hier nutzen, wenn in einem Channel ein Beitrag verfasst oder dort auf einen Thread geantwortet wird
 
- async sendChannelMessage(channel: Channel, messageContent: string, imgFile?: File, replyToThread?: Thread) {        // 3. Parameter (Thread) ist optional !
+ async sendChannelMessage(channel: Channel, messageContent: string, imgFile?: File, replyToThread?: Thread) {        // 4. Parameter (File) und (Thread) ist optional !
      let imgFileURL;
     if (imgFile) {                                          // fügt eine Bilddatei hinzu wenn eine in der Nachricht vorhanden ist
       let storage: StorageService = new StorageService;
