@@ -20,9 +20,8 @@
     </div>
 
   </div>
-  <!-- <input matInput *ngIf="currentChannel" placeholder="Nachricht an {{currentChannel.title}}">   -->
-  <form [formGroup]="channelThreadMessage" class="text-box"
-    (ngSubmit)="currentUser.sendChannelMessage(currentChannel, channelThreadMessage.value.channelMessage)">
+  <!-- <form [formGroup]="channelThreadMessage" class="text-box" (ngSubmit)="currentUser.sendChannelMessage(currentChannel, channelThreadMessage.value.channelMessage)"> -->
+    <form [formGroup]="channelThreadMessage" class="text-box">
     <!-- <div class="add-file-img-box" contenteditable="true" #threadMessageBox [innerHTML]="channelThreadMessage.value.channelMessage"></div> -->
     <div #imgBox class="add-file-img-box"></div>
     <textarea #threadMessageBox formControlName="channelMessage" *ngIf="currentChannel"
@@ -31,26 +30,17 @@
       <div class="interactive-btns">
 
 
-
-
-
         <div class="add-file">
-          <img class="not-hover-icon" src="../../../assets/img/add.png" alt="">
-        
+          <img class="not-hover-icon" src="../../../assets/img/add.png" alt="">        
           <button class="hover-icon" mat-button [matMenuTriggerFor]="addFile">
             <img src="../../../assets/img/add_hover.png" alt="">
           </button>
           <mat-menu #addFile="matMenu" class="mat-menu">
             <div class="input-file-container">
-              <input type="file" (change)="handleFileInput($event)" (click)="$event.stopPropagation()">
+              <input type="file" #fileInput (change)="handleFileInput($event)">
             </div>
          </mat-menu>
         </div>
-
-
-
-
-
 
 
         <div class="border-line"></div>
@@ -59,7 +49,7 @@
           <button class="hover-icon" mat-button [matMenuTriggerFor]="emoji">
             <img src="../../assets/img/emoticon-hover.png" alt="">
           </button>
-          <mat-menu #emoji="matMenu" class="mat-menu">
+          <mat-menu #emoji="matMenu" class="emoji-menu">
             <button mat-menu-item (click)="$event.stopPropagation()">
               <emoji-mart class="emoji-mart" [hideRecent]="false" emoji="point_up" (emojiSelect)="addEmoji($event)"
                 title="Pick your emoji…"></emoji-mart>
@@ -67,12 +57,14 @@
           </mat-menu>
         </div>
 
+
+
         <div class="address-message-to-user">
           <img class="not-hover-icon" src="../../../assets/img/ping-user.png" alt="">
           <button class="hover-icon" mat-button [matMenuTriggerFor]="pingUser">
             <img src="../../../assets/img/ping-user-hover.png" alt="">
           </button>
-          <mat-menu #pingUser="matMenu" class="mat-menu">
+          <mat-menu #pingUser="matMenu" class="address-message-to-user-menu">
             <mat-form-field class="example-full-width" (click)="$event.stopPropagation()">
               <mat-label>User</mat-label>
               <input type="text" placeholder="Pick one" aria-label="User" matInput [formControl]="pingUserControl"
@@ -80,14 +72,11 @@
               <mat-autocomplete #auto="matAutocomplete">
                 <mat-option *ngFor="let user of filteredUsers | async" [value]="user.name"
                   (click)="addUserToMessage(user)">
-                  {{ user.name }}
+                  &#64;{{ user.name }}
                 </mat-option>
               </mat-autocomplete>
             </mat-form-field>
           </mat-menu>
-
-
-
         </div>
       </div>
 
@@ -96,7 +85,7 @@
         <button class="not-hover-icon">
           <img src="../../../assets/img/send-message.png" alt="">
         </button>
-        <button type="submit" class="hover-icon">
+        <button type="submit" class="hover-icon" (click)="currentUser.sendChannelMessage(currentChannel, channelThreadMessage.value.channelMessage, imgFile)">
           <img src="../../../assets/img/send-message-hover.png" alt="">
         </button>
 
