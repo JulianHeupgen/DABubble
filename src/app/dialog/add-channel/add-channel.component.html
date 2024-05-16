@@ -11,8 +11,12 @@
         <h3 class="project-font">Channel-Name</h3>
         <div class="input-channel-name">
             <img src="./assets/img/tag_light.png">
-            <input [(ngModel)]="channelName" type="text"
-                placeholder="z.B. Kooperationsprojekte">
+            <input [(ngModel)]="channelName" type="text" placeholder="z.B. Kooperationsprojekte">
+        </div>
+        <div class="error-message-container">
+            <p *ngIf="showNameError && channelName.length < 3">
+                Der Channel-Name muss mindestens 3 Zeichen lang sein.
+            </p>
         </div>
     </div>
     <div class="input-section">
