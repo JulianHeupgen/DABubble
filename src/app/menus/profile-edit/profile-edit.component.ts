@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderProfileService } from '../../services/header-profile.service';
 import { ReAuthenticateUserComponent } from '../../dialog/re-authenticate-user/re-authenticate-user.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SnackBarService } from '../../services/snack-bar.service';
 
 @Component({
   selector: 'app-profile-edit',
@@ -27,7 +28,8 @@ export class ProfileEditComponent {
     private router: Router,
     private formBuilder: FormBuilder,
     private profileService: HeaderProfileService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackbar: SnackBarService
   ) {
     this.editUserForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -81,11 +83,13 @@ export class ProfileEditComponent {
         await this.reAuthenticate(formData.email, formData.password);
         if (!newEmail) { return }
         await this.auth.updateEmailAddress(newEmail);
+        this.snackbar.showSnackBar('E-Mail changed successful. ', 'Ok');
         console.log('User Email updated with success.');
       } else {
         console.log('Form data not provided');
       }
     } catch (error) {
+      this.snackbar.showSnackBar('An error happened. Please retry ', 'Ok');
       console.error('Error during updating email process: ', error);
     }
   }
@@ -122,8 +126,10 @@ export class ProfileEditComponent {
     if (!name) { return }
     try {
       await this.auth.updateName(name);
+      this.snackbar.showSnackBar('Name changed successful. ', 'Ok');
       console.log('Name successfull changed.');
     } catch (error) {
+      this.snackbar.showSnackBar('An error happened. Please retry ', 'Ok');
       console.error('Error while updating the name.', error);
     }
   }

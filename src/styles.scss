@@ -114,36 +114,22 @@ app-channel-chat {
   background: #4a93f1;
 }
 
-
-// mit ::ng-deep kannst du die styles in die component.scss verlegen ;-) siehe header.scss
-
-
-
-
 .mat-mdc-menu-panel {
   max-width: unset !important;
 }
 
-/* Styles for the Header Mat Menu */
+.img-file {
+  width: 200px;
+  position: absolute;
+  bottom: 5px;
+  border-radius: 10px;
+  border: 5px solid rgba(68, 77, 242, 0.5);
+}
 
-  .profileMenu {
-    padding: 8px;
-    border-radius: 30px 0 30px 30px !important;
 
-    .item {
-      &:hover {
-        color: blue;
-      }
-    }
+/* Snackbar Sytle Override */
+.mat-mdc-snack-bar-container {
+  .mat-mdc-button.mat-mdc-snack-bar-action {
+    color: #444DF2 !important;
   }
-
-  /* Styles for the Header Mat Menu END */
-
-
-  .img-file {
-    width: 200px;
-    position: absolute;
-    bottom: 5px;
-    border-radius: 10px;
-    border: 5px solid rgba(68, 77, 242, 0.5);
-  }
+}
