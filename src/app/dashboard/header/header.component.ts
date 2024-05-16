@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.class';
 import { Subscription } from 'rxjs';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProfileEditComponent } from '../../menus/profile-edit/profile-edit.component';
@@ -29,7 +29,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
     ProfileEditComponent,
     ProfileViewComponent,
     MatAutocompleteModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatMenuTrigger
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -59,8 +60,8 @@ export class HeaderComponent {
   isPanelOpen: boolean = false;
 
   user?: User;
-  isProfileView?: boolean;
-  isProfileEditView?: boolean;
+  isProfileView?: boolean = false;
+  isProfileEditView?: boolean = false;
 
   private userSub = new Subscription();
   private profileViewSub = new Subscription();
@@ -80,6 +81,18 @@ export class HeaderComponent {
     this.subProfileView();
     this.subProfileEdit();
     this.subUserData();
+  }
+
+  menuclosed() {
+    console.log('menu closed');
+    console.log('profile view is: ',this.isProfileView);
+    console.log('profile edit view is: ',this.isProfileEditView);
+  }
+
+  menuopened() {
+    console.log('menu opened');
+    console.log('profile view is: ',this.isProfileView);
+    console.log('profile edit view is: ',this.isProfileEditView);
   }
 
   /**
