@@ -1,4 +1,5 @@
 import { ChannelChatComponent } from "../dashboard/channel-chat/channel-chat.component";
+import { DataService } from "../services/data.service";
 import { StorageService } from "../services/storage.service";
 import { Channel } from "./channel.class";
 import { Message } from "./message.class";
@@ -14,6 +15,8 @@ export class User {
   userChats: UserChat[];
   authUserId: string;
   imageUrl: string;
+
+ 
   constructor(data: {
     id: string,
     name: string,
@@ -33,7 +36,6 @@ export class User {
     this.channels = data.channels;
     this.userChats = data.userChats || [];
   }
-
 
   joinChannel(channelId: string, channel: Channel): void {
     if (!this.channels.includes(channelId)) {
@@ -61,10 +63,11 @@ export class User {
 
  async sendChannelMessage(channel: Channel, messageContent: string, imgFile?: File, replyToThread?: Thread) {        // 4. Parameter (File) und (Thread) ist optional !
      let imgFileURL;
+    //  let dataService: DataService = new DataService;
     if (imgFile) {                                          // fügt eine Bilddatei hinzu wenn eine in der Nachricht vorhanden ist
       let storage: StorageService = new StorageService;
       let imgURL = await storage.uploadFile(imgFile) as string;
-      imgFileURL = imgURL
+      imgFileURL = imgURL;
       // console.log('imgFileURL:', imgFileURL);
     }
 
@@ -74,16 +77,18 @@ export class User {
       replyToThread.messages.push(JSON.stringify(newMessage));
       console.log('newMessage:', newMessage);
       console.log('replyToThread', replyToThread);
-
+      return newMessage
 
     } else {                                                // Andernfalls neuen Thread erstellen, Message überreichen und neuen Thread in Channel pushen
       let newThread = new Thread({ channelId: channel.channelId, timestamp: new Date().getTime() });
       let newMessage = new Message(this, messageContent, imgFileURL);
       newThread.messages.push(JSON.stringify(newMessage));
-      channel.addThread(newThread);
+      // channel.addThread(newThread);
+      // dataService.addThread(newThread);
       console.log('newMessage:', newMessage);
       console.log('Date:', new Date().getTime());
-      console.log('newThread:', channel.threads);
+      // console.log('newThread:', channel.threads);
+      return newThread
     }
   }
 

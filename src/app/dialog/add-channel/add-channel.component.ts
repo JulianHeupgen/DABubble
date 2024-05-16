@@ -35,7 +35,7 @@ export class AddChannelComponent {
       title: this.channelName,
       description: this.channelDescription,
       participants: [],
-      threads: []
+      // threads: []
     });
 
     try {

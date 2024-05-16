@@ -20,7 +20,7 @@
     </div>
 
   </div>
-  <!-- <form [formGroup]="channelThreadMessage" class="text-box" (ngSubmit)="currentUser.sendChannelMessage(currentChannel, channelThreadMessage.value.channelMessage)"> -->
+  <!-- <form [formGroup]="channelThreadMessage" class="text-box" (ngSubmit)="sendMessage()"> -->
     <form [formGroup]="channelThreadMessage" class="text-box">
     <!-- <div class="add-file-img-box" contenteditable="true" #threadMessageBox [innerHTML]="channelThreadMessage.value.channelMessage"></div> -->
     <div #imgBox class="add-file-img-box"></div>
@@ -85,7 +85,7 @@
         <button class="not-hover-icon">
           <img src="../../../assets/img/send-message.png" alt="">
         </button>
-        <button type="submit" class="hover-icon" (click)="currentUser.sendChannelMessage(currentChannel, channelThreadMessage.value.channelMessage, imgFile); removeChatInput()">
+        <button type="submit" class="hover-icon" (click)="sendMessage(); removeChatInput()">
           <img src="../../../assets/img/send-message-hover.png" alt="">
         </button>
 

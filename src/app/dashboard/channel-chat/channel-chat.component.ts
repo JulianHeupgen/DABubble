@@ -214,7 +214,7 @@ export class ChannelChatComponent {
     this.channelThreads = [];
 
     for (let i = 0; i < this.threads.length; i++) {
-      if (this.threads[i].channelId === channelId) {  
+      if (this.threads[i].channelId === channelId) {
         this.channelThreads.push(new Thread(this.threads[i]));
       }
     }
@@ -223,20 +223,6 @@ export class ChannelChatComponent {
   channelThreadMessage: FormGroup = this.formBuilder.group({
     channelMessage: '',
   })
-
-  // sendThreadinChannel() {
-  //   const message: Message = new Message(this.currentUser, this.channelThreadMessage.value.channelMessage);
-  //   const threadMessage = {
-  //     id: '',
-  //     channelId: this.channelId,
-  //     message: message,
-  //     timestamp: message.timestamp,
-  //   };
-  //   console.log('threadMessage:', threadMessage);
-  //   // const thread: Thread = new Thread(message)
-
-  //   console.log('Messasge:', message);
-  // }
 
   addEmoji(event: any) {
     console.log('Emoji:', event.emoji.native);
@@ -287,4 +273,16 @@ export class ChannelChatComponent {
     this.fileInput.nativeElement.value = '';
     this.imgFile = undefined;
   }
+
+
+  async sendMessage() {
+    let newThread = await this.currentUser.sendChannelMessage(this.currentChannel, this.channelThreadMessage.value.channelMessage, this.imgFile)
+    if (newThread instanceof Thread) {
+
+      console.log('New Thread:', newThread);
+
+      this.dataService.addThread(newThread);
+    }
+  }
+
 }

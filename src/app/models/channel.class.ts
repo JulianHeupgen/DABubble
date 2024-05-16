@@ -4,7 +4,7 @@ import { User } from './user.class';
 export class Channel {
   title: string;
   participants: User[];
-  threads: Thread[];
+  // threads: Thread[];   // überhaupt notwendig?
   channelId: string;
   description: string;
 
@@ -12,14 +12,14 @@ export class Channel {
     channelId?: string,
     title?: string,
     participants?: User[],
-    threads?: Thread[],
+    // threads?: Thread[],
     description?: string
 
   }) {
     this.channelId = data.channelId || '';
     this.title = data.title || '';
     this.participants = data.participants || [];
-    this.threads = data.threads || [];
+    // this.threads = data.threads || [];
     this.description = data.description || '';
   }
 
@@ -39,17 +39,17 @@ export class Channel {
   }
 
 
-  addThread(thread: Thread): void {
-    this.threads.push(thread);
-  }
+  // addThread(thread: Thread): void {
+  //   this.threads.push(thread);
+  // }
 
   
-  removeThread(thread: Thread): void {
-    const index = this.threads.indexOf(thread);
-    if (index !== -1) {
-      this.threads.splice(index, 1);
-    }
-  }
+  // removeThread(thread: Thread): void {
+  //   const index = this.threads.indexOf(thread);
+  //   if (index !== -1) {
+  //     this.threads.splice(index, 1);
+  //   }
+  // }
 
   
   toJSON() {
@@ -57,7 +57,7 @@ export class Channel {
         channelId: this.channelId,
         title: this.title,
         participants: this.participants,
-        threads: this.threads,
+        // threads: this.threads,
         description: this.description
     };
   }

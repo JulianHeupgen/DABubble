@@ -27,28 +27,31 @@ export class Thread {
 
 
   getFormattedDatestamp(): any {
-    const timestampInSeconds = this.timestamp.seconds;
-    const timestampInMilliseconds = timestampInSeconds * 1000;
-    const date = new Date(timestampInMilliseconds);
-    const formattedDate = date.toLocaleDateString('en-US', {
-      weekday: 'short',
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    });
-
-
+    // const timestampInSeconds = this.timestamp;
+    // const timestampInMilliseconds = timestampInSeconds * 1000;
+    // const formattedDate = date.toLocaleDateString('en-US', {
+    //   weekday: 'short',
+    //   month: 'short',
+    //   day: 'numeric',
+    //   year: 'numeric'
+    // });
+    const date = new Date(this.timestamp);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Monate sind 0-basiert
+    const day = date.getDate().toString().padStart(2, '0');
+    
+    const formattedDate = `${year}-${month}-${day}`;
     return formattedDate;
   }
 
   getFormattedTimeStamp() {
-    const timestampInSeconds = this.timestamp.seconds;
-    const timestampInMilliseconds = timestampInSeconds * 1000;
-    const date = new Date(timestampInMilliseconds);
-    const formattedTime = date.toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit'
-    });
+    // const timestampInSeconds = this.timestamp;
+    // const timestampInMilliseconds = timestampInSeconds * 1000;
+    const date = new Date(this.timestamp);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+
+    const formattedTime = `${hours}:${minutes} Uhr`;
 
     return formattedTime;
   }
