@@ -23,7 +23,7 @@ import { Firestore, collection, getDocs, writeBatch, doc, arrayUnion } from '@an
 })
 export class ChannelMembersComponent {
 
-  selectedOption = '';
+  selectedOption = 'all';
 
   constructor(
     private firestore: Firestore,

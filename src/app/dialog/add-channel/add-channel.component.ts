@@ -21,13 +21,14 @@ export class AddChannelComponent {
   channelName: string = '';
   channelDescription: string = '';
   createdChannelId: string | null = null;
+  showNameError: boolean = false;
 
   constructor(public dialog: MatDialog, private dataService: DataService) { }
 
 
   async createChannel() {
-    if (!this.channelName.trim()) {
-      alert('Bitte gib einen Kanalnamen ein');
+    if (this.channelName.length < 3) {
+      this.showNameError = true;
       return;
     }
 

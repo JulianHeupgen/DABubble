@@ -11,6 +11,7 @@ import { Channel } from '../../models/channel.class';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddChannelComponent } from '../../dialog/add-channel/add-channel.component';
+import { ChannelMembersComponent } from '../../dialog/channel-members/channel-members.component';
 
 
 @Component({
@@ -240,5 +241,9 @@ export class SidenavComponent {
     if (this.channelSub) {
       this.channelSub.unsubscribe();
     }
+  }
+
+  openMemberDialog() {
+    this.dialog.open(ChannelMembersComponent);
   }
 }
