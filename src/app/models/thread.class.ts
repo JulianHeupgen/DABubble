@@ -3,13 +3,13 @@ import { Message } from './message.class';
 export class Thread {
   threadId: string;
   channelId: string;
-  messages: Message[];
+  messages: string[]; 
   timestamp: any;
 
   constructor(data: {
     id?: string,
     channelId: string,
-    messages?: Message[],
+    messages?: string[],
     timestamp: any
   }) {
     this.threadId = data.id || '';

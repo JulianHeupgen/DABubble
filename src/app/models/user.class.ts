@@ -70,16 +70,16 @@ export class User {
 
 
     if (replyToThread) {                                      // Antwort auf bestehenden Thread: Neue Message wird dem bestehenden Thread überreicht
-      const newMessage = new Message(this, messageContent, imgFileURL);
-      replyToThread.messages.push(newMessage);
+      let newMessage = new Message(this, messageContent, imgFileURL);
+      replyToThread.messages.push(JSON.stringify(newMessage));
       console.log('newMessage:', newMessage);
       console.log('replyToThread', replyToThread);
 
 
     } else {                                                // Andernfalls neuen Thread erstellen, Message überreichen und neuen Thread in Channel pushen
       let newThread = new Thread({ channelId: channel.channelId, timestamp: new Date().getTime() });
-      const newMessage = new Message(this, messageContent, imgFileURL);
-      newThread.messages.push(newMessage);
+      let newMessage = new Message(this, messageContent, imgFileURL);
+      newThread.messages.push(JSON.stringify(newMessage));
       channel.addThread(newThread);
       console.log('newMessage:', newMessage);
       console.log('Date:', new Date().getTime());
