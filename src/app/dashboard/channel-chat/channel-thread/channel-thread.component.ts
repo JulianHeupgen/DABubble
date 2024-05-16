@@ -21,8 +21,12 @@ export class ChannelThreadComponent {
     
   }
 
-  formattedTimestamp(): any {
-    return this.thread.getFormattedTimestamp();
+  formattedDatestamp(): any {
+    return this.thread.getFormattedDatestamp();
+  }
+
+  formattedTimeStamp(): any {
+    return this.thread.getFormattedTimeStamp()
   }
 }
 

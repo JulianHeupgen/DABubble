@@ -3,7 +3,7 @@ import { Message } from './message.class';
 export class Thread {
   threadId: string;
   channelId: string;
-  messages: any[]; 
+  messages: any[];
   timestamp: any;
 
   constructor(data: {
@@ -20,30 +20,42 @@ export class Thread {
 
     if (data.messages) {
       this.messageStringtoJSON();
-    }    
+    }
     console.log('thread message:', this.messages);
-    
+
   }
 
 
-  getFormattedTimestamp(): any {
-    const timestampInSeconds = this.timestamp.seconds; 
+  getFormattedDatestamp(): any {
+    const timestampInSeconds = this.timestamp.seconds;
     const timestampInMilliseconds = timestampInSeconds * 1000;
-    const date = new Date(timestampInMilliseconds); 
-    
+    const date = new Date(timestampInMilliseconds);
     const formattedDate = date.toLocaleDateString('en-US', {
-      weekday: 'short', 
-      month: 'short',   
+      weekday: 'short',
+      month: 'short',
       day: 'numeric',
-      year: 'numeric'   
+      year: 'numeric'
     });
-  
+
+
     return formattedDate;
+  }
+
+  getFormattedTimeStamp() {
+    const timestampInSeconds = this.timestamp.seconds;
+    const timestampInMilliseconds = timestampInSeconds * 1000;
+    const date = new Date(timestampInMilliseconds);
+    const formattedTime = date.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+
+    return formattedTime;
   }
 
   messageStringtoJSON() {
     let newMessages: any = [];
-    this.messages.forEach( message => {
+    this.messages.forEach(message => {
       let jsonMessage = JSON.parse(message)
       newMessages.push(jsonMessage);
     })

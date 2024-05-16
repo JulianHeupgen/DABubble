@@ -1,5 +1,5 @@
 <div>
-    <div> {{ formattedTimestamp() }} </div>
+    <div> {{ formattedDatestamp() }} </div>
     <div> {{ thread.messages }} </div>
     <br>
     <br>
@@ -9,7 +9,7 @@
 <div class="channel-chat-message">
     <div class="channel-chat-content">
         <div class="channel-chat-time-sender">
-            <span>15:06 Uhr</span>
+            <span>{{ formattedTimeStamp() }}</span>
             <h3>{{ this.thread.messages[0].sender.name }}</h3>
         </div>
         <span class="message">
