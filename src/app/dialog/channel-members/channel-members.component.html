@@ -6,16 +6,16 @@
     <div class="input-section">
         <div class="input-channel-name">
             <mat-radio-group [(ngModel)]="selectedOption" class="checkbox-inputs">
-                <mat-radio-button value="all"><p>Alle Mitglieder von <span>DevTeam</span> hinzufügen</p></mat-radio-button>
-                <mat-radio-button value="specific"><p>Bestimmte Leute hinzufügen</p></mat-radio-button>
-              </mat-radio-group>
-            
-            <!-- <input [(ngModel)]="channelName" type="text"> -->
-                
+                <mat-radio-button value="all">
+                    <p>Alle Mitglieder von <span>DevTeam</span> hinzufügen</p>
+                </mat-radio-button>
+                <mat-radio-button value="specific">
+                    <p>Bestimmte Leute hinzufügen</p>
+                </mat-radio-button>
+            </mat-radio-group>
         </div>
     </div>
     <div class="input-section">
-        <!-- <input [(ngModel)]="channelDescription" type="text" placeholder="Dein Text hier"> -->
     </div>
     <div class="btn-section">
         <button (click)="save()">Erstellen</button>
