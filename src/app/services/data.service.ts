@@ -92,7 +92,7 @@ export class DataService {
         this.allThreads = [];
         list.forEach(thread => this.allThreads.push(this.setThreadObject(thread.id, thread.data())))
         observer.next(this.allThreads);
-        console.log('All Threads', this.allThreads);
+        // console.log('All Threads', this.allThreads);
       });
     });
     

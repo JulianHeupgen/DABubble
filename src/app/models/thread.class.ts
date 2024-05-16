@@ -3,7 +3,7 @@ import { Message } from './message.class';
 export class Thread {
   threadId: string;
   channelId: string;
-  messages: string[]; 
+  messages: any[]; 
   timestamp: any;
 
   constructor(data: {
@@ -14,8 +14,15 @@ export class Thread {
   }) {
     this.threadId = data.id || '';
     this.channelId = data.channelId;
+    // this.messages = data.messages || [];
     this.messages = data.messages || [];
     this.timestamp = data.timestamp;
+
+    if (data.messages) {
+      this.messageStringtoJSON();
+    }    
+    console.log('thread message:', this.messages);
+    
   }
 
 
@@ -34,6 +41,14 @@ export class Thread {
     return formattedDate;
   }
 
+  messageStringtoJSON() {
+    let newMessages: any = [];
+    this.messages.forEach( message => {
+      let jsonMessage = JSON.parse(message)
+      newMessages.push(jsonMessage);
+    })
+    this.messages = newMessages;
+  }
 
   toJSON() {
     return {
