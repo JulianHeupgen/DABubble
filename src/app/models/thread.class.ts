@@ -3,7 +3,7 @@ import { Message } from './message.class';
 export class Thread {
   threadId: string;
   channelId: string;
-  messages: Message[];
+  messages: Message[]; 
   timestamp: any;
 
   constructor(data: {

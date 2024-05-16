@@ -1,3 +1,4 @@
+import { reload } from '@angular/fire/auth';
 import { User } from './user.class';
 
 export class Message {
@@ -16,5 +17,5 @@ export class Message {
     this.emojiReactions = [];
     this.imgFileURL = imgFileUrl !== undefined ? imgFileUrl : '';
   }
-}
 
+}
