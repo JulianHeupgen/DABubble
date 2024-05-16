@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { from, switchMap } from 'rxjs';
-import firebase from 'firebase/compat/app';
-import { Firestore, collection, getDocs, writeBatch, doc, arrayUnion } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs, writeBatch, arrayUnion } from '@angular/fire/firestore';
+import { MatSelectModule } from '@angular/material/select';
 
 
 
@@ -16,7 +15,8 @@ import { Firestore, collection, getDocs, writeBatch, doc, arrayUnion } from '@an
   imports: [
     MatRadioModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    MatSelectModule
   ],
   templateUrl: './channel-members.component.html',
   styleUrl: './channel-members.component.scss'
