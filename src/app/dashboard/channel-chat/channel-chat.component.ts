@@ -214,7 +214,7 @@ export class ChannelChatComponent {
     this.channelThreads = [];
 
     for (let i = 0; i < this.threads.length; i++) {
-      if (this.threads[i].channelId === channelId) {
+      if (this.threads[i].channelId === channelId) {  
         this.channelThreads.push(new Thread(this.threads[i]));
       }
     }
