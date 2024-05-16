@@ -60,14 +60,12 @@ export class ChannelChatComponent {
     public storage: StorageService,
     private auth: AuthService,
     private formBuilder: FormBuilder) {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.ngOnInit();
+       this.router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+         this.ngOnInit();
+        }
+       });
       }
-    });
-
-
-  }
 
 
   userAuthId!: string;
