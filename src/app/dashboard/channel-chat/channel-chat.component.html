@@ -1,7 +1,10 @@
 <mat-card class="channel-wrapper">
   <mat-card-header>
     <div class="channel-infos" *ngIf="currentChannel">
-      <div># {{ currentChannel.title }} </div>
+      <div class="header-left-container">
+        <div class="title"># {{ currentChannel.title }} </div>
+        <img class="title-arrow" src="assets/img/arrow_down.png">
+      </div>
       <div class="header-right-container">
         <div class="participants-container">
           <ng-container *ngFor="let participant of channelParticipants">
