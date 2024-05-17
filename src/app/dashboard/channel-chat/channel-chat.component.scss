@@ -18,35 +18,36 @@ mat-card-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-    }
-}
 
-.header-right-container {
-    display: flex;
-    align-items: center;
-
-    .participants-container {
-        display: flex;
-        align-items: center;
-
-        .participants-img {
-            margin-left: -21px;
-        }
-
-        .participant-counter {
-            padding: 0 18px 0 18px;
-            @include font-size-weight-color($fw: 600);
-        }
-    }
-
-    .addUser-btn {
-        cursor: pointer;
+        .header-right-container {
+            display: flex;
+            align-items: center;
         
-        &:hover {
-            content: url('./../../../assets/img/add_user_hover.png');
+            .participants-container {
+                display: flex;
+                align-items: center;
+        
+                .participants-img {
+                    margin-left: -21px;
+                }
+        
+                .participant-counter {
+                    padding: 0 18px 0 18px;
+                    @include font-size-weight-color($fw: 600);
+                }
+            }
+        
+            .addUser-btn {
+                cursor: pointer;
+                
+                &:hover {
+                    content: url('./../../../assets/img/add_user_hover.png');
+                }
+            }
         }
     }
 }
+
 
 
 .chat-history {
