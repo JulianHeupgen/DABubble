@@ -3,10 +3,13 @@
     <div class="channel-infos" *ngIf="currentChannel">
       <div># {{ currentChannel.title }} </div>
       <div class="header-right-container">
-        <ng-container *ngFor="let participant of channelParticipants">
-          <img src="{{participant.participantImage}}">
-        </ng-container>
-        <div class="participant-counter">{{channelParticipantsCounter}} Teilnehmer</div>
+        <div class="participants-container">
+          <ng-container *ngFor="let participant of channelParticipants">
+            <img class="participants-img" src="{{participant.participantImage}}">
+          </ng-container>
+          <div class="participant-counter">{{channelParticipantsCounter}}</div>
+        </div>
+        <img class="addUser-btn" src="assets/img/add_user.png">
       </div>
     </div>
   </mat-card-header>
