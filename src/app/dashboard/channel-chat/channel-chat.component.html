@@ -4,7 +4,7 @@
       <div># {{ currentChannel.title }} </div>
       <div class="header-right-container">
         <ng-container *ngFor="let participant of channelParticipants">
-          <img src="{{participant.participantImage}}">
+          <img class="participants-img" src="{{participant.participantImage}}">
         </ng-container>
         <div class="participant-counter">{{channelParticipantsCounter}}</div>
       </div>
