@@ -20,6 +20,7 @@ import { EmojiMartComponent } from '../emoji-mart/emoji-mart.component';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { Message } from '../../models/message.class';
+import { AddImgToMessageComponent } from '../add-img-to-message/add-img-to-message.component';
 
 @Component({
   selector: 'app-channel-chat',
@@ -41,6 +42,7 @@ import { Message } from '../../models/message.class';
     MatInputModule,
     MatAutocompleteModule,
     EmojiMartComponent,
+    AddImgToMessageComponent,
     // PickerComponent,
     // FormsModule,
     // AsyncPipe,
@@ -53,15 +55,16 @@ export class ChannelChatComponent {
 
   @ViewChild('threadMessageBox') threadMessageBox!: ElementRef;
   @ViewChild('imgBox') imgBox!: ElementRef;
-  @ViewChild('fileInput') fileInput!: ElementRef;
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
+  @ViewChild(AddImgToMessageComponent) addImgToMessageComponent!: AddImgToMessageComponent;
 
   constructor(public dataService: DataService,
     private route: ActivatedRoute,
     private router: Router,
     public storage: StorageService,
     private auth: AuthService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+  ) {
        this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
          this.ngOnInit();
@@ -249,35 +252,10 @@ export class ChannelChatComponent {
     this.threadsSub.unsubscribe();
   }
 
-  handleFileInput(event: any) {
-    const file: File = event.target.files[0];
-    const reader: FileReader = new FileReader();
-    this.removeImage();
-    reader.onloadend = () => {
-      const imgElement = document.createElement('img');
-      imgElement.src = reader.result as string;
-      imgElement.classList.add('img-file')
-      this.imgBox.nativeElement.innerHTML = '';
-      this.imgBox.nativeElement.appendChild(imgElement);
-      imgElement.addEventListener('click', this.removeImage.bind(this));
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-      this.imgFile = file;
-    }
-  }
-
   removeChatInput() {
     this.channelThreadMessage.reset();
-    this.removeImage();
+    this.addImgToMessageComponent.removeImage();
   }
-
-  removeImage() {
-    this.imgBox.nativeElement.innerHTML = '';
-    this.fileInput.nativeElement.value = '';
-    this.imgFile = undefined;
-  }
-
 
   async sendMessage() {
     let newThread = await this.currentUser.sendChannelMessage(this.currentChannel, this.channelThreadMessage.value.channelMessage, this.imgFile)

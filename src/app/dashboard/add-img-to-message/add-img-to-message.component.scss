@@ -1,0 +1,73 @@
+
+@import '../../../mixin.scss';
+
+.add-file {
+    @include flex-align-justify();
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+
+    button {
+        cursor: pointer;
+        @include flex-align-justify();
+        height: 40px;
+        width: 40px;
+        border-radius: 100%;
+        background-color: #FFFFFF;
+        border: none;
+    }
+
+    .hover-icon {
+        display: none;
+    }
+
+    &:hover {
+        border-radius: 100%;
+        background-color: #ECEEFE;
+
+        .not-hover-icon {
+            display: none;
+        }
+
+        .hover-icon {
+            display: flex;
+        }
+    }
+}
+
+.input-file-container {
+    position: relative;
+    display: inline-block;
+    margin: 0 8px;
+
+
+    input[type="file"] {
+        cursor: pointer;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        margin-top: -46px;
+
+        &:hover+::before {
+            background-color: #444df2;
+        }
+    }
+
+    &::before {
+        content: 'Datei auswählen';
+        display: block;
+        padding: 10px;
+        background-color: rgba(236, 238, 239, 0.5);
+        color: #686868;
+        border: 1px dotted #686868;
+        border-radius: 5px;
+        text-align: center;
+        z-index: 1;
+    }
+
+    input[type="file"]:focus+::before {
+        outline: 2px solid #007bff;
+        /* Optional: Highlight when focused */
+    }
+}

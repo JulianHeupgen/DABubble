@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { ChannelChatComponent } from '../channel-chat/channel-chat.component';
