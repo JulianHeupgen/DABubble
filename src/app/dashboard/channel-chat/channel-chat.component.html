@@ -20,32 +20,17 @@
     </div>
 
   </div>
-  <!-- <form [formGroup]="channelThreadMessage" class="text-box" (ngSubmit)="sendMessage()"> -->
-    <form [formGroup]="channelThreadMessage" class="text-box">
-    <!-- <div class="add-file-img-box" contenteditable="true" #threadMessageBox [innerHTML]="channelThreadMessage.value.channelMessage"></div> -->
+  <form [formGroup]="channelThreadMessage" class="text-box">
     <div #imgBox class="add-file-img-box"></div>
     <textarea #threadMessageBox formControlName="channelMessage" *ngIf="currentChannel"
       placeholder="Nachricht an #{{currentChannel.title}}"></textarea>
     <div class="interactiv-btn-box">
       <div class="interactive-btns">
 
-
-        <div class="add-file">
-          <img class="not-hover-icon" src="../../../assets/img/add.png" alt="">        
-          <button class="hover-icon" mat-button [matMenuTriggerFor]="addFile">
-            <img src="../../../assets/img/add_hover.png" alt="">
-          </button>
-          <mat-menu #addFile="matMenu" class="mat-menu">
-            <div class="input-file-container">
-              <input type="file" #fileInput (change)="handleFileInput($event)">
-            </div>
-         </mat-menu>
-        </div>
-
+        <app-add-img-to-message></app-add-img-to-message>
 
         <div class="border-line"></div>
         <app-emoji-mart></app-emoji-mart>
-        
 
         <div class="address-message-to-user">
           <img class="not-hover-icon" src="../../../assets/img/ping-user.png" alt="">

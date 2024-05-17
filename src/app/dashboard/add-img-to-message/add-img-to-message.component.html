@@ -1,0 +1,11 @@
+<div class="add-file">
+    <img class="not-hover-icon" src="../../../assets/img/add.png" alt="">        
+    <button class="hover-icon" mat-button [matMenuTriggerFor]="addFile">
+      <img src="../../../assets/img/add_hover.png" alt="">
+    </button>
+    <mat-menu #addFile="matMenu" class="mat-menu">
+      <div class="input-file-container">
+        <input type="file" #fileInput (change)="handleFileInput($event)">
+      </div>
+   </mat-menu>
+  </div>
