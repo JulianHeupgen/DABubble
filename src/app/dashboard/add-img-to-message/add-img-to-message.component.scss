@@ -1,4 +1,3 @@
-
 @import '../../../mixin.scss';
 
 .add-file {
@@ -23,7 +22,10 @@
 
     &:hover {
         border-radius: 100%;
-        background-color: #ECEEFE;
+
+        button {
+            background-color: #ECEEFE;
+        }
 
         .not-hover-icon {
             display: none;

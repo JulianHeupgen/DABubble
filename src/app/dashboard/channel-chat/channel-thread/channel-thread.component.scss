@@ -1,12 +1,17 @@
 @import '../../../../mixin.scss';
 
 .channel-chat-message {
+    position: relative;
     @include flex-align-justify($ai: flex-start);
     gap: 30px;
     padding: 10px 45px;
 
     &:hover {
         background-color: #ECEEFE;
+
+        .reaction-menu {
+            display: flex;
+        }
     }
 
     .channel-chat-content {
@@ -45,8 +50,44 @@
 
     .channel-chat-sender-img {
         height: 100%;
-        @include flex-align-justify($ai: flex-start)
+        @include flex-align-justify($ai: flex-start);
     }
 
+}
 
+.reaction-menu {
+    position: absolute;
+    top: -35px;
+    left: 5%;
+    @include flex-align-justify();
+    gap: 5px;
+    background-color: #FFFFFF;
+    border: 1px solid #ADB0D9;
+    border-radius: 25px 25px 0 25px;
+    padding: 3px 15px 3px 20px;
+    display: none;
+
+    .icon {
+        cursor: pointer;
+        @include flex-align-justify();
+        width: 40px;
+        height: 40px;
+
+        .hover-icon {
+            display: none;
+        }
+
+        &:hover {
+            background-color: #ECEEFE;
+            border-radius: 100%;
+
+            .not-hover-icon {
+                display: none;
+            }
+
+            .hover-icon {
+                display: flex;
+            }
+        }
+    }
 }
