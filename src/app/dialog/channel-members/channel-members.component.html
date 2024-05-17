@@ -15,7 +15,13 @@
             </mat-radio-group>
         </div>
     </div>
-    <div class="input-section">
+    <div class="input-section" *ngIf="selectedOption === 'specific'">
+        <mat-form-field appearance="fill">
+            <mat-label>Benutzer auswählen</mat-label>
+            <mat-select [(ngModel)]="selectedUsers" multiple>
+                <mat-option *ngFor="let user of dataService.allUsers" [value]="user.id">{{ user.name }}</mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
     <div class="btn-section">
         <button (click)="save()">Erstellen</button>
