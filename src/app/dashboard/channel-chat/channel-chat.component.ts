@@ -6,20 +6,21 @@ import { MatList, MatListModule } from '@angular/material/list';
 import { Channel } from '../../models/channel.class';
 import { StorageService } from '../../services/storage.service';
 import { DataService } from '../../services/data.service';
-import { AsyncPipe, CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { ChannelThreadComponent } from './channel-thread/channel-thread.component';
 import { User } from '../../models/user.class';
 import { Thread } from '../../models/thread.class';
 import { Observable, Subscription, map, startWith } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Message } from '../../models/message.class';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
-import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { MatInputModule } from '@angular/material/input';
-// import 'emoji-picker-element';
+import { EmojiMartComponent } from '../emoji-mart/emoji-mart.component';
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { Message } from '../../models/message.class';
+
 @Component({
   selector: 'app-channel-chat',
   standalone: true,
@@ -35,14 +36,15 @@ import { MatInputModule } from '@angular/material/input';
     ChannelThreadComponent,
     ReactiveFormsModule,
     MatDialogModule,
-    MatMenuTrigger,
     MatMenuModule,
-    PickerComponent,
-    FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
-    AsyncPipe,
+    EmojiMartComponent,
+    // PickerComponent,
+    // FormsModule,
+    // AsyncPipe,
+    // MatMenuTrigger,
   ],
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
@@ -228,10 +230,10 @@ export class ChannelChatComponent {
     channelMessage: '',
   })
 
-  addEmoji(event: any) {
-    let textAreaElement = this.threadMessageBox.nativeElement;
-    textAreaElement.value += event.emoji.native;
-  }
+  // addEmoji(event: any) {
+  //   let textAreaElement = this.threadMessageBox.nativeElement;
+  //   textAreaElement.value += event.emoji.native;
+  // }
 
   addUserToMessage(user: any) {
     if (this.threadMessageBox && user) {

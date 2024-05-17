@@ -1,0 +1,55 @@
+@import '../../../mixin.scss';
+
+.add-emoticons {
+    @include flex-align-justify();
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+
+    button {
+        cursor: pointer;
+        @include flex-align-justify();
+        height: 40px;
+        width: 40px;
+        border-radius: 100%;
+        background-color: #FFFFFF;
+        border: none;
+    }
+
+    .hover-icon {
+        display: none;
+    }
+
+    &:hover {
+        border-radius: 100%;
+        background-color: #ECEEFE;
+
+        .not-hover-icon {
+            display: none;
+        }
+
+        .hover-icon {
+            display: flex;
+        }
+    }
+}
+
+::ng-deep .emoji-menu {
+
+    .emoji-mart {
+        border: none ;
+        border-radius: 20px ;
+      }
+
+    .mat-mdc-menu-content {
+        padding: 0;
+    }
+    .mat-mdc-menu-item {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .mat-mdc-menu-panel {
+        border-radius: 30px;
+    }
+}

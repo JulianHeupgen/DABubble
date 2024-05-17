@@ -1,0 +1,12 @@
+<div class="add-emoticons">
+    <img class="not-hover-icon" src="../../../assets/img/emoticon.png" alt="">
+    <button class="hover-icon" mat-button [matMenuTriggerFor]="emoji">
+        <img src="../../assets/img/emoticon-hover.png" alt="">
+    </button>
+    <mat-menu #emoji="matMenu" class="emoji-menu">
+        <button mat-menu-item (click)="$event.stopPropagation()">
+            <emoji-mart class="emoji-mart" [hideRecent]="false" emoji="point_up" (emojiSelect)="addEmoji($event)"
+                title="Pick your emoji…"></emoji-mart>
+        </button>
+    </mat-menu>
+</div>

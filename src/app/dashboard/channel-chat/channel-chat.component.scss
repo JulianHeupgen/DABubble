@@ -117,26 +117,6 @@ mat-card-header {
     }
 }
 
-::ng-deep .emoji-menu {
-
-    .emoji-mart {
-        border: none ;
-        border-radius: 20px ;
-      }
-
-    .mat-mdc-menu-content {
-        padding: 0;
-    }
-    .mat-mdc-menu-item {
-        padding-left: 0;
-        padding-right: 0;
-    }
-
-    .mat-mdc-menu-panel {
-        border-radius: 30px;
-    }
-}
-
 ::ng-deep .address-message-to-user-menu {
     .mat-mdc-menu-content {
         padding: 0;
