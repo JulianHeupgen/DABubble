@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { ChannelChatComponent } from '../channel-chat/channel-chat.component';
@@ -15,6 +15,8 @@ import { ChannelChatComponent } from '../channel-chat/channel-chat.component';
   styleUrl: './emoji-mart.component.scss'
 })
 export class EmojiMartComponent {
+  @Input() emojiImg: string = 'emoticon.png'
+  @Input() emojiImgHover: string = 'emoticon-hover.png';
 
   constructor(
     private channelChat: ChannelChatComponent

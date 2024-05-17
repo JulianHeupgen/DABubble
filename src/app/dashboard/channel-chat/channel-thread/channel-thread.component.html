@@ -5,6 +5,32 @@
 
 
 <div class="channel-chat-message">
+    <div class="reaction-menu">
+        <div class="icon">
+            <img src="../../../../assets/img/check-mark.png" alt="">
+        </div>
+
+        <div class="icon">
+            <img src="../../../../assets/img/hands-up.png" alt="">
+        </div>
+
+        
+            <app-emoji-mart [emojiImg]="'emoji-reaction.png'"
+                [emojiImgHover]="'emoji-reaction-hover.png'"></app-emoji-mart>
+        
+
+        <div class="icon">
+            <img class="not-hover-icon" src="../../../../assets/img/comment.png" alt="">
+            <img class="hover-icon" src="../../../../assets/img/comment-hover.png" alt="">
+
+        </div>
+
+        <div class="icon">
+            <img class="not-hover-icon" src="../../../../assets/img/dots.png" alt="">
+            <img class="hover-icon" src="../../../../assets/img/dots-hover.png" alt="">
+        </div>
+
+    </div>
     <div class="channel-chat-content">
         <div class="channel-chat-time-sender">
             <span>{{ formattedTimeStamp() }}</span>
@@ -16,7 +42,6 @@
         <div class="chat-reactions"></div>
     </div>
     <div class="channel-chat-sender-img">
-        <img src="{{ this.thread.messages[0].sender.imageUrl }}"
-            alt="">
+        <img src="{{ this.thread.messages[0].sender.imageUrl }}" alt="">
     </div>
 </div>

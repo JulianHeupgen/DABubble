@@ -22,7 +22,10 @@
 
     &:hover {
         border-radius: 100%;
-        background-color: #ECEEFE;
+
+        button {
+            background-color: #ECEEFE;
+        }
 
         .not-hover-icon {
             display: none;
@@ -37,13 +40,14 @@
 ::ng-deep .emoji-menu {
 
     .emoji-mart {
-        border: none ;
-        border-radius: 20px ;
-      }
+        border: none;
+        border-radius: 20px;
+    }
 
     .mat-mdc-menu-content {
         padding: 0;
     }
+
     .mat-mdc-menu-item {
         padding-left: 0;
         padding-right: 0;
@@ -56,8 +60,8 @@
 
 ::ng-deep .mat-mdc-menu-item {
     &:not(:disabled) {
-      &:hover {
-        background-color: unset !important;
-      }
+        &:hover {
+            background-color: unset !important;
+        }
     }
-  }
+}

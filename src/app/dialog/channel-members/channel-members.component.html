@@ -15,14 +15,26 @@
             </mat-radio-group>
         </div>
     </div>
+
     <div class="input-section" *ngIf="selectedOption === 'specific'">
         <mat-form-field appearance="fill">
             <mat-label>Benutzer auswählen</mat-label>
-            <mat-select [(ngModel)]="selectedUsers" multiple>
-                <mat-option *ngFor="let user of dataService.allUsers" [value]="user.id">{{ user.name }}</mat-option>
-            </mat-select>
-        </mat-form-field>
+    <mat-select [(ngModel)]="selectedUsers" multiple>
+        <mat-option *ngFor="let user of dataService.allUsers" [value]="user.id">
+            {{ user.name }}
+        </mat-option>
+    </mat-select>
+    </mat-form-field>
+    
+    <!-- Anzeige der ausgewählten Benutzer als Chips -->
+    <mat-chip-grid *ngIf="selectedUsers.length > 0">
+        <mat-chip-row *ngFor="let userId of selectedUsers" [removable]="true" (removed)="removeUser(userId)">
+            {{ getUserName(userId) }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip-row>
+    </mat-chip-grid>
     </div>
+
     <div class="btn-section">
         <button (click)="save()">Erstellen</button>
     </div>

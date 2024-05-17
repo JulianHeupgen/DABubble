@@ -1,14 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, ElementRef, HostListener, Inject, ViewChild } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
-import { from, switchMap } from 'rxjs';
+import { from, map, startWith, switchMap } from 'rxjs';
 import { Firestore, collection, getDocs, writeBatch, arrayUnion, doc } from '@angular/fire/firestore';
 import { MatSelectModule } from '@angular/material/select';
 import { DataService } from '../../services/data.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
-
+interface User {
+  id: string;
+  name: string;
+  imageUrl: string;
+}
 
 @Component({
   selector: 'app-channel-members',
@@ -17,7 +27,14 @@ import { DataService } from '../../services/data.service';
     MatRadioModule,
     CommonModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatAutocompleteModule
   ],
   templateUrl: './channel-members.component.html',
   styleUrl: './channel-members.component.scss'
@@ -27,6 +44,7 @@ export class ChannelMembersComponent {
   selectedOption = 'all';
   selectedUsers: string[] = [];
 
+
   constructor(
     private firestore: Firestore,
     private dialogRef: MatDialogRef<ChannelMembersComponent>,
@@ -34,7 +52,6 @@ export class ChannelMembersComponent {
     public dataService: DataService,
     @Inject(MAT_DIALOG_DATA) public data: { channelId: string }
   ) { }
-
 
   addChannelToAllUsers() {
     const usersCollection = collection(this.firestore, 'users');
@@ -103,4 +120,16 @@ export class ChannelMembersComponent {
   //     }
   //   });
   // }
+
+  removeUser(userId: string) {
+    const index = this.selectedUsers.indexOf(userId);
+    if (index >= 0) {
+      this.selectedUsers.splice(index, 1);
+    }
+  }
+
+  getUserName(userId: string): string {
+    const user = this.dataService.allUsers.find(u => u.id === userId);
+    return user ? user.name : '';
+  }
 }

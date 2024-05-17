@@ -123,7 +123,10 @@ mat-card-header {
 
     &:hover {
         border-radius: 100%;
-        background-color: #ECEEFE;
+
+        button {
+            background-color: #ECEEFE;
+        }
 
         .not-hover-icon {
             display: none;
@@ -190,9 +193,9 @@ mat-card-header {
 
 /* Fix Emoji Background */
 ::ng-deep .mat-mdc-menu-item {
-  &:not(:disabled) {
-    &:hover {
-      background-color: unset !important;
+    &:not(:disabled) {
+        &:hover {
+            background-color: unset !important;
+        }
     }
-  }
 }
