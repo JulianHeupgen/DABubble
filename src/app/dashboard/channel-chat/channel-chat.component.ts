@@ -216,6 +216,12 @@ export class ChannelChatComponent {
         this.channelThreads.push(new Thread(this.threads[i]));
       }
     }
+    
+    this.sortThreadByFirstMessageTimestamp()
+  }
+
+  sortThreadByFirstMessageTimestamp() {
+    this.channelThreads.sort((a, b) => a.timestamp - b.timestamp);
   }
 
   channelThreadMessage: FormGroup = this.formBuilder.group({

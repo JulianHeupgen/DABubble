@@ -63,6 +63,12 @@ export class Thread {
       newMessages.push(jsonMessage);
     })
     this.messages = newMessages;
+    this.sortMessagesByTimestamp();
+    
+  }
+
+  sortMessagesByTimestamp() {
+    return this.messages.sort((a, b) => a.timestamp - b.timestamp);
   }
 
   toJSON() {
