@@ -229,7 +229,6 @@ export class ChannelChatComponent {
   })
 
   addEmoji(event: any) {
-    console.log('Emoji:', event.emoji.native);
     let textAreaElement = this.threadMessageBox.nativeElement;
     textAreaElement.value += event.emoji.native;
   }
@@ -263,7 +262,6 @@ export class ChannelChatComponent {
     if (file) {
       reader.readAsDataURL(file);
       this.imgFile = file;
-      console.log('File is:', this.imgFile);
     }
   }
 
@@ -282,8 +280,6 @@ export class ChannelChatComponent {
   async sendMessage() {
     let newThread = await this.currentUser.sendChannelMessage(this.currentChannel, this.channelThreadMessage.value.channelMessage, this.imgFile)
     if (newThread instanceof Thread) {
-
-      console.log('New Thread:', newThread);
 
       this.dataService.addThread(newThread);
     }
