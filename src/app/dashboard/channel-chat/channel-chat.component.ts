@@ -22,6 +22,7 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { Message } from '../../models/message.class';
 import { AddImgToMessageComponent } from '../add-img-to-message/add-img-to-message.component';
 import { EditChannelComponent } from './edit-channel/edit-channel.component';
+import { EmojiCommunicationService } from '../../services/emoji-communication.service';
 
 @Component({
   selector: 'app-channel-chat',
@@ -59,14 +60,20 @@ export class ChannelChatComponent {
   @ViewChild('imgBox') imgBox!: ElementRef;
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
   @ViewChild(AddImgToMessageComponent) addImgToMessageComponent!: AddImgToMessageComponent;
-
+  emojiSubscription: Subscription;
   constructor(public dataService: DataService,
     private route: ActivatedRoute,
     private router: Router,
     public storage: StorageService,
     private auth: AuthService,
     private formBuilder: FormBuilder,
+    private emojiService: EmojiCommunicationService,
   ) {
+    this.emojiSubscription = this.emojiService.emojiEvent$.subscribe(event => {
+      if (event.sender === 'ChannelChatComponent') {
+        this.addEmoji(event.emoji);
+      }
+    });
        this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
          this.ngOnInit();
@@ -235,10 +242,10 @@ export class ChannelChatComponent {
     channelMessage: '',
   })
 
-  // addEmoji(event: any) {
-  //   let textAreaElement = this.threadMessageBox.nativeElement;
-  //   textAreaElement.value += event.emoji.native;
-  // }
+  addEmoji(emoji: string) {
+    let textAreaElement = this.threadMessageBox.nativeElement;
+    textAreaElement.value += emoji;
+  }
 
   addUserToMessage(user: any) {
     if (this.threadMessageBox && user) {
@@ -252,6 +259,7 @@ export class ChannelChatComponent {
     this.userSub.unsubscribe();
     this.channelSub.unsubscribe();
     this.threadsSub.unsubscribe();
+    this.emojiSubscription.unsubscribe();
   }
 
   removeChatInput() {

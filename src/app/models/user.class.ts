@@ -61,7 +61,6 @@ export class User {
 
  async sendChannelMessage(channel: Channel, messageContent: string, imgFile?: File, replyToThread?: Thread) {        // 4. Parameter (File) und (Thread) ist optional !
      let imgFileURL;
-    //  let dataService: DataService = new DataService;
     if (imgFile) {                                          // fügt eine Bilddatei hinzu wenn eine in der Nachricht vorhanden ist
       let storage: StorageService = new StorageService;
       let imgURL = await storage.uploadFile(imgFile) as string;

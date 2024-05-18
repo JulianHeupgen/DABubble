@@ -14,10 +14,14 @@
             <img src="../../../../assets/img/hands-up.png" alt="">
         </div>
 
-        
-            <app-emoji-mart [emojiImg]="'emoji-reaction.png'"
-                [emojiImgHover]="'emoji-reaction-hover.png'"></app-emoji-mart>
-        
+
+        <app-emoji-mart 
+        [emojiImg]="'emoji-reaction.png'" 
+        [emojiImgHover]="'emoji-reaction-hover.png'"
+        [emojiToMessageBox]="false"
+        [timestamp]="thread.timestamp">
+        </app-emoji-mart>
+
 
         <div class="icon">
             <img class="not-hover-icon" src="../../../../assets/img/comment.png" alt="">
@@ -40,10 +44,12 @@
             {{ this.thread.messages[0].content }}
         </span>
         <div class="chat-reactions">
-                <div class="reaction" *ngFor="let reaction of thread.messages[0].emojiReactions" (click)="reactToThread(this, reaction.reaction)">
-                    <img src="../../../../assets/img/{{ reaction.reaction }}" alt="">
-                    <span>{{ reaction.count }}</span>
-                </div>
+            <div class="reaction" *ngFor="let reaction of thread.messages[0].emojiReactions"
+                (click)="reactToThread(this, reaction.reaction)">
+                <img src="../../../../assets/img/{{ reaction.reaction }}" alt="">
+                <span>{{ reaction.reaction }}</span>
+                <span>{{ reaction.count }}</span>
+            </div>
         </div>
     </div>
     <div class="channel-chat-sender-img">
