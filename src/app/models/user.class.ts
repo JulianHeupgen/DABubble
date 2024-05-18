@@ -1,5 +1,3 @@
-import { ChannelChatComponent } from "../dashboard/channel-chat/channel-chat.component";
-import { DataService } from "../services/data.service";
 import { StorageService } from "../services/storage.service";
 import { Channel } from "./channel.class";
 import { Message } from "./message.class";
