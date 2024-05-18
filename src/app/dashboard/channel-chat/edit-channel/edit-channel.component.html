@@ -2,11 +2,11 @@
     <h2># {{ currentChannel.title }} </h2>
     <mat-form-field>
       <mat-label>Channel-Name</mat-label>
-      <input matInput [(ngModel)]="currentChannel.title" (ngModelChange)="onTitleChange()">
+      <input matInput [(ngModel)]="currentChannel.title">
     </mat-form-field>
     <mat-form-field>
       <mat-label>Beschreibung</mat-label>
-      <input matInput [(ngModel)]="currentChannel.description" (ngModelChange)="onDescriptionChange()">
+      <input matInput [(ngModel)]="currentChannel.description">
     </mat-form-field>
     <button mat-raised-button color="warn" (click)="leaveChannel()">Channel verlassen</button>
 </div>
