@@ -101,11 +101,6 @@
     @include flex-align-justify($jc: right);
     gap: 20px;
 
-    .reactions {
-        width: 100%;
-        @include flex-align-justify($jc: right)
-    }
-
     .reaction {
         cursor: pointer;
         @include flex-align-justify();

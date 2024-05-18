@@ -75,7 +75,7 @@ export class AuthService {
   //   // )
   //   const docRef = await addDoc(collection(this.firestore, "users"), {
   //     'name': name,
-      // 'email': userData.email,
+  // 'email': userData.email,
   //     'onlineStatus': 'offline',
   //     'channels': [],
   //     'uid': userData.uid,
@@ -440,6 +440,7 @@ export class AuthService {
     const strUser = this.stringifyUser(user);
     try {
       await addDoc(collection(this.firestore, 'users'), strUser);
+      
     } catch (error) {
       console.error('Error uploading user to firebase: ', error);
       throw error;

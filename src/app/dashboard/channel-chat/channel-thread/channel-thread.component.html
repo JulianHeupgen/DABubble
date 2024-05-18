@@ -6,11 +6,11 @@
 
 <div class="channel-chat-message">
     <div class="reaction-menu">
-        <div class="icon" (click)="reactToThread(this, 'checkmark')">
+        <div class="icon" (click)="reactToThread(this, 'check-mark.png')">
             <img src="../../../../assets/img/check-mark.png" alt="">
         </div>
 
-        <div class="icon">
+        <div class="icon" (click)="reactToThread(this, 'hands-up.png')">
             <img src="../../../../assets/img/hands-up.png" alt="">
         </div>
 
@@ -40,18 +40,10 @@
             {{ this.thread.messages[0].content }}
         </span>
         <div class="chat-reactions">
-            <div class="reactions">
-
-                <div class="reaction">
-                    <img src="../../../../assets/img/check-mark.png" alt="">
-                    <span>2</span>
+                <div class="reaction" *ngFor="let reaction of thread.messages[0].emojiReactions">
+                    <img src="../../../../assets/img/{{ reaction.reaction }}" alt="">
+                    <span>{{ reaction.count }}</span>
                 </div>
-                
-                <div class="reaction">
-                    <img src="../../../../assets/img/hands-up.png" alt="">
-                    <span>2</span>
-                </div>
-            </div>
         </div>
     </div>
     <div class="channel-chat-sender-img">
