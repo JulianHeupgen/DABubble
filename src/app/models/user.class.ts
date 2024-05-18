@@ -25,7 +25,7 @@ export class User {
     channels: string[],
     userChats: UserChat[],
   }) {
-    this.id = data.id;
+    this.id = data.id || '';
     this.name = data.name;
     this.email = data.email;
     this.onlineStatus = data.onlineStatus;
