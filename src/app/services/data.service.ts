@@ -172,6 +172,18 @@ export class DataService {
 
 
 
+  // Einen User updaten 
+
+  async updateUser(user: User ) {
+    let docRef = this.getUserDocRef(user.id);
+    await updateDoc(docRef, user.toJSON()).catch((err) => {
+       console.error(err)
+    });
+  }
+
+  getUserDocRef(userId: string ) {
+    return doc(collection(this.firestore, 'users'), userId);
+  }
 
 
   // Einen Channel updaten

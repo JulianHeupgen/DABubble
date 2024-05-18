@@ -120,5 +120,19 @@ export class User {
     message.emojiReactions.push(emoji, reactor.name);
   }
 
+
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      onlineStatus: this.onlineStatus,
+      authUserId: this.authUserId,
+      imageUrl: this.imageUrl,
+      channels: this.channels,
+      userChats: this.userChats
+    }
+  }
+
 }
 
