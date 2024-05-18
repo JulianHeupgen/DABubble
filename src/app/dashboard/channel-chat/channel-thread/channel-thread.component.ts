@@ -20,7 +20,6 @@ export class ChannelThreadComponent {
   @ViewChild(EmojiMartComponent) emojiMart!: EmojiMartComponent;
 
   constructor() {
-    // this.emojiMart.emojiImg = 'emoji-reaction-hover.png'
     setTimeout(() => {
       console.log('Thread:', this.thread);
       console.log('ThreadMessage:', this.thread.messages[0].content);
@@ -34,6 +33,11 @@ export class ChannelThreadComponent {
 
   formattedTimeStamp(): any {
     return this.thread.getFormattedTimeStamp()
+  }
+
+  reactToThread(message: any, reactioen: string) {
+    console.log('Threadmessage is:', message.thread);
+    
   }
 }
 
