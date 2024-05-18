@@ -99,6 +99,7 @@
 
 .chat-reactions {
     @include flex-align-justify($jc: right);
+    flex-direction: row-reverse;
     gap: 20px;
 
     .reaction {

@@ -40,7 +40,7 @@
             {{ this.thread.messages[0].content }}
         </span>
         <div class="chat-reactions">
-                <div class="reaction" *ngFor="let reaction of thread.messages[0].emojiReactions">
+                <div class="reaction" *ngFor="let reaction of thread.messages[0].emojiReactions" (click)="reactToThread(this, reaction.reaction)">
                     <img src="../../../../assets/img/{{ reaction.reaction }}" alt="">
                     <span>{{ reaction.count }}</span>
                 </div>

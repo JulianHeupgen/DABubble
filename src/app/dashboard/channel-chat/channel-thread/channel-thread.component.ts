@@ -3,6 +3,7 @@ import { Thread } from '../../../models/thread.class';
 import { CommonModule } from '@angular/common';
 import { EmojiMartComponent } from '../../emoji-mart/emoji-mart.component';
 import { ChannelChatComponent } from '../channel-chat.component';
+import { User } from '../../../models/user.class';
 
 @Component({
   selector: 'app-channel-thread',
@@ -39,32 +40,53 @@ export class ChannelThreadComponent {
   }
 
   reactToThread(message: any, userReaction: string) {
-    let chatReactions = message.thread.messages[0].emojiReactions
-    if (chatReactions.length > 0) {      
-      chatReactions.forEach( (chatReaction: any) => {
-        if (chatReaction.reaction === userReaction) {
-          chatReaction.count ++;
-        } else {
-          let threadReaction = {
-            reaction: userReaction,
-            user: this.channelChat.currentUser,
-            count: 1
-          }
-          message.thread.messages[0].emojiReactions.push(threadReaction)
+    let chatReactions = message.thread.messages[0].emojiReactions;
+    let user = this.channelChat.currentUser;
+    let reactionExists = false;
+
+    chatReactions.forEach((chatReaction: any) => {
+      if (chatReaction.reaction === userReaction) {
+        reactionExists = true;
+        if (this.isUserInReaction(chatReaction, user) !== -1) {  // User exists in reaction
+          this.userReactionagain(chatReactions, chatReaction, user);
+        } else {  // User does not exist in reaction
+          this.raiseReactionCount(chatReaction, user);
         }
-      })
-    } else {
-      let threadReaction = {
-        reaction: userReaction,
-        user: this.channelChat.currentUser,
-        count: 1
       }
-      message.thread.messages[0].emojiReactions.push(threadReaction)
+    });
+    if (!reactionExists) {
+      this.getNewReactionToMessage(message, userReaction, user);      
     }
-    
     console.log('Threadmessage is:', message.thread);
-      
-    
+  }
+
+  isUserInReaction(chatReaction: any, user: User) {
+    return chatReaction.users.findIndex((u: any) => u.id === user.id);
+  }
+
+  userReactionagain(chatReactions: any, chatReaction: any, user: User) {
+    let userIndex = chatReaction.users.findIndex((u: any) => u.id === user.id);
+    chatReaction.count--;
+    chatReaction.users.splice(userIndex, 1);
+    // Remove reaction if no users are left
+    if (chatReaction.count === 0) {
+      const index = chatReactions.indexOf(chatReaction);
+      chatReactions.splice(index, 1);
+    }
+  }
+
+  raiseReactionCount(chatReaction: any, user: User) {
+    chatReaction.count++;
+    chatReaction.users.push(user);
+  }
+
+  getNewReactionToMessage(message: any, userReaction: string, user: User) {
+    let threadReaction = {
+      reaction: userReaction,
+      users: [user],
+      count: 1
+    };
+    message.thread.messages[0].emojiReactions.push(threadReaction);
   }
 }
 
