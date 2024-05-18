@@ -1,5 +1,5 @@
 <div class="add-channel-card">
-    <img src="./assets/img/close.png" (click)="this.dialog.closeAll()">
+    <img class="close-img" src="./assets/img/close.png" (click)="this.dialog.closeAll()">
     <div>
         <h2 class="project-font">Leute hinzufügen</h2>
     </div>
@@ -17,22 +17,35 @@
     </div>
 
     <div class="input-section" *ngIf="selectedOption === 'specific'">
+        <!-- <button [matMenuTriggerFor]="belowMenu">OPEN</button> -->
+
         <mat-form-field appearance="fill">
             <mat-label>Benutzer auswählen</mat-label>
-    <mat-select [(ngModel)]="selectedUsers" multiple>
-        <mat-option *ngFor="let user of dataService.allUsers" [value]="user.id">
-            {{ user.name }}
-        </mat-option>
-    </mat-select>
-    </mat-form-field>
-    
-    <!-- Anzeige der ausgewählten Benutzer als Chips -->
-    <mat-chip-grid *ngIf="selectedUsers.length > 0">
-        <mat-chip-row *ngFor="let userId of selectedUsers" [removable]="true" (removed)="removeUser(userId)">
-            {{ getUserName(userId) }}
-            <mat-icon matChipRemove>cancel</mat-icon>
-        </mat-chip-row>
-    </mat-chip-grid>
+            <mat-select [(ngModel)]="selectedUsers" multiple>
+                <mat-option *ngFor="let user of dataService.allUsers" [value]="user.id">
+                    <img class="user-chip-img" src="{{ user.imageUrl }}"> {{ user.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Anzeige der ausgewählten Benutzer als Chips -->
+        <div *ngIf="selectedUsers.length > 0">
+            <input style="display: none;" [matChipInputFor]="chipGrid" [matChipInputAddOnBlur]="true" />
+            <mat-chip-grid #chipGrid>
+                <mat-chip-row class="mat-chip-row" *ngFor="let userId of selectedUsers" [removable]="true"
+                    (removed)="removeUser(userId)">
+                    <div class="chip-subcontainer">
+                        <img class="user-chip-img" src="{{ getUserImg(userId) }}">
+                        <p>
+                            {{ getUserName(userId) }}
+                        </p>
+                    </div>
+                    <button matChipRemove (click)="removeUser(userId)"><img src="./assets/img/close.png"></button>
+
+                </mat-chip-row>
+
+            </mat-chip-grid>
+        </div>
     </div>
 
     <div class="btn-section">
