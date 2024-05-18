@@ -1,7 +1,7 @@
 <mat-card class="channel-wrapper">
   <mat-card-header>
     <div class="channel-infos" *ngIf="currentChannel">
-      <div class="header-left-container">
+      <div class="header-left-container" [matMenuTriggerFor]="editMenu">
         <div class="title"># {{ currentChannel.title }} </div>
         <img class="title-arrow" src="assets/img/arrow_down.png">
       </div>
@@ -15,7 +15,16 @@
         <img class="addUser-btn" src="assets/img/add_user.png">
       </div>
     </div>
-  </mat-card-header>
+
+  <!-- Mat Menu EditChannel-->
+  <mat-menu #editMenu>
+    <app-edit-channel *ngIf="currentChannel" [currentChannel]="currentChannel" (leaveChannelEvent)="this.currentUser.leaveChannel(channelId, currentChannel)"></app-edit-channel>
+  </mat-menu>
+
+</mat-card-header>
+
+<!-- Channel Chat Verlauf -->
+
   <div class="chat-history">
 
     <!--ChannelThreadComponents rendern (immer nur erste Nachricht des jeweiligen Threads anzeigen): 
