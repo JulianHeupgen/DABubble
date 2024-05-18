@@ -21,6 +21,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { Message } from '../../models/message.class';
 import { AddImgToMessageComponent } from '../add-img-to-message/add-img-to-message.component';
+import { EditChannelComponent } from './edit-channel/edit-channel.component';
 
 @Component({
   selector: 'app-channel-chat',
@@ -43,6 +44,7 @@ import { AddImgToMessageComponent } from '../add-img-to-message/add-img-to-messa
     MatAutocompleteModule,
     EmojiMartComponent,
     AddImgToMessageComponent,
+    EditChannelComponent
     // PickerComponent,
     // FormsModule,
     // AsyncPipe,

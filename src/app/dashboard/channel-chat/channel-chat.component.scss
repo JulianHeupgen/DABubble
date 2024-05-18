@@ -18,35 +18,64 @@ mat-card-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-    }
-}
 
-.header-right-container {
-    display: flex;
-    align-items: center;
+        .header-left-container {
+            display: flex;
+            align-items: center;
+            border-radius: 30px;
+            padding: 10px 18px;
+            cursor: pointer;
 
-    .participants-container {
-        display: flex;
-        align-items: center;
+            .title {
+                @include font-size-weight-color($fs: 24px, $fw: 700);
+            }
 
-        .participants-img {
-            margin-left: -21px;
+            &:hover {
+                background-color: $backgroundHover;
+
+
+                .title {
+                    color: $fontHover;
+                }
+
+                .title-arrow {
+                    content: url('./../../../assets/img/arrow_down_hover.png');
+                    width: 15px;
+                    height: 10px;
+                    margin-left: 7px;
+                }
+            }
         }
-
-        .participant-counter {
-            padding: 0 18px 0 18px;
-            @include font-size-weight-color($fw: 600);
-        }
-    }
-
-    .addUser-btn {
-        cursor: pointer;
         
-        &:hover {
-            content: url('./../../../assets/img/add_user_hover.png');
+        .header-right-container {
+            display: flex;
+            align-items: center;
+        
+            .participants-container {
+                display: flex;
+                align-items: center;
+        
+                .participants-img {
+                    margin-left: -21px;
+                }
+        
+                .participant-counter {
+                    padding: 0 18px 0 18px;
+                    @include font-size-weight-color($fw: 600);
+                }
+            }
+        
+            .addUser-btn {
+                cursor: pointer;
+                
+                &:hover {
+                    content: url('./../../../assets/img/add_user_hover.png');
+                }
+            }
         }
     }
 }
+
 
 
 .chat-history {
