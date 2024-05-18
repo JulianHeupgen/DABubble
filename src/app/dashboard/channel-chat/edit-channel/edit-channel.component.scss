@@ -1,0 +1,26 @@
+@import '../../../../mixin.scss';
+
+.editChannel-container {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+
+    .title-and-closeButton {
+        @include flex-align-justify($jc: space-between);
+
+        h2 {
+            @include font-size-weight-color($fs: 24px, $fw: 500);
+        }
+
+        button {
+            cursor: pointer;
+        }
+    }
+
+}
+
+.leaveChannel-button {
+    cursor: pointer;
+}
+

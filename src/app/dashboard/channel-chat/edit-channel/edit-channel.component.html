@@ -1,5 +1,8 @@
 <div class="editChannel-container">
+  <div class="title-and-closeButton">
     <h2># {{ currentChannel.title }} </h2>
+    <button (click)="closeMenu()">close</button>
+  </div>
     <mat-form-field>
       <mat-label>Channel-Name</mat-label>
       <input matInput [(ngModel)]="currentChannel.title">
@@ -8,5 +11,5 @@
       <mat-label>Beschreibung</mat-label>
       <input matInput [(ngModel)]="currentChannel.description">
     </mat-form-field>
-    <button mat-raised-button color="warn" (click)="leaveChannel()">Channel verlassen</button>
+    <button mat-raised-button class="leaveChannel-button"  (click)="leaveChannel()">Channel verlassen</button>
 </div>

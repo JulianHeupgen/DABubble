@@ -18,8 +18,10 @@
 
   <!-- MatMenu EditChannel (Bei Klick auf Channel-Titel)-->
   <mat-menu #editMenu>
-    <app-edit-channel *ngIf="currentChannel && currentUser && channelId"
-     [currentChannel]="currentChannel" [currentUser]="currentUser" [channelId]="channelId"></app-edit-channel>  
+    <div (click)="$event.stopPropagation()">
+      <app-edit-channel *ngIf="currentChannel && currentUser && channelId"
+       [currentChannel]="currentChannel" [currentUser]="currentUser" [channelId]="channelId" [matMenuTrigger]="menuTrigger" ></app-edit-channel>  
+    </div>
   </mat-menu>
 
 </mat-card-header>
