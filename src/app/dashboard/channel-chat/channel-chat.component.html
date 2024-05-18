@@ -16,18 +16,16 @@
       </div>
     </div>
 
-  <!-- Mat Menu EditChannel-->
+  <!-- MatMenu EditChannel (Bei Klick auf Channel-Titel)-->
   <mat-menu #editMenu>
     <app-edit-channel *ngIf="currentChannel" [currentChannel]="currentChannel" (leaveChannelEvent)="this.currentUser.leaveChannel(channelId, currentChannel)"></app-edit-channel>
   </mat-menu>
 
 </mat-card-header>
 
-<!-- Channel Chat Verlauf -->
-
+<!-- Channel Chatverlauf -->
   <div class="chat-history">
-
-    <!--ChannelThreadComponents rendern (immer nur erste Nachricht des jeweiligen Threads anzeigen): 
+    <!--ChannelThreadComponents rendern (immer nur die ERSTE Nachricht des jeweiligen Threads anzeigen): 
         Wenn Klick auf einen Thread, dann wird dieser rechts geöffnet mit dem kompletten Chatverlauf ( FullThreadComponent )
       -->
     <div *ngFor="let thread of channelThreads">
@@ -35,6 +33,8 @@
     </div>
 
   </div>
+
+  <!-- Channel Chat Inputfenster-->
   <form [formGroup]="channelThreadMessage" class="text-box">
     <div #imgBox class="add-file-img-box"></div>
     <textarea #threadMessageBox formControlName="channelMessage" *ngIf="currentChannel"
