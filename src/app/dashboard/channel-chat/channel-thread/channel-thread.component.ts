@@ -26,13 +26,7 @@ export class ChannelThreadComponent {
 
   constructor(
     public channelChat: ChannelChatComponent,
-  ) {
-    setTimeout(() => {
-      console.log('Thread:', this.thread);
-      console.log('ThreadMessage:', this.thread.messages[0].content);
-    }, 1000);
-
-  }
+  ) { }
 
   formattedDatestamp(): any {
     return this.thread.getFormattedDatestamp();

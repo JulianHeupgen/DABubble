@@ -30,18 +30,10 @@ export class MessageReactionComponent {
     });
 
 
-  }
-
-  ngOnInit() {
-    console.log('threadMessage', this.threadMessage);
-    console.log('currentUser', this.currentUser);
-  }
+  } 
 
   reactToThread(threadMessage: any, userReaction: string) {
-    console.log('react', this, userReaction);
-
     let chatReactions = threadMessage.emojiReactions;
-    // let user = this.currentUser;
     let reactionExists = false;
 
     chatReactions.forEach((chatReaction: any) => {

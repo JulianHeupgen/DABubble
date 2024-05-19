@@ -65,26 +65,18 @@ export class User {
       let storage: StorageService = new StorageService;
       let imgURL = await storage.uploadFile(imgFile) as string;
       imgFileURL = imgURL;
-      // console.log('imgFileURL:', imgFileURL);
     }
 
 
     if (replyToThread) {                                      // Antwort auf bestehenden Thread: Neue Message wird dem bestehenden Thread überreicht
       let newMessage = new Message(this, messageContent, imgFileURL);
       replyToThread.messages.push(JSON.stringify(newMessage));
-      console.log('newMessage:', newMessage);
-      console.log('replyToThread', replyToThread);
       return newMessage
 
     } else {                                                // Andernfalls neuen Thread erstellen, Message überreichen und neuen Thread in Channel pushen
       let newThread = new Thread({ channelId: channel.channelId, timestamp: new Date().getTime() });
       let newMessage = new Message(this, messageContent, imgFileURL);
       newThread.messages.push(JSON.stringify(newMessage));
-      // channel.addThread(newThread);
-      // dataService.addThread(newThread);
-      console.log('newMessage:', newMessage);
-      console.log('Date:', new Date().getTime());
-      // console.log('newThread:', channel.threads);
       return newThread
     }
   }

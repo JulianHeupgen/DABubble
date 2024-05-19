@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 
 
 import { AuthService } from '../services/auth.service';
-import { Auth, confirmPasswordReset} from '@angular/fire/auth';
+import { Auth, confirmPasswordReset } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -75,19 +75,13 @@ export class PasswordResetComponent {
     if (this.passwordData.valid) {
       const newPassword = this.passwordData.value.password;
       const actionCode = this.activatedRoute.snapshot.queryParams['oobCode'];
-      // confirmPasswordReset(this.auth, actionCode, newPassword)
-      // .then(() => {
-        this.bannerState = 'showBanner';
+      this.bannerState = 'showBanner';
+      setTimeout(() => {
+        this.bannerState = 'fadeUp';
         setTimeout(() => {
-          this.bannerState = 'fadeUp';
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-          }, 1000);
-        }, 500);
-      // })
-      // .catch(() => {
-      //   console.log('password is not reseted');
-      // })
+          this.router.navigate(['/login']);
+        }, 1000);
+      }, 500);
     }
   }
 }

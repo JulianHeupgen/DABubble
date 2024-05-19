@@ -20,8 +20,6 @@ export class Thread {
     if (data.messages) {
       this.messageStringtoJSON();
     }
-    console.log('thread message:', this.messages);
-
   }
 
 

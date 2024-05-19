@@ -56,7 +56,6 @@ export class AuthService {
 
     signInWithPopup(googleAuth, googleProvider)
       .then(userCredential => {
-        console.log(userCredential.user);
         this.router.navigate(['/dashboard/', userCredential.user.uid]);
       }).catch((error) => {
         const errorCode = error.code;
