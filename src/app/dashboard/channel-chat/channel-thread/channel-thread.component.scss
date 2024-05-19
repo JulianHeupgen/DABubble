@@ -96,3 +96,8 @@
         }
     }
 }
+
+.reaction-bar {
+    @include flex-align-justify($jc: right);
+    width: 100%;
+}

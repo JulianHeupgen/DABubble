@@ -6,11 +6,11 @@
 
 <div class="channel-chat-message">
     <div class="reaction-menu">
-        <div class="icon" (click)="messageReaction.reactToThread(this.thread.messages[0], 'check-mark.png')">
+        <div class="icon" (click)="messageReaction.reactToThread(thread.messages[0], 'check-mark.png')">
             <img src="../../../../assets/img/check-mark.png" alt="">
         </div>
 
-        <div class="icon" (click)="messageReaction.reactToThread(this.thread.messages[0], 'hands-up.png')">
+        <div class="icon" (click)="messageReaction.reactToThread(thread.messages[0], 'hands-up.png')">
             <img src="../../../../assets/img/hands-up.png" alt="">
         </div>
 
@@ -38,15 +38,24 @@
     <div class="channel-chat-content">
         <div class="channel-chat-time-sender">
             <span>{{ formattedTimeStamp() }}</span>
-            <h3>{{ this.thread.messages[0].sender.name }}</h3>
+            <h3>{{ thread.messages[0].sender.name }}</h3>
         </div>
         <span class="message">
-            {{ this.thread.messages[0].content }}
+            {{ thread.messages[0].content }}
         </span>
-        <app-message-reaction
-        [threadMessage]="thread.messages[0]"
-        [threadId]="thread.threadId"
-        [currentUser]="channelChat.currentUser"></app-message-reaction>
+        <div class="reaction-bar">
+            <app-message-reaction
+            [threadMessage]="thread.messages[0]"
+            [threadId]="thread.threadId"
+            [currentUser]="channelChat.currentUser"></app-message-reaction>
+            <app-emoji-mart 
+            [emojiImg]="'emoji-reaction.png'" 
+            [emojiImgHover]="'emoji-reaction-hover.png'"
+            [assigningComponent]="'MessageReactionComponent'"
+            [threadId]="thread.threadId"
+            *ngIf="thread.messages[0].emojiReactions.length > 0">
+        </app-emoji-mart>
+    </div>
     </div>
     <div class="channel-chat-sender-img">
         <img src="{{ this.thread.messages[0].sender.imageUrl }}" alt="">
