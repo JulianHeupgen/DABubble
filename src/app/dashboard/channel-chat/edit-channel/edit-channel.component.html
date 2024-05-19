@@ -9,17 +9,22 @@
   <div class="editChannelName">
     <div class="editChannelName-header">
       <div>Channel-Name</div>
-      <button>Bearbeiten</button>
+      <button class="edit-button">Bearbeiten</button>
     </div>
     <div class="editChannelName-title"> # {{ currentChannel.title }} </div>
   </div> 
 
   <div class="editChannelDescription">
-    <div class="editChannelName-header">
-      <div>Channel-Name</div>
-      <button>Bearbeiten</button>
+    <div class="editChannelDescription-header">
+      <div>Beschreibung</div>
+      <button class="edit-button">Bearbeiten</button>
     </div>
-    <div class="editChannelName-title"> # {{ currentChannel.title }} </div>
+    <div class="editChannelDescription-description"> {{ currentChannel.description }} </div>
+    <div class="lineX"></div>
+    <div class="channelCreationInfos">
+      <span class="createdBy">Erstellt von</span>
+      <span class="name">Julian Heupgen Platzhalter</span>
+    </div>
   </div> 
   
 
