@@ -1,7 +1,7 @@
 @import '../../../../mixin.scss';
 
 .editChannel-container {
-    width: 600px;
+    width: 800px;
     display: flex;
     flex-direction: column;
     padding: 30px;
@@ -13,14 +13,48 @@
             @include font-size-weight-color($fs: 24px, $fw: 500);
         }
 
-        button {
+        div {
             cursor: pointer;
+
+            &:hover {
+                content: url(./../../../../assets/img/close_hover.png);
+                margin-bottom: 7px;
+            }
+        }
+    }
+}
+
+.editChannelName,
+.editChannelDescription {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ADB0D9;
+    border-radius: 20px;
+    padding: 15px;
+    margin-top: 18px;
+
+    .editChannelName-header {
+        @include flex-align-justify($jc: space-between);
+
+        div {
+            @include font-size-weight-color($fs: 18px, $fw: 700); 
         }
     }
 
+    .editChannelName-title {
+        margin-top: 18px;
+        @include font-size-weight-color($fs: 18px, $fw: 600);
+    }
 }
 
-.leaveChannel-button {
-    cursor: pointer;
+
+.leaveButton-container {
+    margin-top: 18px;
+    @include flex-align-justify($jc: end);
+
+    .leaveChannel-button {
+        cursor: pointer;
+    }
+
 }
 
