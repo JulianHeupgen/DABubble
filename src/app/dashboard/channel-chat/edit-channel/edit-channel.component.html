@@ -1,15 +1,34 @@
 <div class="editChannel-container">
   <div class="title-and-closeButton">
     <h2># {{ currentChannel.title }} </h2>
-    <button (click)="closeMenu()">close</button>
+    <div (click)="closeMenu()">
+      <img src="assets/img/close.png">
+    </div>
   </div>
-    <mat-form-field>
-      <mat-label>Channel-Name</mat-label>
-      <input matInput [(ngModel)]="currentChannel.title">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Beschreibung</mat-label>
-      <input matInput [(ngModel)]="currentChannel.description">
-    </mat-form-field>
-    <button mat-raised-button class="leaveChannel-button"  (click)="leaveChannel()">Channel verlassen</button>
+
+  <div class="editChannelName">
+    <div class="editChannelName-header">
+      <div>Channel-Name</div>
+      <button class="edit-button">Bearbeiten</button>
+    </div>
+    <div class="editChannelName-title"> # {{ currentChannel.title }} </div>
+  </div> 
+
+  <div class="editChannelDescription">
+    <div class="editChannelDescription-header">
+      <div>Beschreibung</div>
+      <button class="edit-button">Bearbeiten</button>
+    </div>
+    <div class="editChannelDescription-description"> {{ currentChannel.description }} </div>
+    <div class="lineX"></div>
+    <div class="channelCreationInfos">
+      <span class="createdBy">Erstellt von</span>
+      <span class="name">Julian Heupgen Platzhalter</span>
+    </div>
+  </div> 
+  
+
+  <div class="leaveButton-container">
+    <button class="leaveChannel-button"  (click)="leaveChannel()">Channel verlassen</button>
+  </div>
 </div>
