@@ -6,12 +6,14 @@ import { ChannelChatComponent } from '../channel-chat.component';
 import { User } from '../../../models/user.class';
 import { Subscription } from 'rxjs';
 import { EmojiCommunicationService } from '../../../services/emoji-communication.service';
+import { MessageReactionComponent } from '../message-reaction/message-reaction.component';
 
 @Component({
   selector: 'app-channel-thread',
   standalone: true,
   imports: [
     CommonModule,
+    MessageReactionComponent,
     EmojiMartComponent,
   ],
   templateUrl: './channel-thread.component.html',
@@ -20,17 +22,11 @@ import { EmojiCommunicationService } from '../../../services/emoji-communication
 export class ChannelThreadComponent {
 
   @Input() thread!: Thread;
-  emojiSubscription: Subscription;
+  @ViewChild(MessageReactionComponent) messageReaction!: MessageReactionComponent;
 
   constructor(
-    private channelChat: ChannelChatComponent,
-    private emojiService: EmojiCommunicationService
+    public channelChat: ChannelChatComponent,
   ) {
-    this.emojiSubscription = this.emojiService.emojiEvent$.subscribe(event => {
-      if (event.sender === 'ChannelThreadComponent' && event.timestampId === this.thread.timestamp) {
-      this.reactToThread(this, event.emoji);
-      }
-    });
     setTimeout(() => {
       console.log('Thread:', this.thread);
       console.log('ThreadMessage:', this.thread.messages[0].content);
@@ -44,61 +40,6 @@ export class ChannelThreadComponent {
 
   formattedTimeStamp(): any {
     return this.thread.getFormattedTimeStamp();
-  }
-
-  reactToThread(threadElement: any, userReaction: string) {
-    console.log('react', this, userReaction);
-    
-    let chatReactions = threadElement.thread.messages[0].emojiReactions;
-    let user = this.channelChat.currentUser;
-    let reactionExists = false;
-
-    chatReactions.forEach((chatReaction: any) => {
-      if (chatReaction.reaction === userReaction) {
-        reactionExists = true;
-        if (this.isUserInReaction(chatReaction, user) !== -1) {
-          this.userReactionagain(chatReactions, chatReaction, user);
-        } else {
-          this.raiseReactionCount(chatReaction, user);
-        }
-      }
-    });
-    if (!reactionExists) {
-      this.getNewReactionToMessage(threadElement, userReaction, user);      
-    }
-  }
-
-
-  isUserInReaction(chatReaction: any, user: User) {
-    return chatReaction.users.findIndex((u: any) => u.id === user.id);
-  }
-
-  userReactionagain(chatReactions: any, chatReaction: any, user: User) {
-    let userIndex = chatReaction.users.findIndex((u: any) => u.id === user.id);
-    chatReaction.count--;
-    chatReaction.users.splice(userIndex, 1);
-    if (chatReaction.count === 0) {
-      const index = chatReactions.indexOf(chatReaction);
-      chatReactions.splice(index, 1);
-    }
-  }
-
-  raiseReactionCount(chatReaction: any, user: User) {
-    chatReaction.count++;
-    chatReaction.users.push(user);
-  }
-
-  getNewReactionToMessage(message: any, userReaction: string, user: User) {
-    let threadReaction = {
-      reaction: userReaction,
-      users: [user],
-      count: 1
-    };
-    message.thread.messages[0].emojiReactions.push(threadReaction);
-  }
-
-  ngOnDestroy() {
-    this.emojiSubscription.unsubscribe();
-  }
+  }  
 }
 

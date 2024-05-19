@@ -6,11 +6,11 @@
 
 <div class="channel-chat-message">
     <div class="reaction-menu">
-        <div class="icon" (click)="reactToThread(this, 'check-mark.png')">
+        <div class="icon" (click)="messageReaction.reactToThread(this.thread.messages[0], 'check-mark.png')">
             <img src="../../../../assets/img/check-mark.png" alt="">
         </div>
 
-        <div class="icon" (click)="reactToThread(this, 'hands-up.png')">
+        <div class="icon" (click)="messageReaction.reactToThread(this.thread.messages[0], 'hands-up.png')">
             <img src="../../../../assets/img/hands-up.png" alt="">
         </div>
 
@@ -18,8 +18,8 @@
         <app-emoji-mart 
         [emojiImg]="'emoji-reaction.png'" 
         [emojiImgHover]="'emoji-reaction-hover.png'"
-        [emojiToMessageBox]="false"
-        [timestamp]="thread.timestamp">
+        [assigningComponent]="'MessageReactionComponent'"
+        [threadId]="thread.threadId">
         </app-emoji-mart>
 
 
@@ -43,14 +43,10 @@
         <span class="message">
             {{ this.thread.messages[0].content }}
         </span>
-        <div class="chat-reactions">
-            <div class="reaction" *ngFor="let reaction of thread.messages[0].emojiReactions"
-                (click)="reactToThread(this, reaction.reaction)">
-                <img src="../../../../assets/img/{{ reaction.reaction }}" alt="">
-                <span>{{ reaction.reaction }}</span>
-                <span>{{ reaction.count }}</span>
-            </div>
-        </div>
+        <app-message-reaction
+        [threadMessage]="thread.messages[0]"
+        [threadId]="thread.threadId"
+        [currentUser]="channelChat.currentUser"></app-message-reaction>
     </div>
     <div class="channel-chat-sender-img">
         <img src="{{ this.thread.messages[0].sender.imageUrl }}" alt="">

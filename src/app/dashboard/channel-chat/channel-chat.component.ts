@@ -11,15 +11,13 @@ import { ChannelThreadComponent } from './channel-thread/channel-thread.componen
 import { User } from '../../models/user.class';
 import { Thread } from '../../models/thread.class';
 import { Observable, Subscription, map, startWith } from 'rxjs';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { EmojiMartComponent } from '../emoji-mart/emoji-mart.component';
-import { AsyncPipe, CommonModule } from '@angular/common';
-import { PickerComponent } from '@ctrl/ngx-emoji-mart';
-import { Message } from '../../models/message.class';
+import { CommonModule } from '@angular/common';
 import { AddImgToMessageComponent } from '../add-img-to-message/add-img-to-message.component';
 import { EditChannelComponent } from './edit-channel/edit-channel.component';
 import { EmojiCommunicationService } from '../../services/emoji-communication.service';
@@ -45,11 +43,7 @@ import { EmojiCommunicationService } from '../../services/emoji-communication.se
     MatAutocompleteModule,
     EmojiMartComponent,
     AddImgToMessageComponent,
-    EditChannelComponent
-    // PickerComponent,
-    // FormsModule,
-    // AsyncPipe,
-    // MatMenuTrigger,
+    EditChannelComponent,
   ],
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
@@ -127,6 +121,7 @@ export class ChannelChatComponent {
         map(value => this._filterUsers(value || ''))
       );
     }, 600);
+
 
   }
 
@@ -231,7 +226,8 @@ export class ChannelChatComponent {
       }
     }
     
-    this.sortThreadByFirstMessageTimestamp()
+    this.sortThreadByFirstMessageTimestamp();
+    
   }
 
   sortThreadByFirstMessageTimestamp() {

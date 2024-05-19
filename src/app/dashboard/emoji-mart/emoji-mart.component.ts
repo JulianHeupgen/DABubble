@@ -17,16 +17,17 @@ import { EmojiCommunicationService } from '../../services/emoji-communication.se
 export class EmojiMartComponent {
   @Input() emojiImg: string = ''
   @Input() emojiImgHover: string = '';
-  @Input() emojiToMessageBox: boolean = true;
-  @Input() timestamp?: string;
+  @Input() assigningComponent: string = '';
+  @Input() threadId?: string;
+
 
   constructor(
     private emojiService: EmojiCommunicationService,
   ) { }
 
   addEmoji(event: any) {
-    const sender = this.emojiToMessageBox ? 'ChannelChatComponent' : 'ChannelThreadComponent';
-    const timestampId = this.timestamp || '';
-    this.emojiService.emitEmojiEvent(event.emoji.native, sender, timestampId);
+    const sender = this.assigningComponent;
+    const threadId = this.threadId || '';
+    this.emojiService.emitEmojiEvent(event.emoji.native, sender, threadId);
   }
 }

@@ -1,0 +1,12 @@
+<div class="chat-reactions">
+    <div class="reaction" *ngFor="let reactions of threadMessage.emojiReactions"
+        (click)="reactToThread(this.threadMessage, reactions.reaction)">
+        <ng-container *ngIf="reactions.reaction.includes('png')">
+            <img src="../../../../assets/img/{{ reactions.reaction }}" alt="">
+          </ng-container>
+          <ng-container *ngIf="!reactions.reaction.includes('png')">
+            <span class="emoji">{{ reactions.reaction }}</span>
+          </ng-container>
+        <span>{{ reactions.count }}</span>
+    </div>
+</div>

@@ -48,8 +48,10 @@
         <app-add-img-to-message></app-add-img-to-message>
 
         <div class="border-line"></div>
-        <app-emoji-mart [emojiImg]="'emoticon.png'"
-                [emojiImgHover]="'emoticon-hover.png'"></app-emoji-mart>
+        <app-emoji-mart 
+        [emojiImg]="'emoticon.png'"
+        [emojiImgHover]="'emoticon-hover.png'"
+        [assigningComponent]="'ChannelChatComponent'"></app-emoji-mart>
 
         <div class="address-message-to-user">
           <img class="not-hover-icon" src="../../../assets/img/ping-user.png" alt="">

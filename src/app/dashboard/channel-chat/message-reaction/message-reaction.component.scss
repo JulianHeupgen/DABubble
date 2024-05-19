@@ -1,0 +1,33 @@
+@import '../../../../mixin.scss';
+
+.chat-reactions {
+    @include flex-align-justify($jc: right);
+    flex-direction: row-reverse;
+    gap: 20px;
+    .reaction {
+        max-width: 64px;
+        max-height: 34px;
+        cursor: pointer;
+        @include flex-align-justify();
+        gap: 10px;
+        border-radius: 20px;
+        padding: 5px 10px;
+        border: 1px solid #ADB0D9;
+
+        &:hover {
+            border: 1px solid #797EF3
+        }
+    }
+
+    img {
+        width: 24px;
+    }
+
+    span {
+        @include font-size-weight-color($fs: 16px)
+    }
+}
+
+.emoji {
+    font-size: 20px !important;
+}
