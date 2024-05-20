@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { User } from '../../models/user.class';
 
@@ -112,6 +112,7 @@ export class ChannelMembersComponent {
 
   removeUser(userId: string): void {
     this.selectedUsers = this.selectedUsers.filter(id => id !== userId);
+    this.selectedUsersIds = this.selectedUsersIds.filter(id => id !== userId);
   }
 
 
@@ -134,13 +135,18 @@ export class ChannelMembersComponent {
   toggleUserSelection(userId: string, userName: string) {
     const index = this.selectedUsersIds.indexOf(userId);
     if (index > -1) {
-      // Benutzer ist bereits ausgewählt, entferne ihn
       this.selectedUsersIds.splice(index, 1);
-      this.selectedUsers.splice(index, 1); // Entferne den Namen aus dem Namen-Array
+      this.selectedUsers.splice(index, 1);
     } else {
-      // Benutzer nicht ausgewählt, füge ihn hinzu
       this.selectedUsersIds.push(userId);
       this.selectedUsers.push(userName);
+    }
+  }
+
+  openMenu(trigger: MatMenuTrigger, event: KeyboardEvent) {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.value.length > 0 && !trigger.menuOpen) {
+      trigger.openMenu();  
     }
   }
 }
