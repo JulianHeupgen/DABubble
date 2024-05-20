@@ -79,7 +79,8 @@ export class DataService {
       title: data.title,
       participants: data.participants,
       threads: data.threads,
-      description: data.description
+      description: data.description,
+      createdBy: data.createdBy
     }
   }
 

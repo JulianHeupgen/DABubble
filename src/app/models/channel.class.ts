@@ -60,7 +60,8 @@ export class Channel {
         title: this.title,
         participants: this.participants,
         // threads: this.threads,
-        description: this.description
+        description: this.description,
+        createdBy: this.createdBy
     };
   }
 

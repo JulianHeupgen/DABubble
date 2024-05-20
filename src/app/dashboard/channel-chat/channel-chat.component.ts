@@ -117,7 +117,7 @@ export class ChannelChatComponent {
         startWith(''),
         map(value => this._filterUsers(value || ''))
       );
-    }, 600);
+    }, 700);
   }
 
   ngAfterViewChecked() {
