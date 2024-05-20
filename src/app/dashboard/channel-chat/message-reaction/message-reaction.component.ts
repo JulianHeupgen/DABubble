@@ -33,7 +33,7 @@ export class MessageReactionComponent {
     });
 
 
-  } 
+  }
 
   reactToThread(threadMessage: any, userReaction: string) {
     let chatReactions = threadMessage.emojiReactions;
@@ -51,19 +51,50 @@ export class MessageReactionComponent {
     });
     if (!reactionExists) {
       this.getNewReactionToMessage(threadMessage, userReaction);
-    }    
-    this.threadMessageToString();    
-    this.dataService.updateThread(this.thread);
+    }
+    this.updateThreadInFirebase();
+    // this.convertTemporaryThreadAndBack();
+    // this.threadMessageToString();
+    // this.dataService.updateThread(this.thread);
   }
 
-  threadMessageToString() {
-    let threadMessages: string[] = []
-    this.thread.messages.forEach(message => {
-      threadMessages.push(JSON.stringify(message));
-    })
-    this.thread.messages = threadMessages;
-    
+  // convertTemporaryThreadAndBack() {
+  //   const originalMessages = [...this.thread.messages];  // Originale Nachrichten speichern
+  //   this.threadMessageToString();
+  //   this.dataService.updateThread(this.thread).then(() => {
+  //     this.thread.messages = originalMessages;  // Nachrichten wiederherstellen
+  //   }).catch(err => {
+  //     console.error('Update failed', err);
+  //     this.thread.messages = originalMessages;  // Nachrichten wiederherstellen im Fehlerfall
+  //   });
+  // }
+
+  updateThreadInFirebase() {
+    const threadCopy = new Thread({ ...this.thread });  // Instanz der Thread-Klasse erstellen
+    threadCopy.messages = [...this.thread.messages];  // Nachrichten kopieren
+    this.convertThreadMessagesToString(threadCopy);
+    this.dataService.updateThread(threadCopy).then(() => {
+      console.log('Thread successfully updated in Firebase');
+    }).catch(err => {
+      console.error('Update failed', err);
+    });
   }
+
+  convertThreadMessagesToString(thread: any) {
+    let threadMessages: string[] = [];
+    thread.messages.forEach((message: any) => {
+      threadMessages.push(JSON.stringify(message));
+    });
+    thread.messages = threadMessages;
+  }
+
+  // threadMessageToString() {
+  //   let threadMessages: string[] = []
+  //   this.thread.messages.forEach(message => {
+  //     threadMessages.push(JSON.stringify(message));
+  //   })
+  //   this.thread.messages = threadMessages;
+  // }
 
 
   isUserInReaction(chatReaction: any) {

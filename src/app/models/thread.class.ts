@@ -56,12 +56,15 @@ export class Thread {
   messageStringtoJSON() {
     let newMessages: any = [];
     this.messages.forEach(message => {
-      let jsonMessage = JSON.parse(message)
-      newMessages.push(jsonMessage);
+      if (typeof message === 'string') {
+        let jsonMessage = JSON.parse(message)
+        newMessages.push(jsonMessage);        
+      } else {
+        newMessages.push(message);
+      }
     })
     this.messages = newMessages;
-    this.sortMessagesByTimestamp();
-    
+    this.sortMessagesByTimestamp();    
   }
 
   sortMessagesByTimestamp() {
