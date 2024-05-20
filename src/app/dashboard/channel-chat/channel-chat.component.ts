@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
@@ -50,6 +50,7 @@ import { EmojiCommunicationService } from '../../services/emoji-communication.se
 })
 export class ChannelChatComponent {
 
+  @ViewChild('threadContainer') threadContainer!: ElementRef;
   @ViewChild('threadMessageBox') threadMessageBox!: ElementRef;
   @ViewChild('imgBox') imgBox!: ElementRef;
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
@@ -110,21 +111,26 @@ export class ChannelChatComponent {
     this.resetParticipantsData();
     this.dataSubscriptions();
     await this.checkUserAuthId();
-
-
-
     setTimeout(() => {
       this.getChannelInfos();
-
       this.filteredUsers = this.pingUserControl.valueChanges.pipe(
         startWith(''),
         map(value => this._filterUsers(value || ''))
       );
     }, 600);
-
-
   }
 
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    try {
+      this.threadContainer.nativeElement.scrollTop = this.threadContainer.nativeElement.scrollHeight;
+    } catch (err) {
+      console.error('Could not scroll to bottom:', err);
+    }
+  }
 
   private _filterUsers(value: string): any[] {
     const filterValue = value.toLowerCase();
