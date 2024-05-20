@@ -25,11 +25,17 @@ export class EditChannelComponent {
   @Input() channelId!: string;
   @Input() matMenuTrigger!: MatMenuTrigger;
 
-  editChannelName_Activated:boolean = false;
-  editChannelDescription_Activated:boolean = false;
+  editChannelName_Activated: boolean = false;
+  editChannelDescription_Activated: boolean = false;
+  showNameError: boolean = false;
+  showDescriptionError: boolean = false;
+  temporaryChannelName: string = '';
+  temporaryChannelDescription: string = '';
 
 
   closeMenu() {
+    this.editChannelName_Activated = false;
+    this.editChannelDescription_Activated = false;
     this.matMenuTrigger.closeMenu();
   }
 
@@ -44,13 +50,39 @@ export class EditChannelComponent {
   }
 
 
+  validateChannelName(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.temporaryChannelName = input.value;
+    this.showNameError = this.temporaryChannelName.length < 3;
+  }
+
+
   saveNameChanges(){
-    this.editChannelName_Activated = !this.editChannelName_Activated;
+    if (this.temporaryChannelName.length >= 3) {
+      this.currentChannel.title = this.temporaryChannelName;
+      this.dataService.updateChannel(this.currentChannel);
+      this.editChannelName_Activated = !this.editChannelName_Activated;
+    } else {
+      this.showNameError = true;
+    }
+  }
+
+
+  validateChannelDescription(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.temporaryChannelDescription = input.value;
+    this.showDescriptionError = this.temporaryChannelDescription.length < 6;
   }
 
 
   saveDescriptionChanges(){
-    this.editChannelDescription_Activated = !this.editChannelDescription_Activated;
+    if (this.temporaryChannelDescription.length >= 6) {
+      this.currentChannel.description = this.temporaryChannelDescription;
+      this.dataService.updateChannel(this.currentChannel);
+      this.editChannelDescription_Activated = !this.editChannelDescription_Activated;
+    } else {
+      this.showDescriptionError = true;
+    }
   }
 
 

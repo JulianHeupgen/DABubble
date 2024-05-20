@@ -19,7 +19,8 @@
       <div>Channel-Name</div>
       <button (click)="saveNameChanges()" class="save-button">Speichern</button>
     </div>
-    <input type="text" placeholder="# {{ currentChannel.title }} ">
+    <input type="text" placeholder="# {{ currentChannel.title }}" (input)="validateChannelName($event)">
+    <span *ngIf="showNameError" class="error-message">Bitte gib einen vollständigen Channel-Name an</span>
   </div> 
 
   <div class="editChannelDescription" *ngIf="!editChannelDescription_Activated">
@@ -40,7 +41,8 @@
       <div>Beschreibung</div>
       <button (click)="saveDescriptionChanges()" class="save-button">Speichern</button>
     </div>
-    <input type="text" placeholder="Teile Infos zu diesem Channel">
+    <input type="text" placeholder="Teile Infos zu diesem Channel" (input)="validateChannelDescription($event)">
+    <span *ngIf="showDescriptionError" class="error-message">Bitte teile Infos zu diesem Channel</span>
     <div class="lineX"></div>
     <div class="channelCreationInfos">
       <span class="createdBy">Erstellt von</span>
