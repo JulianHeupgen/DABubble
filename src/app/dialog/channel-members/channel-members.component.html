@@ -27,9 +27,8 @@
                 </mat-option>
             </mat-select>
         </mat-form-field> -->
-
-        <input [matMenuTriggerFor]="menu" type="text"> 
-        <!-- [value]="selectedUsers.join(', ')"> -->
+        
+        <input [matMenuTriggerFor]="menu"  type="text"> 
         <mat-menu #menu="matMenu" yPosition="below">
             <button mat-menu-item *ngFor="let user of dataService.allUsers"
                 (click)="toggleUserSelection(user.id, user.name)">
