@@ -146,8 +146,9 @@ export class ChannelChatComponent {
     });
     this.threadsSub = this.dataService.getThreadsList().subscribe(threads => {
       this.threads = threads;
-    });
-  }
+      this.getChannelInfos()
+    })
+}
 
 
   async checkUserAuthId() {
