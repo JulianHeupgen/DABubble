@@ -3,8 +3,10 @@
     <div>
         <h2 class="project-font">Leute hinzufügen</h2>
     </div>
+
+    <!-- Container for option selection -->
     <div class="input-section">
-        <div class="input-channel-name">
+        <div class="choose-member">
             <mat-radio-group [(ngModel)]="selectedOption" class="checkbox-inputs">
                 <mat-radio-button value="all">
                     <p>Alle Mitglieder von <span>DevTeam</span> hinzufügen</p>
@@ -16,41 +18,34 @@
         </div>
     </div>
 
+    <!-- Select single users to add to channel -->
     <div class="input-section" *ngIf="selectedOption === 'specific'">
-        <!-- <button [matMenuTriggerFor]="belowMenu">OPEN</button> -->
-
-        <!-- <mat-form-field appearance="fill">
-            <mat-label>Benutzer auswählen</mat-label>
-            <mat-select [(ngModel)]="selectedUsers" multiple>
-                <mat-option *ngFor="let user of dataService.allUsers" [value]="user.id">
-                    <img class="user-chip-img" src="{{ user.imageUrl }}"> {{ user.name }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field> -->
-        
-        <input [matMenuTriggerFor]="menu"  type="text"> 
+        <input [matMenuTriggerFor]="menu" type="text">
         <mat-menu #menu="matMenu" yPosition="below">
             <button mat-menu-item *ngFor="let user of dataService.allUsers"
                 (click)="toggleUserSelection(user.id, user.name)">
-                <img class="user-chip-img" src="{{ user.imageUrl }}" alt=""> {{ user.name }}
+                <img class="user-chip-img" src="{{ user.imageUrl }}" alt="">
+                <p class="project-font">
+                    {{ user.name }}
+                </p>
             </button>
         </mat-menu>
 
-        <!-- Anzeige der ausgewählten Benutzer als Chips -->
+        <!-- Show selected users as chips -->
         <div *ngIf="selectedUsersIds.length > 0">
-                <input style="display: none;" [matChipInputFor]="chipGrid" [matChipInputAddOnBlur]="true" />
-                <mat-chip-grid #chipGrid>
-                    <mat-chip-row class="mat-chip-row" *ngFor="let userId of selectedUsersIds" [removable]="true"
-                        (removed)="removeUser(userId)">
-                        <div class="chip-subcontainer">
-                            <img class="user-chip-img" src="{{ getUserImg(userId) }}">
-                            <p>
-                                {{ getUserName(userId) }}
-                            </p>
-                        </div>
-                        <button matChipRemove (click)="removeUser(userId)"><img src="./assets/img/close.png"></button>
-                    </mat-chip-row>
-                </mat-chip-grid>
+            <input style="display: none;" [matChipInputFor]="chipGrid" [matChipInputAddOnBlur]="true" />
+            <mat-chip-grid #chipGrid>
+                <mat-chip-row class="mat-chip-row" *ngFor="let userId of selectedUsersIds" [removable]="true"
+                    (removed)="removeUser(userId)">
+                    <div class="chip-subcontainer">
+                        <img class="user-chip-img" src="{{ getUserImg(userId) }}">
+                        <p>
+                            {{ getUserName(userId) }}
+                        </p>
+                    </div>
+                    <button matChipRemove (click)="removeUser(userId)"><img src="./assets/img/close.png"></button>
+                </mat-chip-row>
+            </mat-chip-grid>
         </div>
     </div>
 
