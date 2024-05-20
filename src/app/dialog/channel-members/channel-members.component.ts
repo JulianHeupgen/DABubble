@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { User } from '../../models/user.class';
 
 // interface User {
 //   id: string;
@@ -43,6 +44,7 @@ export class ChannelMembersComponent {
 
   selectedOption = 'all';
   selectedUsers: string[] = [];
+  selectedUsersIds: string[] = [];
 
 
   constructor(
@@ -125,7 +127,20 @@ export class ChannelMembersComponent {
   }
 
 
-  addUser(user: any) {
-    this.selectedUsers.push(user);
+  // addUser(user: any) {
+  //   this.selectedUsers.push(user);
+  // }
+
+  toggleUserSelection(userId: string, userName: string) {
+    const index = this.selectedUsersIds.indexOf(userId);
+    if (index > -1) {
+      // Benutzer ist bereits ausgewählt, entferne ihn
+      this.selectedUsersIds.splice(index, 1);
+      this.selectedUsers.splice(index, 1); // Entferne den Namen aus dem Namen-Array
+    } else {
+      // Benutzer nicht ausgewählt, füge ihn hinzu
+      this.selectedUsersIds.push(userId);
+      this.selectedUsers.push(userName);
+    }
   }
 }
