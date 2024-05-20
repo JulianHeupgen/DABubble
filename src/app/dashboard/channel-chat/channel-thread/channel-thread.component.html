@@ -46,7 +46,7 @@
         <div class="reaction-bar">
             <app-message-reaction
             [threadMessage]="thread.messages[0]"
-            [threadId]="thread.threadId"
+            [thread]="thread"
             [currentUser]="channelChat.currentUser"></app-message-reaction>
             <app-emoji-mart 
             [emojiImg]="'emoji-reaction.png'" 

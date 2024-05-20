@@ -4,6 +4,8 @@ import { EmojiCommunicationService } from '../../../services/emoji-communication
 import { Message } from '../../../models/message.class';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { Thread } from '../../../models/thread.class';
+import { DataService } from '../../../services/data.service';
 
 @Component({
   selector: 'app-message-reaction',
@@ -17,14 +19,15 @@ import { Subscription } from 'rxjs';
 export class MessageReactionComponent {
   @Input() threadMessage!: any;
   @Input() currentUser!: User;
-  @Input() threadId!: string;
+  @Input() thread!: Thread;
   emojiSubscription: Subscription;
 
   constructor(
     private emojiService: EmojiCommunicationService,
+    private dataService: DataService
   ) {
     this.emojiSubscription = this.emojiService.emojiEvent$.subscribe(event => {
-      if (event.sender === 'MessageReactionComponent' && event.threadId === this.threadId) {
+      if (event.sender === 'MessageReactionComponent' && event.threadId === this.thread.threadId) {
         this.reactToThread(this.threadMessage, event.emoji);
       }
     });
@@ -48,7 +51,18 @@ export class MessageReactionComponent {
     });
     if (!reactionExists) {
       this.getNewReactionToMessage(threadMessage, userReaction);
-    }
+    }    
+    this.threadMessageToString();    
+    this.dataService.updateThread(this.thread);
+  }
+
+  threadMessageToString() {
+    let threadMessages: string[] = []
+    this.thread.messages.forEach(message => {
+      threadMessages.push(JSON.stringify(message));
+    })
+    this.thread.messages = threadMessages;
+    
   }
 
 
