@@ -50,6 +50,6 @@
     </div>
 
     <div class="btn-section">
-        <button (click)="save()">Erstellen</button>
+        <button [disabled]="!(selectedOption === 'all' || (selectedOption === 'specific' && selectedUsers.length > 0))" (click)="save()">Erstellen</button>
     </div>
 </div>
