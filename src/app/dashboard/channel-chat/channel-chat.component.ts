@@ -146,7 +146,7 @@ export class ChannelChatComponent {
     });
     this.threadsSub = this.dataService.getThreadsList().subscribe(threads => {
       this.threads = threads;
-      this.getChannelInfos()
+      this.getChannelInfos();
     })
 }
 
@@ -179,6 +179,7 @@ export class ChannelChatComponent {
 
 
   getChannelInfos() {
+    this.resetParticipantsData()
     this.getCurrentChannel();
     this.showChannelParticipants(this.channelId);
     this.getChannelThreads(this.channelId);
