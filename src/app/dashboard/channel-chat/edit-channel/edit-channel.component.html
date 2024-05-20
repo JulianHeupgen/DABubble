@@ -6,12 +6,20 @@
     </div>
   </div>
 
-  <div class="editChannelName">
+  <div class="editChannelName" *ngIf="!editChannelName_Activated">
     <div class="editChannelName-header">
       <div>Channel-Name</div>
-      <button class="edit-button">Bearbeiten</button>
+      <button (click)="editChannelName()" class="edit-button">Bearbeiten</button>
     </div>
     <div class="editChannelName-title"> # {{ currentChannel.title }} </div>
+  </div> 
+
+  <div class="editChannelName2" *ngIf="editChannelName_Activated">
+    <div class="editChannelName-header2">
+      <div>Channel-Name</div>
+      <button (click)="saveNameChanges()" class="save-button">Speichern</button>
+    </div>
+    <input type="text" name="username" placeholder="# {{ currentChannel.title }} ">
   </div> 
 
   <div class="editChannelDescription">
