@@ -73,7 +73,7 @@ export class ChannelMembersComponent {
 
   addChannelToSpecificUsers() {
     const batch = writeBatch(this.firestore);
-    this.selectedUsers.forEach(userId => {
+    this.selectedUsersIds.forEach(userId => {
       const userDocRef = doc(this.firestore, `users/${userId}`);
       batch.update(userDocRef, { channels: arrayUnion(this.data.channelId) });
     });

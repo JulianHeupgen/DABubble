@@ -1,234 +1,180 @@
 @import '../../../mixin.scss';
 
 h2,
-h3 {
-    margin: 0;
+h3,
+p {
+  margin: 0;
 }
 
 h2 {
-    @include font-size-weight-color($fs: 24px, $fw: 700)
+  @include font-size-weight-color($fs: 24px, $fw: 700)
 }
 
 h3 {
-    @include font-size-weight-color($fw: 700);
+  @include font-size-weight-color($fw: 700);
 
-    span {
-        @include font-size-weight-color($cl: #686868 !important)
-    }
+  span {
+    @include font-size-weight-color($cl: #686868 !important)
+  }
 }
 
 input {
-    border: unset;
-    outline: none;
+  border: unset;
+  outline: none;
 
-    &:focus {
-        border-color: #444DF2 !important;
-    }
+  &:focus {
+    border-color: #444DF2 !important;
+  }
 }
 
 .add-channel-card {
-    box-shadow: 0px 6px 10px 0px #00000033;
-    max-width: 872px;
-    min-height: 294px;
-    border-radius: 30px;
-    background-color: #FFFFFF;
-    padding: 40px;
-    @include flex-align-justify($ai: start, $jc: space-between);
-    flex-direction: column;
-    gap: 20px;
-    position: relative;
-    z-index: 1001;
+  box-shadow: 0px 6px 10px 0px #00000033;
+  max-width: 872px;
+  min-height: 294px;
+  border-radius: 30px;
+  background-color: #FFFFFF;
+  padding: 40px;
+  @include flex-align-justify($ai: start, $jc: space-between);
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 1001;
 
-    span {
-        @include font-size-weight-color();
-    }
-
-    div {
-        width: 100%;
-    }
-
-    .close-img {
-        position: absolute;
-        right: 32px;
-        height: 24px;
-        width: 24px;
-        cursor: pointer;
-    }
-}
-  
-  .user-avatar {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    margin-right: 8px;
-    vertical-align: middle;
+  span {
+    @include font-size-weight-color();
   }
 
-
-.input-section {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
-    input {
-        width: 100%;
-        padding: 18px 40px;
-        border: 1px solid #ADB0D9;
-        border-radius: 40px;
-        @include font-size-weight-color($cl: #686868)
-    }
-}
-
-.btn-section {
-    display: flex;
-    justify-content: right;
-
-    button {
-        cursor: pointer;
-        border-radius: 25px;
-        border: none;
-        background-color: #444DF2;
-        padding: 12px 25px;
-        @include font-size-weight-color($fw: 700, $cl: #FFFFFF);
-
-        &:hover {
-            background-color: #797EF3;
-        }
-    }
-}
-
-.input-channel-name {
-    position: relative;
-    display: flex;
-    align-items: center;
-
-    input {
-        width: 100%;
-        // padding-left: 40px;
-    }
-
-    // img {
-    //     height: 23px;
-    //     width: 23px;
-    //     position: absolute;
-    //     left: 10px;
-    // }
-}
-
-::ng-deep .mat-mdc-dialog-container {
-    --mdc-dialog-container-shape: 30px;
-}
-
-::ng-deep .mat-accent, 
-::ng-deep .mat-mdc-radio-button.mat-accent,
-::ng-deep .mat-radio {
-    --mdc-radio-selected-focus-icon-color: none;
-    --mdc-radio-selected-hover-icon-color: #444DF2;
-    --mdc-radio-selected-icon-color: #444DF2;
-    --mdc-radio-selected-pressed-icon-color: none;
-    --mat-radio-ripple-color: none;
-    --mat-radio-checked-ripple-color: none;
-    --mat-radio-disabled-label-color: none;
-    --mdc-circular-progress-active-indicator-color: none;
-    --mdc-radio-disabled-selected-icon-color: none;
-    --mdc-radio-disabled-unselected-icon-color: none;
-    --mdc-radio-unselected-hover-icon-color: #444DF2;
-    --mdc-radio-unselected-icon-color: #ADB0D9;
-    --mdc-radio-unselected-pressed-icon-color: none;
-}
-
-.checkbox-inputs {
-    display: flex;
-    flex-direction: column;
-
-    p {
-        font-size: 18px;
-        margin: 0;
-
-        span {
-            font-size: 18px;
-            color: $fontHover;
-        }
-    }    
-}  
-
-
-
-.add-channel-card {
-    .chip-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 8px;
-    }
-  
-    .chip {
-      display: flex;
-      align-items: center;
-      padding: 4px 8px;
-      background-color: #e0e0e0;
-      border-radius: 16px;
-    }
-  
-    .chip-avatar {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      margin-right: 8px;
-    }
-  
-    .chip span {
-      margin-right: 8px;
-    }
-  
-    .chip mat-icon {
-      cursor: pointer;
-    }
-  
-    .full-width {
-      width: 100%;
-    }
-  
-    .user-avatar {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      margin-right: 8px;
-    }
-  }
-
-  ::ng-deep mat-chip-row, 
-  .mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) {
-    display: flex;
-    background-color: $backgroundHover;
-    min-width: 206px;
-    height: 40px;
-    border-radius: 35px;
-  }
-
-  ::ng-deep .mdc-evolution-chip__text-label, .mat-mdc-chip-action-label {
+  div {
     width: 100%;
   }
 
-  ::ng-deep .mdc-list-item__primary-text {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+  .close-img {
+    position: absolute;
+    right: 32px;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
   }
+}
 
-  .chip-subcontainer {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+::ng-deep .mat-mdc-menu-item-text {
+  margin: 0;
+  @include flex-align-justify($jc: flex-start);
+  gap: 8px;
+}
 
-    p {
-        margin: 0;
-        font-size: 18px;
+.input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  input {
+    width: 100%;
+    padding: 18px 40px;
+    border: 1px solid #ADB0D9;
+    border-radius: 40px;
+    @include font-size-weight-color($cl: #686868)
+  }
+}
+
+.btn-section {
+  display: flex;
+  justify-content: right;
+
+  button {
+    cursor: pointer;
+    border-radius: 25px;
+    border: none;
+    background-color: #444DF2;
+    padding: 12px 25px;
+    @include font-size-weight-color($fw: 700, $cl: #FFFFFF);
+
+    &:hover {
+      background-color: #797EF3;
     }
   }
+}
 
-  .user-chip-img {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
+.choose-member {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  input {
+    width: 100%;
   }
+}
+
+::ng-deep .mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: 30px;
+}
+
+::ng-deep .mat-accent,
+::ng-deep .mat-mdc-radio-button.mat-accent,
+::ng-deep .mat-radio {
+  --mdc-radio-selected-focus-icon-color: none;
+  --mdc-radio-selected-hover-icon-color: #444DF2;
+  --mdc-radio-selected-icon-color: #444DF2;
+  --mdc-radio-selected-pressed-icon-color: none;
+  --mat-radio-ripple-color: none;
+  --mat-radio-checked-ripple-color: none;
+  --mat-radio-disabled-label-color: none;
+  --mdc-circular-progress-active-indicator-color: none;
+  --mdc-radio-disabled-selected-icon-color: none;
+  --mdc-radio-disabled-unselected-icon-color: none;
+  --mdc-radio-unselected-hover-icon-color: #444DF2;
+  --mdc-radio-unselected-icon-color: #ADB0D9;
+  --mdc-radio-unselected-pressed-icon-color: none;
+}
+
+.checkbox-inputs {
+  display: flex;
+  flex-direction: column;
+
+  p {
+    font-size: 18px;
+    margin: 0;
+
+    span {
+      font-size: 18px;
+      color: $fontHover;
+    }
+  }
+}
+
+::ng-deep mat-chip-row,
+.mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) {
+  display: flex;
+  background-color: $backgroundHover;
+  min-width: 206px;
+  height: 40px;
+  border-radius: 35px;
+}
+
+::ng-deep .mdc-evolution-chip__text-label,
+.mat-mdc-chip-action-label {
+  width: 100%;
+}
+
+::ng-deep .mdc-list-item__primary-text {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.chip-subcontainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  p {
+    margin: 0;
+    font-size: 18px;
+  }
+}
+
+.user-chip-img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+}
