@@ -53,25 +53,11 @@ export class MessageReactionComponent {
       this.getNewReactionToMessage(threadMessage, userReaction);
     }
     this.updateThreadInFirebase();
-    // this.convertTemporaryThreadAndBack();
-    // this.threadMessageToString();
-    // this.dataService.updateThread(this.thread);
   }
 
-  // convertTemporaryThreadAndBack() {
-  //   const originalMessages = [...this.thread.messages];  // Originale Nachrichten speichern
-  //   this.threadMessageToString();
-  //   this.dataService.updateThread(this.thread).then(() => {
-  //     this.thread.messages = originalMessages;  // Nachrichten wiederherstellen
-  //   }).catch(err => {
-  //     console.error('Update failed', err);
-  //     this.thread.messages = originalMessages;  // Nachrichten wiederherstellen im Fehlerfall
-  //   });
-  // }
-
   updateThreadInFirebase() {
-    const threadCopy = new Thread({ ...this.thread });  // Instanz der Thread-Klasse erstellen
-    threadCopy.messages = [...this.thread.messages];  // Nachrichten kopieren
+    const threadCopy = new Thread({ ...this.thread });
+    threadCopy.messages = [...this.thread.messages];
     this.convertThreadMessagesToString(threadCopy);
     this.dataService.updateThread(threadCopy).then(() => {
       console.log('Thread successfully updated in Firebase');
@@ -87,15 +73,6 @@ export class MessageReactionComponent {
     });
     thread.messages = threadMessages;
   }
-
-  // threadMessageToString() {
-  //   let threadMessages: string[] = []
-  //   this.thread.messages.forEach(message => {
-  //     threadMessages.push(JSON.stringify(message));
-  //   })
-  //   this.thread.messages = threadMessages;
-  // }
-
 
   isUserInReaction(chatReaction: any) {
     return chatReaction.users.findIndex((u: any) => u.id === this.currentUser.id);
