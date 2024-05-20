@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Channel } from '../../../models/channel.class';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +20,16 @@ export class EditChannelComponent {
 
   constructor(public dataService: DataService) {}
 
+  ngOnInit() {
+    this.channelCreator = this.getChannelCreator();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['currentChannel']) {
+      this.channelCreator = this.getChannelCreator();
+    }
+  }
+
   @Input() currentChannel!: Channel;
   @Input() currentUser!: User; 
   @Input() channelId!: string;
@@ -31,6 +41,14 @@ export class EditChannelComponent {
   showDescriptionError: boolean = false;
   temporaryChannelName: string = '';
   temporaryChannelDescription: string = '';
+  channelCreator!: string;
+
+
+  getChannelCreator(): string {
+    const creatorId = this.currentChannel.createdBy;
+    const creator = this.dataService.allUsers.find(user => user.id === creatorId);
+    return creator ? creator.name : 'Unbekannter Ersteller';
+  }
 
 
   closeMenu() {
