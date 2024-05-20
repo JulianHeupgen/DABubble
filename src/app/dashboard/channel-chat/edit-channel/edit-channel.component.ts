@@ -6,12 +6,13 @@ import { MatInputModule } from '@angular/material/input';
 import { User } from '../../../models/user.class';
 import { DataService } from '../../../services/data.service';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-edit-channel',
   standalone: true,
-  imports: [MatFormField, MatLabel, FormsModule, MatInputModule],
+  imports: [MatFormField, MatLabel, FormsModule, MatInputModule, CommonModule],
   templateUrl: './edit-channel.component.html',
   styleUrl: './edit-channel.component.scss'
 })
@@ -24,9 +25,21 @@ export class EditChannelComponent {
   @Input() channelId!: string;
   @Input() matMenuTrigger!: MatMenuTrigger;
 
+  editChannelName_Activated:boolean = false;
+
 
   closeMenu() {
     this.matMenuTrigger.closeMenu();
+  }
+
+
+  editChannelName() {
+    this.editChannelName_Activated = !this.editChannelName_Activated;
+  }
+
+
+  saveNameChanges(){
+    this.editChannelName_Activated = !this.editChannelName_Activated;
   }
 
 
