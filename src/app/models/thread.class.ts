@@ -24,14 +24,6 @@ export class Thread {
 
 
   getFormattedDatestamp(): any {
-    // const timestampInSeconds = this.timestamp;
-    // const timestampInMilliseconds = timestampInSeconds * 1000;
-    // const formattedDate = date.toLocaleDateString('en-US', {
-    //   weekday: 'short',
-    //   month: 'short',
-    //   day: 'numeric',
-    //   year: 'numeric'
-    // });
     const date = new Date(this.timestamp);
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Monate sind 0-basiert
@@ -42,8 +34,6 @@ export class Thread {
   }
 
   getFormattedTimeStamp() {
-    // const timestampInSeconds = this.timestamp;
-    // const timestampInMilliseconds = timestampInSeconds * 1000;
     const date = new Date(this.timestamp);
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
