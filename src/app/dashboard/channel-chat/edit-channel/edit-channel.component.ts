@@ -26,6 +26,7 @@ export class EditChannelComponent {
   @Input() matMenuTrigger!: MatMenuTrigger;
 
   editChannelName_Activated:boolean = false;
+  editChannelDescription_Activated:boolean = false;
 
 
   closeMenu() {
@@ -38,8 +39,18 @@ export class EditChannelComponent {
   }
 
 
+  editChannelDescription() {
+    this.editChannelDescription_Activated = !this.editChannelDescription_Activated;
+  }
+
+
   saveNameChanges(){
     this.editChannelName_Activated = !this.editChannelName_Activated;
+  }
+
+
+  saveDescriptionChanges(){
+    this.editChannelDescription_Activated = !this.editChannelDescription_Activated;
   }
 
 

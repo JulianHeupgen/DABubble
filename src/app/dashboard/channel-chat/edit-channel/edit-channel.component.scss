@@ -113,15 +113,75 @@
     }
 
     input {
-        border-radius: 15px;
+        border-radius: 20px;
         border: 1px solid #ADB0D9;
         margin-top: 18px;
-        font-size: 21px;
-        padding: 8px;
+        font-size: 19px;
+        padding: 9px;
     }
 
-    input:focus {
-        border: 1px solid #444DF2;  
+    input:focus {  
+        outline: 1px solid #444DF2;
+    }
+}
+
+.editChannelDescription2 {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    margin-top: 18px;
+
+    .editChannelDescription-header2 {
+        @include flex-align-justify($jc: space-between);  
+
+        div {
+            @include font-size-weight-color($fs: 18px, $fw: 700); 
+        }
+
+        .save-button {
+            cursor: pointer;
+            border: none;
+            background-color: white;
+            @include font-size-weight-color($fs: 18px, $fw: 600, $cl: #444DF2);
+
+            &:hover {
+                @include font-size-weight-color($fs: 18px, $fw: 700, $cl: #535AF1);  
+            }
+        }
+    }
+
+    input {
+        border-radius: 20px;
+        border: 1px solid #ADB0D9;
+        margin-top: 18px;
+        font-size: 19px;
+        padding: 9px;
+    }
+
+    input:focus {  
+        outline: 1px solid #444DF2;
+    }
+
+    .lineX {
+        width: 100%;
+        height: 1px;
+        background-color: #bdbfdf;
+        margin-top: 22px;
+    }
+
+    .channelCreationInfos {
+        margin-top: 22px;
+        display: flex;
+        flex-direction: column;
+
+        .createdBy {
+            @include font-size-weight-color($fs: 18px, $fw: 700);  
+        }
+
+        .name {
+            margin: 24px 0 12px 0;
+            @include font-size-weight-color($fs: 24px, $fw: 600, $cl: #444DF2);
+        }
     }
 }
 

@@ -19,13 +19,13 @@
       <div>Channel-Name</div>
       <button (click)="saveNameChanges()" class="save-button">Speichern</button>
     </div>
-    <input type="text" name="username" placeholder="# {{ currentChannel.title }} ">
+    <input type="text" placeholder="# {{ currentChannel.title }} ">
   </div> 
 
-  <div class="editChannelDescription">
+  <div class="editChannelDescription" *ngIf="!editChannelDescription_Activated">
     <div class="editChannelDescription-header">
       <div>Beschreibung</div>
-      <button class="edit-button">Bearbeiten</button>
+      <button (click)="editChannelDescription()" class="edit-button">Bearbeiten</button>
     </div>
     <div class="editChannelDescription-description"> {{ currentChannel.description }} </div>
     <div class="lineX"></div>
@@ -34,6 +34,19 @@
       <span class="name">Julian Heupgen Platzhalter</span>
     </div>
   </div> 
+
+  <div class="editChannelDescription2" *ngIf="editChannelDescription_Activated">
+    <div class="editChannelDescription-header2">
+      <div>Beschreibung</div>
+      <button (click)="saveDescriptionChanges()" class="save-button">Speichern</button>
+    </div>
+    <input type="text" placeholder="Teile Infos zu diesem Channel">
+    <div class="lineX"></div>
+    <div class="channelCreationInfos">
+      <span class="createdBy">Erstellt von</span>
+      <span class="name">Julian Heupgen Platzhalter</span>
+    </div>
+  </div>
   
 
   <div class="leaveButton-container">
