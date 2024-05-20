@@ -7,20 +7,22 @@ export class Channel {
   // threads: Thread[];   // überhaupt notwendig?
   channelId: string;
   description: string;
+  createdBy: string;
 
   constructor(data: {
     channelId?: string,
     title?: string,
     participants?: User[],
     // threads?: Thread[],
-    description?: string
-
+    description?: string,
+    createdBy?: string
   }) {
     this.channelId = data.channelId || '';
     this.title = data.title || '';
     this.participants = data.participants || [];
     // this.threads = data.threads || [];
     this.description = data.description || '';
+    this.createdBy = data.createdBy || '';
   }
 
 
