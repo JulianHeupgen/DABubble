@@ -72,29 +72,31 @@ export class PhotoSelectionComponent {
   async onRegistrationFinished() {
     if (this.uploadedFile && this.uploadedFile instanceof File) {
       try {
-        const downloadUrl = await this.storageService.uploadFile(this.uploadedFile);
-        this.imgSrcUrl = downloadUrl;
+        this.imgSrcUrl = await this.storageService.uploadFile(this.uploadedFile);
       } catch (error) {
-        console.error('Error when uploading to the db: ', error);
+        console.error('Image upload error. ', error);
       }
     }
     this.updateUserObject('imageUrl', this.imgSrcUrl as string);
     this.updateUserObject('onlineStatus', 'online');
     this.updateUserObject('channels', ['Yk2dgejx9yy7iHLij1Qj']);
-    // Authenticate User and when successfull update User Object and set it to Firestore
+    // Authenticate User and when successful update User Object and set it to Firestore
     this.signUpAndCreateUser();
   }
 
   signUpAndCreateUser() {
-    // first we signup the user
-    this.authService.signUp(this._userData.email, this._userData.password, this._userData.fullname)
+    // first we sign up the user
+    this.authService.signUp(this._userData.email, this._userData.password)
       .then(user => {
         //update the firebase user model with the auth id and store it
         this.updateUserObject('authUserId', user.user.uid);
-        this.createUserObject();
+        return this.createUserObject();
+      })
+      .then(() => {
+        console.log('User created with success.')
       })
       .catch(error => {
-        console.error('An error occured while signin up the user. ERR CODE: ', error);
+        console.error('An error occurred while sign in up the user. Error: ', error);
       })
   }
 

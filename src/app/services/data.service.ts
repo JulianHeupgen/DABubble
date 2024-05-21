@@ -1,11 +1,11 @@
-import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, collection, deleteDoc, doc, onSnapshot, updateDoc } from '@angular/fire/firestore';
-import { User } from '../models/user.class';
-import { Channel } from '../models/channel.class';
-import { Thread } from '../models/thread.class';
-import { UserChat } from '../models/user-chat';
-import { Observable } from 'rxjs';
-import { FullThreadComponent } from '../dashboard/full-thread/full-thread.component';
+import {Injectable, inject} from '@angular/core';
+import {Firestore, addDoc, collection, deleteDoc, doc, onSnapshot, updateDoc} from '@angular/fire/firestore';
+import {User} from '../models/user.class';
+import {Channel} from '../models/channel.class';
+import {Thread} from '../models/thread.class';
+import {UserChat} from '../models/user-chat';
+import {Observable} from 'rxjs';
+import {FullThreadComponent} from '../dashboard/full-thread/full-thread.component';
 
 
 @Injectable({
@@ -15,11 +15,11 @@ export class DataService {
 
   firestore: Firestore = inject(Firestore);
 
-  constructor( ) {
+  constructor() {
     this.getUsersList();
     this.getChannelsList();
     this.getThreadsList();
-    this.getUserChatsList();    
+    this.getUserChatsList();
   }
 
   allUsers: User[] = [];
@@ -62,12 +62,13 @@ export class DataService {
 
   getChannelsList() {
     return new Observable(observer => {
-      const unsubscribe = onSnapshot(this.getChannelCollection(), list => {
-        this.allChannels = [];
-        list.forEach(channel => this.allChannels.push(this.setChannelObject(channel.id, channel.data())))
-        observer.next(this.allChannels);
-      });
-    });
+      const unsubscribe = onSnapshot(this.getChannelCollection(),
+        list => {
+          this.allChannels = [];
+          list.forEach(channel => this.allChannels.push(this.setChannelObject(channel.id, channel.data())))
+          observer.next(this.allChannels);
+        });
+    })
   }
 
   getChannelCollection() {
@@ -96,7 +97,7 @@ export class DataService {
         observer.next(this.allThreads);
       });
     });
-    
+
   }
 
   getThreadCollection() {
@@ -138,10 +139,6 @@ export class DataService {
   }
 
 
-
-
-
-
   // Neue Channels, Threads oder UserChats in den Firebase Collections hinzufügen
 
   async addChannel(channel: Channel): Promise<string> {
@@ -156,7 +153,7 @@ export class DataService {
   }
 
   async addThread(thread: Thread) {
-    await addDoc(this.getThreadCollection(), thread.toJSON() ).catch((err) => {
+    await addDoc(this.getThreadCollection(), thread.toJSON()).catch((err) => {
       console.error(err)
     }).then((docRef) => {
       console.log("Document written with ID: ", docRef?.id)
@@ -164,7 +161,7 @@ export class DataService {
   }
 
   async addUserChat(userChat: UserChat) {
-    await addDoc(this.getUserChatsCollection(), userChat.toJSON() ).catch((err) => {
+    await addDoc(this.getUserChatsCollection(), userChat.toJSON()).catch((err) => {
       console.error(err)
     }).then((docRef) => {
       console.log("Document written with ID: ", docRef?.id)
@@ -172,63 +169,60 @@ export class DataService {
   }
 
 
+  // Einen User updaten
 
-  // Einen User updaten 
-
-  async updateUser(user: User ) {
+  async updateUser(user: User) {
     let docRef = this.getUserDocRef(user.id);
     await updateDoc(docRef, user.toJSON()).catch((err) => {
-       console.error(err)
+      console.error(err)
     });
   }
 
-  getUserDocRef(userId: string ) {
+  getUserDocRef(userId: string) {
     return doc(collection(this.firestore, 'users'), userId);
   }
 
 
   // Einen Channel updaten
 
-  async updateChannel(channel: Channel ) {
+  async updateChannel(channel: Channel) {
     let docRef = this.getChannelDocRef(channel.channelId);
     await updateDoc(docRef, channel.toJSON()).catch((err) => {
-       console.error(err)
+      console.error(err)
     });
   }
 
-  getChannelDocRef(channelId: string ) {
+  getChannelDocRef(channelId: string) {
     return doc(collection(this.firestore, 'channels'), channelId);
   }
 
 
   // Einen Thread updaten
 
-  async updateThread(thread: Thread ) {
+  async updateThread(thread: Thread) {
     let docRef = this.getThreadDocRef(thread.threadId);
     await updateDoc(docRef, thread.toJSON()).catch((err) => {
-       console.error(err)
+      console.error(err)
     });
   }
 
-  getThreadDocRef(threadId: string ) {
+  getThreadDocRef(threadId: string) {
     return doc(collection(this.firestore, 'threads'), threadId);
   }
 
 
   // Einen UserChat updaten
-  
-  async updateUserChat(userChat: UserChat ) {
+
+  async updateUserChat(userChat: UserChat) {
     let docRef = this.getUserChatDocRef(userChat.userChatId);
     await updateDoc(docRef, userChat.toJSON()).catch((err) => {
-       console.error(err)
+      console.error(err)
     });
   }
 
   getUserChatDocRef(userChatId: string) {
     return doc(collection(this.firestore, 'directMessages'), userChatId)
   }
-
-
 
 
   // Einzelnen UserChat löschen

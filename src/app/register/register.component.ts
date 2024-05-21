@@ -64,7 +64,7 @@ export class RegisterComponent {
 
   // REMOVE those for PROD
   registerUser() {
-    this.authservice.signUp('hannes@dabubble.com', '123456789', 'Hannes')
+    this.authservice.signUp('hannes@dabubble.com', '123456789')
       .then(user => {
         console.log(user);
       })

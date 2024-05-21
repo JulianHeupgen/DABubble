@@ -1,11 +1,35 @@
-import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateEmail, onAuthStateChanged, user, EmailAuthProvider, reauthenticateWithCredential, deleteUser, signInWithCredential, signOut } from '@angular/fire/auth';
-import { Router } from '@angular/router';
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import {Injectable} from '@angular/core';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateEmail,
+  onAuthStateChanged,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  deleteUser,
+  signInWithCredential,
+  signOut
+} from '@angular/fire/auth';
+import {Router} from '@angular/router';
+import {GoogleAuthProvider, getAuth, signInWithPopup} from "firebase/auth";
 
-import { Firestore, doc, addDoc, collection, updateDoc, query, where, getDocs, getDoc, deleteDoc, onSnapshot, docSnapshots } from '@angular/fire/firestore';
-import { User } from '../models/user.class';
-import { Observable } from 'rxjs';
+import {
+  Firestore,
+  doc,
+  addDoc,
+  collection,
+  updateDoc,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  deleteDoc,
+  onSnapshot,
+  docSnapshots
+} from '@angular/fire/firestore';
+import {User} from '../models/user.class';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +40,8 @@ export class AuthService {
     private auth: Auth,
     private firestore: Firestore,
     private router: Router,
-  ) { }
+  ) {
+  }
 
 
   /* TEST SPACE */
@@ -28,13 +53,11 @@ export class AuthService {
    * This function performs a signup using email and password.
    * @param email
    * @param password
-   * @param name
    * @returns User Object to store data in firestore DB.
    */
-  async signUp(email: string, password: string, name: string) {
+  async signUp(email: string, password: string) {
     try {
-      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
-      return userCredential;
+      return await createUserWithEmailAndPassword(this.auth, email, password);
     } catch (error) {
       throw error;
     }
@@ -56,13 +79,20 @@ export class AuthService {
 
     signInWithPopup(googleAuth, googleProvider)
       .then(userCredential => {
-        this.router.navigate(['/dashboard/', userCredential.user.uid]);
-      }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
-      });
+        this.router.navigate(['/dashboard/', userCredential.user.uid])
+          .then(() => {
+            console.log('Navigation successful!')
+          })
+          .catch((navError) => {
+            console.error('Navigation Error ', navError)
+          })
+      })
+      .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const email = error.customData.email;
+      const credential = GoogleAuthProvider.credentialFromError(error);
+    });
   }
 
   // async setUserToFirestore(userData: any, name: string) {
@@ -82,7 +112,7 @@ export class AuthService {
   // }
 
   /**
-   * Logout the actual logged in user
+   * Logout the actual logged-in user
    */
   async logout(): Promise<boolean> {
     try {
@@ -107,7 +137,7 @@ export class AuthService {
       }
       return undefined;
     } catch (error) {
-      console.error('Couldnt provide the doc Id. ', error);
+      console.error('Couldn t provide the doc Id. ', error);
       throw error;
     }
   }
@@ -117,17 +147,20 @@ export class AuthService {
    * @param newStatus New Status which can be set (only use 'online' | 'offline')
    */
   async updateUserOnlineStatus(newStatus: 'online' | 'offline' | 'away'): Promise<void> {
+    const docId = await this.getDocIdfromAuthenticatedUser();
+    if (!docId) {
+      console.error('No docId found for this user.');
+      throw new Error('No docId found for this user.');
+      // throw an Error moves the pointer inside the catch block and stops here
+    }
+
     try {
-      const docId = await this.getDocIdfromAuthenticatedUser();
-      if (!docId) {
-        throw new Error('No docId found for this user.');
-      }
       await updateDoc(doc(this.firestore, 'users', docId), {
         onlineStatus: newStatus
       })
 
     } catch (error) {
-      console.error('Error updating user online Status.');
+      console.error('Error updating user online Status.', error);
       throw error;
     }
   }
@@ -174,7 +207,7 @@ export class AuthService {
             subscriber.error(new Error('No doc ID found.'));
             return;
           }
-          // Use the docId to get onsnapShot data
+          // Use the docId to get onSnapShot data
           const unsubscribe = onSnapshot(doc(this.firestore, 'users', docId), docSnapshots => {
             if (docSnapshots.exists()) {
               const user = new User(docSnapshots.data() as User);
@@ -220,14 +253,14 @@ export class AuthService {
   }
 
   /**
-   * This reauthenticates the user - for sensitive actions needed
+   * This reAuthenticates the user - for sensitive actions needed
    * @param email Email to log in
    * @param password Password to log in
    * @returns Boolean - true when successful
    */
   async reAuthenticateUser(email: string, password: string) {
     const user = this.auth.currentUser;
-    const credential = await EmailAuthProvider.credential(email, password);
+    const credential = EmailAuthProvider.credential(email, password);
 
     if (!user || !credential) {
       throw new Error('Authentication failed. User or Credentials wrong.');
@@ -270,48 +303,53 @@ export class AuthService {
     if (!user) {
       throw new Error('No UID found for current user.');
     }
+
     const uid = user.uid; //this gets the auth id from the current logged user
+    const docId = await this.getDocIdFromAuthUserId(uid);
+    if (!docId) {
+      throw new Error('User docId not found by Auth ID.')
+    }
+
     try {
-      const docId = await this.getDocIdFromAuthUserId(uid);
-      if (!docId) {
-        throw new Error('User docId not found by Auth ID.')
-      }
       await deleteDoc(doc(this.firestore, 'users', docId));
       console.log('Firestore User successfully deleted');
     } catch (error) {
-      console.error('Couldnt delete firestore user.', error);
+      console.error('Could not delete firestore user.', error);
       throw error;
     }
   }
 
   /**
-   * This is the main function to call when changing email address.
-   * @param newmail this is the new mail to update to
+   * This is the main function to call when changing users full name.
+   * @param name this is the new Full Name to update the User to
    */
   async updateName(name: string) {
     const currentUser = this.auth.currentUser;
-    if (!currentUser) { return }
+    if (!currentUser) {
+      throw new Error('Current user does not exist.');
+    }
+
     const authId = currentUser.uid;
+    const docId = await this.getDocIdFromAuthUserId(authId);
+    if (!docId) {
+      throw new Error('User docId not found by Auth ID.');
+    }
+
     try {
-      const docId = await this.getDocIdFromAuthUserId(authId);
-      if (!docId) {
-        console.log('No user found for given UID.');
-        return;
-      }
       const userRef = doc(this.firestore, 'users', docId);
-      await updateDoc(userRef, { 'name': name });
+      await updateDoc(userRef, {'name': name});
     } catch (error) {
       console.error('Error updating user name to firestore. ', error);
-      throw error;
+      throw new Error('Failed to update Full Name.');
     }
   }
 
   /**
    * Updates email of the current user from Firebase Authentication and Firestore
    * Make sure to re-authenticate the user with reAuthenticateUser() before calling this function.
-   * @returns Boolean - true on success
+   * @returns newMail - true on success
    */
-  async updateEmailAddress(newmail: string): Promise<boolean> {
+  async updateEmailAddress(newMail: string): Promise<boolean> {
     const user = this.auth.currentUser;
     if (!user) {
       console.error('No user found.');
@@ -319,12 +357,12 @@ export class AuthService {
     }
     const oldEmail = user.email as string;
     try {
-      await this.updateEmailAllRefs(user, newmail);
+      await this.updateEmailAllRefs(user, newMail);
       return true;
     } catch (error) {
       console.log('Error updating email, rolling back');
       await this.rollbackUser(user, oldEmail);
-      throw error;
+      throw new Error('Error while updating the email of the current user - rolled back.');
     }
   }
 
@@ -346,14 +384,14 @@ export class AuthService {
   /**
    * Bundled functions to update users email on auth and firestore
    * @param currentUser
-   * @param newmail
+   * @param newMail
    */
-  async updateEmailAllRefs(currentUser: any, newmail: string) {
+  async updateEmailAllRefs(currentUser: any, newMail: string) {
     try {
-      await updateEmail(currentUser, newmail); //updates email in auth
-      await this.updateEmailUsingUID(newmail); //updates email in firestore db
+      await updateEmail(currentUser, newMail); //updates email in auth
+      await this.updateEmailUsingUID(newMail); //updates email in firestore db
     } catch (error) {
-
+      throw error;
     }
   }
 
@@ -367,15 +405,17 @@ export class AuthService {
     if (!user) {
       throw new Error('No UID found for current user.');
     }
+
     const uid = user.uid; //this gets the auth id from the current logged user
+    const docId = await this.getDocIdFromAuthUserId(uid);
+    if (!docId) {
+      throw new Error('User not found by Auth ID.')
+    }
+
     try {
-      const docId = await this.getDocIdFromAuthUserId(uid);
-      if (!docId) {
-        throw new Error('User not found by Auth ID.')
-      }
       await this.setFirestoreUserEmail(docId, email);
     } catch (error) {
-      console.error('Couldnt update email on the firestore user.', error);
+      console.error('Could not update email on the firestore user.', error);
       throw error;
     }
   }
@@ -386,9 +426,9 @@ export class AuthService {
    * @param email
    */
   async setFirestoreUserEmail(docId: string, email: string) {
+    const userRef = doc(this.firestore, 'users', docId);
     try {
-      const userRef = doc(this.firestore, 'users', docId);
-      await updateDoc(userRef, { 'email': email });
+      await updateDoc(userRef, {'email': email});
     } catch (error) {
       console.error('Error updating user email to this firestore. ', error);
       throw error;
@@ -397,17 +437,17 @@ export class AuthService {
 
   /**
    * Searches the users collection for a given uid
-   * @param uid The Authid of the user to serach for
+   * @param uid The Authid of the user to search for
    * @returns docId of the User doc with the given UID
    */
   async getDocIdFromAuthUserId(uid: string): Promise<string> {
     const usersRef = collection(this.firestore, "users");
     const q = query(usersRef, where("authUserId", "==", uid));
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.empty) {
+      throw new Error('No firestore user document found for the provided UID.');
+    }
     try {
-      const querySnapshot = await getDocs(q);
-      if (querySnapshot.empty) {
-        throw new Error('No document found for the provided UID.');
-      }
       const userDoc = querySnapshot.docs[0];
       return userDoc.id;
     } catch (error) {
@@ -416,7 +456,7 @@ export class AuthService {
   }
 
   /**
-   * This function returns the logged in Users UID by Firebase Auth Object
+   * This function returns the logged-in Users UID by Firebase Auth Object
    * @returns Logged in User UID or undefined if no User is authenticated
    */
   getUserAuthId() {
@@ -429,7 +469,7 @@ export class AuthService {
           reject(new Error('No user signed in.'));
         }
       }, (error) => {
-        console.error('Failed to get authenticatin state ', error);
+        console.error('Failed to get Authentication state ', error);
         reject(error);
       });
     })
@@ -439,7 +479,6 @@ export class AuthService {
     const strUser = this.stringifyUser(user);
     try {
       await addDoc(collection(this.firestore, 'users'), strUser);
-      
     } catch (error) {
       console.error('Error uploading user to firebase: ', error);
       throw error;
