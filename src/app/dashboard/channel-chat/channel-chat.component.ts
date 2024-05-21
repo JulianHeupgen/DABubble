@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
@@ -10,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
 import { ChannelThreadComponent } from './channel-thread/channel-thread.component';
 import { User } from '../../models/user.class';
 import { Thread } from '../../models/thread.class';
-import { Observable, Subscription, map, startWith } from 'rxjs';
+import { Observable, Subscription, firstValueFrom, map, startWith } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -70,12 +70,12 @@ export class ChannelChatComponent {
         this.addEmoji(event.emoji);
       }
     });
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-       this.ngOnInit();
-      }
-     });
-    }
+    // this.router.events.subscribe(event => {
+    //   if (event instanceof NavigationEnd) {
+    //     this.ngOnInit();
+    //   }
+    // });
+  }
 
 
   userAuthId!: string;
@@ -109,16 +109,23 @@ export class ChannelChatComponent {
 
 
   async ngOnInit() {
-    this.resetParticipantsData();
+    this.route.params.subscribe(params => {
+      this.channelId = params['id'];
+      console.log(this.channelId);
+      this.reloadAll();
+
+    });
+  }
+
+  async reloadAll() {
     this.dataSubscriptions();
+    await this.loadUsers();
     await this.checkUserAuthId();
-    setTimeout(() => {
-      this.getChannelInfos();
-      this.filteredUsers = this.pingUserControl.valueChanges.pipe(
-        startWith(''),
-        map(value => this._filterUsers(value || ''))
-      );
-    }, 700);
+    this.getChannelInfos();
+    this.filteredUsers = this.pingUserControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterUsers(value || ''))
+    );
   }
 
   ngAfterViewChecked() {
@@ -143,41 +150,62 @@ export class ChannelChatComponent {
     this.channelParticipantsCounter = 0;
   }
 
+  async loadUsers() {
+    this.users = await firstValueFrom(this.dataService.getUsersList());
+    this.channels = await firstValueFrom(this.dataService.getChannelsList());
+  }
 
   dataSubscriptions() {
+    if (this.userSub) {
+      this.userSub.unsubscribe();
+    }
+    if (this.channelSub) {
+      this.channelSub.unsubscribe();
+    }
+    if (this.threadsSub) {
+      this.threadsSub.unsubscribe();
+    }
     this.userSub = this.dataService.getUsersList().subscribe((users: any) => {
       this.users = users;
+
     });
     this.channelSub = this.dataService.getChannelsList().subscribe(channels => {
       this.channels = channels;
     });
     this.threadsSub = this.dataService.getThreadsList().subscribe(threads => {
       this.threads = threads;
-      this.getChannelInfos();
+      console.log('threads:', this.threads);
     })
-}
-
-
-  async checkUserAuthId() {
-    await this.auth.getUserAuthId().then(userId => {
-      if (userId) {
-        this.userAuthId = userId;
-      } else {
-        console.log("Kein Benutzer angemeldet.");
-      }
-    }).catch(error => {
-      console.error("Fehler beim Abrufen der Benutzer-ID:", error);
-    });
-
-    setTimeout(() => {
-      this.findCurrentUser(this.userAuthId);
-    }, 500);
   }
 
 
-  async findCurrentUser(authId: string) {
+  async checkUserAuthId() {
+    try {
+
+      await this.auth.getUserAuthId()
+        .then(userId => {
+          // if (userId) {
+          this.userAuthId = userId;
+          this.findCurrentUser();
+
+          // } else {
+          //   console.log("Kein Benutzer angemeldet.");
+          // }
+        })
+        .catch(error => {
+          console.error("Fehler beim Abrufen der Benutzer-ID:", error);
+        });
+    } catch {
+      console.error('Keinen User gefunden')
+    }
+  }
+
+
+
+
+  async findCurrentUser() {
     for (let i = 0; i < this.users.length; i++) {
-      if (this.users[i].authUserId === authId) {
+      if (this.users[i].authUserId === this.userAuthId) {
         this.currentUser = new User(this.users[i]);
         break;
       }
@@ -193,8 +221,8 @@ export class ChannelChatComponent {
   }
 
 
-  async getCurrentChannel() {
-    this.getChannelIdFromURL();
+  getCurrentChannel() {
+    // this.getChannelIdFromURL();
 
     for (let i = 0; i < this.channels.length; i++) {
       if (this.channels[i].channelId === this.channelId) {
@@ -209,12 +237,17 @@ export class ChannelChatComponent {
   getChannelIdFromURL() {
     this.route.params.subscribe(params => {
       this.channelId = params['id'];
+      console.log(this.channelId);
+      // if(this.users && this.channels) {
+
+      //   this.getChannelInfos();
+      // }
     });
   }
 
 
-  async showChannelParticipants(channelId: string) {
-    await this.users.forEach((user: any) => {
+  showChannelParticipants(channelId: string) {
+    this.users.forEach((user: any) => {
       if (user.channels && user.channels.includes(channelId)) {
         this.channelParticipants.push({
           participantImage: user.imageUrl
@@ -226,7 +259,7 @@ export class ChannelChatComponent {
   }
 
 
-  async getChannelThreads(channelId: string) {
+  getChannelThreads(channelId: string) {
     this.channelThreads = [];
 
     for (let i = 0; i < this.threads.length; i++) {
