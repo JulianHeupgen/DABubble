@@ -81,11 +81,6 @@ export class SidenavComponent {
   }
 
 
-  // ngOnInit() {
-  //   this.dataSubscriptions();
-  // }
-
-
   /**
    * Subscribe users and channels from DataService
    */
@@ -110,6 +105,9 @@ export class SidenavComponent {
   }
 
 
+  /**
+   * Main function to update user onlineStatus
+   */
   updateDirectMessages() {
     if (this.selectedUser && this.selectedUser.length > 0) {
       this.getUserDirectMessages();
@@ -252,6 +250,7 @@ export class SidenavComponent {
     }
   }
 
+  
   openMemberDialog() {
     this.dialog.open(ChannelMembersComponent);
   }

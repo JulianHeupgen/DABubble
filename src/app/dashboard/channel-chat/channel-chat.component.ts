@@ -1,35 +1,26 @@
-import { Component, ElementRef, SimpleChanges, ViewChild } from "@angular/core";
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
-import { MatCard, MatCardContent, MatCardHeader } from "@angular/material/card";
-import {
-  MatFormField,
-  MatFormFieldModule,
-  MatLabel,
-} from "@angular/material/form-field";
-import { MatList, MatListModule } from "@angular/material/list";
-import { Channel } from "../../models/channel.class";
-import { StorageService } from "../../services/storage.service";
-import { DataService } from "../../services/data.service";
-import { AuthService } from "../../services/auth.service";
-import { ChannelThreadComponent } from "./channel-thread/channel-thread.component";
-import { User } from "../../models/user.class";
-import { Thread } from "../../models/thread.class";
-import { Observable, Subscription, map, startWith } from "rxjs";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-} from "@angular/forms";
-import { MatAutocompleteModule } from "@angular/material/autocomplete";
-import { MatDialogModule } from "@angular/material/dialog";
-import { MatMenuTrigger, MatMenuModule } from "@angular/material/menu";
-import { MatInputModule } from "@angular/material/input";
-import { EmojiMartComponent } from "../emoji-mart/emoji-mart.component";
-import { CommonModule } from "@angular/common";
-import { AddImgToMessageComponent } from "../add-img-to-message/add-img-to-message.component";
-import { EditChannelComponent } from "./edit-channel/edit-channel.component";
-import { EmojiCommunicationService } from "../../services/emoji-communication.service";
+import { Component, ElementRef, SimpleChanges, ViewChild } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
+import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatList, MatListModule } from '@angular/material/list';
+import { Channel } from '../../models/channel.class';
+import { StorageService } from '../../services/storage.service';
+import { DataService } from '../../services/data.service';
+import { AuthService } from '../../services/auth.service';
+import { ChannelThreadComponent } from './channel-thread/channel-thread.component';
+import { User } from '../../models/user.class';
+import { Thread } from '../../models/thread.class';
+import { Observable, Subscription, firstValueFrom, map, startWith } from 'rxjs';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
+import { MatInputModule } from '@angular/material/input';
+import { EmojiMartComponent } from '../emoji-mart/emoji-mart.component';
+import { CommonModule } from '@angular/common';
+import { AddImgToMessageComponent } from '../add-img-to-message/add-img-to-message.component';
+import { EditChannelComponent } from './edit-channel/edit-channel.component';
+import { EmojiCommunicationService } from '../../services/emoji-communication.service';
 
 @Component({
   selector: "app-channel-chat",
@@ -80,12 +71,12 @@ export class ChannelChatComponent {
           this.addEmoji(event.emoji);
         }
       }
-    );
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.ngOnInit();
-      }
     });
+    // this.router.events.subscribe(event => {
+    //   if (event instanceof NavigationEnd) {
+    //     this.ngOnInit();
+    //   }
+    // });
   }
 
   userAuthId!: string;
@@ -112,16 +103,23 @@ export class ChannelChatComponent {
   //------------------//
 
   async ngOnInit() {
-    this.resetParticipantsData();
+    this.route.params.subscribe(params => {
+      this.channelId = params['id'];
+      console.log(this.channelId);
+      this.reloadAll();
+
+    });
+  }
+
+  async reloadAll() {
     this.dataSubscriptions();
+    await this.loadUsers();
     await this.checkUserAuthId();
-    setTimeout(() => {
-      this.getChannelInfos();
-      this.filteredUsers = this.pingUserControl.valueChanges.pipe(
-        startWith(""),
-        map((value) => this._filterUsers(value || ""))
-      );
-    }, 700);
+    this.getChannelInfos();
+    this.filteredUsers = this.pingUserControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterUsers(value || ''))
+    );
   }
 
   ngAfterViewChecked() {
@@ -149,9 +147,24 @@ export class ChannelChatComponent {
     this.channelParticipantsCounter = 0;
   }
 
+  async loadUsers() {
+    this.users = await firstValueFrom(this.dataService.getUsersList());
+    this.channels = await firstValueFrom(this.dataService.getChannelsList());
+  }
+
   dataSubscriptions() {
+    if (this.userSub) {
+      this.userSub.unsubscribe();
+    }
+    if (this.channelSub) {
+      this.channelSub.unsubscribe();
+    }
+    if (this.threadsSub) {
+      this.threadsSub.unsubscribe();
+    }
     this.userSub = this.dataService.getUsersList().subscribe((users: any) => {
       this.users = users;
+
     });
     this.channelSub = this.dataService
       .getChannelsList()
@@ -160,32 +173,38 @@ export class ChannelChatComponent {
       });
     this.threadsSub = this.dataService.getThreadsList().subscribe((threads) => {
       this.threads = threads;
-      this.getChannelInfos();
-    });
+      console.log('threads:', this.threads);
+    })
   }
+
 
   async checkUserAuthId() {
-    await this.auth
-      .getUserAuthId()
-      .then((userId) => {
-        if (userId) {
-          this.userAuthId = userId;
-        } else {
-          console.log("Kein Benutzer angemeldet.");
-        }
-      })
-      .catch((error) => {
-        console.error("Fehler beim Abrufen der Benutzer-ID:", error);
-      });
+    try {
 
-    /* setTimeout(() => {
-      this.findCurrentUser(this.userAuthId);
-    }, 500); */
+      await this.auth.getUserAuthId()
+        .then(userId => {
+          // if (userId) {
+          this.userAuthId = userId;
+          this.findCurrentUser();
+
+          // } else {
+          //   console.log("Kein Benutzer angemeldet.");
+          // }
+        })
+        .catch(error => {
+          console.error("Fehler beim Abrufen der Benutzer-ID:", error);
+        });
+    } catch {
+      console.error('Keinen User gefunden')
+    }
   }
 
-  async findCurrentUser(authId: string) {
+
+
+
+  async findCurrentUser() {
     for (let i = 0; i < this.users.length; i++) {
-      if (this.users[i].authUserId === authId) {
+      if (this.users[i].authUserId === this.userAuthId) {
         this.currentUser = new User(this.users[i]);
         break;
       }
@@ -199,8 +218,9 @@ export class ChannelChatComponent {
     this.getChannelThreads(this.channelId);
   }
 
-  async getCurrentChannel() {
-    this.getChannelIdFromURL();
+
+  getCurrentChannel() {
+    // this.getChannelIdFromURL();
 
     for (let i = 0; i < this.channels.length; i++) {
       if (this.channels[i].channelId === this.channelId) {
@@ -211,13 +231,19 @@ export class ChannelChatComponent {
   }
 
   getChannelIdFromURL() {
-    this.route.params.subscribe((params) => {
-      this.channelId = params["id"];
+    this.route.params.subscribe(params => {
+      this.channelId = params['id'];
+      console.log(this.channelId);
+      // if(this.users && this.channels) {
+
+      //   this.getChannelInfos();
+      // }
     });
   }
 
-  async showChannelParticipants(channelId: string) {
-    await this.users.forEach((user: any) => {
+
+  showChannelParticipants(channelId: string) {
+    this.users.forEach((user: any) => {
       if (user.channels && user.channels.includes(channelId)) {
         this.channelParticipants.push({
           participantImage: user.imageUrl,
@@ -227,7 +253,8 @@ export class ChannelChatComponent {
     });
   }
 
-  async getChannelThreads(channelId: string) {
+
+  getChannelThreads(channelId: string) {
     this.channelThreads = [];
 
     for (let i = 0; i < this.threads.length; i++) {

@@ -5,6 +5,7 @@ import { Channel } from '../models/channel.class';
 import { Thread } from '../models/thread.class';
 import { UserChat } from '../models/user-chat';
 import { Observable } from 'rxjs';
+import { FullThreadComponent } from '../dashboard/full-thread/full-thread.component';
 
 
 @Injectable({
@@ -14,11 +15,11 @@ export class DataService {
 
   firestore: Firestore = inject(Firestore);
 
-  constructor() {
+  constructor( ) {
     this.getUsersList();
     this.getChannelsList();
     this.getThreadsList();
-    this.getUserChatsList();
+    this.getUserChatsList();    
   }
 
   allUsers: User[] = [];
@@ -238,6 +239,10 @@ export class DataService {
     });
   }
 
+
+  openThread(threadElement: Thread) {
+    console.log('threadElement', threadElement);
+  }
 
 }
 

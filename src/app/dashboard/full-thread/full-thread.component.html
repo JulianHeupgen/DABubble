@@ -1,1 +1,54 @@
-<p>full-thread works!</p>
+<div class="open-thread" *ngIf="openThread">
+    <div class="thread-header">
+        <div class="headline">
+            <h2>Thread</h2>
+            <span># DevTeam</span>
+        </div>
+        <div class="close-thread" (click)="closeThread()">
+            <img src="../../../assets/img/close.png" alt="">
+        </div>
+    </div>
+    <div>
+
+        <div class="channel-chat-message" *ngFor="let message of thread?.messages">
+            <div class="reaction-menu">
+
+
+                <app-emoji-mart [emojiImg]="'emoji-reaction.png'" [emojiImgHover]="'emoji-reaction-hover.png'"
+                    [assigningComponent]="'MessageReactionComponent'">
+                </app-emoji-mart>
+
+                <div class="icon">
+                    <img class="not-hover-icon" src="../../../../assets/img/dots.png" alt="">
+                    <img class="hover-icon" src="../../../../assets/img/dots-hover.png" alt="">
+                </div>
+
+            </div>
+            <div class="channel-chat-content">
+                <div class="channel-chat-time-sender">
+                    <span>14:25 Uhr</span>
+                    <h3>{{ message.sender.name }}</h3>
+                </div>
+                <span class="message">
+                    {{ message.content }}
+                </span>
+
+            </div>
+            <div class="channel-chat-sender-img">
+                <img src="{{ message.sender.imageUrl }}"
+                    alt="">
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+</div>
