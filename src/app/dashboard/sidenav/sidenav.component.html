@@ -4,7 +4,7 @@
             <div class="inner-container">
                 <div class="headline-container">
                     <img src="./assets/img/devspace_logo.png">
-                    <h1 class="devspace-headline font-nunito">Devspace</h1>
+                    <h1 class="project-font">Devspace</h1>
                     <img class="edit-square-img" [src]="editSrc">
                 </div>
                 <div class="private-message-container">
@@ -14,7 +14,7 @@
                                 [ngStyle]="{'transform': showChannels ? 'rotate(0deg)' : 'rotate(270deg)'}">
                             <div class="headline-subcontainer-channels">
                                 <img class="img-logo" [src]="logoSrcWs">
-                                <h2 class="private-headline font-nunito">Channels</h2>
+                                <h2 class="private-headline project-font">Channels</h2>
                             </div>
                         </div>
                         <img class="add-icon" [src]="add" (click)="openDialog()">
@@ -31,7 +31,7 @@
                     </div>
                     <div *ngIf="showChannels" class="add-channel-container">
                         <div class="add-channel-subcontainer" (click)="openDialog()">
-                            <img class="add-circle-icon" [src]="addCircle">
+                            <img [src]="addCircle">
                             <p>Channel hinzufügen</p>
                         </div>
                     </div>
