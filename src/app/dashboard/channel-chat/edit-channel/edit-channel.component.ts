@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Channel } from '../../../models/channel.class';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -20,15 +20,40 @@ export class EditChannelComponent {
 
   constructor(public dataService: DataService) {}
 
+  ngOnInit() {
+    this.channelCreator = this.getChannelCreator();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['currentChannel']) {
+      this.channelCreator = this.getChannelCreator();
+    }
+  }
+
   @Input() currentChannel!: Channel;
   @Input() currentUser!: User; 
   @Input() channelId!: string;
   @Input() matMenuTrigger!: MatMenuTrigger;
 
-  editChannelName_Activated:boolean = false;
+  editChannelName_Activated: boolean = false;
+  editChannelDescription_Activated: boolean = false;
+  showNameError: boolean = false;
+  showDescriptionError: boolean = false;
+  temporaryChannelName: string = '';
+  temporaryChannelDescription: string = '';
+  channelCreator!: string;
+
+
+  getChannelCreator(): string {
+    const creatorId = this.currentChannel.createdBy;
+    const creator = this.dataService.allUsers.find(user => user.id === creatorId);
+    return creator ? creator.name : 'Unbekannter Ersteller';
+  }
 
 
   closeMenu() {
+    this.editChannelName_Activated = false;
+    this.editChannelDescription_Activated = false;
     this.matMenuTrigger.closeMenu();
   }
 
@@ -38,8 +63,44 @@ export class EditChannelComponent {
   }
 
 
+  editChannelDescription() {
+    this.editChannelDescription_Activated = !this.editChannelDescription_Activated;
+  }
+
+
+  validateChannelName(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.temporaryChannelName = input.value;
+    this.showNameError = this.temporaryChannelName.length < 3;
+  }
+
+
   saveNameChanges(){
-    this.editChannelName_Activated = !this.editChannelName_Activated;
+    if (this.temporaryChannelName.length >= 3) {
+      this.currentChannel.title = this.temporaryChannelName;
+      this.dataService.updateChannel(this.currentChannel);
+      this.editChannelName_Activated = !this.editChannelName_Activated;
+    } else {
+      this.showNameError = true;
+    }
+  }
+
+
+  validateChannelDescription(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.temporaryChannelDescription = input.value;
+    this.showDescriptionError = this.temporaryChannelDescription.length < 6;
+  }
+
+
+  saveDescriptionChanges(){
+    if (this.temporaryChannelDescription.length >= 6) {
+      this.currentChannel.description = this.temporaryChannelDescription;
+      this.dataService.updateChannel(this.currentChannel);
+      this.editChannelDescription_Activated = !this.editChannelDescription_Activated;
+    } else {
+      this.showDescriptionError = true;
+    }
   }
 
 

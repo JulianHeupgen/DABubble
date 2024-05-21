@@ -6,6 +6,8 @@
     </div>
   </div>
 
+  <!-- Channel Name -->
+
   <div class="editChannelName" *ngIf="!editChannelName_Activated">
     <div class="editChannelName-header">
       <div>Channel-Name</div>
@@ -14,27 +16,49 @@
     <div class="editChannelName-title"> # {{ currentChannel.title }} </div>
   </div> 
 
+  <!-- Channel Name Edit -->
+
   <div class="editChannelName2" *ngIf="editChannelName_Activated">
     <div class="editChannelName-header2">
       <div>Channel-Name</div>
       <button (click)="saveNameChanges()" class="save-button">Speichern</button>
     </div>
-    <input type="text" name="username" placeholder="# {{ currentChannel.title }} ">
+    <input type="text" placeholder="# {{ currentChannel.title }}" (input)="validateChannelName($event)">
+    <span *ngIf="showNameError" class="error-message">Bitte gib einen vollständigen Channel-Name an</span>
   </div> 
 
-  <div class="editChannelDescription">
+  <!-- Channel Description -->
+
+  <div class="editChannelDescription" *ngIf="!editChannelDescription_Activated">
     <div class="editChannelDescription-header">
       <div>Beschreibung</div>
-      <button class="edit-button">Bearbeiten</button>
+      <button (click)="editChannelDescription()" class="edit-button">Bearbeiten</button>
     </div>
     <div class="editChannelDescription-description"> {{ currentChannel.description }} </div>
     <div class="lineX"></div>
     <div class="channelCreationInfos">
       <span class="createdBy">Erstellt von</span>
-      <span class="name">Julian Heupgen Platzhalter</span>
+      <span class="name">{{ channelCreator }}</span>
     </div>
   </div> 
-  
+
+  <!-- Channel Description Edit -->
+
+  <div class="editChannelDescription2" *ngIf="editChannelDescription_Activated">
+    <div class="editChannelDescription-header2">
+      <div>Beschreibung</div>
+      <button (click)="saveDescriptionChanges()" class="save-button">Speichern</button>
+    </div>
+    <input type="text" placeholder="Teile Infos zu diesem Channel" (input)="validateChannelDescription($event)">
+    <span *ngIf="showDescriptionError" class="error-message">Bitte teile Infos zu diesem Channel</span>
+    <div class="lineX"></div>
+    <div class="channelCreationInfos">
+      <span class="createdBy">Erstellt von</span>
+      <span class="name">{{ channelCreator }}</span>
+    </div>
+  </div>
+
+  <!-- Leave Channel Button -->
 
   <div class="leaveButton-container">
     <button class="leaveChannel-button"  (click)="leaveChannel()">Channel verlassen</button>
