@@ -22,11 +22,13 @@ export class EditChannelComponent {
 
   ngOnInit() {
     this.channelCreator = this.getChannelCreator();
+    this.compareChannelCreatorWithCurrentUser();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['currentChannel']) {
       this.channelCreator = this.getChannelCreator();
+      this.compareChannelCreatorWithCurrentUser();
     }
   }
 
@@ -42,12 +44,20 @@ export class EditChannelComponent {
   temporaryChannelName: string = '';
   temporaryChannelDescription: string = '';
   channelCreator!: string;
+  channelCreatorIsCurrentUser: boolean = false;
 
 
-  getChannelCreator(): string {
+   getChannelCreator(): string {
     const creatorId = this.currentChannel.createdBy;
     const creator = this.dataService.allUsers.find(user => user.id === creatorId);
     return creator ? creator.name : 'Unbekannter Ersteller';
+  }
+
+
+  compareChannelCreatorWithCurrentUser() {
+    const creatorId = this.currentChannel.createdBy;
+    const currentUserId = this.currentUser.id;
+    this.channelCreatorIsCurrentUser = creatorId === currentUserId;
   }
 
 
