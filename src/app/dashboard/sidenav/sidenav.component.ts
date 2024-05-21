@@ -71,18 +71,19 @@ export class SidenavComponent {
   directMessageTitle: { imageUrl: string, onlineStatus: string, name: string, id: string }[] = [];
 
 
-  private userSub: Subscription = new Subscription();
-  private channelSub: Subscription = new Subscription();
+  private userSub = new Subscription();
+  private channelSub = new Subscription();
 
 
   constructor(private dataService: DataService, private authService: AuthService, public dialog: MatDialog) {
-    this.users = [];
-  }
-
-
-  ngOnInit() {
+    // this.users = [];
     this.dataSubscriptions();
   }
+
+
+  // ngOnInit() {
+  //   this.dataSubscriptions();
+  // }
 
 
   /**
@@ -91,6 +92,7 @@ export class SidenavComponent {
   dataSubscriptions() {
     this.userSub = this.dataService.getUsersList().subscribe(users => {
       this.users = users;
+      this.updateDirectMessages();
       this.authService.getUserAuthId().then(uid => {
         if (uid) {
           this.setUserData(uid);
@@ -105,6 +107,13 @@ export class SidenavComponent {
       this.channels = channels;
       this.checkDataForChannelNames();
     });
+  }
+
+
+  updateDirectMessages() {
+    if (this.selectedUser && this.selectedUser.length > 0) {
+      this.getUserDirectMessages();
+    }
   }
 
 

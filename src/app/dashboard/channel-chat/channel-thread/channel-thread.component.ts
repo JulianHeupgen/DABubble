@@ -7,6 +7,10 @@ import { User } from '../../../models/user.class';
 import { Subscription } from 'rxjs';
 import { EmojiCommunicationService } from '../../../services/emoji-communication.service';
 import { MessageReactionComponent } from '../message-reaction/message-reaction.component';
+import { FullThreadComponent } from '../../full-thread/full-thread.component';
+import { DashboardComponent } from '../../dashboard.component';
+import { DataService } from '../../../services/data.service';
+import { ThreadService } from '../../../services/thread.service';
 
 @Component({
   selector: 'app-channel-thread',
@@ -26,6 +30,10 @@ export class ChannelThreadComponent {
 
   constructor(
     public channelChat: ChannelChatComponent,
+    public dashboard: DashboardComponent,
+    public dataService: DataService,
+    private threadService: ThreadService,
+
   ) { }
 
   formattedDatestamp(): any {
@@ -35,5 +43,9 @@ export class ChannelThreadComponent {
   formattedTimeStamp(): any {
     return this.thread.getFormattedTimeStamp();
   }  
+
+  openThread(thread: Thread) {
+    this.threadService.changeThread(thread);
+  }
 }
 
