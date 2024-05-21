@@ -1,7 +1,7 @@
 <mat-card class="channel-wrapper">
   <mat-card-header>
     <div class="channel-infos" *ngIf="currentChannel">
-      <div class="header-left-container" [matMenuTriggerFor]="editMenu">
+      <div class="header-left-container" [matMenuTriggerFor]="editChannelMenu">
         <div class="title"># {{ currentChannel.title }} </div>
         <img class="title-arrow" src="assets/img/arrow_down.png">
       </div>
@@ -17,7 +17,7 @@
     </div>
 
   <!-- MatMenu EditChannel (Bei Klick auf Channel-Titel)-->
-  <mat-menu #editMenu>
+  <mat-menu #editChannelMenu>
     <div (click)="$event.stopPropagation()">
       <app-edit-channel *ngIf="currentChannel && currentUser && channelId"
        [currentChannel]="currentChannel" [currentUser]="currentUser" [channelId]="channelId" [matMenuTrigger]="menuTrigger" ></app-edit-channel>  
