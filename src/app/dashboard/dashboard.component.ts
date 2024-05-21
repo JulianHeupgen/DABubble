@@ -5,6 +5,7 @@ import { HeaderComponent } from './header/header.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { RouterOutlet } from '@angular/router';
 import { FullThreadComponent } from './full-thread/full-thread.component';
+import { Thread } from '../models/thread.class';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,4 +16,12 @@ import { FullThreadComponent } from './full-thread/full-thread.component';
 })
 export class DashboardComponent {
 
+  constructor(
+  ) { }
+
+
+  openThread(threadElement: Thread) {
+    console.log('threadElement', threadElement);
+    
+  }
 }
