@@ -71,12 +71,7 @@ export class ChannelChatComponent {
           this.addEmoji(event.emoji);
         }
       }
-    });
-    // this.router.events.subscribe(event => {
-    //   if (event instanceof NavigationEnd) {
-    //     this.ngOnInit();
-    //   }
-    // });
+    )
   }
 
   userAuthId!: string;
