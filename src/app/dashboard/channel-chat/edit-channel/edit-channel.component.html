@@ -11,7 +11,7 @@
   <div class="editChannelName" *ngIf="!editChannelName_Activated">
     <div class="editChannelName-header">
       <div>Channel-Name</div>
-      <button (click)="editChannelName()" class="edit-button">Bearbeiten</button>
+      <button (click)="editChannelName()" class="edit-button" *ngIf="channelCreatorIsCurrentUser">Bearbeiten</button>
     </div>
     <div class="editChannelName-title"> # {{ currentChannel.title }} </div>
   </div> 
@@ -32,7 +32,7 @@
   <div class="editChannelDescription" *ngIf="!editChannelDescription_Activated">
     <div class="editChannelDescription-header">
       <div>Beschreibung</div>
-      <button (click)="editChannelDescription()" class="edit-button">Bearbeiten</button>
+      <button (click)="editChannelDescription()" class="edit-button" *ngIf="channelCreatorIsCurrentUser">Bearbeiten</button>
     </div>
     <div class="editChannelDescription-description"> {{ currentChannel.description }} </div>
     <div class="lineX"></div>
