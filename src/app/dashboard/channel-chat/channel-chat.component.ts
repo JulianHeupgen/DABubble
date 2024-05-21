@@ -1,4 +1,4 @@
-import { Component, ElementRef, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
@@ -56,7 +56,8 @@ export class ChannelChatComponent {
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
   @ViewChild(AddImgToMessageComponent) addImgToMessageComponent!: AddImgToMessageComponent;
   emojiSubscription: Subscription;
-  constructor(public dataService: DataService,
+  constructor(
+    public dataService: DataService,
     private route: ActivatedRoute,
     private router: Router,
     public storage: StorageService,
@@ -278,5 +279,7 @@ export class ChannelChatComponent {
       this.dataService.addThread(newThread);
     }
   }
+
+
 
 }

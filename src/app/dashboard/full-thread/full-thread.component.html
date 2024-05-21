@@ -4,13 +4,13 @@
             <h2>Thread</h2>
             <span># DevTeam</span>
         </div>
-        <div class="close-thread">
+        <div class="close-thread" (click)="closeThread()">
             <img src="../../../assets/img/close.png" alt="">
         </div>
     </div>
     <div>
 
-        <div class="channel-chat-message">
+        <div class="channel-chat-message" *ngFor="let message of thread?.messages">
             <div class="reaction-menu">
 
 
@@ -27,17 +27,15 @@
             <div class="channel-chat-content">
                 <div class="channel-chat-time-sender">
                     <span>14:25 Uhr</span>
-                    <h3>Sofia Müller</h3>
+                    <h3>{{ message.sender.name }}</h3>
                 </div>
                 <span class="message">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Qui accusantium maxime, obcaecati eligendi quisquam quae atque minus numquam dicta incidunt quasi,
-                    mollitia adipisci aliquid delectus eos dolores sunt iusto? Iure?
+                    {{ message.content }}
                 </span>
 
             </div>
             <div class="channel-chat-sender-img">
-                <img src="https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_1.png?alt=media&token=76a558f3-7364-4591-8b0d-9084a608438d"
+                <img src="{{ message.sender.imageUrl }}"
                     alt="">
             </div>
         </div>

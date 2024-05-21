@@ -16,12 +16,8 @@ import { Thread } from '../models/thread.class';
 })
 export class DashboardComponent {
 
-  constructor(
-  ) { }
+  constructor( ) { }
 
 
-  openThread(threadElement: Thread) {
-    console.log('threadElement', threadElement);
-    
-  }
+
 }
