@@ -1,0 +1,22 @@
+<div class="container">
+  <form class="search-bar">
+    <input
+      type="text"
+      placeholder="Code learning durchsuchen"
+      [formControl]="control"
+      [matAutocomplete]="auto"
+      class="example-input"
+      [class.mat-autocomplete-panel-open]="isPanelOpen"
+    />
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (opened)="isPanelOpen = true"
+      (closed)="isPanelOpen = false"
+    >
+      @for (street of streets; track street) {
+      <mat-option [value]="street">{{ street }}</mat-option>
+      }
+    </mat-autocomplete>
+    <img src="./assets/img/search.png" />
+  </form>
+</div>

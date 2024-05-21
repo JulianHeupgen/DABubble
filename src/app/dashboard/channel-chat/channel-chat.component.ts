@@ -234,9 +234,9 @@ export class ChannelChatComponent {
         this.channelThreads.push(new Thread(this.threads[i]));
       }
     }
-    
+
     this.sortThreadByFirstMessageTimestamp();
-    
+
   }
 
   sortThreadByFirstMessageTimestamp() {
@@ -279,7 +279,5 @@ export class ChannelChatComponent {
       this.dataService.addThread(newThread);
     }
   }
-
-
 
 }

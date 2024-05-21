@@ -13,8 +13,7 @@ import { ProfileEditComponent } from '../../menus/profile-edit/profile-edit.comp
 import { ProfileViewComponent } from '../../menus/profile-view/profile-view.component';
 import { HeaderProfileService } from '../../services/header-profile.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { SearchComponent } from '../search/search.component';
 
 @Component({
   selector: 'app-header',
@@ -28,9 +27,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ProfileEditComponent,
     ProfileViewComponent,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
-    MatMenuTrigger
+    MatMenuTrigger,
+    SearchComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -51,13 +49,6 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 })
 
 export class HeaderComponent {
-
-  // Test search component START
-  control = new FormControl('');
-  streets: string[] = ['Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue'];
-  // Test Search END
-
-  isPanelOpen: boolean = false;
 
   user?: User;
   isProfileView?: boolean = false;
@@ -81,18 +72,6 @@ export class HeaderComponent {
     this.subProfileView();
     this.subProfileEdit();
     this.subUserData();
-  }
-
-  menuclosed() {
-    console.log('menu closed');
-    console.log('profile view is: ',this.isProfileView);
-    console.log('profile edit view is: ',this.isProfileEditView);
-  }
-
-  menuopened() {
-    console.log('menu opened');
-    console.log('profile view is: ',this.isProfileView);
-    console.log('profile edit view is: ',this.isProfileEditView);
   }
 
   /**

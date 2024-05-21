@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
-import { from, switchMap } from 'rxjs';
+import { Observable, from, map, startWith, switchMap } from 'rxjs';
 import { Firestore, collection, getDocs, writeBatch, arrayUnion, doc } from '@angular/fire/firestore';
 import { MatSelectModule } from '@angular/material/select';
 import { DataService } from '../../services/data.service';
@@ -45,6 +45,10 @@ export class ChannelMembersComponent {
   selectedOption = 'all';
   selectedUsers: string[] = [];
   selectedUsersIds: string[] = [];
+  userControl = new FormControl('');
+  isPanelOpen: any;
+  filteredUsers!: Observable<User[]>;
+  allUsers: User[] = [];
 
 
   constructor(
@@ -53,7 +57,21 @@ export class ChannelMembersComponent {
     public dialog: MatDialog,
     public dataService: DataService,
     @Inject(MAT_DIALOG_DATA) public data: { channelId: string }
-  ) { }
+  ) { 
+    this.allUsers = this.dataService.allUsers;
+    this.filteredUsers = this.userControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this.filterUsers(value ?? ''))
+    );
+  }
+
+
+  filterUsers(value: string): User[] {
+    const filterValue = value.toLowerCase();
+    return this.allUsers.filter(user => 
+      user.name.toLowerCase().includes(filterValue) &&
+      !this.selectedUsersIds.includes(user.id)); // Filtert bereits ausgewählte Benutzer heraus
+  }
 
 
   addChannelToAllUsers() {
@@ -128,25 +146,19 @@ export class ChannelMembersComponent {
   }
 
 
-  // addUser(user: any) {
-  //   this.selectedUsers.push(user);
-  // }
-
-  toggleUserSelection(userId: string, userName: string) {
-    const index = this.selectedUsersIds.indexOf(userId);
-    if (index > -1) {
-      this.selectedUsersIds.splice(index, 1);
-      this.selectedUsers.splice(index, 1);
-    } else {
-      this.selectedUsersIds.push(userId);
+  toggleUserSelection(userId: string, userName: string): void {
+    if (!this.selectedUsersIds.includes(userId)) {
       this.selectedUsers.push(userName);
+      this.selectedUsersIds.push(userId);
     }
+    this.userControl.reset();
   }
+
 
   openMenu(trigger: MatMenuTrigger, event: KeyboardEvent) {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.value.length > 0 && !trigger.menuOpen) {
-      trigger.openMenu();  
+      trigger.openMenu();
     }
   }
 }

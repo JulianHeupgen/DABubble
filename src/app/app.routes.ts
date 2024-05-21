@@ -14,6 +14,7 @@ import { TestComponent } from './test/test.component';
 import { SendMailToResetPasswordComponent } from './send-mail-to-reset-password/send-mail-to-reset-password.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { authGuard } from './auth.guard';
+import { SearchComponent } from './dashboard/search/search.component';
 
 export const routes: Routes = [
 
@@ -36,6 +37,7 @@ export const routes: Routes = [
   { path: 'imprint', component: ImprintComponent },
   { path: 'logo', component: LogoComponent },
   { path: 'test', component: TestComponent, canActivate: [authGuard]},
-  { path: '**', component: PageNotFoundComponent }
+  { path: 'search', component: SearchComponent },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
