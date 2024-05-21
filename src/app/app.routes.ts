@@ -31,7 +31,8 @@ export const routes: Routes = [
       { path: '', redirectTo: 'channel/Yk2dgejx9yy7iHLij1Qj', pathMatch: 'full' },
       { path: 'channel/:id', component: ChannelChatComponent },
       { path: 'chat/:id', component: UserChatComponent }
-    ]
+    ],
+    canActivate: [authGuard]
   },
   { path: 'privacy', component: PrivacyComponent },
   { path: 'imprint', component: ImprintComponent },
