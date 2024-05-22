@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Inject, Input} from '@angular/core';
 import { UserRegistrationService } from '../services/user-registration.service';
-import { AuthService } from '../services/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -8,9 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { StorageService } from '../services/storage.service';
-import { User } from '../models/user.class';
-import { Router, RouterModule } from '@angular/router';
+import {RouterModule} from "@angular/router";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-photo-selection',
@@ -30,12 +28,11 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class PhotoSelectionComponent {
 
-  // this is used as reference for the new User model which will be upped to db
-  fullName: string = '';
+  @Input()
+  showBackArrow: boolean = true;
 
-  ngOnInit(): void {
-    this.fullName = this.userRegService.getUserFullName();
-  }
+  // this is used as reference for the new User model which will be upped to db
+  fullName: string = 'Full Name';
 
   defaultAvatars: string[] = [
     'https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_1.png?alt=media&token=76a558f3-7364-4591-8b0d-9084a608438d',
@@ -60,8 +57,14 @@ export class PhotoSelectionComponent {
   uploadErr: boolean = false;
 
   constructor(
-    private userRegService: UserRegistrationService
+    private userRegService: UserRegistrationService,
+    @Inject(MAT_DIALOG_DATA) public data: { showBackArrow: boolean }
   ) { }
+
+  ngOnInit(): void {
+    this.fullName = this.userRegService.getUserFullName();
+    this.showBackArrow = this.data.showBackArrow ?? this.showBackArrow;
+  }
 
   /**
    * Finalize the User Registration process when next button is clicked

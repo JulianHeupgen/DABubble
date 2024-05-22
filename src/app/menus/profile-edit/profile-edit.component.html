@@ -5,7 +5,7 @@
     <img (click)="closeEdit($event)" src="./../../../assets/img/close.png">
   </div>
   <div class="p-img">
-    <img [src]="user.imageUrl">
+    <img [src]="user.imageUrl" (click)="openImageUploaderModal()">
   </div>
   <div class="profile-edit">
     <form [formGroup]="editUserForm" (ngSubmit)="save()">
@@ -21,7 +21,7 @@
         </div>
         <div class="error-container">
           <p class="input-feedback" *ngIf="editUserForm.get('name')?.errors && editUserForm.get('name')?.dirty">
-            *Dieser Name ist leider ungültig. Bitte Vor Anchname eingeben.
+            *Dieser Name ist leider ungültig. Bitte Vor Nachname eingeben.
           </p>
         </div>
       </div>

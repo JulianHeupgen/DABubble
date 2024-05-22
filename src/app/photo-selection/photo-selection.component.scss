@@ -1,5 +1,5 @@
 mat-card {
-  width: 40%;
+  width: 100%;
   max-width: 606px;
   height: 80vh;
   max-height: 769px;
@@ -112,18 +112,6 @@ form {
 
   input {
     width: 100%;
-  }
-}
-
-a {
-  color: #797EF3;
-  font-size: 18px;
-  line-height: normal;
-  font-family: Nunito, sans-serif;
-  text-decoration: none;
-
-  &:hover {
-    cursor: pointer;
   }
 }
 

@@ -25,7 +25,9 @@ export class UserRegistrationService {
 
   // Get user date for next step on registration process
   getUserFullName(): any {
-    return this._userData.fullname;
+    if (this._userData) {
+      return this._userData.fullname;
+    }
   }
 
   clearUserData(): void {

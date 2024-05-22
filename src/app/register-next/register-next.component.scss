@@ -21,5 +21,17 @@
   bottom: 24px;
   margin-left: auto;
   margin-right: auto;
+
+  a {
+    color: #797EF3;
+    font-size: 18px;
+    line-height: normal;
+    font-family: Nunito, sans-serif;
+    text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
