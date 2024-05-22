@@ -1,0 +1,25 @@
+@import '../../mixin.scss';
+
+.photo-upload-container {
+  @include flex-align-justify();
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.logo {
+  height: 55px;
+  position: absolute;
+  left: 32px;
+  top: 32px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  position: absolute;
+  bottom: 24px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
