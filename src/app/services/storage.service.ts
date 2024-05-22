@@ -13,10 +13,7 @@ export class StorageService {
 
     try {
       const uploadFile = await uploadBytes(storageRef, file);
-      const downloadURL: string = await getDownloadURL(uploadFile.ref);
-      //console.log('Download of the file available at: ', downloadURL);
-
-      return downloadURL;
+      return await getDownloadURL(uploadFile.ref);
     } catch (error) {
       console.error("Upload failed", error);
       throw new Error("Upload failed");
