@@ -5,8 +5,9 @@
     border-radius: 30px;
     background-color: #FFFFFF;
     margin: 20px 0;    
-    min-width: 320px;
+    min-width: 410px;
     width: 50%;
+    height: 100%;
 }
 
 .thread-header {
@@ -129,4 +130,22 @@
 .reaction-bar {
     @include flex-align-justify($jc: right);
     width: 100%;
+}
+
+.separation-line {
+    width: 100%;
+    @include flex-align-justify();
+    gap: 20px;
+    padding: 10px 25px;
+
+    span {
+        @include font-size-weight-color($cl: #ADB0D9);
+        text-wrap: nowrap;
+    }
+
+    div {
+        height: 1px;
+        background-color: #ADB0D9;
+        width: 100%;
+    }
 }

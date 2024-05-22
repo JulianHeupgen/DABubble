@@ -1,7 +1,7 @@
 <div class="header">
   <img class="logo" src="./assets/img/dabubble_header_logo.png">
 
-  <app-search/>
+  <app-search />
 
 
   @if (user) {
@@ -9,10 +9,10 @@
     <span>{{ user.name }}</span>
     <div class="profile-img-container">
       <img class="profile-img" [src]="user.imageUrl">
-      <div class="online-status" [class.online]="user.onlineStatus === 'online'"
-        [class.offline]="user.onlineStatus === 'offline'" [class.away]="user.onlineStatus === 'away'"></div>
+      <img src="./assets/img/online.png" class="online-status" [class.online]="user.onlineStatus === 'online'"
+        [class.offline]="user.onlineStatus === 'offline'">
     </div>
-    <img class="arrow-down" src="./../../../assets/img/header_arrow_down.png">
+    <img class="arrow-down" src="./assets/img/header_arrow_down.png">
   </div>
 
   <mat-menu #menu xPosition="before" class="profile-menu">
@@ -30,7 +30,7 @@
       <div class="profile-details-box" *ngIf="isProfileEditView">
         <app-profile-edit [@fadeInOut]></app-profile-edit>
       </div>
-     </ng-template>
+    </ng-template>
 
   </mat-menu>
 

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -11,8 +11,8 @@ import {
   signInWithCredential,
   signOut
 } from '@angular/fire/auth';
-import {Router} from '@angular/router';
-import {GoogleAuthProvider, getAuth, signInWithPopup} from "firebase/auth";
+import { Router } from '@angular/router';
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
 import {
   Firestore,
@@ -28,8 +28,9 @@ import {
   onSnapshot,
   docSnapshots
 } from '@angular/fire/firestore';
-import {User} from '../models/user.class';
-import {Observable} from 'rxjs';
+import { User } from '../models/user.class';
+import { Observable } from 'rxjs';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,7 @@ export class AuthService {
   constructor(
     private auth: Auth,
     private firestore: Firestore,
+    private dataService: DataService,
     private router: Router,
   ) {
   }
@@ -79,20 +81,40 @@ export class AuthService {
 
     signInWithPopup(googleAuth, googleProvider)
       .then(userCredential => {
-        this.router.navigate(['/dashboard/', userCredential.user.uid])
-          .then(() => {
-            console.log('Navigation successful!')
-          })
-          .catch((navError) => {
-            console.error('Navigation Error ', navError)
-          })
+        const userQuery = query(this.dataService.getUserCollection(), where('authUserId', '==', userCredential.user.uid));
+        getDocs(userQuery).then(querySnapshot => {
+          if (!querySnapshot.empty) {
+            //we do nothing if the user exists
+          } else {
+            const userData = this.setGoogleUserData(userCredential.user);
+            const newUser = new User(userData);
+            this.createFirebaseUser(newUser);
+          }
+          this.updateUserOnlineStatus('online')
+          this.router.navigate(['/dashboard/']);
+        }).catch((error) => {
+          console.error('Error checking user existence:', error);
+        });
       })
       .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      const email = error.customData.email;
-      const credential = GoogleAuthProvider.credentialFromError(error);
-    });
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+      });
+  }
+
+  setGoogleUserData(userData: any) {
+    return {
+      id: '',
+      name: userData.displayName,
+      email: userData.email,
+      onlineStatus: 'offline' as 'offline',
+      authUserId: userData.uid,
+      imageUrl: userData.photoURL,
+      channels: ['Yk2dgejx9yy7iHLij1Qj'],
+      userChats: []
+    }
   }
 
   // async setUserToFirestore(userData: any, name: string) {
@@ -337,7 +359,7 @@ export class AuthService {
 
     try {
       const userRef = doc(this.firestore, 'users', docId);
-      await updateDoc(userRef, {'name': name});
+      await updateDoc(userRef, { 'name': name });
     } catch (error) {
       console.error('Error updating user name to firestore. ', error);
       throw new Error('Failed to update Full Name.');
@@ -428,7 +450,7 @@ export class AuthService {
   async setFirestoreUserEmail(docId: string, email: string) {
     const userRef = doc(this.firestore, 'users', docId);
     try {
-      await updateDoc(userRef, {'email': email});
+      await updateDoc(userRef, { 'email': email });
     } catch (error) {
       console.error('Error updating user email to this firestore. ', error);
       throw error;

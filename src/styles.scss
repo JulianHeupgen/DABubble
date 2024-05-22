@@ -50,6 +50,12 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+h1,
+h2,
+h3 {
+  font-family: 'Nunito', sans-serif !important;
+}
+
 app-login,
 app-send-mail-to-reset-password,
 app-password-reset {
