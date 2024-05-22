@@ -117,7 +117,7 @@ export class SidenavComponent {
 
 
   /**
-   * Read out the user data based on the user authentication id
+   * Read out the user data based on the user authentication id.
    * 
    * @param uid - User authentication id from firestore authentication
    * @returns - Return if error exists
@@ -139,7 +139,7 @@ export class SidenavComponent {
 
 
   /**
-   * Pull refresh for channels on change
+   * Pull refresh for channels on change.
    */
   refreshChannels() {
     this.dataService.getChannelsList().subscribe(channels => {
@@ -151,7 +151,7 @@ export class SidenavComponent {
 
 
   /**
-   * Set and Update the channel titles for the sidenav rendering
+   * Set and Update the channel titles for the sidenav rendering.
    */
   updateChannelTitles() {
     this.channelTitles = [];
@@ -172,7 +172,7 @@ export class SidenavComponent {
 
 
   /**
-   * Get and set direct messages to display in the sidenav
+   * Get and set direct messages to display in the sidenav.
    */
   getUserDirectMessages(): void {
     this.directMessageTitle = [];
@@ -208,7 +208,8 @@ export class SidenavComponent {
 
 
   /**
-   * Fetching and sorting the user list for the sidenav. Main reason to display yourself at the top.
+   * Fetching and sorting the user list for the sidenav. 
+   * Main reason to display yourself at the top.
    */
   sortDirectMessageUsers() {
     this.directMessageTitle.sort((a, b) => {
@@ -220,7 +221,7 @@ export class SidenavComponent {
 
 
   /**
-   * Toggle variable for sidenav to open or close
+   * Toggle variable for sidenav to open or close.
    */
   toggleSidenav(value: string) {
     if (value === 'sidenav') {
@@ -236,7 +237,7 @@ export class SidenavComponent {
 
 
   /**
-   * Open AddChannelComponent per material dialog
+   * Open AddChannelComponent per material dialog.
    */
   openDialog() {
     this.dialog.open(AddChannelComponent);
@@ -244,7 +245,8 @@ export class SidenavComponent {
 
 
   /**
-   * Unsub subscriptions on destroy the page
+   * Called when an instance of the component or service is destroyed. 
+   * This method takes care of cleaning up resources, in particular canceling subscriptions to avoid memory leaks.
    */
   ngOnDestroy() {
     if (this.userSub) {
