@@ -7,6 +7,8 @@ import { ChannelChatComponent } from '../channel-chat/channel-chat.component';
 import { User } from '../../models/user.class';
 import { DataService } from '../../services/data.service';
 import { ThreadService } from '../../services/thread.service';
+import { ChannelThreadComponent } from '../channel-chat/channel-thread/channel-thread.component';
+import { FullThreadMessageComponent } from './full-thread-message/full-thread-message.component';
 
 @Component({
   selector: 'app-full-thread',
@@ -15,6 +17,7 @@ import { ThreadService } from '../../services/thread.service';
     CommonModule,
     EmojiMartComponent,
     MessageReactionComponent,
+    FullThreadMessageComponent,
   ],
   templateUrl: './full-thread.component.html',
   styleUrl: './full-thread.component.scss'
@@ -25,7 +28,7 @@ export class FullThreadComponent {
   thread: Thread | null = null;
 
   constructor(
-    private threadService: ThreadService
+    private threadService: ThreadService,
   ) { }
 
   ngOnInit(): void {

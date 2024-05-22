@@ -8,9 +8,8 @@
             <img src="../../../assets/img/close.png" alt="">
         </div>
     </div>
-    <div>
-
-        <div class="channel-chat-message" *ngFor="let message of thread?.messages">
+    <div *ngIf="thread && thread.messages && thread.messages[0]">
+        <div class="channel-chat-message">
             <div class="reaction-menu">
 
 
@@ -26,21 +25,29 @@
             </div>
             <div class="channel-chat-content">
                 <div class="channel-chat-time-sender">
-                    <span>14:25 Uhr</span>
-                    <h3>{{ message.sender.name }}</h3>
+                    <span>{{thread.getFormattedTimeStamp()}}</span>
+                    <h3>{{ thread.messages[0].sender.name }}</h3>
                 </div>
                 <span class="message">
-                    {{ message.content }}
+                    {{ thread.messages[0].content }}
                 </span>
-
             </div>
             <div class="channel-chat-sender-img">
-                <img src="{{ message.sender.imageUrl }}"
+                <img src="{{ thread.messages[0].sender.imageUrl }}"
                     alt="">
             </div>
         </div>
 
+        <div class="separation-line">
+            <span>
+                {{ thread.messages.length - 1 }} Antworten
+            </span>
+            <div></div>
+        </div>
 
+        <app-full-thread-message
+        [thread]="thread"
+        ></app-full-thread-message>
 
     </div>
 
