@@ -4,58 +4,51 @@
 </div>
 
 
-<div class="channel-chat-message">
+<div class="channel-chat-message" [class.other-users-channel-chat-message]="!isCurrentUser">
     <div class="reaction-menu">
         <div class="icon" (click)="messageReaction.reactToThread(thread.messages[0], 'check-mark.png')">
             <img src="../../../../assets/img/check-mark.png" alt="">
         </div>
-
         <div class="icon" (click)="messageReaction.reactToThread(thread.messages[0], 'hands-up.png')">
             <img src="../../../../assets/img/hands-up.png" alt="">
         </div>
-
-
-        <app-emoji-mart 
-        [emojiImg]="'emoji-reaction.png'" 
-        [emojiImgHover]="'emoji-reaction-hover.png'"
-        [assigningComponent]="'MessageReactionComponent'"
-        [threadId]="thread.threadId">
+        <app-emoji-mart [emojiImg]="'emoji-reaction.png'" [emojiImgHover]="'emoji-reaction-hover.png'"
+            [assigningComponent]="'MessageReactionComponent'" [threadId]="thread.threadId">
         </app-emoji-mart>
-
-
         <div class="icon">
             <img class="not-hover-icon" src="../../../../assets/img/comment.png" alt="">
-            <img class="hover-icon" src="../../../../assets/img/comment-hover.png" alt="" (click)="openThread(this.thread)">
-
+            <img class="hover-icon" src="../../../../assets/img/comment-hover.png" alt=""
+                (click)="openThread(this.thread)">
         </div>
-
         <div class="icon">
             <img class="not-hover-icon" src="../../../../assets/img/dots.png" alt="">
             <img class="hover-icon" src="../../../../assets/img/dots-hover.png" alt="">
         </div>
-
     </div>
     <div class="channel-chat-content">
         <div class="channel-chat-time-sender">
             <span>{{ formattedTimeStamp() }}</span>
             <h3>{{ thread.messages[0].sender.name }}</h3>
         </div>
-        <span class="message">
+        <span class="message" [class.other-users-message]="!isCurrentUser">
             {{ thread.messages[0].content }}
         </span>
-        <div class="reaction-bar">
-            <app-message-reaction
-            [threadMessage]="thread.messages[0]"
-            [thread]="thread"
-            [currentUser]="channelChat.currentUser"></app-message-reaction>
-            <app-emoji-mart 
-            [emojiImg]="'emoji-reaction.png'" 
-            [emojiImgHover]="'emoji-reaction-hover.png'"
-            [assigningComponent]="'MessageReactionComponent'"
-            [threadId]="thread.threadId"
-            *ngIf="thread.messages[0].emojiReactions.length > 0">
-        </app-emoji-mart>
-    </div>
+        <div class="reaction-and-answercount">
+            <span *ngIf="thread.messages.length > 1 && thread.messages.length < 3">
+                {{ thread.messages.length - 1 }} Antwort
+            </span>
+            <span *ngIf="thread.messages.length >= 3">
+                {{ thread.messages.length - 1 }} Antworten
+            </span>
+            <div class="reaction-bar">
+                <app-message-reaction [threadMessage]="thread.messages[0]" [thread]="thread"
+                    [currentUser]="channelChat.currentUser"></app-message-reaction>
+                <app-emoji-mart [emojiImg]="'emoji-reaction.png'" [emojiImgHover]="'emoji-reaction-hover.png'"
+                    [assigningComponent]="'MessageReactionComponent'" [threadId]="thread.threadId"
+                    *ngIf="thread.messages[0].emojiReactions.length > 0">
+                </app-emoji-mart>
+            </div>
+        </div>
     </div>
     <div class="channel-chat-sender-img">
         <img src="{{ this.thread.messages[0].sender.imageUrl }}" alt="">

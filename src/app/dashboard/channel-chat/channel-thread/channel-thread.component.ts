@@ -28,6 +28,8 @@ export class ChannelThreadComponent {
   @Input() thread!: Thread;
   @ViewChild(MessageReactionComponent) messageReaction!: MessageReactionComponent;
 
+  isCurrentUser: boolean = false;
+
   constructor(
     public channelChat: ChannelChatComponent,
     public dashboard: DashboardComponent,
@@ -36,13 +38,24 @@ export class ChannelThreadComponent {
 
   ) { }
 
+  ngOnInit() {
+    let currentUserId = this.channelChat.currentUser.id;
+    let messageOwnderId = this.thread.messages[0].sender.id
+    if (currentUserId == messageOwnderId) {
+      this.isCurrentUser = true;
+      console.log(this.isCurrentUser);
+      
+    }
+
+  }
+
   formattedDatestamp(): any {
     return this.thread.getFormattedDatestamp();
   }
 
   formattedTimeStamp(): any {
     return this.thread.getFormattedTimeStamp();
-  }  
+  }
 
   openThread(thread: Thread) {
     this.threadService.changeThread(thread);

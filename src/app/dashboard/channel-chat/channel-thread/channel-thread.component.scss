@@ -1,5 +1,8 @@
 @import '../../../../mixin.scss';
 
+
+/*current User*/
+
 .channel-chat-message {
     position: relative;
     @include flex-align-justify($ai: flex-start);
@@ -16,6 +19,7 @@
 
     .channel-chat-content {
         width: 100%;
+        padding-left: 90px;
         @include flex-align-justify($ai: flex-end);
         flex-direction: column;
         gap: 8px;
@@ -97,7 +101,38 @@
     }
 }
 
+.reaction-and-answercount {
+    width: 100%;
+    @include flex-align-justify($jc: space-between);
+    span {
+        text-wrap: nowrap;
+        @include font-size-weight-color($cl: #535AF1)
+    }
+}
+
 .reaction-bar {
     @include flex-align-justify($jc: right);
     width: 100%;
+}
+
+/*is not currentUser*/
+
+.other-users-channel-chat-message {
+    flex-direction: row-reverse !important;
+    
+    .channel-chat-content {
+        align-items: flex-start !important;
+        padding-left: 0 !important;
+        padding-right: 90px !important;
+    }
+    
+    .channel-chat-time-sender {
+        flex-direction: row-reverse !important;
+    }
+    
+    .message {
+        border-radius: 0px 30px 30px 30px !important;
+        background-color: #ECEEFE !important;
+        @include font-size-weight-color($cl: #000000 !important);
+    }
 }
