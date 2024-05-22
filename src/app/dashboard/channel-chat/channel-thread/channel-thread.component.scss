@@ -119,6 +119,11 @@
 
 .other-users-channel-chat-message {
     flex-direction: row-reverse !important;
+
+    .reaction-menu {
+        left: unset;
+        right: 5%;
+    }
     
     .channel-chat-content {
         align-items: flex-start !important;

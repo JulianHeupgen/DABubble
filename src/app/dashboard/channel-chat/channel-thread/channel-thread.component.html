@@ -20,7 +20,7 @@
             <img class="hover-icon" src="../../../../assets/img/comment-hover.png" alt=""
                 (click)="openThread(this.thread)">
         </div>
-        <div class="icon">
+        <div class="icon" *ngIf="isCurrentUser">
             <img class="not-hover-icon" src="../../../../assets/img/dots.png" alt="">
             <img class="hover-icon" src="../../../../assets/img/dots-hover.png" alt="">
         </div>

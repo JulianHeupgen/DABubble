@@ -43,8 +43,8 @@ export class ChannelThreadComponent {
     let messageOwnderId = this.thread.messages[0].sender.id
     if (currentUserId == messageOwnderId) {
       this.isCurrentUser = true;
-      console.log(this.isCurrentUser);
-      
+    } else {
+      this.isCurrentUser = false;
     }
 
   }
