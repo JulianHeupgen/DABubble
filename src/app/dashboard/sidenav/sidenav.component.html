@@ -5,19 +5,19 @@
                 <div class="headline-container">
                     <img src="./assets/img/devspace_logo.png">
                     <h1 class="project-font">Devspace</h1>
-                    <img class="edit-square-img" [src]="editSrc">
+                    <img class="edit-square-img" src="./assets/img/edit_square.png">
                 </div>
                 <div class="private-message-container">
                     <div class="private-message-headline-container">
                         <div class="dF" (click)="toggleSidenav('channels')">
-                            <img class="img-arrow-channels" [src]="arrowSrcWs"
+                            <img class="img-arrow-channels" src="./assets/img/arrow_drop_down.png"
                                 [ngStyle]="{'transform': showChannels ? 'rotate(0deg)' : 'rotate(270deg)'}">
                             <div class="headline-subcontainer-channels">
-                                <img class="img-logo" [src]="logoSrcWs">
+                                <img class="img-logo" src="./assets/img/workspaces.png">
                                 <h2 class="private-headline project-font">Channels</h2>
                             </div>
                         </div>
-                        <img class="add-icon" [src]="add" (click)="openDialog()">
+                        <img class="add-icon" src="./assets/img/add_channel.png" (click)="openDialog()">
                     </div>
                     <div *ngIf="showChannels" class="channels-container">
                         <div *ngFor="let user of selectedUser" class="channel-subcontainer">
@@ -31,17 +31,17 @@
                     </div>
                     <div *ngIf="showChannels" class="add-channel-container">
                         <div class="add-channel-subcontainer" (click)="openDialog()">
-                            <img [src]="addCircle">
+                            <img src="./assets/img/add_circle.png">
                             <p>Channel hinzufügen</p>
                         </div>
                     </div>
                 </div>
                 <div class="private-message-container">
                     <div class="private-message-headline-container" (click)="toggleSidenav('private')">
-                        <img class="img-arrow" [src]="arrowSrc"
+                        <img class="img-arrow" src="./assets/img/arrow_drop_down.png"
                             [ngStyle]="{'transform': showDirectMessages ? 'rotate(0deg)' : 'rotate(270deg)'}">
                         <div class="headline-subcontainer">
-                            <img class="img-logo" [src]="logoSrc">
+                            <img class="img-logo" src="./assets/img/private_message_logo.png">
                             <h2 class="private-headline font-nunito">Direktnachrichten</h2>
                         </div>
                     </div>
@@ -70,12 +70,12 @@
     </mat-drawer-container>
 </div>
 @if (opened) {
-<img class="img-as-button" [src]="imageSrc"
+<img class="img-as-button" src="./assets/img/sidemenu_close_normal.png"
     (click)="toggleSidenav('sidenav')">
 }
 @if (!opened) {
-<img class="img-as-button-open" [src]="imageSrcOpen"
+<img class="img-as-button-open" src="./assets/img/sidemenu_open_normal.png"
     (click)="toggleSidenav('sidenav')">
 }
 
-<button (click)="openMemberDialog()">OPEN</button>
+<!-- <button (click)="openMemberDialog()">OPEN</button> -->

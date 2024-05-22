@@ -11,7 +11,6 @@ import { Channel } from '../../models/channel.class';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddChannelComponent } from '../../dialog/add-channel/add-channel.component';
-import { ChannelMembersComponent } from '../../dialog/channel-members/channel-members.component';
 
 
 @Component({
@@ -51,16 +50,6 @@ export class SidenavComponent {
   opened: boolean = true;
   showChannels: boolean = true;
   showDirectMessages: boolean = true;
-  imageSrc: string = './assets/img/sidemenu_close_normal.png';
-  imageSrcOpen: string = './assets/img/sidemenu_open_normal.png';
-  editSrc: string = './assets/img/edit_square.png';
-  arrowSrc: string = './assets/img/arrow_drop_down.png';
-  arrowSrcWs: string = './assets/img/arrow_drop_down.png';
-  logoSrc: string = './assets/img/private_message_logo.png';
-  logoSrcWs: string = './assets/img/workspaces.png';
-  tagImg: string = './assets/img/tag.png';
-  add: string = './assets/img/add_channel.png';
-  addCircle: string = './assets/img/add_circle.png';
   online: boolean = true;
   users: any;
   channels: any;
@@ -76,7 +65,6 @@ export class SidenavComponent {
 
 
   constructor(private dataService: DataService, private authService: AuthService, public dialog: MatDialog) {
-    // this.users = [];
     this.dataSubscriptions();
   }
 
@@ -88,6 +76,7 @@ export class SidenavComponent {
     this.userSub = this.dataService.getUsersList().subscribe(users => {
       this.users = users;
       this.updateDirectMessages();
+      this.refreshChannels();
       this.authService.getUserAuthId().then(uid => {
         if (uid) {
           this.setUserData(uid);
@@ -100,6 +89,7 @@ export class SidenavComponent {
     });
     this.channelSub = this.dataService.getChannelsList().subscribe(channels => {
       this.channels = channels;
+      this.refreshChannels();
       this.checkDataForChannelNames();
     });
   }
@@ -149,6 +139,18 @@ export class SidenavComponent {
 
 
   /**
+   * Pull refresh for channels on change
+   */
+  refreshChannels() {
+    this.dataService.getChannelsList().subscribe(channels => {
+      this.channels = channels;
+      this.updateChannelTitles();
+      this.checkDataForChannelNames();
+    });
+  }
+
+
+  /**
    * Set and Update the channel titles for the sidenav rendering
    */
   updateChannelTitles() {
@@ -157,7 +159,7 @@ export class SidenavComponent {
       if (user.channels && Array.isArray(user.channels)) {
         user.channels.forEach(userChannelId => {
           const matchedChannel = this.channels.find((channel: Channel) => channel.channelId === userChannelId);
-          if (matchedChannel && matchedChannel.channelId && matchedChannel.title) {
+          if (matchedChannel) { // && matchedChannel.channelId && matchedChannel.title) {
             this.channelTitles.push({
               channelId: matchedChannel.channelId,
               title: matchedChannel.title
@@ -241,6 +243,9 @@ export class SidenavComponent {
   }
 
 
+  /**
+   * Unsub subscriptions on destroy the page
+   */
   ngOnDestroy() {
     if (this.userSub) {
       this.userSub.unsubscribe();
@@ -248,10 +253,5 @@ export class SidenavComponent {
     if (this.channelSub) {
       this.channelSub.unsubscribe();
     }
-  }
-
-  
-  openMemberDialog() {
-    this.dialog.open(ChannelMembersComponent);
   }
 }
