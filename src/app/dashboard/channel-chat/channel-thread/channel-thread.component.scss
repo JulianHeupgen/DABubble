@@ -60,6 +60,12 @@
     .channel-chat-sender-img {
         height: 100%;
         @include flex-align-justify($ai: flex-start);
+
+        img {
+            width: 64px;
+            height: 64px;
+            border-radius: 100%;
+        }
     }
 
 }
