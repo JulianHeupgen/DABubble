@@ -18,6 +18,9 @@
             <p *ngIf="showNameError && channelName.length < 3">
                 Der Channel-Name muss mindestens 3 Zeichen lang sein.
             </p>
+            <p *ngIf="showDuplicateError">
+                Dieser Channel-Name wird bereits verwendet! Bitte wähle einen anderen!
+            </p>
         </div>
     </div>
     <div class="input-section">
