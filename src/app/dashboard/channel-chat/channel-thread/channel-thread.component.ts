@@ -10,6 +10,7 @@ import { ThreadService } from '../../../services/thread.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { User } from '../../../models/user.class';
+import { FullThreadComponent } from '../../full-thread/full-thread.component';
 
 @Component({
   selector: 'app-channel-thread',
@@ -72,7 +73,11 @@ export class ChannelThreadComponent {
   }
 
   openThread(thread: Thread) {
-    this.threadService.changeThread(thread, this.threadUser);
+    this.threadService.openThread = false;
+    setTimeout(() => {
+      
+      this.threadService.changeThread(thread, this.threadUser, this.channelChat.currentChannel, this.channelChat.currentUser);
+    }, 1);
   }
 
   setHoverMenu() {

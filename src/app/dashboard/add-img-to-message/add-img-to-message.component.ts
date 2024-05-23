@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, input } from '@angular/core';
 import { ChannelChatComponent } from '../channel-chat/channel-chat.component';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 
@@ -15,12 +15,10 @@ import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 export class AddImgToMessageComponent {
 
   @ViewChild('fileInput') fileInput!: ElementRef;
-  
+  @Input() showImgRef!: HTMLDivElement;
   imgFile: File | undefined = undefined;
 
-  constructor(
-    private channelChat: ChannelChatComponent
-  ) { }
+  constructor( ) { }
 
   handleFileInput(event: any) {
     const file: File = event.target.files[0];
@@ -29,9 +27,9 @@ export class AddImgToMessageComponent {
     reader.onloadend = () => {
       const imgElement = document.createElement('img');
       imgElement.src = reader.result as string;
-      imgElement.classList.add('img-file')
-      this.channelChat.imgBox.nativeElement.innerHTML = '';
-      this.channelChat.imgBox.nativeElement.appendChild(imgElement);
+      imgElement.classList.add('img-file');
+      this.showImgRef.innerHTML= '';
+      this.showImgRef.appendChild(imgElement);
       imgElement.addEventListener('click', this.removeImage.bind(this));
     };
     if (file) {
@@ -41,9 +39,9 @@ export class AddImgToMessageComponent {
   }
 
   removeImage() {
-    this.channelChat.imgBox.nativeElement.innerHTML = '';
+    this.showImgRef.innerHTML = '';
     this.fileInput.nativeElement.value = '';
     this.imgFile = undefined;
   }
-  
+
 }

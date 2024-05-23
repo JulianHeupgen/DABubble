@@ -51,10 +51,9 @@ import { EmojiCommunicationService } from '../../services/emoji-communication.se
 export class ChannelChatComponent {
   @ViewChild("threadContainer") threadContainer!: ElementRef;
   @ViewChild("threadMessageBox") threadMessageBox!: ElementRef;
-  @ViewChild("imgBox") imgBox!: ElementRef;
+  @ViewChild("imgBox") imgBox!: ElementRef<any>;
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
-  @ViewChild(AddImgToMessageComponent)
-  addImgToMessageComponent!: AddImgToMessageComponent;
+  @ViewChild(AddImgToMessageComponent) addImgToMessageComponent!: AddImgToMessageComponent;
   emojiSubscription: Subscription;
   constructor(
     public dataService: DataService,
@@ -70,8 +69,7 @@ export class ChannelChatComponent {
         if (event.sender === "ChannelChatComponent") {
           this.addEmoji(event.emoji);
         }
-      }
-    )
+      })
   }
 
   userAuthId!: string;
@@ -220,6 +218,8 @@ export class ChannelChatComponent {
     for (let i = 0; i < this.channels.length; i++) {
       if (this.channels[i].channelId === this.channelId) {
         this.currentChannel = new Channel(this.channels[i]);
+        console.log(this.currentChannel);
+
         break;
       }
     }

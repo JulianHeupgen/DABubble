@@ -3,7 +3,6 @@ import { Thread } from '../../../models/thread.class';
 import { EmojiMartComponent } from '../../emoji-mart/emoji-mart.component';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../../services/data.service';
-import { Message } from '../../../models/message.class';
 
 @Component({
   selector: 'app-full-thread-message',

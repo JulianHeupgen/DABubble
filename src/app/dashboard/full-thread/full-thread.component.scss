@@ -30,6 +30,10 @@
     }
 }
 
+.channel-history {
+    height: 50%;
+}
+
 .channel-chat-message {
     position: relative;
     @include flex-align-justify($ai: flex-start);
@@ -148,4 +152,12 @@
         background-color: #ADB0D9;
         width: 100%;
     }
+}
+
+app-full-thread-message {
+    display: flex;
+    height: 85%;
+    overflow-y: auto;
+    flex-direction: column;
+    gap: 5px;
 }

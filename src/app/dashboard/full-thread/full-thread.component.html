@@ -1,4 +1,4 @@
-<div class="open-thread" *ngIf="openThread">
+<div class="open-thread" *ngIf="threadService.openThread">
     <div class="thread-header">
         <div class="headline">
             <h2>Thread</h2>
@@ -8,7 +8,7 @@
             <img src="../../../assets/img/close.png" alt="">
         </div>
     </div>
-    <div *ngIf="thread && thread.messages && thread.messages[0] && threadOwnder">
+    <div class="channel-history" *ngIf="thread && thread.messages && thread.messages[0] && threadOwnder">
         <div class="channel-chat-message">
             <div class="reaction-menu">
 
@@ -33,8 +33,7 @@
                 </span>
             </div>
             <div class="channel-chat-sender-img">
-                <img src="{{ threadOwnder.imageUrl }}"
-                    alt="">
+                <img src="{{ threadOwnder.imageUrl }}" alt="">
             </div>
         </div>
 
@@ -44,10 +43,59 @@
             </span>
             <div></div>
         </div>
+            
+            <app-full-thread-message [thread]="thread"></app-full-thread-message>
+        
 
-        <app-full-thread-message
-        [thread]="thread"
-        ></app-full-thread-message>
+
+        <form [formGroup]="fullThreadMessage" class="text-box">
+            <div #imgBoxFullThread class="add-file-img-box"></div>
+            <textarea #fullThreadMessageBox formControlName="threadMessage"
+                placeholder="Antworten"></textarea>
+            <div class="interactiv-btn-box">
+                <div class="interactive-btns">
+
+                    <app-add-img-to-message [showImgRef]="imgBoxFullThread"></app-add-img-to-message>
+
+                    <div class="border-line"></div>
+                    <app-emoji-mart 
+                    [emojiImg]="'emoticon.png'" 
+                    [emojiImgHover]="'emoticon-hover.png'"
+                    [assigningComponent]="'FullThreadComponent'"></app-emoji-mart>
+
+                    <div class="address-message-to-user">
+                        <img class="not-hover-icon" src="../../../assets/img/ping-user.png" alt="">
+                        <button class="hover-icon" mat-button [matMenuTriggerFor]="pingUser">
+                            <img src="../../../assets/img/ping-user-hover.png" alt="">
+                        </button>
+                        <mat-menu #pingUser="matMenu" class="address-message-to-user-menu">
+                            <mat-form-field class="example-full-width" (click)="$event.stopPropagation()">
+                                <mat-label>User</mat-label>
+                                <input type="text" placeholder="Pick one" aria-label="User" matInput
+                                    [formControl]="pingUserControlFullThread" [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option *ngFor="let user of filteredUsers | async" [value]="user.name"
+                                        (click)="addUserToMessage(user)">
+                                        &#64;{{ user.name }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </mat-menu>
+                    </div>
+                </div>
+
+
+                <div class="send-message">
+                    <button class="not-hover-icon">
+                        <img src="../../../assets/img/send-message.png" alt="">
+                    </button>
+                    <button type="submit" class="hover-icon" (click)="sendMessage(); removeChatInput()">
+                        <img src="../../../assets/img/send-message-hover.png" alt="">
+                    </button>
+
+                </div>
+            </div>
+        </form>
 
     </div>
 

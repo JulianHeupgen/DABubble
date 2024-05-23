@@ -70,7 +70,7 @@ export class User {
 
     if (replyToThread) {                                      // Antwort auf bestehenden Thread: Neue Message wird dem bestehenden Thread überreicht
       let newMessage = new Message(this, messageContent, imgFileURL);
-      replyToThread.messages.push(JSON.stringify(newMessage));
+      replyToThread.messages.push(newMessage);
       return newMessage
 
     } else {                                                // Andernfalls neuen Thread erstellen, Message überreichen und neuen Thread in Channel pushen
