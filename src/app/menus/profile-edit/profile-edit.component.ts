@@ -1,15 +1,17 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
-import { User } from '../../models/user.class';
-import { Subscription, firstValueFrom } from 'rxjs';
-import { CommonModule } from '@angular/common';
-import { HeaderProfileService } from '../../services/header-profile.service';
-import { ReAuthenticateUserComponent } from '../../dialog/re-authenticate-user/re-authenticate-user.component';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
-import { SnackBarService } from '../../services/snack-bar.service';
+import {Component} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AuthService} from '../../services/auth.service';
+import {Router} from '@angular/router';
+import {User} from '../../models/user.class';
+import {Subscription, firstValueFrom} from 'rxjs';
+import {CommonModule} from '@angular/common';
+import {HeaderProfileService} from '../../services/header-profile.service';
+import {ReAuthenticateUserComponent} from '../../dialog/re-authenticate-user/re-authenticate-user.component';
+import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {SnackBarService} from '../../services/snack-bar.service';
 import {PhotoSelectionComponent} from "../../photo-selection/photo-selection.component";
+import {UserRegistrationService} from "../../services/user-registration.service";
+import {StorageService} from "../../services/storage.service";
 
 @Component({
   selector: 'app-profile-edit',
@@ -24,13 +26,19 @@ export class ProfileEditComponent {
   selectedImageAsFileOrUrl: File | string = '';
   user!: User;
 
+  dialogRef?: MatDialogRef<PhotoSelectionComponent>;
+
+  private userSub = new Subscription();
+
   constructor(
     private auth: AuthService,
     private router: Router,
     private formBuilder: FormBuilder,
     private profileService: HeaderProfileService,
     public dialog: MatDialog,
-    private snackbar: SnackBarService
+    private snackbar: SnackBarService,
+    private userRegService: UserRegistrationService,
+    private storage: StorageService
   ) {
     this.editUserForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -39,24 +47,44 @@ export class ProfileEditComponent {
     this.getUser();
   }
 
-  private userSub = new Subscription();
-
   openImageUploaderModal() {
     const dialogRef = this.dialog.open(PhotoSelectionComponent, {
       data: {
         showBackArrow: false,
-        onNext: this.saveUserImage.bind(this)
+        onNext: this.onSelectedImage.bind(this)
       }
     });
-
     dialogRef.componentInstance.selectedImg.subscribe((image: File | string) => {
       this.selectedImageAsFileOrUrl = image;
-      console.log(this.selectedImageAsFileOrUrl)
     })
+    this.dialogRef = dialogRef;
   }
 
-  saveUserImage() {
-
+  async onSelectedImage() {
+    try {
+      let storageUrl: string = '';
+      if (this.selectedImageAsFileOrUrl instanceof File) {
+        storageUrl = await this.userRegService.uploadFile(this.selectedImageAsFileOrUrl);
+      } else if (this.selectedImageAsFileOrUrl.trim() !== '') {
+        storageUrl = this.selectedImageAsFileOrUrl;
+      } else {
+        console.error('Invalid image URL');
+        return;
+      }
+      // Get the actual image
+      const user: any = await this.auth.getUserDoc();
+      const oldImageUrl = user.imageUrl;
+      // Set new image with storageUrl, then delete old image from storage
+      try {
+        await this.auth.updateFirebaseUser({imageUrl: storageUrl});
+        this.storage.deleteFile(oldImageUrl);
+        this.dialogRef?.close();
+      } catch {
+        console.error('Error while updating image');
+      }
+    } catch (error) {
+      console.error('An error occurred while saving the user.', error);
+    }
   }
 
   /**
@@ -99,8 +127,10 @@ export class ProfileEditComponent {
       const formData = await this.openLoginModal('E-Mail ändern');
       if (formData) {
         await this.reAuthenticate(formData.email, formData.password);
-        if (!newEmail) { return }
-        await this.auth.updateEmailAddress(newEmail);
+        if (!newEmail) {
+          return
+        }
+        await this.auth.updateFirebaseUser({email: newEmail});
         this.snackbar.showSnackBar('E-Mail changed successful. ', 'Ok');
         console.log('User Email updated with success.');
       } else {
@@ -117,7 +147,7 @@ export class ProfileEditComponent {
    * @returns Login Form value as Promise
    */
   openLoginModal(source: string): Promise<any> {
-    const dialogRef = this.dialog.open(ReAuthenticateUserComponent, { data: { from: source } });
+    const dialogRef = this.dialog.open(ReAuthenticateUserComponent, {data: {from: source}});
     return firstValueFrom(dialogRef.afterClosed());
   }
 
@@ -140,10 +170,12 @@ export class ProfileEditComponent {
    * Take this function to update users fullname on firestore
    * @returns A log or an error log. In hope for just a log.
    */
-  async changeFullname(name: string) {
-    if (!name) { return }
+  async changeFullname(fullname: string) {
+    if (!fullname) {
+      return
+    }
     try {
-      await this.auth.updateName(name);
+      await this.auth.updateFirebaseUser({name: fullname});
       this.snackbar.showSnackBar('Name changed successful. ', 'Ok');
       console.log('Name successfull changed.');
     } catch (error) {

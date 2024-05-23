@@ -139,7 +139,7 @@ export class HeaderComponent {
    */
   async logoutUser() {
     try {
-      await this.auth.updateUserOnlineStatus('offline');
+      await this.auth.updateFirebaseUser({ onlineStatus: 'offline' });
       const tryLogout = await this.auth.logout();
       if (tryLogout === true) {
         this.router.navigate(['/login']);

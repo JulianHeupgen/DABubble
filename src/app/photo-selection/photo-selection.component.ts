@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {RouterModule} from "@angular/router";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {defaultAvatars} from "../configuration/default-avatars";
 
 @Component({
   selector: 'app-photo-selection',
@@ -33,14 +34,7 @@ export class PhotoSelectionComponent {
   @Output() selectedImg = new EventEmitter<File | string>();
 
   fullName: string = 'Full Name';
-  defaultAvatars: string[] = [
-    'https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_1.png?alt=media&token=76a558f3-7364-4591-8b0d-9084a608438d',
-    'https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_2.png?alt=media&token=c11604f5-49f6-4faf-b7c7-5e1795c67e12',
-    'https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_3.png?alt=media&token=8e57bc9d-29fd-4e99-aece-435a6edf761a',
-    'https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_4.png?alt=media&token=d518661c-a6d0-4cbe-846a-8c7fcc072e98',
-    'https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_5.png?alt=media&token=27617a09-956f-47c4-b96a-bedd411f6da1',
-    'https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_6.png?alt=media&token=c4962f78-c6cf-4d28-964b-ed104548d2da'
-  ];
+  defaultAvatars = defaultAvatars;
 
   // URL which is shown on the Card as selected image
   DEFAULT_IMG_SRC_URL: string = './../../assets/img/profile-empty.png';
