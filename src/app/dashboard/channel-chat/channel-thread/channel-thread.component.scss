@@ -1,6 +1,7 @@
 @import '../../../../mixin.scss';
 @import '../../../../font.scss';
 
+
 /*current User*/
 
 .channel-chat-message {
@@ -28,7 +29,40 @@
             padding: 15px;
             border-radius: 30px 0 30px 30px;
             background-color: #797EF3;
-            @include font-size-weight-color($cl: #FFFFFF)
+            @include font-size-weight-color($cl: #FFFFFF);
+        }
+
+        .message-textarea {
+
+
+            textarea {
+                padding: 15px;
+                border-radius: 30px 0 30px 30px;
+                background-color: #797EF3;
+                @include font-size-weight-color($cl: #FFFFFF);
+                resize: none;
+                border: none;
+
+                &:focus {
+                    outline: none
+                }
+            }
+
+            .edit-message-btns {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 10px;
+                span {
+                    cursor: pointer;
+                    color: #535AF1;
+
+                    &:hover {
+                        color: #444DF2;
+                        font-weight: 700;
+                    }
+                }
+            }
         }
 
         .channel-chat-time-sender {
@@ -138,9 +172,10 @@
         padding: 10px 20px !important;
         border-radius: 100px !important;
         @include font-size-weight-color($fs: 24px !important, $fw: 600 !important);
+
         &:hover {
-        @include font-size-weight-color($fs: 24px !important, $fw: 700 !important, $cl: #535AF1);
-        background-color: #ECEEFE;
+            @include font-size-weight-color($fs: 24px !important, $fw: 700 !important, $cl: #535AF1);
+            background-color: #ECEEFE;
         }
     }
 }
@@ -173,5 +208,28 @@
         border-radius: 0px 30px 30px 30px !important;
         background-color: #ECEEFE !important;
         @include font-size-weight-color($cl: #000000 !important);
+    }
+
+    &:hover {
+
+        .message,
+        .message-textarea {
+            textarea {
+                background-color: #FFFFFF !important;
+            }
+        }
+    }
+
+    .message-textarea {
+
+        textarea {
+            border-radius: 0px 30px 30px 30px !important;
+            background-color: #ECEEFE !important;
+            @include font-size-weight-color($cl: #000000 !important);
+
+            &:focus {
+                outline: none
+            }
+        }
     }
 }

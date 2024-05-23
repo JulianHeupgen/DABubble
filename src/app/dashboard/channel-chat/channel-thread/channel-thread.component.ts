@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Thread } from '../../../models/thread.class';
 import { CommonModule } from '@angular/common';
 import { EmojiMartComponent } from '../../emoji-mart/emoji-mart.component';
@@ -27,9 +27,10 @@ export class ChannelThreadComponent {
 
   @Input() thread!: Thread;
   @ViewChild(MessageReactionComponent) messageReaction!: MessageReactionComponent;
-
+  @ViewChild("editMessageBox") editMessageBox!: ElementRef;
   isCurrentUser: boolean = false;
   setReactionMenuHover: boolean = false;
+  editMessage: boolean = false;
 
   constructor(
     public channelChat: ChannelChatComponent,
@@ -65,9 +66,19 @@ export class ChannelThreadComponent {
     this.setReactionMenuHover = true;
   }
 
-  editMessageHandler() {
-    // Logik für das Bearbeiten der Nachricht
-    console.log('Edit message clicked');
+  editThreadMessage() {
+    this.setReactionMenuHover = false;
+    this.editMessage = true;   
+  }
+
+  cancelEditMessage() {
+    this.editMessage = false;
+  }
+
+  async saveEditMessage(messageElement: Thread) {
+    messageElement.messages[0].content = this.editMessageBox.nativeElement.value
+    await this.dataService.updateThread(messageElement)
+    this.editMessage = false;
   }
 }
 
