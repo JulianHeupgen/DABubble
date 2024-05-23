@@ -5,7 +5,7 @@
 
 
 <div class="channel-chat-message" [class.other-users-channel-chat-message]="!isCurrentUser">
-    <div class="reaction-menu">
+    <div class="reaction-menu" [class.set-reaaction-menu-hover]="setReactionMenuHover">
         <div class="icon" (click)="messageReaction.reactToThread(thread.messages[0], 'check-mark.png')">
             <img src="../../../../assets/img/check-mark.png" alt="">
         </div>
@@ -22,7 +22,13 @@
         </div>
         <div class="icon" *ngIf="isCurrentUser">
             <img class="not-hover-icon" src="../../../../assets/img/dots.png" alt="">
-            <img class="hover-icon" src="../../../../assets/img/dots-hover.png" alt="">
+            
+            <button class="hover-icon" mat-button [matMenuTriggerFor]="editMessage" (click)="setHoverMenu()">
+                <img src="../../../../assets/img/dots-hover.png" alt="">
+            </button>
+            <mat-menu  class="edit-message-btn" #editMessage="matMenu">
+                <button mat-menu-item (click)="editMessageHandler()">Nachricht bearbeiten</button>
+            </mat-menu>
         </div>
     </div>
     <div class="channel-chat-content">

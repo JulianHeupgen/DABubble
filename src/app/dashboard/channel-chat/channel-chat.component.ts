@@ -117,18 +117,18 @@ export class ChannelChatComponent {
     );
   }
 
-  ngAfterViewChecked() {
-    this.scrollToBottom();
-  }
+  // ngAfterViewChecked() {
+  //   this.scrollToBottom();
+  // }
 
-  scrollToBottom() {
-    try {
-      this.threadContainer.nativeElement.scrollTop =
-        this.threadContainer.nativeElement.scrollHeight;
-    } catch (err) {
-      console.error("Could not scroll to bottom:", err);
-    }
-  }
+  // scrollToBottom() {
+  //   try {
+  //     this.threadContainer.nativeElement.scrollTop =
+  //       this.threadContainer.nativeElement.scrollHeight;
+  //   } catch (err) {
+  //     console.error("Could not scroll to bottom:", err);
+  //   }
+  // }
 
   private _filterUsers(value: string): any[] {
     const filterValue = value.toLowerCase();
