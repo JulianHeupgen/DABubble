@@ -28,6 +28,7 @@ export class AddChannelComponent {
   users: any;
   userAuthId!: string;
   currentUser!: User;
+  showDuplicateError: boolean = false;
   private userSub: Subscription = new Subscription();
 
   constructor(public dialog: MatDialog, private dataService: DataService, private auth: AuthService) {
@@ -88,6 +89,10 @@ export class AddChannelComponent {
       this.showNameError = true;
       return;
     }
+    if (this.checkChannelNameExists(this.channelName)) {
+      this.showDuplicateError = true;
+      return;
+    }
     const newChannelData = new Channel({
       title: this.channelName,
       description: this.channelDescription,
@@ -129,6 +134,11 @@ export class AddChannelComponent {
         });
       }, 500);
     }
+  }
+
+
+  checkChannelNameExists(channelName: string): boolean {
+    return this.dataService.allChannels.some(channel => channel.title === channelName);
   }
 
 
