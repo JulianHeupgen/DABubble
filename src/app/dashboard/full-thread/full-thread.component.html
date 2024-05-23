@@ -8,7 +8,7 @@
             <img src="../../../assets/img/close.png" alt="">
         </div>
     </div>
-    <div *ngIf="thread && thread.messages && thread.messages[0]">
+    <div *ngIf="thread && thread.messages && thread.messages[0] && threadOwnder">
         <div class="channel-chat-message">
             <div class="reaction-menu">
 
@@ -26,14 +26,14 @@
             <div class="channel-chat-content">
                 <div class="channel-chat-time-sender">
                     <span>{{thread.getFormattedTimeStamp()}}</span>
-                    <h3>{{ thread.messages[0].sender.name }}</h3>
+                    <h3>{{ threadOwnder.name }}</h3>
                 </div>
                 <span class="message">
                     {{ thread.messages[0].content }}
                 </span>
             </div>
             <div class="channel-chat-sender-img">
-                <img src="{{ thread.messages[0].sender.imageUrl }}"
+                <img src="{{ threadOwnder.imageUrl }}"
                     alt="">
             </div>
         </div>

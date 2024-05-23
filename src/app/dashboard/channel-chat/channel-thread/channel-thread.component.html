@@ -40,7 +40,7 @@
     <div class="channel-chat-content">
         <div class="channel-chat-time-sender">
             <span>{{ formattedTimeStamp() }}</span>
-            <h3>{{ thread.messages[0].sender.name }}</h3>
+            <h3>{{ threadUser.name }}</h3>
         </div>
 
         <span class="message" *ngIf="!editMessage" [class.other-users-message]="!isCurrentUser">
@@ -79,7 +79,7 @@
     </div>
 
     <div class="channel-chat-sender-img">
-        <img src="{{ this.thread.messages[0].sender.imageUrl }}" alt="">
+        <img src="{{ threadUser.imageUrl }}" alt="">
     </div>
 
 </div>

@@ -9,6 +9,7 @@ import { DataService } from '../../../services/data.service';
 import { ThreadService } from '../../../services/thread.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { User } from '../../../models/user.class';
 
 @Component({
   selector: 'app-channel-thread',
@@ -26,8 +27,10 @@ import { MatMenuModule } from '@angular/material/menu';
 export class ChannelThreadComponent {
 
   @Input() thread!: Thread;
+
   @ViewChild(MessageReactionComponent) messageReaction!: MessageReactionComponent;
   @ViewChild("editMessageBox") editMessageBox!: ElementRef;
+  threadUser!: User
   isCurrentUser: boolean = false;
   setReactionMenuHover: boolean = false;
   editMessage: boolean = false;
@@ -41,13 +44,23 @@ export class ChannelThreadComponent {
 
   ngOnInit() {
     let currentUserId = this.channelChat.currentUser.id;
-    let messageOwnderId = this.thread.messages[0].sender.id
+    let messageOwnderId = this.thread.messages[0].senderId
     if (currentUserId == messageOwnderId) {
       this.isCurrentUser = true;
     } else {
       this.isCurrentUser = false;
     }
+    this.findThreadUser(messageOwnderId);
+  }
 
+  findThreadUser(messageOwnderId: string) {
+    this.dataService.allUsers.forEach( user => {
+      if (user.id == messageOwnderId) {
+        this.threadUser = user;
+        console.log('Thread User',this.threadUser);
+        
+      }
+    })
   }
 
   formattedDatestamp(): any {
@@ -59,7 +72,7 @@ export class ChannelThreadComponent {
   }
 
   openThread(thread: Thread) {
-    this.threadService.changeThread(thread);
+    this.threadService.changeThread(thread, this.threadUser);
   }
 
   setHoverMenu() {

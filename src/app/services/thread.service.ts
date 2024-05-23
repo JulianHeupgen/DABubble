@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Thread } from '../models/thread.class';
+import { User } from '../models/user.class';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThreadService {
 
-  private threadSource = new BehaviorSubject<Thread | null>(null);
-  currentThread = this.threadSource.asObservable();
+  private threadSource = new Subject<any>();
+  currentThread$ = this.threadSource.asObservable();
 
   constructor() { }
 
-  changeThread(thread: Thread) {
-    this.threadSource.next(thread);
+  changeThread(thread: Thread, threadOwner: User) {
+    this.threadSource.next({thread, threadOwner});
   }
 
 

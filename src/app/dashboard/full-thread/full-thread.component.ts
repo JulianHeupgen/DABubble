@@ -26,15 +26,17 @@ export class FullThreadComponent {
   
   openThread: boolean = false;
   thread: Thread | null = null;
+  threadOwnder: User | null = null;
 
   constructor(
     private threadService: ThreadService,
   ) { }
 
   ngOnInit(): void {
-    this.threadService.currentThread.subscribe(thread => {
-      if (thread) {
-        this.thread = thread;
+    this.threadService.currentThread$.subscribe(event => {
+      if (event.thread) {
+        this.thread = event.thread;
+        this.threadOwnder = event.threadOwner
         this.openThread = true;
         console.log('FullThread:', this.thread)
       }

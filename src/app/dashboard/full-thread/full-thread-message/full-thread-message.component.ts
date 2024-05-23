@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 export class FullThreadMessageComponent {
 
   @Input() thread!: Thread;
+  threadMessages!: any;
 
 
   getFormattedDatestamp(timestamp: number): any {
