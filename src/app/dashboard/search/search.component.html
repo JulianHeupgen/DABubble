@@ -12,7 +12,7 @@
     (opened)="isPanelOpen = true"
     (closed)="isPanelOpen = false"
   >
-    @for (street of streets; track street) {
+    @for (street of users; track street) {
     <mat-option [value]="street">{{ street }}</mat-option>
     }
   </mat-autocomplete>
