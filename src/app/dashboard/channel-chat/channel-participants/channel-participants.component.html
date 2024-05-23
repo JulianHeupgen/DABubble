@@ -1,6 +1,9 @@
 <div class="channelParticipants-container">
     <h2>Mitglieder</h2>
-    <div>
-        <!-- Einzelne Mitglieder rendern  -->
+    <div *ngIf="channelParticipants">
+        @for(participant of channelParticipants; track participant.name; let index = $index) {
+            <div>{{ participant.name }}</div>
+        }
     </div>
+    <button>Teilnehmer hinzufpgen</button>
 </div>
