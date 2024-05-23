@@ -21,7 +21,7 @@ import {PhotoSelectionComponent} from "../../photo-selection/photo-selection.com
 export class ProfileEditComponent {
 
   editUserForm: FormGroup;
-
+  selectedImageAsFileOrUrl: File | string = '';
   user!: User;
 
   constructor(
@@ -43,8 +43,20 @@ export class ProfileEditComponent {
 
   openImageUploaderModal() {
     const dialogRef = this.dialog.open(PhotoSelectionComponent, {
-      data: { showBackArrow: false }
+      data: {
+        showBackArrow: false,
+        onNext: this.saveUserImage.bind(this)
+      }
     });
+
+    dialogRef.componentInstance.selectedImg.subscribe((image: File | string) => {
+      this.selectedImageAsFileOrUrl = image;
+      console.log(this.selectedImageAsFileOrUrl)
+    })
+  }
+
+  saveUserImage() {
+
   }
 
   /**

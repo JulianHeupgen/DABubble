@@ -42,7 +42,7 @@ export class UserRegistrationService {
         console.error('Image upload error. ', error);
       }
     }
-    return null;
+    return '';
   }
 
   updateUserObject(key: string, data: string | string[]) {

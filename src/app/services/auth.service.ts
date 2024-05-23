@@ -150,12 +150,11 @@ export class AuthService {
    * Get the docId from the actual logged User by the auth id
    * @returns firestore docId
    */
-  async getDocIdfromAuthenticatedUser(): Promise<string | undefined> {
+  async getDocIdFromAuthenticatedUser(): Promise<string | undefined> {
     try {
       const auth = this.auth.currentUser?.uid;
       if (auth) {
-        const docId = await this.getDocIdFromAuthUserId(auth);
-        return docId;
+        return await this.getDocIdFromAuthUserId(auth);
       }
       return undefined;
     } catch (error) {
@@ -169,7 +168,7 @@ export class AuthService {
    * @param newStatus New Status which can be set (only use 'online' | 'offline')
    */
   async updateUserOnlineStatus(newStatus: 'online' | 'offline' | 'away'): Promise<void> {
-    const docId = await this.getDocIdfromAuthenticatedUser();
+    const docId = await this.getDocIdFromAuthenticatedUser();
     if (!docId) {
       console.error('No docId found for this user.');
       throw new Error('No docId found for this user.');
