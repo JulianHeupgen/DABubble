@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Inject, Input} from '@angular/core';
 import { UserRegistrationService } from '../services/user-registration.service';
-import { AuthService } from '../services/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -8,9 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { StorageService } from '../services/storage.service';
-import { User } from '../models/user.class';
-import { Router, RouterModule } from '@angular/router';
+import {RouterModule} from "@angular/router";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-photo-selection',
@@ -30,8 +28,11 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class PhotoSelectionComponent {
 
+  @Input()
+  showBackArrow: boolean = true;
+
   // this is used as reference for the new User model which will be upped to db
-  _userData: any = {};
+  fullName: string = 'Full Name';
 
   defaultAvatars: string[] = [
     'https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_1.png?alt=media&token=76a558f3-7364-4591-8b0d-9084a608438d',
@@ -57,78 +58,26 @@ export class PhotoSelectionComponent {
 
   constructor(
     private userRegService: UserRegistrationService,
-    private authService: AuthService,
-    private storageService: StorageService,
-    private router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: { showBackArrow: boolean }
   ) { }
 
   ngOnInit(): void {
-    this._userData = this.userRegService.getSavedUserData();
+    this.fullName = this.userRegService.getUserFullName();
+    this.showBackArrow = this.data.showBackArrow ?? this.showBackArrow;
   }
 
   /**
    * Finalize the User Registration process when next button is clicked
    */
   async onRegistrationFinished() {
-    if (this.uploadedFile && this.uploadedFile instanceof File) {
-      try {
-        this.imgSrcUrl = await this.storageService.uploadFile(this.uploadedFile);
-      } catch (error) {
-        console.error('Image upload error. ', error);
-      }
+    let imgUrl: string | null = null;
+    if (this.uploadedFile) {
+      imgUrl = await this.userRegService.uploadFile(this.uploadedFile);
     }
-    this.updateUserObject('imageUrl', this.imgSrcUrl as string);
-    this.updateUserObject('onlineStatus', 'online');
-    this.updateUserObject('channels', ['Yk2dgejx9yy7iHLij1Qj']);
-    // Authenticate User and when successful update User Object and set it to Firestore
-    this.signUpAndCreateUser();
-  }
-
-  signUpAndCreateUser() {
-    // first we sign up the user
-    this.authService.signUp(this._userData.email, this._userData.password)
-      .then(user => {
-        //update the firebase user model with the auth id and store it
-        this.updateUserObject('authUserId', user.user.uid);
-        return this.createUserObject();
-      })
-      .then(() => {
-        console.log('User created with success.')
-      })
-      .catch(error => {
-        console.error('An error occurred while sign in up the user. Error: ', error);
-      })
-  }
-
-  async createUserObject() {
-    this.removePasswordFromUserObject();
-    const user = new User(this._userData);
-    // Connect firebase and set Doc User HERE
-    await this.saveUserToFirebase(user)
-      .then(() => {
-        this.router.navigate(['dashboard']);
-      })
-      .catch((error) => {
-        console.error('Error saving user to firebase. ', error);
-      })
-  }
-
-  removePasswordFromUserObject() {
-    if (this._userData.password) {
-      delete this._userData.password;
-    }
-  }
-
-  async saveUserToFirebase(user: User) {
-    try {
-      await this.authService.createFirebaseUser(user);
-    } catch (error) {
-      console.error('Error after saving user to firebase: ', error);
-    }
-  }
-
-  updateUserObject(key: string, data: string | string[]) {
-    this._userData = { ...this._userData, [key]: data };
+    this.userRegService.updateUserObject('imageUrl', imgUrl as string);
+    this.userRegService.updateUserObject('onlineStatus', 'online');
+    this.userRegService.updateUserObject('channels', ['Yk2dgejx9yy7iHLij1Qj']);
+    this.userRegService.signUpAndCreateUser();
   }
 
   // uploaded File
@@ -173,18 +122,6 @@ export class PhotoSelectionComponent {
   onSelectedAvatar(avatarUrl: string): void {
     this.imgSrcUrl = avatarUrl;
     this.imageSelected = true;
-  }
-
-  setUserObject() {
-    return {
-      name: this._userData.name,
-      email: this._userData.email,
-      onlineStatus: this._userData.onlineStatus,
-      channels: this._userData.channels,
-      userChats: this._userData.userChats,
-      authUserId: this._userData.authUserId,
-      imageUrl: this._userData.imageUrl
-    }
   }
 
 }

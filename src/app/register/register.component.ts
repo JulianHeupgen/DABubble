@@ -50,10 +50,6 @@ export class RegisterComponent {
     });
   }
 
-  goBack() {
-    this.location.back();
-  }
-
   async onNextStep() {
     const { privacy, ...userData } = this.registerForm.value;
     this.userRegService.saveUserData(userData);

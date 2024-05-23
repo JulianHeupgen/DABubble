@@ -7,13 +7,14 @@ import { Subscription, firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { HeaderProfileService } from '../../services/header-profile.service';
 import { ReAuthenticateUserComponent } from '../../dialog/re-authenticate-user/re-authenticate-user.component';
-import { MatDialog } from '@angular/material/dialog';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { SnackBarService } from '../../services/snack-bar.service';
+import {PhotoSelectionComponent} from "../../photo-selection/photo-selection.component";
 
 @Component({
   selector: 'app-profile-edit',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, MatDialogModule],
   templateUrl: './profile-edit.component.html',
   styleUrl: './profile-edit.component.scss'
 })
@@ -40,6 +41,12 @@ export class ProfileEditComponent {
 
   private userSub = new Subscription();
 
+  openImageUploaderModal() {
+    const dialogRef = this.dialog.open(PhotoSelectionComponent, {
+      data: { showBackArrow: false }
+    });
+  }
+
   /**
    * Performs action on form submit
    */
@@ -57,7 +64,6 @@ export class ProfileEditComponent {
       console.error('Error updating the user. ', error);
     }
   }
-
 
   /**
    * Checks for differences between two values

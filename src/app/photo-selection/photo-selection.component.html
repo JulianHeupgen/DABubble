@@ -1,9 +1,7 @@
-<div class="photoupload-container">
-  <img class="logo" src="./../../assets/img/logo-complete-black.png">
-  <mat-card>
+<mat-card>
     <mat-card-content>
       <div class="photoupload-header">
-        <img routerLink="/register" class="back-arrow" src="./../../assets/img/go-back.png">
+        <img *ngIf="showBackArrow" routerLink="/register" class="back-arrow" src="./../../assets/img/go-back.png">
         <h1 class="card-headline">
           Wähle deinen Avatar
         </h1>
@@ -13,7 +11,7 @@
 
         <div class="user-data">
           <img [src]="imgSrcUrl">
-          <h1 class="name">{{ _userData?.name }}</h1>
+          <h1 class="name">{{ fullName }}</h1>
         </div>
 
         <span>Aus der Liste wählen</span>
@@ -47,10 +45,3 @@
     </mat-card-content>
 
   </mat-card>
-
-  <div class="footer-links">
-    <a [routerLink]="['/imprint']">Impressum</a>
-    <a [routerLink]="['/privacy']">Datenschutz</a>
-  </div>
-
-</div>

@@ -224,7 +224,8 @@ export class AuthService {
           return;
         }
         // Next resolve the docId by authId
-        this.getDocIdFromAuthUserId(authId).then(docId => {
+        this.getDocIdFromAuthUserId(authId)
+          .then(docId => {
           if (!docId) {
             subscriber.error(new Error('No doc ID found.'));
             return;

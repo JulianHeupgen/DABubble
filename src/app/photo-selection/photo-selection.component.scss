@@ -1,21 +1,5 @@
-@import '../../mixin.scss';
-
-.photoupload-container {
-  @include flex-align-justify();
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-}
-
-.logo {
-  height: 55px;
-  position: absolute;
-  left: 32px;
-  top: 32px;
-}
-
 mat-card {
-  width: 40%;
+  width: 100%;
   max-width: 606px;
   height: 80vh;
   max-height: 769px;
@@ -131,29 +115,7 @@ form {
   }
 }
 
-a {
-  color: #797EF3;
-  font-size: 18px;
-  line-height: normal;
-  font-family: Nunito, sans-serif;
-  text-decoration: none;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.footer-links {
-  display: flex;
-  gap: 24px;
-  position: absolute;
-  bottom: 24px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .file-input {
-  /* display: none; */
   opacity: 0;
   position: absolute;
   width: 0;

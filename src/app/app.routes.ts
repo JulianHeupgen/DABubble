@@ -7,7 +7,6 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { ImprintComponent } from './imprint/imprint.component';
 import { RegisterComponent } from './register/register.component';
 import { LogoComponent } from './animations/logo/logo.component';
-import { PhotoSelectionComponent } from './photo-selection/photo-selection.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { TestComponent } from './test/test.component';
 
@@ -15,6 +14,7 @@ import { SendMailToResetPasswordComponent } from './send-mail-to-reset-password/
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { authGuard } from './auth.guard';
 import { SearchComponent } from './dashboard/search/search.component';
+import {RegisterNextComponent} from "./register-next/register-next.component";
 
 export const routes: Routes = [
 
@@ -22,7 +22,7 @@ export const routes: Routes = [
   { path: 'hello', component: LogoComponent},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
-  { path: 'register/next', component: PhotoSelectionComponent },
+  { path: 'register/next', component: RegisterNextComponent },
   { path: 'send-mail-to-reset', component: SendMailToResetPasswordComponent },
   { path: 'reset-password', component: PasswordResetComponent },
   {
