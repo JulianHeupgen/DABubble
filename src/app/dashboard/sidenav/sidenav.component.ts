@@ -129,7 +129,6 @@ export class SidenavComponent {
     }
     const user = this.users.find((user: User) => user.authUserId === uid);
     if (user) {
-      console.log('User gefunden', user);
       this.selectedUser = [];
       this.selectedUser.push(user);
     } else {
@@ -203,7 +202,6 @@ export class SidenavComponent {
       console.log('Keine ausgewählten Benutzer vorhanden.');
     }
     this.sortDirectMessageUsers();
-    console.log('Direct Message Titles:', this.directMessageTitle);
   }
 
 
