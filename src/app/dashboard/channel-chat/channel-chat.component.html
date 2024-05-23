@@ -6,7 +6,7 @@
         <img class="title-arrow" src="assets/img/arrow_down.png">
       </div>
       <div class="header-right-container">
-        <div class="participants-container">
+        <div class="participants-container" [matMenuTriggerFor]="channelParticipantsMenu">
           <ng-container *ngFor="let participant of channelParticipants">
             <img class="participants-img" src="{{participant.participantImage}}">
           </ng-container>
@@ -17,10 +17,17 @@
     </div>
 
   <!-- MatMenu EditChannel (Bei Klick auf Channel-Titel)-->
-  <mat-menu #editChannelMenu>
+  <mat-menu #editChannelMenu >
     <div (click)="$event.stopPropagation()">
       <app-edit-channel *ngIf="currentChannel && currentUser && channelId"
-       [currentChannel]="currentChannel" [currentUser]="currentUser" [channelId]="channelId" [matMenuTrigger]="menuTrigger" ></app-edit-channel>  
+       [currentChannel]="currentChannel" [currentUser]="currentUser" [channelId]="channelId" [matMenuTrigger]="menuTrigger"></app-edit-channel>  
+    </div>
+  </mat-menu>
+
+  <!-- MatMenu ChannelParticipants (Bei Klick auf Participants)-->
+  <mat-menu #channelParticipantsMenu class="channelParticipants">
+    <div (click)="$event.stopPropagation()">
+        <app-channel-participants *ngIf="currentChannel" [currentChannel]="currentChannel"></app-channel-participants>
     </div>
   </mat-menu>
 

@@ -1,0 +1,14 @@
+@import '../../../../mixin.scss';
+
+.channelParticipants-container {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    width: 300px;
+
+    h2 {
+        @include font-size-weight-color($fs: 24px, $fw: 500);
+    }      
+    
+}
+

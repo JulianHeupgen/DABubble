@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
 import { AddImgToMessageComponent } from '../add-img-to-message/add-img-to-message.component';
 import { EditChannelComponent } from './edit-channel/edit-channel.component';
 import { EmojiCommunicationService } from '../../services/emoji-communication.service';
+import { ChannelParticipantsComponent } from './channel-participants/channel-participants.component';
 
 @Component({
   selector: "app-channel-chat",
@@ -44,6 +45,7 @@ import { EmojiCommunicationService } from '../../services/emoji-communication.se
     EmojiMartComponent,
     AddImgToMessageComponent,
     EditChannelComponent,
+    ChannelParticipantsComponent
   ],
   templateUrl: "./channel-chat.component.html",
   styleUrl: "./channel-chat.component.scss",
