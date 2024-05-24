@@ -3,7 +3,7 @@
     <div *ngIf="channelParticipants">
         @for(participant of channelParticipants; track participant.name; let index = $index) {
             <div class="participant">
-                <img src="{{ participant.imageUrl }}">
+                <img class="profile-img" src="{{ participant.imageUrl }}">
                 <img src="assets/img/online.png" class="online-status" [class.online]="participant.onlineStatus === 'online'"
                     [class.offline]="participant.onlineStatus === 'offline'">
                 <span> {{ participant.name }} </span>

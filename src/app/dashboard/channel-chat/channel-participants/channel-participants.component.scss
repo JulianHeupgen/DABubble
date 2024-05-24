@@ -11,7 +11,15 @@
     } 
     
     .participant {
+        @include flex-align-justify();
         position: relative;
+        margin-top: 8px;
+
+        .profile-img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+          }
 
         .onlineStatus { 
                 position: absolute;
