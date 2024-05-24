@@ -26,10 +26,10 @@ export class ChannelParticipantsComponent {
   getChannelParticipants() {
     this.channelParticipants = [];
     this.currentChannel.participants.forEach((participant) => {
-      this.users.some((user: any) => {   // some statt forEach für bessere Performance (vorzeitiger Abbruch der inneren Schleife wenn true returned wird)
+      this.users.some((user: any) => {   
         if(participant == user.id) {
           this.channelParticipants.push(user);
-          return true;           // gesuchter User gefunden; innere Schleife kann vorzeitig beendet werden; weitere User müssen nicht verglichen werden !
+          return true;           
         }
         return false;
       });
