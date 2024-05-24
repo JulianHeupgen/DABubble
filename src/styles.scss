@@ -141,7 +141,7 @@ app-channel-chat {
 }
 
 /* Border Radius 30 px for all dialogs */
-* {
+mat-dialog-container {
   --mdc-dialog-container-shape: 30px !important;
 }
 

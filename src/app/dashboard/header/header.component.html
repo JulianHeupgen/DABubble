@@ -1,42 +1,43 @@
 <div class="header">
   <img class="logo" src="./assets/img/dabubble_header_logo.png">
 
-  <app-search />
-
+  <app-search/>
 
   @if (user) {
-  <div [matMenuTriggerFor]="menu" (menuOpened)="resetMenuState()" class="header-profile">
-    <span>{{ user.name }}</span>
-    <div class="profile-img-container">
-      <img class="profile-img" [src]="user.imageUrl">
-      <img src="./assets/img/online.png" class="online-status" [class.online]="user.onlineStatus === 'online'"
-        [class.offline]="user.onlineStatus === 'offline'">
-    </div>
-    <img class="arrow-down" src="./assets/img/header_arrow_down.png">
-  </div>
-
-  <mat-menu #menu xPosition="before" class="profile-menu">
-
-    <div class="small-menu" *ngIf="!isProfileView && !isProfileEditView; else profileContent">
-      <button (click)="openProfile($event)" class="profile mat-button" mat-menu-item>Profil</button>
-      <button (click)="logoutUser()" class="logout mat-button" mat-menu-item>Logout</button>
-    </div>
-
-    <ng-template #profileContent>
-      <div class="profile-details-box" *ngIf="isProfileView">
-        <app-profile-view [@fadeInOut] (editClicked)="switchToEdit()"></app-profile-view>
+    <div [matMenuTriggerFor]="menu" (menuOpened)="resetMenuState()" class="header-profile">
+      <span>{{ user.name }}</span>
+      <div class="profile-img-container">
+        <img class="profile-img" [src]="user.imageUrl"/>
+        <div class="online-status"
+             [class.online]="user.onlineStatus === 'online'"
+             [class.offline]="user.onlineStatus === 'offline'"
+             [class.away]="user.onlineStatus === 'away'">
+        </div>
       </div>
 
-      <div class="profile-details-box" *ngIf="isProfileEditView">
-        <app-profile-edit [@fadeInOut]></app-profile-edit>
-      </div>
-    </ng-template>
+      <mat-menu #menu xPosition="before" class="profile-menu">
 
-  </mat-menu>
+        <div class="small-menu" *ngIf="!isProfileView && !isProfileEditView; else profileContent">
+          <button (click)="openProfile($event)" class="profile mat-button" mat-menu-item>Profil</button>
+          <button (click)="logoutUser()" class="logout mat-button" mat-menu-item>Logout</button>
+        </div>
 
-  }
-  @else {
-  <div class="profile-placeholder"></div>
+        <ng-template #profileContent>
+          <div class="profile-details-box" *ngIf="isProfileView">
+            <app-profile-view [@fadeInOut] (editClicked)="switchToEdit()"></app-profile-view>
+          </div>
+
+          <div class="profile-details-box" *ngIf="isProfileEditView">
+            <app-profile-edit [@fadeInOut]></app-profile-edit>
+          </div>
+        </ng-template>
+
+      </mat-menu>
+      <img class="arrow-down" src="./assets/img/header_arrow_down.png">
+    </div>
+
+  } @else {
+    <div class="profile-placeholder"></div>
   }
 
 </div>

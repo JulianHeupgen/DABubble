@@ -12,7 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 16px;
+  gap: 12px;
   padding: 8px 0;
   box-sizing: border-box;
   width: 400px;
@@ -25,12 +25,27 @@
     overflow: auto;
   }
 
+  .online-status {
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    background-color: #dddddd;
+  }
+
   .online {
-    content: url('./../../../assets/img/online.png');
+    background-color: #92c83e !important;
   }
 
   .offline {
-    content: url('./../../../assets/img/offline.png');
+    background-color: #686868 !important;
+  }
+
+  .away {
+    background-color: #dddddd;
   }
 
   &:hover {
@@ -47,15 +62,6 @@
 .profile-img {
   height: 70px;
   width: 70px;
-  border-radius: 50%;
-}
-
-.online-status {
-  position: absolute;
-  right: 2px;
-  bottom: 2px;
-  width: 18px;
-  height: 18px;
   border-radius: 50%;
 }
 

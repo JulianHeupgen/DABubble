@@ -48,7 +48,7 @@ export class ProfileEditComponent {
     this.getUser();
   }
 
-  openImageUploaderModal() {
+  openImageUploaderDialog() {
     const dialogRef = this.dialog.open(PhotoSelectionComponent, {
       data: {
         showBackArrow: false,
@@ -80,6 +80,7 @@ export class ProfileEditComponent {
       try {
         await this.auth.updateFirebaseUser({imageUrl: storageUrl});
         this.storage.deleteFile(oldImageUrl);
+        this.snackbar.showSnackBar('Photo changed successful. ', 'Ok');
         this.dialogRef?.close();
       } catch {
         console.error('Error while updating image');
