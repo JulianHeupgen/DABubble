@@ -4,7 +4,10 @@
     display: flex;
     flex-direction: column;
     padding: 30px;
-    width: 300px;
+    width: 320px;
+    height: 360px;
+    overflow-y: scroll;
+
 
     .title-and-closeButton {
         @include flex-align-justify($jc: space-between);
@@ -28,6 +31,12 @@
     .participant {
         @include flex-align-justify($jc: start);
         margin-top: 8px;
+        border-radius: 30px;
+
+        &:hover {
+            cursor: pointer;
+            background-color: $backgroundHover;
+        }
 
         .profileImg-and-onlineStatus {
             position: relative;
@@ -54,5 +63,33 @@
         }
     }
     
+    .addUser-container {
+        @include flex-align-justify($jc: start);
+        margin-top: 16px;
+        border-radius: 30px;
+
+        button {
+            background-color: white;
+            border: none;
+            @include font-size-weight-color($fs: 17px);
+        }
+
+        &:hover {
+            cursor: pointer;
+            background-color: $backgroundHover;
+
+            img {
+                content: url('./../../../../assets/img/add_user_hover.png');
+            }
+
+            button {
+                cursor: pointer;
+                color: $fontHover;
+                font-weight: 700;
+                background-color: $backgroundHover;
+            }
+        }
+
+    }
 }
 
