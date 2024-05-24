@@ -39,22 +39,18 @@ html,
 body {
   height: 100%;
   background-color: #ECEEFE;
-}
-
-.project-font {
   font-family: 'Nunito', sans-serif !important;
 }
 
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+/*.project-font {
+  font-family: 'Nunito', sans-serif !important;
 }
 
 h1,
 h2,
 h3 {
   font-family: 'Nunito', sans-serif !important;
-}
+}*/
 
 app-login,
 app-send-mail-to-reset-password,
@@ -133,7 +129,7 @@ app-channel-chat {
 }
 
 
-/* Snackbar Sytle Override */
+/* Snackbar Style Override */
 .mat-mdc-snack-bar-container {
   .mat-mdc-button.mat-mdc-snack-bar-action {
     color: #444DF2 !important;
@@ -142,5 +138,10 @@ app-channel-chat {
 
 .mat-mdc-menu-panel {
   border-radius: 0 30px 30px 30px !important;
+}
+
+/* Border Radius 30 px for all dialogs */
+mat-dialog-container {
+  --mdc-dialog-container-shape: 30px !important;
 }
 

@@ -1,1 +1,33 @@
-<p>view-profile works!</p>
+<div class="participant-profile">
+    <div class="title-and-closeButton">
+         <h2>Profil</h2>
+         <div (click)="closeProfile()">
+            <img src="assets/img/close.png">
+        </div>
+    </div>
+    <div class="image-container">
+        <img src="{{ data.imageUrl }}">
+    </div>
+    <div class="participant-name">
+        {{ data.name }}
+    </div>
+    <div class="status-container">
+        <div class="status-inner-container">
+            <img class="status-color" [class.online]="data.onlineStatus === 'online'" [class.offline]="data.onlineStatus === 'offline'">
+            <div class="status">{{ data.onlineStatus }}</div>
+        </div>
+    </div>
+    <div class="email-container">
+        <div class="email-inner-container">
+            <img src="./../../../assets/img/mail.png">
+            <div class="email">E-Mail-Adresse</div>
+        </div>
+    </div>
+    <div class="email-adress">
+        <a href="mailto: {{ data.email }}">{{ data.email }}</a>
+    </div>
+    <div class="button-container">
+        <button [routerLink]="['/dashboard/chat', data.userChat[0] ]" >Nachricht</button>
+    </div>
+</div>
+

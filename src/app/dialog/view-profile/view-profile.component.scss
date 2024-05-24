@@ -1,0 +1,101 @@
+@import './../../../mixin.scss';
+
+.participant-profile {
+    display: flex;
+    flex-direction: column;
+    padding: 45px;
+    width: 480px;
+    height: 650px;
+
+    .title-and-closeButton {
+        @include flex-align-justify($jc: space-between);
+        
+
+        h2 {
+            @include font-size-weight-color($fs: 25px, $fw: 500);
+        } 
+
+        div {
+            cursor: pointer;
+            margin-bottom: 2px;
+
+            &:hover {
+                content: url(./../../../assets/img/close_hover.png);
+                margin-bottom: 8px;
+            }
+        }
+    }
+
+    .image-container {
+        @include flex-align-justify();
+        padding: 25px;
+
+        img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+        }
+    }
+
+    .participant-name {
+        @include flex-align-justify($jc: start);
+        @include font-size-weight-color($fs: 29px, $fw: 700);
+        margin-top: 40px;
+    }
+
+    .status-container {
+        @include flex-align-justify($jc: start);
+        margin-top: 20px;
+
+        .status-inner-container {
+            @include flex-align-justify();
+
+            .status-color {
+                width: 26px;
+                height: 26px;
+                border-radius: 50%;
+            }
+
+            .status {
+                margin-left: 20px;
+                @include font-size-weight-color($fs: 21px, $fw: 500);
+            }
+        }
+    }
+
+    .email-container {
+        @include flex-align-justify($jc: start);
+        margin-top: 20px;
+
+        .email-inner-container {
+            @include flex-align-justify();
+
+            .email {
+                margin-left: 18px;
+                @include font-size-weight-color($fw: 600);
+            }
+        }
+    }
+
+    .email-adress {
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .button-container {
+        @include flex-align-justify();
+
+        button {
+            border: none;
+        }
+    }
+}
+
+.online {
+    content: url('./../../../assets/img/online.png');
+}
+
+.offline {
+    content: url('./../../../assets/img/offline.png');
+}
+

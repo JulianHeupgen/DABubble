@@ -82,10 +82,10 @@ export class LogoComponent {
     this.containerState = 'end';
   }
 
-  resizeAndMoveDone() {
+  async resizeAndMoveDone() {
     if (this.containerState === 'end'){
       this.defaultBackground = true;
-      this.route.navigateByUrl('login');
+      await this.route.navigateByUrl('dashboard');
     }
   }
 

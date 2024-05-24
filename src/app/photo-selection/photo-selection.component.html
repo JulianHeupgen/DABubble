@@ -1,6 +1,7 @@
 <mat-card>
     <mat-card-content>
       <div class="photoupload-header">
+        <img class="close-icon" (click)="closeDialog($event)" src="./../../assets/img/close.png">
         <img *ngIf="showBackArrow" routerLink="/register" class="back-arrow" src="./../../assets/img/go-back.png">
         <h1 class="card-headline">
           Wähle deinen Avatar
@@ -23,7 +24,7 @@
 
         <div class="personal-upload">
           <span>Eigenes Bild verwenden</span>
-          <label class="upload-btn" mat-mini-fab color="primary">
+          <label class="upload-btn">
             <input type="file" #fileInput class="file-input" (change)="onSelectedFile($event)">
             <button class="file-upload-btn" (click)="fileInput.click()">Datei hochladen</button>
           </label>
@@ -36,9 +37,8 @@
           <span class="upload-error" *ngIf="uploadErr">Bild muss kleiner als 500kb sein. Das Bild hat {{ filesize }} kb.</span>
         </div>
 
-
-        <button (click)="handleNext()" type="submit" mat-flat-button color="primary"
-          [disabled]="!imageSelected">Weiter</button>
+        <button class="next-btn" (click)="handleNext()" type="submit"
+          [disabled]="!imageSelected">{{buttonText}}</button>
 
       </div>
 

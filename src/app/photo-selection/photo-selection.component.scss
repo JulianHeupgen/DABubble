@@ -4,7 +4,7 @@ mat-card {
   height: 80vh;
   max-height: 769px;
   border-radius: 30px;
-  padding: 18px 32px;
+  padding: 32px;
 
   mat-card-content {
     height: 100%;
@@ -33,6 +33,16 @@ mat-card {
       display: flex;
       flex-direction: column;
       position: relative;
+    }
+
+    .close-icon {
+      position: absolute;
+      top: 0;
+      right: 0;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
 
     .card-headline {
@@ -96,8 +106,26 @@ mat-card {
 
     }
 
-    button {
+    .next-btn {
       align-self: end;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      background-color: #444DF2;
+      border: none;
+
+      &:disabled {
+        cursor: default;
+        pointer-events: none;
+        color: rgba(0, 0, 0, 0.38);
+        background-color: rgba(0, 0, 0, 0.12);
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }
