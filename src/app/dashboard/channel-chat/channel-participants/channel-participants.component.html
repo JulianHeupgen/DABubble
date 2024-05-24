@@ -17,7 +17,7 @@
         </div>
 
         @for(participant of channelParticipants; track participant.name; let index = $index) {
-            <div class="participant">
+            <div class="participant" (click)="showProfile(participant)">
                 <div class="profileImg-and-onlineStatus">
                   <img class="profile-img" src="{{ participant.imageUrl }}">
                   <img class="online-status" [class.online]="participant.onlineStatus === 'online'"

@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { Channel } from '../../../models/channel.class';
 import { CommonModule } from '@angular/common';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { MatDialog } from '@angular/material/dialog';
+import { ViewProfileComponent } from '../../../dialog/view-profile/view-profile.component';
 
 
 @Component({
@@ -12,6 +14,8 @@ import { MatMenuTrigger } from '@angular/material/menu';
   styleUrl: './channel-participants.component.scss'
 })
 export class ChannelParticipantsComponent {
+
+  constructor(public dialog: MatDialog) {}
 
   @Input() currentChannel!: Channel;
   @Input() users!: any;
@@ -46,6 +50,14 @@ export class ChannelParticipantsComponent {
         return false;
       });
     })
+  }
+
+
+  showProfile(participant: any) {
+     this.dialog.open(ViewProfileComponent, {
+       data: participant
+     }
+    );
   }
 
 
