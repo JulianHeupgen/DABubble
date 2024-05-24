@@ -6,16 +6,27 @@
       </div>
     </div>
     <div *ngIf="channelParticipants">
+
+        <div class="currentUser">
+            <div class="profileImg-and-onlineStatus">
+                <img class="profile-img" src="{{ currentUser.imageUrl }}">
+                <img class="online-status" [class.online]="currentUser.onlineStatus === 'online'"
+                 [class.offline]="currentUser.onlineStatus === 'offline'">
+              </div>
+              <span> {{ currentUser.name }}  (Du) </span>
+        </div>
+
         @for(participant of channelParticipants; track participant.name; let index = $index) {
             <div class="participant">
                 <div class="profileImg-and-onlineStatus">
                   <img class="profile-img" src="{{ participant.imageUrl }}">
-                  <img src="assets/img/online.png" class="online-status" [class.online]="participant.onlineStatus === 'online'"
-                      [class.offline]="participant.onlineStatus === 'offline'">
+                  <img class="online-status" [class.online]="participant.onlineStatus === 'online'"
+                   [class.offline]="participant.onlineStatus === 'offline'">
                 </div>
                 <span> {{ participant.name }} </span>
             </div>
         }
+
     </div>
     <div class="addUser-container">
         <img src="assets/img/add_user.png">

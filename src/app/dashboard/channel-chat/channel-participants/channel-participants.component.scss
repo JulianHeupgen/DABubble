@@ -26,6 +26,36 @@
             }
         }
     }
+
+
+    .currentUser {
+        @include flex-align-justify($jc: start);
+        margin-top: 8px;
+
+        .profileImg-and-onlineStatus {
+            position: relative;
+
+            .profile-img {
+                height: 40px;
+                width: 40px;
+                border-radius: 50%;
+            }
+
+            .online-status { 
+                position: absolute;
+                right: 1px;
+                bottom: 2px;
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+            }
+        }
+
+        span {
+            margin-left: 12px;
+            @include font-size-weight-color($fs: 19px, $fw: 500);
+        }
+    }
     
 
     .participant {
@@ -62,7 +92,17 @@
             @include font-size-weight-color($fs: 19px);
         }
     }
+
+
+    .online {
+        content: url('./../../../../assets/img/online.png');
+    }
     
+    .offline {
+        content: url('./../../../../assets/img/offline.png');
+    }
+    
+
     .addUser-container {
         @include flex-align-justify($jc: start);
         margin-top: 16px;
