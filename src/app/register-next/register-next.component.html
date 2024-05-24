@@ -1,7 +1,11 @@
 <div class="photo-upload-container">
   <img alt="Image" class="logo" src="./../../assets/img/logo-complete-black.png">
 
-  <app-photo-selection></app-photo-selection>
+  <app-photo-selection
+    [showBackArrow]="true"
+    [onNext]="onRegistrationFinished.bind(this)"
+    (selectedImg)="handleImage($event)"
+  />
 
   <div class="footer-links">
     <a [routerLink]="['/imprint']">Impressum</a>

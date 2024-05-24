@@ -27,9 +27,9 @@ export class TestComponent {
   @HostListener('document:visibilitychange', ['$event'])
   onVisibilityChange() {
     if (document.visibilityState === 'visible') {
-      this.authService.updateUserOnlineStatus('online');
+      this.authService.updateFirebaseUser({ onlineStatus: 'online' });
     } else if (document.visibilityState === 'hidden') {
-      this.authService.updateUserOnlineStatus('away');
+      this.authService.updateFirebaseUser({ onlineStatus: 'away' });
     }
   }
 
@@ -66,7 +66,7 @@ export class TestComponent {
 
   async logoutUser() {
     try {
-      await this.authService.updateUserOnlineStatus('offline');
+      await this.authService.updateFirebaseUser({ onlineStatus: 'offline' });
       const tryLogout = await this.authService.logout();
       if (tryLogout === true) {
         this.router.navigate(['/login']);
@@ -162,7 +162,7 @@ export class TestComponent {
       if (formData) {
         await this.reAuthenticate(formData.email, formData.password);
         if (!this.newEmail) { return; }
-        await this.authService.updateEmailAddress(this.newEmail);
+        await this.authService.updateFirebaseUser({email: this.newEmail});
         console.log('User Email updated with success.');
       } else {
         console.log('Form data not provided');
@@ -179,7 +179,7 @@ export class TestComponent {
   async changeFullname() {
     if (!this.newFullname) { return; }
     try {
-      await this.authService.updateName(this.newFullname);
+      await this.authService.updateFirebaseUser({name: this.newFullname});
       console.log('Name successfull changed.');
     } catch (error) {
       console.error('Error while updating the name.', error);

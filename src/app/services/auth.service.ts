@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -11,8 +11,8 @@ import {
   signInWithCredential,
   signOut
 } from '@angular/fire/auth';
-import { Router } from '@angular/router';
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import {Router} from '@angular/router';
+import {GoogleAuthProvider, getAuth, signInWithPopup} from "firebase/auth";
 
 import {
   Firestore,
@@ -28,9 +28,9 @@ import {
   onSnapshot,
   docSnapshots
 } from '@angular/fire/firestore';
-import { User } from '../models/user.class';
-import { Observable } from 'rxjs';
-import { DataService } from './data.service';
+import {User} from '../models/user.class';
+import {Observable} from 'rxjs';
+import {DataService} from './data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -68,7 +68,7 @@ export class AuthService {
   async signIn(email: string, password: string) {
     try {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
-      await this.updateUserOnlineStatus('online')
+      await this.updateFirebaseUser({onlineStatus: 'online'})
       return userCredential;
     } catch (error) {
       throw error;
@@ -90,7 +90,7 @@ export class AuthService {
             const newUser = new User(userData);
             this.createFirebaseUser(newUser);
           }
-          this.updateUserOnlineStatus('online')
+          this.updateFirebaseUser({onlineStatus: 'online'})
           this.router.navigate(['/dashboard/']);
         }).catch((error) => {
           console.error('Error checking user existence:', error);
@@ -150,12 +150,11 @@ export class AuthService {
    * Get the docId from the actual logged User by the auth id
    * @returns firestore docId
    */
-  async getDocIdfromAuthenticatedUser(): Promise<string | undefined> {
+  async getDocIdFromAuthenticatedUser(): Promise<string | undefined> {
     try {
       const auth = this.auth.currentUser?.uid;
       if (auth) {
-        const docId = await this.getDocIdFromAuthUserId(auth);
-        return docId;
+        return await this.getDocIdFromAuthUserId(auth);
       }
       return undefined;
     } catch (error) {
@@ -165,22 +164,18 @@ export class AuthService {
   }
 
   /**
-   * This function can be used to update firestore onlineStatus
-   * @param newStatus New Status which can be set (only use 'online' | 'offline')
+   * This function can be used to update Firestore User Object.
+   * The function extracts the logged authId.
+   * @param updateData Update Object consisting key:value - Existing keys will be overwritten!
    */
-  async updateUserOnlineStatus(newStatus: 'online' | 'offline' | 'away'): Promise<void> {
-    const docId = await this.getDocIdfromAuthenticatedUser();
+  async updateFirebaseUser(updateData: { [key: string]: any }): Promise<void> {
+    const docId = await this.getDocIdFromAuthenticatedUser();
     if (!docId) {
-      console.error('No docId found for this user.');
-      throw new Error('No docId found for this user.');
-      // throw an Error moves the pointer inside the catch block and stops here
+      console.error('No docId found for this user. Could not update the User Object.');
+      return;
     }
-
     try {
-      await updateDoc(doc(this.firestore, 'users', docId), {
-        onlineStatus: newStatus
-      })
-
+      await updateDoc(doc(this.firestore, 'users', docId), updateData)
     } catch (error) {
       console.error('Error updating user online Status.', error);
       throw error;
@@ -211,6 +206,13 @@ export class AuthService {
     });
   }
 
+  async getUserDoc() {
+    const docId = await this.getDocIdFromAuthenticatedUser();
+    const docRef = doc(this.firestore, "users", docId as string);
+    const docSnap =  await getDoc(docRef);
+    return docSnap.data();
+  }
+
   /**
    * This function adds a stream of the firestore user data which is actually logged in
    * @returns User data
@@ -226,27 +228,27 @@ export class AuthService {
         // Next resolve the docId by authId
         this.getDocIdFromAuthUserId(authId)
           .then(docId => {
-          if (!docId) {
-            subscriber.error(new Error('No doc ID found.'));
-            return;
-          }
-          // Use the docId to get onSnapShot data
-          const unsubscribe = onSnapshot(doc(this.firestore, 'users', docId), docSnapshots => {
-            if (docSnapshots.exists()) {
-              const user = new User(docSnapshots.data() as User);
-              subscriber.next(user);
-            } else {
-              subscriber.error(new Error('Document does not exist.'));
+            if (!docId) {
+              subscriber.error(new Error('No doc ID found.'));
+              return;
             }
-          }, error => {
-            subscriber.error(error);
-          });
+            // Use the docId to get onSnapShot data
+            const unsubscribe = onSnapshot(doc(this.firestore, 'users', docId), docSnapshots => {
+              if (docSnapshots.exists()) {
+                const user = new User(docSnapshots.data() as User);
+                subscriber.next(user);
+              } else {
+                subscriber.error(new Error('Document does not exist.'));
+              }
+            }, error => {
+              subscriber.error(error);
+            });
 
-          subscriber.add(() => {
-            unsubscribe();
-          });
+            subscriber.add(() => {
+              unsubscribe();
+            });
 
-        }).catch(error => {
+          }).catch(error => {
           subscriber.error(error);
         });
 
@@ -346,7 +348,7 @@ export class AuthService {
    * This is the main function to call when changing users full name.
    * @param name this is the new Full Name to update the User to
    */
-  async updateName(name: string) {
+  /*async updateName(name: string) {
     const currentUser = this.auth.currentUser;
     if (!currentUser) {
       throw new Error('Current user does not exist.');
@@ -360,19 +362,19 @@ export class AuthService {
 
     try {
       const userRef = doc(this.firestore, 'users', docId);
-      await updateDoc(userRef, { 'name': name });
+      await updateDoc(userRef, {'name': name});
     } catch (error) {
       console.error('Error updating user name to firestore. ', error);
       throw new Error('Failed to update Full Name.');
     }
-  }
+  }*/
 
   /**
    * Updates email of the current user from Firebase Authentication and Firestore
    * Make sure to re-authenticate the user with reAuthenticateUser() before calling this function.
    * @returns newMail - true on success
    */
-  async updateEmailAddress(newMail: string): Promise<boolean> {
+ /* async updateEmailAddress(newMail: string): Promise<boolean> {
     const user = this.auth.currentUser;
     if (!user) {
       console.error('No user found.');
@@ -387,7 +389,7 @@ export class AuthService {
       await this.rollbackUser(user, oldEmail);
       throw new Error('Error while updating the email of the current user - rolled back.');
     }
-  }
+  }*/
 
   /**
    * Rollback function to set the old email if any resetting fails
@@ -451,7 +453,7 @@ export class AuthService {
   async setFirestoreUserEmail(docId: string, email: string) {
     const userRef = doc(this.firestore, 'users', docId);
     try {
-      await updateDoc(userRef, { 'email': email });
+      await updateDoc(userRef, {'email': email});
     } catch (error) {
       console.error('Error updating user email to this firestore. ', error);
       throw error;

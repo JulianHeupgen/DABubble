@@ -1,4 +1,4 @@
-import {Component, Inject, Input} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, Optional, Output} from '@angular/core';
 import { UserRegistrationService } from '../services/user-registration.service';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {RouterModule} from "@angular/router";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {defaultAvatars} from "../configuration/default-avatars";
 
 @Component({
   selector: 'app-photo-selection',
@@ -28,20 +29,12 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 })
 export class PhotoSelectionComponent {
 
-  @Input()
-  showBackArrow: boolean = true;
+  @Input({required: true}) showBackArrow: boolean = true;
+  @Input({required: true}) onNext?: () => void;
+  @Output() selectedImg = new EventEmitter<File | string>();
 
-  // this is used as reference for the new User model which will be upped to db
   fullName: string = 'Full Name';
-
-  defaultAvatars: string[] = [
-    'https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_1.png?alt=media&token=76a558f3-7364-4591-8b0d-9084a608438d',
-    'https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_2.png?alt=media&token=c11604f5-49f6-4faf-b7c7-5e1795c67e12',
-    'https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_3.png?alt=media&token=8e57bc9d-29fd-4e99-aece-435a6edf761a',
-    'https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_4.png?alt=media&token=d518661c-a6d0-4cbe-846a-8c7fcc072e98',
-    'https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_5.png?alt=media&token=27617a09-956f-47c4-b96a-bedd411f6da1',
-    'https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_6.png?alt=media&token=c4962f78-c6cf-4d28-964b-ed104548d2da'
-  ];
+  defaultAvatars = defaultAvatars;
 
   // URL which is shown on the Card as selected image
   DEFAULT_IMG_SRC_URL: string = './../../assets/img/profile-empty.png';
@@ -58,30 +51,26 @@ export class PhotoSelectionComponent {
 
   constructor(
     private userRegService: UserRegistrationService,
-    @Inject(MAT_DIALOG_DATA) public data: { showBackArrow: boolean }
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: { showBackArrow: boolean, onNext?: () => void }
   ) { }
 
   ngOnInit(): void {
     this.fullName = this.userRegService.getUserFullName();
-    this.showBackArrow = this.data.showBackArrow ?? this.showBackArrow;
-  }
-
-  /**
-   * Finalize the User Registration process when next button is clicked
-   */
-  async onRegistrationFinished() {
-    let imgUrl: string | null = null;
-    if (this.uploadedFile) {
-      imgUrl = await this.userRegService.uploadFile(this.uploadedFile);
+    if (this.data) {
+      this.showBackArrow = this.data.showBackArrow;
+      this.onNext = this.data.onNext;
     }
-    this.userRegService.updateUserObject('imageUrl', imgUrl as string);
-    this.userRegService.updateUserObject('onlineStatus', 'online');
-    this.userRegService.updateUserObject('channels', ['Yk2dgejx9yy7iHLij1Qj']);
-    this.userRegService.signUpAndCreateUser();
   }
 
-  // uploaded File
-  onFileSelected(event: Event): void {
+  // Method to call the Next function from the onNext @Input
+  handleNext() {
+    if (this.onNext) {
+      this.onNext();
+    }
+  }
+
+  // runs when the user uploads a photo
+  onSelectedFile(event: Event): void {
     this.uploadErr = false;
     const element = event.target as HTMLInputElement;
     const file = element.files ? element.files[0] : null;
@@ -91,11 +80,24 @@ export class PhotoSelectionComponent {
         this.fileTooBig();
         return;
       }
+
+      // Emit the file and log it
+      this.selectedImg.emit(file);
+
       this.setFile(file, element);
     } else {
       element.value = '';
       this.imageSelected = false;
     }
+  }
+
+  // runs when the user select a preset picture
+  onSelectedAvatar(avatarUrl: string): void {
+
+    this.selectedImg.emit(avatarUrl);
+
+    this.imgSrcUrl = avatarUrl;
+    this.imageSelected = true;
   }
 
   fileTooBig() {
@@ -116,12 +118,6 @@ export class PhotoSelectionComponent {
       console.error('Error occurred reading file');
     }
     reader.readAsDataURL(file);
-  }
-
-  // Selected Default Avatar
-  onSelectedAvatar(avatarUrl: string): void {
-    this.imgSrcUrl = avatarUrl;
-    this.imageSelected = true;
   }
 
 }

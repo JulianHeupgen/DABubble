@@ -8,7 +8,29 @@
 
     h2 {
         @include font-size-weight-color($fs: 24px, $fw: 500);
-    }      
+    } 
+    
+    .participant {
+        @include flex-align-justify();
+        position: relative;
+        margin-top: 8px;
+
+        .profile-img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+          }
+
+        .onlineStatus { 
+                position: absolute;
+                right: 2px;
+                bottom: 2px;
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+              
+        }
+    }
     
 }
 

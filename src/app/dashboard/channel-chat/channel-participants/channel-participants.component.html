@@ -2,8 +2,13 @@
     <h2>Mitglieder</h2>
     <div *ngIf="channelParticipants">
         @for(participant of channelParticipants; track participant.name; let index = $index) {
-            <div>{{ participant.name }}</div>
+            <div class="participant">
+                <img class="profile-img" src="{{ participant.imageUrl }}">
+                <img src="assets/img/online.png" class="online-status" [class.online]="participant.onlineStatus === 'online'"
+                    [class.offline]="participant.onlineStatus === 'offline'">
+                <span> {{ participant.name }} </span>
+            </div>
         }
     </div>
-    <button>Teilnehmer hinzufpgen</button>
+    <button>Teilnehmer hinzufügen</button>
 </div>
