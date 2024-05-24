@@ -16,6 +16,7 @@
         .reaction-menu {
             display: flex;
         }
+
     }
 
     .channel-chat-content {
@@ -40,7 +41,7 @@
         }
 
         .message-textarea {
-            
+
             .message-textarea-content {
                 display: flex;
                 flex-direction: column;
@@ -232,9 +233,7 @@
 
         .message,
         .message-textarea {
-            textarea {
-                background-color: #FFFFFF !important;
-            }
+            background-color: #FFFFFF !important;
         }
     }
 

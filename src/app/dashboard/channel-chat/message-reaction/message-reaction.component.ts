@@ -20,6 +20,10 @@ export class MessageReactionComponent {
   @Input() threadMessage!: any;
   @Input() currentUser!: User;
   @Input() thread!: Thread;
+
+  usersForReaction: User[] = [];
+ 
+
   emojiSubscription: Subscription;
 
   constructor(
@@ -31,8 +35,42 @@ export class MessageReactionComponent {
         this.reactToThread(this.threadMessage, event.emoji);
       }
     });
+  }
 
+  ngOnInit() {
+    this.usersForReaction = [];
+    this.dataService.allUsers.forEach(user => {
+      this.getEmojiReactions(user);
+    });
+    this.updateThreadMessageReactions();
+    // console.log('threadMessage', this.threadMessage);
+    
+  }
 
+  getEmojiReactions(user: User) {
+    this.threadMessage.emojiReactions.forEach((emojiReaction: any) => {
+      this.searchUserInReactions(user, emojiReaction);
+    });
+  }
+
+  searchUserInReactions(user: User, emojiReaction: any) {
+    emojiReaction.users.forEach((reactionUserId: string) => {
+      if (reactionUserId === user.id) {
+        if (!emojiReaction.usersDetail) {
+          emojiReaction.usersDetail = [];
+        }
+        emojiReaction.usersDetail.push(user);
+      }
+    });
+  }
+
+  updateThreadMessageReactions() {
+    // This function ensures that the threadMessage is updated with detailed user information
+    this.threadMessage.emojiReactions = this.threadMessage.emojiReactions.map((reaction: any) => {
+      reaction.users = reaction.usersDetail || reaction.users;
+      delete reaction.usersDetail;
+      return reaction;
+    });
   }
 
   reactToThread(threadMessage: any, userReaction: string) {
@@ -90,13 +128,13 @@ export class MessageReactionComponent {
 
   raiseReactionCount(chatReaction: any) {
     chatReaction.count++;
-    chatReaction.users.push(this.currentUser);
+    chatReaction.users.push(this.currentUser.id);
   }
 
   getNewReactionToMessage(threadMessage: any, userReaction: string) {
     let threadReaction = {
       reaction: userReaction,
-      users: [this.currentUser],
+      users: [this.currentUser.id],
       count: 1
     };
     threadMessage.emojiReactions.push(threadReaction);

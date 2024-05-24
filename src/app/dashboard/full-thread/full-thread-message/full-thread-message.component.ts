@@ -3,6 +3,8 @@ import { Thread } from '../../../models/thread.class';
 import { EmojiMartComponent } from '../../emoji-mart/emoji-mart.component';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../../services/data.service';
+import { MessageReactionComponent } from '../../channel-chat/message-reaction/message-reaction.component';
+import { User } from '../../../models/user.class';
 
 @Component({
   selector: 'app-full-thread-message',
@@ -10,6 +12,7 @@ import { DataService } from '../../../services/data.service';
   imports: [
     CommonModule,
     EmojiMartComponent,
+    MessageReactionComponent,
   ],
   templateUrl: './full-thread-message.component.html',
   styleUrls: [
@@ -20,8 +23,8 @@ import { DataService } from '../../../services/data.service';
 export class FullThreadMessageComponent {
 
   @Input() thread!: Thread;
+  @Input() currentUser!: User;
   threadMessages: any[] = [];
-
   constructor(
     private dataService: DataService,
   ) { }

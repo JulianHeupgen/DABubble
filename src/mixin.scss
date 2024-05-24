@@ -1,7 +1,7 @@
 @import './font.scss';
 
-@mixin flex-align-justify($ai: center, $jc: center) {
-    display: flex;
+@mixin flex-align-justify($df: flex, $ai: center, $jc: center) {
+    display: $df;
     align-items: $ai;
     justify-content: $jc;
 }

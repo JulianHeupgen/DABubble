@@ -82,6 +82,8 @@ export class User {
   }
 
 
+
+
   // Diese Funktion hier nutzen wenn eine Direktnachricht an einen anderen User gesendet wird
 
   sendDirectMessage(recipient: User, messageContent: string): void {

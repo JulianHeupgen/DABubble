@@ -129,13 +129,24 @@ export class FullThreadComponent {
         this.addImgToMessageComponent.imgFile,
         this.thread
       );
-      let newThread = new Thread(this.thread);
+      // let newThread = new Thread(this.thread);
+      let newThread = this.jsonToString(new Thread(this.thread));
         // this.thread?.messages.push(newThreadMessage);
         // console.log('Thread copy', newThreadMessageToString);
-        console.log('Thread origin', newThread);
+        // console.log('Thread origin', newThread);
+
         this.dataService.updateThread(newThread);
       
     }
+  }
+
+  jsonToString(thread: Thread) {
+    let stringedMessages: string[] = []
+    thread.messages.forEach(message => {
+      stringedMessages.push(JSON.stringify(message))
+    })
+    thread.messages = stringedMessages;
+    return thread
   }
 
   addEmoji(emoji: string) {
