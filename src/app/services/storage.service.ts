@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {Injectable} from '@angular/core';
+import {getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage";
 import {deleteObject} from "@angular/fire/storage";
 import {defaultAvatars} from "../configuration/default-avatars";
 
@@ -26,15 +26,18 @@ export class StorageService {
     const storage = getStorage();
     const desertRef = ref(storage, fileUrl);
 
-    if (defaultAvatars.includes(fileUrl)) { return; }
+    if (defaultAvatars.includes(fileUrl)) {
+      return;
+    }
 
-    deleteObject(desertRef).then(() => {
-      console.log('File deleted.')
-    }).catch((error) => {
-      console.log('Uh-oh, an error occurred!');
-    });
+    deleteObject(desertRef)
+      .then(() => {
+        console.log('File deleted.')
+      })
+      .catch((error) => {
+        console.log('Uh-oh, an error occurred and the file could not be deleted!');
+      });
   }
-
 
 }
 

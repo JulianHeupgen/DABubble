@@ -12,11 +12,12 @@ import {SnackBarService} from '../../services/snack-bar.service';
 import {PhotoSelectionComponent} from "../../photo-selection/photo-selection.component";
 import {UserRegistrationService} from "../../services/user-registration.service";
 import {StorageService} from "../../services/storage.service";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'app-profile-edit',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, MatDialogModule],
+  imports: [ReactiveFormsModule, CommonModule, MatDialogModule, MatIcon],
   templateUrl: './profile-edit.component.html',
   styleUrl: './profile-edit.component.scss'
 })
@@ -51,6 +52,7 @@ export class ProfileEditComponent {
     const dialogRef = this.dialog.open(PhotoSelectionComponent, {
       data: {
         showBackArrow: false,
+        buttonText: 'Speichern',
         onNext: this.onSelectedImage.bind(this)
       }
     });
@@ -199,6 +201,11 @@ export class ProfileEditComponent {
   closeEdit(event: Event) {
     event.stopPropagation();
     this.profileService.switchToMenu();
+  }
+
+  closeToView(event: Event) {
+    event.stopPropagation();
+    this.profileService.switchToView();
   }
 
   updateFormValues() {

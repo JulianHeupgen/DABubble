@@ -1,51 +1,58 @@
-@if (user) {
-<div class="profile-menu-data" (click)="$event.stopPropagation()">
-  <div class="p-head">
-    <span>Profil bearbeiten</span>
-    <img (click)="closeEdit($event)" src="./../../../assets/img/close.png">
-  </div>
-  <div class="p-img">
-    <img [src]="user.imageUrl" (click)="openImageUploaderModal()">
-  </div>
-  <div class="profile-edit">
-    <form [formGroup]="editUserForm" (ngSubmit)="save()">
-      <div class="input-container">
-        <div class="edit-label">
-          <img src="./../../../assets/img/account_circle.png">
-          <span>Vollständiger Name</span>
-        </div>
-        <div class="input-field-container">
-          <div>
-            <input formControlName="name" type="text">
+@defer(on idle; prefetch on idle) {
+  @if (user) {
+    <div class="profile-menu-data" (click)="$event.stopPropagation()">
+      <div class="p-head">
+        <span>Profil bearbeiten</span>
+        <img (click)="closeEdit($event)" src="./../../../assets/img/close.png">
+      </div>
+      <div class="p-img">
+        <div class="image-container">
+          <img [src]="user.imageUrl" (click)="openImageUploaderModal()">
+          <div class="icon-bg">
+            <mat-icon class="image-edit-icon" fontIcon="edit"></mat-icon>
           </div>
         </div>
-        <div class="error-container">
-          <p class="input-feedback" *ngIf="editUserForm.get('name')?.errors && editUserForm.get('name')?.dirty">
-            *Dieser Name ist leider ungültig. Bitte Vor Nachname eingeben.
-          </p>
-        </div>
       </div>
-      <div class="input-container">
-        <div class="edit-label">
-          <img src="./../../../assets/img/mail.png">
-          <span>E-Mail-Adresse</span>
-        </div>
-        <div class="input-field-container">
-          <div>
-            <input formControlName="email" type="email">
+      <div class="profile-edit">
+        <form [formGroup]="editUserForm" (ngSubmit)="save()">
+          <div class="input-container">
+            <div class="edit-label">
+              <img src="./../../../assets/img/account_circle.png">
+              <span>Vollständiger Name</span>
+            </div>
+            <div class="input-field-container">
+              <div>
+                <input formControlName="name" type="text">
+              </div>
+            </div>
+            <div class="error-container">
+              <p class="input-feedback" *ngIf="editUserForm.get('name')?.errors && editUserForm.get('name')?.dirty">
+                *Dieser Name ist leider ungültig. Bitte Vor Nachname eingeben.
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="error-container">
-          <p class="input-feedback" *ngIf="editUserForm.get('email')?.errors && editUserForm.get('email')?.dirty">
-            *Diese E-Mail Adresse ist leider ungültig.
-          </p>
-        </div>
+          <div class="input-container">
+            <div class="edit-label">
+              <img src="./../../../assets/img/mail.png">
+              <span>E-Mail-Adresse</span>
+            </div>
+            <div class="input-field-container">
+              <div>
+                <input formControlName="email" type="email">
+              </div>
+            </div>
+            <div class="error-container">
+              <p class="input-feedback" *ngIf="editUserForm.get('email')?.errors && editUserForm.get('email')?.dirty">
+                *Diese E-Mail Adresse ist leider ungültig.
+              </p>
+            </div>
+          </div>
+          <div class="buttons">
+            <button class="dark" type="button" (click)="closeToView($event)">Abbrechen</button>
+            <button class="light" mat-flat-button type="submit" [disabled]="!editUserForm.valid">Speichern</button>
+          </div>
+        </form>
       </div>
-      <div class="buttons">
-        <button class="dark" type="button" (click)="closeEdit($event)">Abbrechen</button>
-        <button class="light" mat-flat-button type="submit" [disabled]="!editUserForm.valid">Speichern</button>
     </div>
-    </form>
-  </div>
-</div>
+  }
 }

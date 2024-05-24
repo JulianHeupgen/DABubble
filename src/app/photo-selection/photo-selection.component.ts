@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {RouterModule} from "@angular/router";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {defaultAvatars} from "../configuration/default-avatars";
 
 @Component({
@@ -31,6 +31,7 @@ export class PhotoSelectionComponent {
 
   @Input({required: true}) showBackArrow: boolean = true;
   @Input({required: true}) onNext?: () => void;
+  @Input() buttonText: string = 'Weiter';
   @Output() selectedImg = new EventEmitter<File | string>();
 
   fullName: string = 'Full Name';
@@ -51,13 +52,19 @@ export class PhotoSelectionComponent {
 
   constructor(
     private userRegService: UserRegistrationService,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: { showBackArrow: boolean, onNext?: () => void }
+    public dialogRef: MatDialogRef<PhotoSelectionComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: {
+      showBackArrow: boolean,
+      onNext?: () => void,
+      buttonText: string
+    }
   ) { }
 
   ngOnInit(): void {
     this.fullName = this.userRegService.getUserFullName();
     if (this.data) {
       this.showBackArrow = this.data.showBackArrow;
+      this.buttonText = this.data.buttonText;
       this.onNext = this.data.onNext;
     }
   }
@@ -67,6 +74,11 @@ export class PhotoSelectionComponent {
     if (this.onNext) {
       this.onNext();
     }
+  }
+
+  closeDialog(event: Event) {
+    event.stopPropagation();
+    this.dialogRef.close();
   }
 
   // runs when the user uploads a photo
