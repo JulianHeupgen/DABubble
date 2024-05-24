@@ -114,8 +114,22 @@ export class ProfileEditComponent {
    * @param actualVal
    * @returns boolean if values are different
    */
-  isDifferent(newVal: string, actualVal: string): string | null {
+  isDifferent(newVal: string, actualVal: any): string | null {
     return newVal !== actualVal ? newVal : null;
+  }
+
+  isDifferentBool(newVal: string, actualVal: any): boolean {
+    return newVal !== actualVal;
+  }
+
+  hasNewFormValue() {
+    const emailCtrl = this.editUserForm.get('email')?.value;
+    const nameCtrl = this.editUserForm.get('name')?.value;
+
+    const isEmailDiff = this.isDifferentBool(this.user.email, emailCtrl);
+    const isNameDiff = this.isDifferentBool(this.user.name, nameCtrl);
+
+    return isEmailDiff || isNameDiff;
   }
 
   /**

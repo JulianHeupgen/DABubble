@@ -252,7 +252,7 @@
         font-size: 18px;
         font-weight: 700;
         line-height: normal;
-        border: none;
+        border: 1px solid transparent;
 
         &.dark {
           color: white;
@@ -268,7 +268,7 @@
 
           &:enabled {
             color: #797EF3;
-            border: 1px solid #797EF3;
+            border-color: #797EF3;
             background-color: white;
 
             &:hover {
@@ -280,9 +280,9 @@
           }
 
           &:disabled {
-            background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(19, 1, 1, 0.3));
-            color: light-dark(rgba(16, 16, 16, 0.3), rgba(255, 255, 255, 0.3));
-            border-color: light-dark(rgba(118, 118, 118, 0.3), rgba(195, 195, 195, 0.3));
+            background-color: #efefef4d;
+            color: #1010104d;
+            border-color: #7676764d;
           }
 
         }

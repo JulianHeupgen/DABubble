@@ -48,8 +48,8 @@
             </div>
           </div>
           <div class="buttons">
-            <button class="dark" type="button" (click)="closeToView($event)">Abbrechen</button>
-            <button class="light" mat-flat-button type="submit" [disabled]="!editUserForm.valid">Speichern</button>
+            <button class="dark" (click)="closeToView($event)">Abbrechen</button>
+            <button class="light save-btn" type="submit" [disabled]="!hasNewFormValue()">Speichern</button>
           </div>
         </form>
       </div>
