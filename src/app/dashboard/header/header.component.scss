@@ -1,7 +1,7 @@
 @import '../../../mixin.scss';
 
 .header {
-  @include flex-align-justify(center, space-between);
+  @include flex-align-justify($ai: center, $jc: space-between);
   padding: 24px 24px 0 24px;
   box-sizing: border-box;
   min-height: 120px;
