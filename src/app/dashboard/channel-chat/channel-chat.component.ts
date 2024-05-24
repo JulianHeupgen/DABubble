@@ -300,7 +300,7 @@ export class ChannelChatComponent {
     let newThread = await this.currentUser.sendChannelMessage(
       this.currentChannel,
       this.channelThreadMessage.value.channelMessage,
-      this.imgFile
+      this.addImgToMessageComponent.imgFile,
     );
     if (newThread instanceof Thread) {
       this.dataService.addThread(newThread);

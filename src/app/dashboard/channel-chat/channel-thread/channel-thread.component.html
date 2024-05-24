@@ -42,13 +42,18 @@
             <span>{{ formattedTimeStamp() }}</span>
             <h3>{{ threadUser.name }}</h3>
         </div>
-
-        <span class="message" *ngIf="!editMessage" [class.other-users-message]="!isCurrentUser">
-            {{ thread.messages[0].content }}
-        </span>
+        <div class="message" *ngIf="!editMessage">
+            <img src="{{ thread.messages[0].imgFileURL }}" alt="">
+            <span [class.other-users-message]="!isCurrentUser">
+                {{ thread.messages[0].content }}
+            </span>
+        </div>
 
         <div class="message-textarea" *ngIf="editMessage">
-            <textarea #editMessageBox>{{ thread.messages[0].content }}</textarea>
+            <div class="message-textarea-content">
+                <img *ngIf="thread.messages[0].imgFileURL" src="{{ thread.messages[0].imgFileURL }}" alt="">
+                <textarea #editMessageBox>{{ thread.messages[0].content }}</textarea>
+            </div>
             <div class="edit-message-btns">
                 <span (click)="cancelEditMessage()">Abbrechen</span>
                 <span (click)="saveEditMessage(this.thread)">Speichern</span>

@@ -126,7 +126,7 @@ export class FullThreadComponent {
       await this.currentUser.sendChannelMessage(
         this.currentChannel,
         this.fullThreadMessage.value.threadMessage,
-        this.imgFile,
+        this.addImgToMessageComponent.imgFile,
         this.thread
       );
       let newThread = new Thread(this.thread);

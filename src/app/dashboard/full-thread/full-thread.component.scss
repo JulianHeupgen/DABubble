@@ -38,7 +38,7 @@
     position: relative;
     @include flex-align-justify($ai: flex-start);
     gap: 30px;
-    padding: 10px 45px;
+    padding: 10px 45px 40px 10px;
 
     &:hover {
         background-color: #ECEEFE;
@@ -160,4 +160,5 @@ app-full-thread-message {
     overflow-y: auto;
     flex-direction: column;
     gap: 5px;
+    padding-top: 40px;
 }
