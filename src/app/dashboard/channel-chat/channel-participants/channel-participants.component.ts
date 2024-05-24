@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Channel } from '../../../models/channel.class';
 import { CommonModule } from '@angular/common';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-channel-participants',
@@ -13,6 +14,7 @@ export class ChannelParticipantsComponent {
 
   @Input() currentChannel!: Channel;
   @Input() users!: any;
+  @Input() matMenuTrigger!: MatMenuTrigger;
 
 
   channelParticipants!: any[];
@@ -34,6 +36,11 @@ export class ChannelParticipantsComponent {
         return false;
       });
     })
+  }
+
+
+  closeMenu() {
+    this.matMenuTrigger.closeMenu();
   }
 
 

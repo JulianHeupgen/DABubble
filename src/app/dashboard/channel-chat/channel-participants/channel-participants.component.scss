@@ -6,29 +6,51 @@
     padding: 30px;
     width: 300px;
 
-    h2 {
-        @include font-size-weight-color($fs: 24px, $fw: 500);
-    } 
+    .title-and-closeButton {
+        @include flex-align-justify($jc: space-between);
+
+        h2 {
+            @include font-size-weight-color($fs: 24px, $fw: 500);
+        } 
+
+        div {
+            cursor: pointer;
+            margin-bottom: 2px;
+
+            &:hover {
+                content: url(./../../../../assets/img/close_hover.png);
+                margin-bottom: 8px;
+            }
+        }
+    }
     
+
     .participant {
-        @include flex-align-justify();
-        position: relative;
+        @include flex-align-justify($jc: start);
         margin-top: 8px;
 
-        .profile-img {
-            height: 50px;
-            width: 50px;
-            border-radius: 50%;
-          }
+        .profileImg-and-onlineStatus {
+            position: relative;
 
-        .onlineStatus { 
-                position: absolute;
-                right: 2px;
-                bottom: 2px;
-                width: 18px;
-                height: 18px;
+            .profile-img {
+                height: 40px;
+                width: 40px;
                 border-radius: 50%;
-              
+            }
+
+            .online-status { 
+                position: absolute;
+                right: 1px;
+                bottom: 2px;
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+            }
+        }
+
+        span {
+            margin-left: 12px;
+            @include font-size-weight-color($fs: 19px);
         }
     }
     

@@ -1,11 +1,18 @@
 <div class="channelParticipants-container">
-    <h2>Mitglieder</h2>
+    <div class="title-and-closeButton">
+      <h2>Mitglieder</h2>
+      <div (click)="closeMenu()">
+        <img src="assets/img/close.png">
+      </div>
+    </div>
     <div *ngIf="channelParticipants">
         @for(participant of channelParticipants; track participant.name; let index = $index) {
             <div class="participant">
-                <img class="profile-img" src="{{ participant.imageUrl }}">
-                <img src="assets/img/online.png" class="online-status" [class.online]="participant.onlineStatus === 'online'"
-                    [class.offline]="participant.onlineStatus === 'offline'">
+                <div class="profileImg-and-onlineStatus">
+                  <img class="profile-img" src="{{ participant.imageUrl }}">
+                  <img src="assets/img/online.png" class="online-status" [class.online]="participant.onlineStatus === 'online'"
+                      [class.offline]="participant.onlineStatus === 'offline'">
+                </div>
                 <span> {{ participant.name }} </span>
             </div>
         }
