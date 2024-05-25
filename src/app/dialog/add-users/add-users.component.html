@@ -1,2 +1,49 @@
-<p>Leute hinzufügen</p>
-<div>Suchleiste etc einbauen</div>
+<div class="add-channel-card">
+    <img class="close-img" src="./assets/img/close.png" (click)="this.dialog.closeAll()">
+    <div>
+        <h2 class="project-font">Leute hinzufügen</h2>
+    </div>
+
+            <mat-radio-group >
+                <mat-radio-button value="specific">
+                    <p>Bestimmte Leute hinzufügen</p>
+                </mat-radio-button>
+            </mat-radio-group>
+        
+    <!-- Select single users to add to channel -->
+    <div class="input-section" >
+        <form>
+            <input type="text" placeholder="Benutzer durchsuchen" [formControl]="userControl" [matAutocomplete]="auto"
+                class="example-input" [class.mat-autocomplete-panel-open]="isPanelOpen">
+            <mat-autocomplete #auto="matAutocomplete" (opened)="isPanelOpen = true" (closed)="isPanelOpen = false">
+                <mat-option *ngFor="let user of filteredUsers | async" [value]="user.name"
+                    (onSelectionChange)="toggleUserSelection(user.id, user.name)">
+                    <img class="user-chip-img" src="{{ getUserImg(user.id) }}" alt="">
+                    <p class="project-font">{{ user.name }}</p>
+                </mat-option>
+            </mat-autocomplete>
+        </form>
+
+        <!-- Show selected users as chips -->
+        <div *ngIf="selectedUsersIds.length > 0">
+            <input style="display: none;" [matChipInputFor]="chipGrid" [matChipInputAddOnBlur]="true" />
+            <mat-chip-grid #chipGrid>
+                <mat-chip-row class="mat-chip-row" *ngFor="let userId of selectedUsersIds" [removable]="true"
+                    (removed)="removeUser(userId)">
+                    <div class="chip-subcontainer">
+                        <img class="user-chip-img" src="{{ getUserImg(userId) }}">
+                        <p>
+                            {{ getUserName(userId) }}
+                        </p>
+                    </div>
+                    <button matChipRemove (click)="removeUser(userId)"><img src="./assets/img/close.png"></button>
+                </mat-chip-row>
+            </mat-chip-grid>
+        </div>
+    </div>
+
+    <div class="btn-section">
+        <button [disabled]="!(selectedUsers.length > 0)"
+            (click)="save()">Erstellen</button>
+    </div>
+</div>

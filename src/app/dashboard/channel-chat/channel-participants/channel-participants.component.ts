@@ -70,7 +70,9 @@ export class ChannelParticipantsComponent {
 
 
   openAddUsersDialog() {
-    this.dialog.open(AddUsersComponent);
+    this.dialog.open(AddUsersComponent, {
+      data: { channelId: this.currentChannel.channelId }
+    });
   }
 
 }

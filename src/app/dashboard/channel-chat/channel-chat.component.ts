@@ -1,5 +1,5 @@
-import { Component, ElementRef, SimpleChanges, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatList, MatListModule } from '@angular/material/list';
@@ -310,6 +310,9 @@ export class ChannelChatComponent {
   }
 
   openAddUsersDialog() {
-    this.dialog.open(AddUsersComponent);
+    this.dialog.open(AddUsersComponent, {
+      data: { channelId: this.channelId }
+    }
+    );
   }
 }
