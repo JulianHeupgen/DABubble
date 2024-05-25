@@ -3,6 +3,7 @@ import { Channel } from '../../../models/channel.class';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewProfileComponent } from '../../../dialog/view-profile/view-profile.component';
+import { AddUsersComponent } from '../../../dialog/add-users/add-users.component';
 
 
 @Component({
@@ -68,7 +69,9 @@ export class ChannelParticipantsComponent {
   }
 
 
-
+  openAddUsersDialog() {
+    this.dialog.open(AddUsersComponent);
+  }
 
 }
 

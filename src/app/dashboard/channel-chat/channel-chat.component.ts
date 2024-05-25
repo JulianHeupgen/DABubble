@@ -13,7 +13,7 @@ import { Thread } from '../../models/thread.class';
 import { Observable, Subscription, firstValueFrom, map, startWith } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { EmojiMartComponent } from '../emoji-mart/emoji-mart.component';
@@ -22,6 +22,7 @@ import { AddImgToMessageComponent } from '../add-img-to-message/add-img-to-messa
 import { EditChannelComponent } from './edit-channel/edit-channel.component';
 import { EmojiCommunicationService } from '../../services/emoji-communication.service';
 import { ChannelParticipantsComponent } from './channel-participants/channel-participants.component';
+import { AddUsersComponent } from '../../dialog/add-users/add-users.component';
 
 @Component({
   selector: "app-channel-chat",
@@ -64,7 +65,8 @@ export class ChannelChatComponent {
     public storage: StorageService,
     private auth: AuthService,
     private formBuilder: FormBuilder,
-    private emojiService: EmojiCommunicationService
+    private emojiService: EmojiCommunicationService,
+    public dialog: MatDialog
   ) {
     this.emojiSubscription = this.emojiService.emojiEvent$.subscribe(
       (event) => {
@@ -305,5 +307,9 @@ export class ChannelChatComponent {
     if (newThread instanceof Thread) {
       this.dataService.addThread(newThread);
     }
+  }
+
+  openAddUsersDialog() {
+    this.dialog.open(AddUsersComponent);
   }
 }
