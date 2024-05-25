@@ -66,6 +66,7 @@ import {Router} from '@angular/router';
 export class LogoComponent {
 
   logoTextUrl: string = './../../../assets/img/logo-text-white.png';
+  fullLogoBlackUrl: string = './../../../assets/img/dabubble_header_logo.png';
 
   startGrowing = false;
   containerState = 'start';
@@ -106,8 +107,8 @@ export class LogoComponent {
 
     let adjustedWidth: number;
     if (totalWindowWidth > 800) {
-      adjustedWidth = totalWindowWidth * 0.8;
-      this.scaleFactor = '.5';
+      adjustedWidth = totalWindowWidth * 0.5;
+      this.scaleFactor = '.6';
     } else {
       adjustedWidth = totalWindowWidth * 0.6;
       this.scaleFactor = '.4';
@@ -119,7 +120,6 @@ export class LogoComponent {
     this.textLogoWidth = `${adjustedTextWidth}px`;
     this.iconLogoWidth = `${adjustedIconWidth}px`;
     this.marginLeft = `-${adjustedTextWidth}px`;
-
 
   }
 
@@ -137,6 +137,7 @@ export class LogoComponent {
     if (this.containerState === 'end') {
       this.defaultBackground = true;
       this.logoTextUrl = './../../../assets/img/logo-text-black.png';
+      return
       await this.route.navigateByUrl('dashboard');
     }
   }

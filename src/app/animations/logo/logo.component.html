@@ -10,12 +10,14 @@
       (@grow.done)="growDone()"
       *ngIf="startGrowing"
       class="text-container">
+
         <img
           [@slideIn]="{ value: '', params: { marginLeft: marginLeft } }"
           (@slideIn.done)="slideDone()"
           [style.width]="textLogoWidth"
           *ngIf="textVisible" class=""
           [src]="logoTextUrl"/>
+
     </div>
 
   </div>

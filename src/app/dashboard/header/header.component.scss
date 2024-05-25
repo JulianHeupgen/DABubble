@@ -4,7 +4,6 @@
   @include flex-align-justify($ai: center, $jc: space-between);
   padding: 24px 24px 0 24px;
   box-sizing: border-box;
-  min-height: 120px;
   gap: 32px;
 }
 
@@ -13,7 +12,6 @@
   align-items: center;
   justify-content: flex-end;
   gap: 12px;
-  padding: 8px 0;
   box-sizing: border-box;
   width: 400px;
 
