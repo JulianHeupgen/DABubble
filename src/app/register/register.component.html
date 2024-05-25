@@ -50,7 +50,7 @@
 
         <mat-checkbox formControlName="privacy" color="primary" class="privacy-check"><span>Ich stimme der </span><a [routerLink]="['/privacy']">Datenschutzerklärung</a><span> zu.</span></mat-checkbox>
 
-        <button type="submit" mat-flat-button color="primary" [disabled]="!registerForm.valid">Weiter</button>
+        <button type="submit" class="next-btn" [disabled]="!registerForm.valid">Weiter</button>
 
       </form>
 

@@ -133,7 +133,6 @@ export class LogoComponent {
 
   async resizeAndMoveDone() {
     if (this.containerState === 'end') {
-      return;
       this.defaultBackground = true;
       await this.route.navigateByUrl('dashboard');
     }
