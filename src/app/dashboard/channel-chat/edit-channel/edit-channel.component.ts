@@ -24,12 +24,14 @@ export class EditChannelComponent {
   ngOnInit() {
     this.channelCreator = this.getChannelCreator();
     this.compareChannelCreatorWithCurrentUser();
+    this.checkIfDevTeamChannel();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['currentChannel']) {
       this.channelCreator = this.getChannelCreator();
       this.compareChannelCreatorWithCurrentUser();
+      this.checkIfDevTeamChannel();
     }
   }
 
@@ -46,6 +48,7 @@ export class EditChannelComponent {
   temporaryChannelDescription: string = '';
   channelCreator!: string;
   channelCreatorIsCurrentUser: boolean = false;
+  currentChannelIsDevTeamChannel: boolean = false;
 
 
    getChannelCreator(): string {
@@ -59,6 +62,11 @@ export class EditChannelComponent {
     const creatorId = this.currentChannel.createdBy;
     const currentUserId = this.currentUser.id;
     this.channelCreatorIsCurrentUser = creatorId === currentUserId;
+  }
+
+
+  checkIfDevTeamChannel() {
+    this.currentChannelIsDevTeamChannel = this.currentChannel.channelId === 'Yk2dgejx9yy7iHLij1Qj';
   }
 
 
