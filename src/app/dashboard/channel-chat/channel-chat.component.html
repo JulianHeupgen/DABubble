@@ -28,7 +28,7 @@
   <mat-menu #channelParticipantsMenu class="channelParticipants">
     <div (click)="$event.stopPropagation()">
         <app-channel-participants *ngIf="currentChannel && users && currentUser" [currentChannel]="currentChannel" [users]="users"
-         [currentUser]="currentUser"  [matMenuTrigger]="menuTrigger"></app-channel-participants>
+         [currentUser]="currentUser" ></app-channel-participants>
     </div>
   </mat-menu>
 

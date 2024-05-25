@@ -1,7 +1,6 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { Channel } from '../../../models/channel.class';
 import { CommonModule } from '@angular/common';
-import { MatMenuTrigger } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewProfileComponent } from '../../../dialog/view-profile/view-profile.component';
 
@@ -20,7 +19,7 @@ export class ChannelParticipantsComponent {
   @Input() currentChannel!: Channel;
   @Input() users!: any;
   @Input() currentUser!: any;
-  @Input() matMenuTrigger!: MatMenuTrigger;
+  
 
   channelParticipants!: any[];
   
@@ -69,9 +68,7 @@ export class ChannelParticipantsComponent {
   }
 
 
-  closeMenu() {
-    this.matMenuTrigger.closeMenu();
-  }
+
 
 }
 
