@@ -311,7 +311,9 @@ export class ChannelChatComponent {
 
   openAddUsersDialog() {
     this.dialog.open(AddUsersComponent, {
-      data: { channelId: this.channelId }
+      data: {
+         channelId: this.channelId,
+         currentChannel: this.currentChannel }
     }
     );
   }

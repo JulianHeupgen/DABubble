@@ -1,21 +1,12 @@
 @import '../../../mixin.scss';
 
 h2,
-h3,
 p {
   margin: 0;
 }
 
 h2 {
   @include font-size-weight-color($fs: 24px, $fw: 700)
-}
-
-h3 {
-  @include font-size-weight-color($fw: 700);
-
-  span {
-    @include font-size-weight-color($cl: #686868 !important)
-  }
 }
 
 input {
@@ -25,6 +16,10 @@ input {
   &:focus {
     border-color: #444DF2 !important;
   }
+}
+
+.channel-title {
+    @include font-size-weight-color($fs: 21px, $cl: $fontHover);
 }
 
 .add-channel-card {
@@ -80,6 +75,7 @@ input {
 .btn-section {
   display: flex;
   justify-content: right;
+  margin-top: 20px;
 
   button {
     cursor: pointer;
@@ -107,24 +103,6 @@ input {
 
 ::ng-deep .mat-mdc-dialog-container {
   --mdc-dialog-container-shape: 30px;
-}
-
-::ng-deep .mat-accent,
-::ng-deep .mat-mdc-radio-button.mat-accent,
-::ng-deep .mat-radio {
-  --mdc-radio-selected-focus-icon-color: none;
-  --mdc-radio-selected-hover-icon-color: #444DF2;
-  --mdc-radio-selected-icon-color: #444DF2;
-  --mdc-radio-selected-pressed-icon-color: none;
-  --mat-radio-ripple-color: none;
-  --mat-radio-checked-ripple-color: none;
-  --mat-radio-disabled-label-color: none;
-  --mdc-circular-progress-active-indicator-color: none;
-  --mdc-radio-disabled-selected-icon-color: none;
-  --mdc-radio-disabled-unselected-icon-color: none;
-  --mdc-radio-unselected-hover-icon-color: #444DF2;
-  --mdc-radio-unselected-icon-color: #ADB0D9;
-  --mdc-radio-unselected-pressed-icon-color: none;
 }
 
 .checkbox-inputs {
@@ -178,3 +156,4 @@ input {
   height: 34px;
   border-radius: 50%;
 }
+

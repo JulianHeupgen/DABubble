@@ -71,7 +71,9 @@ export class ChannelParticipantsComponent {
 
   openAddUsersDialog() {
     this.dialog.open(AddUsersComponent, {
-      data: { channelId: this.currentChannel.channelId }
+      data: { 
+        channelId: this.currentChannel.channelId,
+        currentChannel: this.currentChannel }
     });
   }
 

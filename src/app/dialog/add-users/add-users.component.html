@@ -4,12 +4,8 @@
         <h2 class="project-font">Leute hinzufügen</h2>
     </div>
 
-            <mat-radio-group >
-                <mat-radio-button value="specific">
-                    <p>Bestimmte Leute hinzufügen</p>
-                </mat-radio-button>
-            </mat-radio-group>
-        
+    <div class="channel-title"># {{ data.currentChannel.title }}</div>
+
     <!-- Select single users to add to channel -->
     <div class="input-section" >
         <form>
@@ -43,7 +39,6 @@
     </div>
 
     <div class="btn-section">
-        <button [disabled]="!(selectedUsers.length > 0)"
-            (click)="save()">Erstellen</button>
+        <button [disabled]="!(selectedUsers.length > 0)" (click)="save()">Hinzufügen</button>
     </div>
 </div>

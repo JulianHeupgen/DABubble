@@ -3,8 +3,8 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
-import { Observable, from, map, startWith, switchMap } from 'rxjs';
-import { Firestore, collection, getDocs, writeBatch, arrayUnion, doc } from '@angular/fire/firestore';
+import { Observable, from, map, startWith } from 'rxjs';
+import { Firestore, writeBatch, arrayUnion, doc } from '@angular/fire/firestore';
 import { MatSelectModule } from '@angular/material/select';
 import { DataService } from '../../services/data.service';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { User } from '../../models/user.class';
+import { Channel } from '../../models/channel.class';
 
 
 @Component({
@@ -37,21 +38,22 @@ import { User } from '../../models/user.class';
 })
 export class AddUsersComponent {
 
-  
   selectedUsers: string[] = [];
   selectedUsersIds: string[] = [];
   userControl = new FormControl('');
-  isPanelOpen: any;
+  isPanelOpen!: boolean;
   filteredUsers!: Observable<User[]>;
   allUsers: User[] = [];
-
 
   constructor(
     private firestore: Firestore,
     private dialogRef: MatDialogRef<AddUsersComponent>,
     public dialog: MatDialog,
     public dataService: DataService,
-    @Inject(MAT_DIALOG_DATA) public data: { channelId: string }
+    @Inject(MAT_DIALOG_DATA) public data: { 
+      channelId: string,
+      currentChannel: Channel 
+    }
   ) {
     this.allUsers = this.dataService.allUsers;
     this.filteredUsers = this.userControl.valueChanges.pipe(
@@ -59,7 +61,6 @@ export class AddUsersComponent {
       map(value => this.filterUsers(value ?? ''))
     );
   }
-
 
   /**
    * Filter function for selecting users during input via keyboard. 
@@ -75,33 +76,12 @@ export class AddUsersComponent {
       !this.selectedUsersIds.includes(user.id));
   }
 
-
-  /**
-   * This function adds the channel to all users when it is created.
-   * 
-   * @returns - if the operation is successfully
-   */
-  addChannelToAllUsers() {
-    const usersCollection = collection(this.firestore, 'users');
-    return from(getDocs(usersCollection)).pipe(
-      switchMap(querySnapshot => {
-        const batch = writeBatch(this.firestore);
-        querySnapshot.forEach(doc => {
-          const userDocRef = doc.ref;
-          batch.update(userDocRef, { channels: arrayUnion(this.data.channelId) });
-        });
-        return from(batch.commit());
-      })
-    );
-  }
-
-
   /**
    * This function adds the channel to specific users when it is created.
    * 
    * @returns - if the operation is successfully
    */
-  addChannelToSpecificUsers() {
+  addChannelToSpecificUsers() {                            // User muss noch in collection "channels" zum "participants"-Array hinzugefügt werden !!!
     const batch = writeBatch(this.firestore);
     this.selectedUsersIds.forEach(userId => {
       const userDocRef = doc(this.firestore, `users/${userId}`);
@@ -109,7 +89,6 @@ export class AddUsersComponent {
     });
     return from(batch.commit());
   }
-
 
   /**
    * This function executes the final saving process of the addChannelToAllUsers or addChannelToSpecificUsers.
@@ -132,7 +111,6 @@ export class AddUsersComponent {
     });
   }
 
-
   /**
    * This function removes the selected user from the selectedUsers and selectedUsersIds array.
    * 
@@ -142,7 +120,6 @@ export class AddUsersComponent {
     this.selectedUsers = this.selectedUsers.filter(id => id !== userId);
     this.selectedUsersIds = this.selectedUsersIds.filter(id => id !== userId);
   }
-
 
   /**
    * This function searches for the username using the transferred userId from the allUsers array in the dataService.
@@ -155,7 +132,6 @@ export class AddUsersComponent {
     return user ? user.name : '';
   }
 
-
   /**
    * This function searches for the user avatar using the transferred userId from the allUsers array in the dataService.
    * 
@@ -166,7 +142,6 @@ export class AddUsersComponent {
     const user = this.dataService.allUsers.find(u => u.id === userId);
     return user ? user.imageUrl : '';
   }
-
 
   /**
    * Adds a user to the list of selected users if it is not already included and resets the associated form control element.
@@ -181,7 +156,6 @@ export class AddUsersComponent {
     }
     this.userControl.reset();
   }
-
 
   /**
    * Opens a menu based on the input value and the current status of the menu. 
@@ -198,3 +172,4 @@ export class AddUsersComponent {
   }
 
 }
+
