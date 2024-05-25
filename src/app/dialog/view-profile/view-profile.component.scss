@@ -78,15 +78,36 @@
     }
 
     .email-adress {
-        margin-top: 15px;
+        margin-top: 20px;
         text-align: center;
+
+        a {
+            text-decoration: none;
+            @include font-size-weight-color($fs: 21px, $fw: 600, $cl: rgb(76, 107, 241));
+        }
     }
 
     .button-container {
         @include flex-align-justify();
+        margin-top: 40px;
 
         button {
+            @include flex-align-justify();
+            @include font-size-weight-color($fs: 21px, $cl: white);
             border: none;
+            background-color: $purple;
+            border-radius: 30px;
+            padding: 8px 21px;
+
+            img {
+                filter: invert(1);
+                margin-right: 12px;
+            }
+
+            &:hover {
+                cursor: pointer;
+                background-color: $fontHover;
+            }
         }
     }
 }

@@ -27,7 +27,7 @@
         <a href="mailto: {{ data.email }}">{{ data.email }}</a>
     </div>
     <div class="button-container">
-        <button [routerLink]="['/dashboard/chat', data.userChat[0] ]" >Nachricht</button>
+        <button [routerLink]="['/dashboard/chat', data.id ]" (click)="closeProfile()" ><img src="assets/img/mail.png">Nachricht</button>
     </div>
 </div>
 

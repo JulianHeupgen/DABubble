@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Channel } from '../../../models/channel.class';
 import { CommonModule } from '@angular/common';
 import { MatMenuTrigger } from '@angular/material/menu';
@@ -28,6 +28,14 @@ export class ChannelParticipantsComponent {
   ngOnInit() {
     this.spliceCurrentUser();
     this.getChannelParticipants();
+  }
+
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['currentChannel']) {
+      this.spliceCurrentUser();
+      this.getChannelParticipants();
+    }
   }
 
 
