@@ -39,7 +39,6 @@ import { Message } from '../../models/message.class';
   styleUrls: [
     './full-thread.component.scss',
     '../channel-chat/channel-chat.component.scss',
-    '../channel-chat/channel-thread/channel-thread.component.scss'
   ]
 })
 export class FullThreadComponent {
