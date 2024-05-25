@@ -137,7 +137,6 @@ export class LogoComponent {
     if (this.containerState === 'end') {
       this.defaultBackground = true;
       this.logoTextUrl = './../../../assets/img/logo-text-black.png';
-      return
       await this.route.navigateByUrl('dashboard');
     }
   }
