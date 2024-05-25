@@ -18,33 +18,25 @@
                 <span>{{getFormattedTimeStamp(message.timestamp)}}</span>
                 <h3>{{ message.sender.name }}</h3>
             </div>
-            <span class="message">
-                {{ message.content }}
-            </span>
-        </div>
 
-
-        <!-- <div class="reaction-and-answercount">
-
-            <span *ngIf="thread.messages.length > 1 && thread.messages.length < 3">
-                {{ thread.messages.length - 1 }} Antwort
-            </span>
-
-            <span *ngIf="thread.messages.length >= 3">
-                {{ thread.messages.length - 1 }} Antworten
-            </span>
+            <div class="message">
+                <img src="{{ message.imgFileURL }}" alt="">
+                <span>
+                    {{ message.content }}
+                </span>
+            </div>
 
             <div class="reaction-bar">
-                <app-message-reaction [threadMessage]="thread.messages[0]" [thread]="thread"
+                <app-message-reaction [threadMessage]="message" [thread]="thread"
                     [currentUser]="currentUser"></app-message-reaction>
                 <app-emoji-mart [emojiImg]="'emoji-reaction.png'" [emojiImgHover]="'emoji-reaction-hover.png'"
                     [assigningComponent]="'MessageReactionComponent'" [threadId]="thread.threadId"
-                    *ngIf="thread.messages[0].emojiReactions.length > 0">
+                    *ngIf="message.emojiReactions.length > 0">
                 </app-emoji-mart>
             </div>
-            
-        </div> -->
 
+
+        </div>
         <div class="channel-chat-sender-img">
             <img src="{{ message.sender.imageUrl }}" alt="">
         </div>

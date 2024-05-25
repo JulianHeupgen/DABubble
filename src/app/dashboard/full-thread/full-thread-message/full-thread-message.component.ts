@@ -17,7 +17,8 @@ import { User } from '../../../models/user.class';
   templateUrl: './full-thread-message.component.html',
   styleUrls: [
     './full-thread-message.component.scss',
-    '../full-thread.component.scss'
+    '../full-thread.component.scss',
+    '../../channel-chat/channel-thread/channel-thread.component.scss'
   ]
 })
 export class FullThreadMessageComponent {

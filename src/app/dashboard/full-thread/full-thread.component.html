@@ -28,9 +28,12 @@
                     <span>{{thread.getFormattedTimeStamp()}}</span>
                     <h3>{{ threadOwnder.name }}</h3>
                 </div>
-                <span class="message">
-                    {{ thread.messages[0].content }}
-                </span>
+                <div class="message">
+                    <img src="{{ thread.messages[0].imgFileURL }}" alt="">
+                    <span>
+                        {{ thread.messages[0].content }}
+                    </span>
+                </div>
             </div>
             <div class="channel-chat-sender-img">
                 <img src="{{ threadOwnder.imageUrl }}" alt="">
