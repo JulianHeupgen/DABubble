@@ -59,7 +59,7 @@ export class ChannelThreadComponent {
       if (user.id == messageOwnderId) {
         this.threadUser = user;
         console.log('Thread User',this.threadUser);
-        
+
       }
     })
   }
@@ -75,7 +75,7 @@ export class ChannelThreadComponent {
   openThread(thread: Thread) {
     this.threadService.openThread = false;
     setTimeout(() => {
-      
+
       this.threadService.changeThread(thread, this.threadUser, this.channelChat.currentChannel, this.channelChat.currentUser);
     }, 1);
   }
@@ -86,7 +86,7 @@ export class ChannelThreadComponent {
 
   editThreadMessage() {
     this.setReactionMenuHover = false;
-    this.editMessage = true;   
+    this.editMessage = true;
   }
 
   cancelEditMessage() {

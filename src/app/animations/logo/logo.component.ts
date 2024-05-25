@@ -65,6 +65,8 @@ import {Router} from '@angular/router';
 
 export class LogoComponent {
 
+  logoTextUrl: string = './../../../assets/img/logo-text-white.png';
+
   startGrowing = false;
   containerState = 'start';
   textVisible = false;
@@ -72,7 +74,7 @@ export class LogoComponent {
   textLogoWidth: string = '470px'; // Default value
   iconLogoWidth: string = '187px'; // Default value
   marginLeft: string = '-470px';
-  scaleFactor: string = '.3'; // Default scale factor
+  scaleFactor: string = '.354'; // Default scale factor
 
   constructor(private route: Router) {
   }
@@ -98,7 +100,7 @@ export class LogoComponent {
       this.textLogoWidth = `470px`;
       this.iconLogoWidth = `187px`;
       this.marginLeft = `-470px`;
-      this.scaleFactor = '.3';
+      this.scaleFactor = '.354';
       return;
     }
 
@@ -108,7 +110,7 @@ export class LogoComponent {
       this.scaleFactor = '.5';
     } else {
       adjustedWidth = totalWindowWidth * 0.6;
-      this.scaleFactor = '.5';
+      this.scaleFactor = '.4';
     }
 
     const adjustedIconWidth = adjustedWidth / (1 + ratio);
@@ -134,6 +136,7 @@ export class LogoComponent {
   async resizeAndMoveDone() {
     if (this.containerState === 'end') {
       this.defaultBackground = true;
+      this.logoTextUrl = './../../../assets/img/logo-text-black.png';
       await this.route.navigateByUrl('dashboard');
     }
   }
