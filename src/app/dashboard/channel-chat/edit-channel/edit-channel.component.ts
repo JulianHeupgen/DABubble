@@ -7,12 +7,13 @@ import { User } from '../../../models/user.class';
 import { DataService } from '../../../services/data.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-edit-channel',
   standalone: true,
-  imports: [MatFormField, MatLabel, FormsModule, MatInputModule, CommonModule],
+  imports: [MatFormField, MatLabel, FormsModule, MatInputModule, CommonModule, RouterLink],
   templateUrl: './edit-channel.component.html',
   styleUrl: './edit-channel.component.scss'
 })
