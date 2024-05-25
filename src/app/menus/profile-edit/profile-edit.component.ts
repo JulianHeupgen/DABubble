@@ -51,6 +51,7 @@ export class ProfileEditComponent {
   openImageUploaderDialog() {
     const dialogRef = this.dialog.open(PhotoSelectionComponent, {
       data: {
+        showClose: true,
         showBackArrow: false,
         buttonText: 'Speichern',
         onNext: this.onSelectedImage.bind(this)
