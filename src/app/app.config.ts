@@ -12,10 +12,10 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimations(),
-    importProvidersFrom(provideFirebaseApp(() => initializeApp(firebaseConfig))),
-    importProvidersFrom(provideAuth(() => getAuth())),
-    importProvidersFrom(provideFirestore(() => getFirestore())),
-    importProvidersFrom(provideStorage(() => getStorage())),
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()),
 
     // Test below - uncomment above line if fails
     /* importProvidersFrom(provideFirestore(() => {
@@ -25,4 +25,3 @@ export const appConfig: ApplicationConfig = {
     })), */
   ]
 };
-
