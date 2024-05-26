@@ -5,7 +5,6 @@ import {Channel} from '../models/channel.class';
 import {Thread} from '../models/thread.class';
 import {UserChat} from '../models/user-chat';
 import {Observable} from 'rxjs';
-import {FullThreadComponent} from '../dashboard/full-thread/full-thread.component';
 
 
 @Injectable({
@@ -27,8 +26,6 @@ export class DataService {
   allThreads: Thread[] = [];
   allUserChats: UserChat[] = [];
 
-
-  // User von Firestore laden
 
   getUsersList() {
     return new Observable(observer => {
@@ -58,7 +55,6 @@ export class DataService {
   }
 
 
-  // CHANNELS von Firestore laden
 
   getChannelsList() {
     return new Observable(observer => {
@@ -87,7 +83,6 @@ export class DataService {
   }
 
 
-  // THREADS von Firestore laden
 
   getThreadsList() {
     return new Observable(observer => {
@@ -114,7 +109,6 @@ export class DataService {
   }
 
 
-  // UserChats von Firestore laden
 
   getUserChatsList() {
     return new Observable(observer => {
@@ -139,7 +133,6 @@ export class DataService {
   }
 
 
-  // Neue Channels, Threads oder UserChats in den Firebase Collections hinzufügen
 
   async addChannel(channel: Channel): Promise<string> {
     try {
@@ -169,7 +162,6 @@ export class DataService {
   }
 
 
-  // Einen User updaten
 
   async updateUser(user: User) {
     let docRef = this.getUserDocRef(user.id);
@@ -183,8 +175,6 @@ export class DataService {
   }
 
 
-  // Einen Channel updaten
-
   async updateChannel(channel: Channel) {
     let docRef = this.getChannelDocRef(channel.channelId);
     await updateDoc(docRef, channel.toJSON()).catch((err) => {
@@ -196,8 +186,6 @@ export class DataService {
     return doc(collection(this.firestore, 'channels'), channelId);
   }
 
-
-  // Einen Thread updaten
 
   async updateThread(thread: Thread) {
     let docRef = this.getThreadDocRef(thread.threadId);
@@ -211,8 +199,6 @@ export class DataService {
   }
 
 
-  // Einen UserChat updaten
-
   async updateUserChat(userChat: UserChat) {
     let docRef = this.getUserChatDocRef(userChat.userChatId);
     await updateDoc(docRef, userChat.toJSON()).catch((err) => {
@@ -225,7 +211,6 @@ export class DataService {
   }
 
 
-  // Einzelnen UserChat löschen
 
   async deleteUserChat(userChatId: string) {
     await deleteDoc(this.getUserChatDocRef(userChatId)).catch((err) => {

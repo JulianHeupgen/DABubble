@@ -79,6 +79,7 @@ export class AddUsersComponent {
 
   /**
    * This function adds the channel to specific users when it is created.
+   * Also the User will be added to the Channel´s participants
    * 
    * @returns - if the operation is successfully
    */
@@ -165,7 +166,7 @@ export class AddUsersComponent {
     this.userControl.reset();
   }
 
-  
+
   /**
    * Opens a menu based on the input value and the current status of the menu. 
    * The function checks that the input value is not empty and that the menu is not currently open before the menu is opened.

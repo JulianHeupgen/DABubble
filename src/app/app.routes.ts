@@ -9,7 +9,6 @@ import { RegisterComponent } from './register/register.component';
 import { LogoComponent } from './animations/logo/logo.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { TestComponent } from './test/test.component';
-
 import { SendMailToResetPasswordComponent } from './send-mail-to-reset-password/send-mail-to-reset-password.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { authGuard } from './auth.guard';

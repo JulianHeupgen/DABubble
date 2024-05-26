@@ -57,23 +57,19 @@ export class User {
   }
 
 
-  // Diese Funktion hier nutzen, wenn in einem Channel ein Beitrag verfasst oder dort auf einen Thread geantwortet wird
-
- async sendChannelMessage(channel: Channel, messageContent: string, imgFile?: File, replyToThread?: Thread) {        // 4. Parameter (File) und (Thread) ist optional !
-     let imgFileURL;
-    if (imgFile) {                                          // fügt eine Bilddatei hinzu wenn eine in der Nachricht vorhanden ist
+  async sendChannelMessage(channel: Channel, messageContent: string, imgFile?: File, replyToThread?: Thread) {        
+    let imgFileURL;
+    if (imgFile) {                                          
       let storage: StorageService = new StorageService;
       let imgURL = await storage.uploadFile(imgFile) as string;
       imgFileURL = imgURL;
     }
 
-
-    if (replyToThread) {                                      // Antwort auf bestehenden Thread: Neue Message wird dem bestehenden Thread überreicht
+    if (replyToThread) {                                      
       let newMessage = new Message(this, messageContent, imgFileURL);
       replyToThread.messages.push(newMessage);
       return newMessage
-
-    } else {                                                // Andernfalls neuen Thread erstellen, Message überreichen und neuen Thread in Channel pushen
+    } else {                                                
       let newThread = new Thread({ channelId: channel.channelId, timestamp: new Date().getTime() });
       let newMessage = new Message(this, messageContent, imgFileURL);
       newThread.messages.push(JSON.stringify(newMessage));
@@ -82,19 +78,15 @@ export class User {
   }
 
 
-
-
-  // Diese Funktion hier nutzen wenn eine Direktnachricht an einen anderen User gesendet wird
-
   sendDirectMessage(recipient: User, messageContent: string): void {
 
     const existingUserChat = this.userChats.find(chat =>
-      chat.participants.includes(recipient));                   // Prüfen ob Chat zwischen den beiden schon existiert !
+      chat.participants.includes(recipient));                   
 
-    if (existingUserChat) {                                       // UserChat existiert, also Message einfach dort einfügen
+    if (existingUserChat) {                                       
       const newMessage = new Message(this, messageContent);
       existingUserChat.addMessage(newMessage);
-    } else {                                                      // UserChat existiert noch nicht, also UserChat erstellen und beiden Usern hinzufügen
+    } else {                                                      
       const newUserChat = new UserChat([this, recipient]);
       const newMessage = new Message(this, messageContent);
       newUserChat.addMessage(newMessage);
@@ -104,13 +96,13 @@ export class User {
   }
 
 
-  addReply(message: Message, sender: User, replyContent: string): void {       // Auf eine ausgewählte Message direkt antworten
+  addReply(message: Message, sender: User, replyContent: string): void {       
     const replyMessage = new Message(sender, replyContent);
     message.replies.push(replyMessage);
   }
 
 
-  addReaction(message: Message, emoji: string, reactor: User): void {          // Emoji Reaction
+  addReaction(message: Message, emoji: string, reactor: User): void {          
     message.emojiReactions.push(emoji, reactor.name);
   }
 

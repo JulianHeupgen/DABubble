@@ -33,6 +33,7 @@ export class Thread {
     return formattedDate;
   }
 
+
   getFormattedTimeStamp() {
     const date = new Date(this.timestamp);
     const hours = date.getHours().toString().padStart(2, '0');
@@ -42,6 +43,7 @@ export class Thread {
 
     return formattedTime;
   }
+
 
   messageStringtoJSON() {
     let newMessages: any = [];
@@ -57,10 +59,12 @@ export class Thread {
     this.sortMessagesByTimestamp();    
   }
 
+
   sortMessagesByTimestamp() {
     return this.messages.sort((a, b) => a.timestamp - b.timestamp);
   }
 
+  
   toJSON() {
     return {
       threadId: this.threadId,

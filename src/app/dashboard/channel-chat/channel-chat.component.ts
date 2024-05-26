@@ -197,8 +197,6 @@ export class ChannelChatComponent {
   }
 
 
-
-
   async findCurrentUser() {
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].authUserId === this.userAuthId) {
@@ -207,6 +205,7 @@ export class ChannelChatComponent {
       }
     }
   }
+
 
   getChannelInfos() {
     this.resetParticipantsData();
@@ -228,6 +227,7 @@ export class ChannelChatComponent {
       }
     }
   }
+
 
   getChannelIdFromURL() {
     this.route.params.subscribe(params => {
@@ -265,18 +265,22 @@ export class ChannelChatComponent {
     this.sortThreadByFirstMessageTimestamp();
   }
 
+
   sortThreadByFirstMessageTimestamp() {
     this.channelThreads.sort((a, b) => a.timestamp - b.timestamp);
   }
+
 
   channelThreadMessage: FormGroup = this.formBuilder.group({
     channelMessage: "",
   });
 
+
   addEmoji(emoji: string) {
     let textAreaElement = this.threadMessageBox.nativeElement;
     textAreaElement.value += emoji;
   }
+
 
   addUserToMessage(user: any) {
     if (this.threadMessageBox && user) {
@@ -286,6 +290,7 @@ export class ChannelChatComponent {
     }
   }
 
+
   ngOnDestroy() {
     this.userSub.unsubscribe();
     this.channelSub.unsubscribe();
@@ -293,10 +298,12 @@ export class ChannelChatComponent {
     this.emojiSubscription.unsubscribe();
   }
 
+
   removeChatInput() {
     this.channelThreadMessage.reset();
     this.addImgToMessageComponent.removeImage();
   }
+
 
   async sendMessage() {
     let newThread = await this.currentUser.sendChannelMessage(
@@ -309,6 +316,7 @@ export class ChannelChatComponent {
     }
   }
 
+
   openAddUsersDialog() {
     this.dialog.open(AddUsersComponent, {
       data: {
@@ -317,4 +325,5 @@ export class ChannelChatComponent {
     }
     );
   }
+  
 }
