@@ -108,6 +108,7 @@ export class ChannelChatComponent {
     });
   }
 
+
   async reloadAll() {
     this.dataSubscriptions();
     await this.loadUsers();
