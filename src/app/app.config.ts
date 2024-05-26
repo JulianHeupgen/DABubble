@@ -8,6 +8,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { firebaseConfig } from "../environments/firebase.config";
 
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
@@ -17,7 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
 
-    // Test below - uncomment above line if fails
+    // Test below - uncomment above line if it fails
     /* importProvidersFrom(provideFirestore(() => {
       const firestore = getFirestore();
       enableIndexedDbPersistence(firestore);
