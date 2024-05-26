@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 import { DataService } from '../../../services/data.service';
 import { MessageReactionComponent } from '../../channel-chat/message-reaction/message-reaction.component';
 import { User } from '../../../models/user.class';
+import { Firestore, Unsubscribe, doc, onSnapshot } from '@angular/fire/firestore';
+import { Subscription } from 'rxjs';
+import { ThreadService } from '../../../services/thread.service';
 
 @Component({
   selector: 'app-full-thread-message',
@@ -27,22 +30,38 @@ export class FullThreadMessageComponent {
   @Input() currentUser!: User;
   threadMessages: any[] = [];
 
+  private threadUnsubscribe!: Unsubscribe;
+
   constructor(
     private dataService: DataService,
+    private threadService: ThreadService,
+    private firebase: Firestore
   ) {  }
 
   ngOnInit() {
-    this.threadMessages = []
-    this.thread.messages.forEach( message => {
-      this.dataService.allUsers.forEach( user => {
+    this.loadThreadMessages();  
+    this.listenForThreadChanges();
+  }
+
+  listenForThreadChanges() {
+    this.threadUnsubscribe  = onSnapshot(doc(this.firebase, "threads", this.thread.threadId), (doc) => {
+      this.loadThreadMessages();
+      this.threadService.getReactionsForMessage(this.thread)
+    });
+  }
+
+  loadThreadMessages() {
+    this.threadMessages = [];
+    this.thread.messages.forEach(message => {
+      this.dataService.allUsers.forEach(user => {
         if (user.id == message.senderId) {
           message.sender = user;
         }
       })
-      this.threadMessages.push(message)
-    })
+      this.threadMessages.push(message);
+    });
     console.log('threadMessages', this.threadMessages);
-    console.log('thread', this.thread);    
+    console.log('thread', this.thread);
   }
 
   getFormattedDatestamp(timestamp: number): any {
@@ -70,4 +89,8 @@ export class FullThreadMessageComponent {
 
   }
 
+
+  ngOnDestroy() {
+      this.threadUnsubscribe();
+  }
 }

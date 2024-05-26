@@ -6,6 +6,9 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { Thread } from '../../../models/thread.class';
 import { DataService } from '../../../services/data.service';
+import { Unsubscribe } from '@angular/fire/auth';
+import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
+import { ThreadService } from '../../../services/thread.service';
 
 @Component({
   selector: 'app-message-reaction',
@@ -23,15 +26,17 @@ export class MessageReactionComponent {
 
   usersForReaction: User[] = [];
  
-
+  // private threadUnsubscribe!: Unsubscribe;
   emojiSubscription: Subscription;
 
   constructor(
     private emojiService: EmojiCommunicationService,
-    private dataService: DataService
+    private dataService: DataService,
+    private threadService: ThreadService,
+    // private firebase: Firestore,
   ) {
     this.emojiSubscription = this.emojiService.emojiEvent$.subscribe(event => {
-      if (event.sender === 'MessageReactionComponent' && event.threadId === this.thread.threadId) {
+      if (event.sender === 'MessageReactionComponent' && event.messageTimestamp === this.threadMessage.timestamp) {
         this.reactToThread(this.threadMessage, event.emoji);
       }
     });
@@ -39,13 +44,30 @@ export class MessageReactionComponent {
 
   ngOnInit() {
     this.usersForReaction = [];
+    // this.threadService.currentThread$.subscribe(event => {
+    //   if (event.update = 'updateReaction') {
+    //     if (event.thread) {             
+    //       this.thread = event.thread;
+    //       console.log('event', event.thread);
+    //       this.dataService.allUsers.forEach(user => {
+    //         this.getEmojiReactions(user);
+    //       })        
+    //     }
+    //   }
+    //   });
     this.dataService.allUsers.forEach(user => {
       this.getEmojiReactions(user);
     });
     this.updateThreadMessageReactions();
-    // console.log('threadMessage', this.threadMessage);
-    
+    // this.listenForThreadChanges();
+    // console.log('thread', this.threadMessage);    
   }
+
+  // listenForThreadChanges() {
+  //   this.threadUnsubscribe  = onSnapshot(doc(this.firebase, "threads", this.thread.threadId), (doc) => {
+  //     this.updateThreadMessageReactions();;
+  //   });
+  // }
 
   getEmojiReactions(user: User) {
     this.threadMessage.emojiReactions.forEach((emojiReaction: any) => {
@@ -142,5 +164,6 @@ export class MessageReactionComponent {
 
   ngOnDestroy() {
     this.emojiSubscription.unsubscribe();
+    // this.threadUnsubscribe();
   }
 }

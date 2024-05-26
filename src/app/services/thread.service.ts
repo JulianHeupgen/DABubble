@@ -19,5 +19,10 @@ export class ThreadService {
     this.threadSource.next({thread, threadOwner, currentChannel, currentUser});
   }
 
+  getReactionsForMessage(thread: Thread) {
+    let update = 'updateReaction'
+    this.threadSource.next({thread, update});
+  }
+
 
 }
