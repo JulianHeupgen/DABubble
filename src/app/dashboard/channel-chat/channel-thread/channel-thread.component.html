@@ -59,29 +59,25 @@
         <span (click)="saveEditMessage(this.thread)">Speichern</span>
       </div>
     </div>
-    <div class="edit-message-btns">
-      <span (click)="cancelEditMessage()">Abbrechen</span>
-      <span (click)="saveEditMessage(this.thread)">Speichern</span>
-    </div>
-  </div>
 
-  <div class="reaction-and-answercount">
+    <div class="reaction-and-answercount">
 
-    <span *ngIf="thread.messages.length > 1 && thread.messages.length < 3">
-      {{ thread.messages.length - 1 }} Antwort
-    </span>
+      <span *ngIf="thread.messages.length > 1 && thread.messages.length < 3">
+        {{ thread.messages.length - 1 }} Antwort
+      </span>
 
-    <span *ngIf="thread.messages.length >= 3">
-      {{ thread.messages.length - 1 }} Antworten
-    </span>
+      <span *ngIf="thread.messages.length >= 3">
+        {{ thread.messages.length - 1 }} Antworten
+      </span>
 
-    <div class="reaction-bar">
-      <app-message-reaction [threadMessage]="thread.messages[0]" [thread]="thread"
-        [currentUser]="channelChat.currentUser"></app-message-reaction>
-      <app-emoji-mart [emojiImg]="'emoji-reaction.png'" [emojiImgHover]="'emoji-reaction-hover.png'"
-        [assigningComponent]="'MessageReactionComponent'" [threadId]="thread.threadId"
-        *ngIf="thread.messages[0].emojiReactions.length > 0">
-      </app-emoji-mart>
+      <div class="reaction-bar">
+        <app-message-reaction [threadMessage]="thread.messages[0]" [thread]="thread"
+          [currentUser]="channelChat.currentUser"></app-message-reaction>
+        <app-emoji-mart [emojiImg]="'emoji-reaction.png'" [emojiImgHover]="'emoji-reaction-hover.png'"
+          [assigningComponent]="'MessageReactionComponent'" [threadId]="thread.threadId"
+          *ngIf="thread.messages[0].emojiReactions.length > 0">
+        </app-emoji-mart>
+      </div>
     </div>
 
   </div>
