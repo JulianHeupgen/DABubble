@@ -8,7 +8,7 @@
       <div class="header-right-container">
         <div class="participants-container" [matMenuTriggerFor]="channelParticipantsMenu">
           <ng-container *ngFor="let participant of channelParticipants">
-            <img class="participants-img" src="{{participant.participantImage}}">
+            <img class="participants-img" src="{{participant.participantImage}}" referrerpolicy="no-referrer">
           </ng-container>
           <div class="participant-counter">{{channelParticipantsCounter}}</div>
         </div>
@@ -20,7 +20,7 @@
   <mat-menu #editChannelMenu >
     <div (click)="$event.stopPropagation()">
       <app-edit-channel *ngIf="currentChannel && currentUser && channelId"
-       [currentChannel]="currentChannel" [currentUser]="currentUser" [channelId]="channelId" [matMenuTrigger]="menuTrigger"></app-edit-channel>  
+       [currentChannel]="currentChannel" [currentUser]="currentUser" [channelId]="channelId" [matMenuTrigger]="menuTrigger"></app-edit-channel>
     </div>
   </mat-menu>
 
@@ -36,7 +36,7 @@
 
 <!-- Channel Chatverlauf -->
   <div #threadContainer class="chat-history">
-    <!--ChannelThreadComponents rendern (immer nur die ERSTE Nachricht des jeweiligen Threads anzeigen): 
+    <!--ChannelThreadComponents rendern (immer nur die ERSTE Nachricht des jeweiligen Threads anzeigen):
         Wenn Klick auf einen Thread, dann wird dieser rechts geöffnet mit dem kompletten Chatverlauf ( FullThreadComponent )
       -->
     <div *ngFor="let thread of channelThreads">
@@ -56,7 +56,7 @@
         <app-add-img-to-message [showImgRef]="imgBox"></app-add-img-to-message>
 
         <div class="border-line"></div>
-        <app-emoji-mart 
+        <app-emoji-mart
         [emojiImg]="'emoticon.png'"
         [emojiImgHover]="'emoticon-hover.png'"
         [assigningComponent]="'ChannelChatComponent'"></app-emoji-mart>
