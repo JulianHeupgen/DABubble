@@ -5,9 +5,9 @@ export class Message {
   senderId: string;
   content: string;
   timestamp: Number;
-  replies: Message[];      
-  emojiReactions: string[]; 
-  imgFileURL: string;   
+  replies: Message[];
+  emojiReactions: string[];
+  imgFileURL: string;
 
   constructor(sender: User, content: string, imgFileUrl?: string) {
     this.senderId = sender.id;
