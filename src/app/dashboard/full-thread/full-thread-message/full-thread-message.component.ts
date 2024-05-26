@@ -36,17 +36,30 @@ export class FullThreadMessageComponent {
     private dataService: DataService,
     public threadService: ThreadService,
     private firebase: Firestore
-  ) {  }
+  ) { }
 
   ngOnInit() {
-    this.loadThreadMessages();  
+    this.loadThreadMessages();
     this.listenForThreadChanges();
   }
 
   listenForThreadChanges() {
-    this.threadUnsubscribe  = onSnapshot(doc(this.firebase, "threads", this.thread.threadId), (doc) => {
-      this.loadThreadMessages();
-      this.threadService.getReactionsForMessage(this.thread)
+    this.threadUnsubscribe = onSnapshot(doc(this.firebase, "threads", this.thread.threadId), (doc) => {
+      console.log('DocData', doc.data());
+      let data = doc.data();
+      if (data) {
+        let threadData = {
+          threadId: data['threadId'],
+          channelId: data['channelId'],
+          messages: data['messages'],
+          timestamp: data['timestamp'],
+        }
+        
+        this.thread = new Thread(threadData)
+        
+        this.loadThreadMessages();
+        this.threadService.getReactionsForMessage(this.thread);
+      }
     });
   }
 
@@ -91,6 +104,6 @@ export class FullThreadMessageComponent {
 
 
   ngOnDestroy() {
-      this.threadUnsubscribe();
+    this.threadUnsubscribe();
   }
 }

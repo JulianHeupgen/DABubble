@@ -47,7 +47,7 @@ export class MessageReactionComponent {
       if (event.update = 'updateReaction') {
         if (event.thread) {
           this.thread = event.thread;
-          console.log('event', event.thread);
+          // console.log('event', event.thread);
           this.dataService.allUsers.forEach(user => {
             this.getEmojiReactions(user);
           })
@@ -68,12 +68,20 @@ export class MessageReactionComponent {
   }
 
   searchUserInReactions(user: User, emojiReaction: any) {
-    emojiReaction.users.forEach((reactionUserId: string) => {
+    emojiReaction.users.forEach((reactionUserId: any) => {
       if (reactionUserId === user.id) {
         if (!emojiReaction.usersDetail) {
           emojiReaction.usersDetail = [];
         }
         emojiReaction.usersDetail.push(user);
+        console.log('this.threadMessage', this.threadMessage);        
+      }
+      if (reactionUserId.id === user.id) {
+        if (!emojiReaction.usersDetail) {
+          emojiReaction.usersDetail = [];
+        }
+        emojiReaction.usersDetail.push(user);
+        console.log('this.threadMessage', this.threadMessage);        
       }
     });
   }
