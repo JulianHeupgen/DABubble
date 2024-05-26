@@ -1,6 +1,6 @@
 # dabubble
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.1.
 
 ## Setup Firestore Application and Firestore Database
 
