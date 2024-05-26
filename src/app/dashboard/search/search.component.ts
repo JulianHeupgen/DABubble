@@ -15,7 +15,7 @@ export class SearchComponent {
 
   // Test search component START
   control = new FormControl('');
-  streets: string[] = ['Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue'];
+  // streets: string[] = ['Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue'];
   isPanelOpen: boolean = false;
   // Test Search END
   users: string[] = [];

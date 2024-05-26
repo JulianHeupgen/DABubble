@@ -50,7 +50,7 @@
                             <div *ngFor="let chat of directMessageTitle" class="user-container"
                                 [routerLink]="['/dashboard/chat', chat.id]" [routerLinkActive]="['active-user']">
                                 <div class="profile-img-container" [routerLink]="['/dashboard/chat', chat.id]">
-                                    <img class="profile-img" src="{{ chat.imageUrl }}">
+                                    <img class="profile-img" src="{{ chat.imageUrl }}"  referrerpolicy="no-referrer">
                                     @if (chat.onlineStatus === 'online') {
                                     <img class="online-status" src="./assets/img/online.png">
                                     }
