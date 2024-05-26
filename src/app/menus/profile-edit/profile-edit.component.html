@@ -7,7 +7,7 @@
       </div>
       <div class="p-img">
         <div class="image-container">
-          <img [src]="user.imageUrl" (click)="openImageUploaderDialog()">
+          <img [src]="user.imageUrl" (click)="openImageUploaderDialog()" referrerpolicy="no-referrer">
           <div class="icon-bg">
             <mat-icon class="image-edit-icon" fontIcon="edit"></mat-icon>
           </div>
@@ -17,7 +17,7 @@
         <form [formGroup]="editUserForm" (ngSubmit)="save()">
           <div class="input-container">
             <div class="edit-label">
-              <img src="./../../../assets/img/account_circle.png" referrerpolicy="no-referrer">
+              <img src="./../../../assets/img/account_circle.png">
               <span>Vollständiger Name</span>
             </div>
             <div class="input-field-container">
