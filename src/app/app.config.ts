@@ -7,11 +7,9 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { enableIndexedDbPersistence, getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { Subscription } from 'rxjs';
-import {firebaseConfig} from "../environments/firebase.config";
+import {firebaseConfig} from "./../environments/firebase.config";
 
 export const appConfig: ApplicationConfig = {
-
-
 
   providers: [
     provideRouter(routes),
@@ -29,3 +27,4 @@ export const appConfig: ApplicationConfig = {
     })), */
   ]
 };
+
