@@ -146,3 +146,7 @@ mat-dialog-container {
   --mdc-dialog-container-shape: 30px !important;
 }
 
+.cdk-overlay-pane:not(.mat-mdc-autocomplete-panel-above) div.mat-mdc-autocomplete-panel {
+  scrollbar-width: none !important;
+}
+
