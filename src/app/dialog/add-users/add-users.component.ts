@@ -5,7 +5,6 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { MatRadioModule } from '@angular/material/radio';
 import { Observable, from, map, startWith } from 'rxjs';
 import { Firestore, writeBatch, arrayUnion, doc } from '@angular/fire/firestore';
-import { MatSelectModule } from '@angular/material/select';
 import { DataService } from '../../services/data.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
@@ -24,7 +23,6 @@ import { Channel } from '../../models/channel.class';
     MatRadioModule,
     CommonModule,
     FormsModule,
-    MatSelectModule,
     ReactiveFormsModule,
     MatIconModule,
     MatChipsModule,
@@ -76,19 +74,24 @@ export class AddUsersComponent {
       !this.selectedUsersIds.includes(user.id));
   }
 
+
   /**
    * This function adds the channel to specific users when it is created.
+   * Also the User will be added to the Channel´s participants
    * 
    * @returns - if the operation is successfully
    */
-  addChannelToSpecificUsers() {                            // User muss noch in collection "channels" zum "participants"-Array hinzugefügt werden !!!
+  addChannelToSpecificUsers() {               
     const batch = writeBatch(this.firestore);
+    const channelDocRef = doc(this.firestore, `channels/${this.data.channelId}`);
     this.selectedUsersIds.forEach(userId => {
       const userDocRef = doc(this.firestore, `users/${userId}`);
       batch.update(userDocRef, { channels: arrayUnion(this.data.channelId) });
+      batch.update(channelDocRef, { participants: arrayUnion(userId) });
     });
     return from(batch.commit());
   }
+
 
   /**
    * This function executes the final saving process of the addChannelToAllUsers or addChannelToSpecificUsers.
@@ -111,6 +114,7 @@ export class AddUsersComponent {
     });
   }
 
+
   /**
    * This function removes the selected user from the selectedUsers and selectedUsersIds array.
    * 
@@ -120,6 +124,7 @@ export class AddUsersComponent {
     this.selectedUsers = this.selectedUsers.filter(id => id !== userId);
     this.selectedUsersIds = this.selectedUsersIds.filter(id => id !== userId);
   }
+
 
   /**
    * This function searches for the username using the transferred userId from the allUsers array in the dataService.
@@ -132,6 +137,7 @@ export class AddUsersComponent {
     return user ? user.name : '';
   }
 
+
   /**
    * This function searches for the user avatar using the transferred userId from the allUsers array in the dataService.
    * 
@@ -142,6 +148,7 @@ export class AddUsersComponent {
     const user = this.dataService.allUsers.find(u => u.id === userId);
     return user ? user.imageUrl : '';
   }
+
 
   /**
    * Adds a user to the list of selected users if it is not already included and resets the associated form control element.
@@ -156,6 +163,7 @@ export class AddUsersComponent {
     }
     this.userControl.reset();
   }
+
 
   /**
    * Opens a menu based on the input value and the current status of the menu. 

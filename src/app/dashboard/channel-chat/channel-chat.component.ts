@@ -82,7 +82,7 @@ export class ChannelChatComponent {
   channels: any;
   channelId: string = "";
   currentChannel!: Channel;
-  channelParticipants: any = [];
+  channelParticipants: any[] = [];
   channelParticipantsCounter: number = 0;
   threads: any;
   channelThreads!: Thread[];
@@ -107,6 +107,7 @@ export class ChannelChatComponent {
 
     });
   }
+
 
   async reloadAll() {
     this.dataSubscriptions();
@@ -250,6 +251,7 @@ export class ChannelChatComponent {
         this.channelParticipantsCounter++;
       }
     });
+    console.log(this.channelParticipants)
   }
 
 

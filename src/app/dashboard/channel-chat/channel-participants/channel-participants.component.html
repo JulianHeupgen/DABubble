@@ -2,9 +2,10 @@
     <div class="title">
       <h2>Mitglieder</h2>
     </div>
-    
+
     <div *ngIf="channelParticipants">
 
+        <!-- current User -->
         <div class="currentUser">
             <div class="profileImg-and-onlineStatus">
                 <img class="profile-img" src="{{ currentUser.imageUrl }}">
@@ -14,7 +15,8 @@
               <span> {{ currentUser.name }}  (Du) </span>
         </div>
 
-        @for(participant of channelParticipants; track participant.name; let index = $index) {
+        <!-- other channel participants -->
+        @for(participant of channelParticipants; track $index) {
             <div class="participant" (click)="showProfile(participant)">
                 <div class="profileImg-and-onlineStatus">
                   <img class="profile-img" src="{{ participant.imageUrl }}">
