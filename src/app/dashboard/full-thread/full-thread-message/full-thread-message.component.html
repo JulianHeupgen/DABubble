@@ -1,6 +1,6 @@
 <div *ngFor="let message of threadMessages.slice(1); let i = index" (click)="getMessageContent(message)">
     <!-- <div *ngIf="message.sender"> -->
-        <div class="channel-chat-message">
+        <div class="channel-chat-message"  [class.other-users-channel-chat-message]="currentUser.id != message.senderId">
             <div class="reaction-menu">
 
 

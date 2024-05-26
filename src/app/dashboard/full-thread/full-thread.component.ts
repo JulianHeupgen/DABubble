@@ -52,7 +52,6 @@ export class FullThreadComponent {
   emojiSubscription: Subscription;
   imgFile: File | undefined = undefined;
 
-
   pingUserControlFullThread = new FormControl("");
   filteredUsers!: Observable<any[]>;
 
@@ -80,7 +79,7 @@ export class FullThreadComponent {
 
   ngOnInit(): void {
     this.threadService.currentThread$.subscribe(event => {
-    if (event.thread) {
+      if (event.thread) {
         this.thread = event.thread;
         this.threadOwnder = event.threadOwner;
         this.currentUser = event.currentUser;

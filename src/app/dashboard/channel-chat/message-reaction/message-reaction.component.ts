@@ -24,7 +24,7 @@ export class MessageReactionComponent {
   @Input() thread!: Thread;
 
   usersForReaction: User[] = [];
- 
+
   // private threadUnsubscribe!: Unsubscribe;
   emojiSubscription: Subscription;
 
@@ -43,30 +43,23 @@ export class MessageReactionComponent {
 
   ngOnInit() {
     this.usersForReaction = [];
-    // this.threadService.currentThread$.subscribe(event => {
-    //   if (event.update = 'updateReaction') {
-    //     if (event.thread) {             
-    //       this.thread = event.thread;
-    //       console.log('event', event.thread);
-    //       this.dataService.allUsers.forEach(user => {
-    //         this.getEmojiReactions(user);
-    //       })        
-    //     }
-    //   }
-    //   });
+    this.threadService.currentMessages$.subscribe(event => {
+      if (event.update = 'updateReaction') {
+        if (event.thread) {
+          this.thread = event.thread;
+          console.log('event', event.thread);
+          this.dataService.allUsers.forEach(user => {
+            this.getEmojiReactions(user);
+          })
+          this.updateThreadMessageReactions();
+        }
+      }
+    });
     this.dataService.allUsers.forEach(user => {
       this.getEmojiReactions(user);
     });
     this.updateThreadMessageReactions();
-    // this.listenForThreadChanges();
-    // console.log('thread', this.threadMessage);    
   }
-
-  // listenForThreadChanges() {
-  //   this.threadUnsubscribe  = onSnapshot(doc(this.firebase, "threads", this.thread.threadId), (doc) => {
-  //     this.updateThreadMessageReactions();;
-  //   });
-  // }
 
   getEmojiReactions(user: User) {
     this.threadMessage.emojiReactions.forEach((emojiReaction: any) => {

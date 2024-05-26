@@ -1,4 +1,6 @@
-<div class="open-thread" *ngIf="threadService.openThread">
+<div class="open-thread" 
+*ngIf="threadService.openThread && threadService.openThread && thread && thread.messages && thread.messages.length > 0" 
+[class.other-users-channel-chat-message]="currentUser.id != thread.messages[0]?.senderId">
     <div class="thread-header">
         <div class="headline">
             <h2>Thread</h2>

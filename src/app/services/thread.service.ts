@@ -10,7 +10,11 @@ import { Channel } from '../models/channel.class';
 export class ThreadService {
 
   private threadSource = new Subject<any>();
+  private threadMessageSource = new Subject<any>();
+
   currentThread$ = this.threadSource.asObservable();
+  currentMessages$ = this.threadMessageSource.asObservable();
+  // isCurrentUser: boolean = false;
   openThread: boolean = false;
   
   constructor() { }
@@ -21,8 +25,6 @@ export class ThreadService {
 
   getReactionsForMessage(thread: Thread) {
     let update = 'updateReaction'
-    this.threadSource.next({thread, update});
+    this.threadMessageSource.next({thread, update});
   }
-
-
 }

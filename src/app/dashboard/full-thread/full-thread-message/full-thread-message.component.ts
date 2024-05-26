@@ -34,7 +34,7 @@ export class FullThreadMessageComponent {
 
   constructor(
     private dataService: DataService,
-    private threadService: ThreadService,
+    public threadService: ThreadService,
     private firebase: Firestore
   ) {  }
 

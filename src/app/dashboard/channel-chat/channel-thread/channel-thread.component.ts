@@ -37,23 +37,23 @@ export class ChannelThreadComponent {
     public channelChat: ChannelChatComponent,
     public dashboard: DashboardComponent,
     public dataService: DataService,
-    private threadService: ThreadService,
+    public threadService: ThreadService,
   ) { }
 
   ngOnInit() {
     let currentUserId = this.channelChat.currentUser.id;
-    let messageOwnderId = this.thread.messages[0].senderId
-    if (currentUserId == messageOwnderId) {
+    let messageOwnerId = this.thread.messages[0].senderId
+    if (currentUserId == messageOwnerId) {
       this.isCurrentUser = true;
     } else {
       this.isCurrentUser = false;
     }
-    this.findThreadUser(messageOwnderId);
+    this.findThreadUser(messageOwnerId);
   }
 
-  findThreadUser(messageOwnderId: string) {
+  findThreadUser(messageOwnerId: string) {
     this.dataService.allUsers.forEach( user => {
-      if (user.id == messageOwnderId) {
+      if (user.id == messageOwnerId) {
         this.threadUser = user;
         // console.log('Thread User',this.threadUser);
 
