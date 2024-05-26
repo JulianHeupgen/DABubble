@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { User } from '../../../models/user.class';
 import { EmojiCommunicationService } from '../../../services/emoji-communication.service';
-import { Message } from '../../../models/message.class';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { Thread } from '../../../models/thread.class';

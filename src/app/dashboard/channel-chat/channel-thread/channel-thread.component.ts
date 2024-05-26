@@ -7,10 +7,8 @@ import { MessageReactionComponent } from '../message-reaction/message-reaction.c
 import { DashboardComponent } from '../../dashboard.component';
 import { DataService } from '../../../services/data.service';
 import { ThreadService } from '../../../services/thread.service';
-import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { User } from '../../../models/user.class';
-import { FullThreadComponent } from '../../full-thread/full-thread.component';
 
 @Component({
   selector: 'app-channel-thread',
@@ -19,7 +17,6 @@ import { FullThreadComponent } from '../../full-thread/full-thread.component';
     CommonModule,
     MessageReactionComponent,
     EmojiMartComponent,
-    // MatButtonModule,
     MatMenuModule,
   ],
   templateUrl: './channel-thread.component.html',
