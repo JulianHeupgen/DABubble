@@ -5,7 +5,6 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { MatRadioModule } from '@angular/material/radio';
 import { Observable, from, map, startWith } from 'rxjs';
 import { Firestore, writeBatch, arrayUnion, doc } from '@angular/fire/firestore';
-import { MatSelectModule } from '@angular/material/select';
 import { DataService } from '../../services/data.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
@@ -24,7 +23,6 @@ import { Channel } from '../../models/channel.class';
     MatRadioModule,
     CommonModule,
     FormsModule,
-    MatSelectModule,
     ReactiveFormsModule,
     MatIconModule,
     MatChipsModule,
