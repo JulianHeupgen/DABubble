@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { EmojiCommunicationService } from '../../services/emoji-communication.service';
+import { Message } from '../../models/message.class';
 
 @Component({
   selector: 'app-emoji-mart',
@@ -19,6 +20,7 @@ export class EmojiMartComponent {
   @Input() emojiImgHover: string = '';
   @Input() assigningComponent: string = '';
   @Input() threadId?: string;
+  @Input() message!: Message;
 
 
   constructor(
@@ -27,7 +29,10 @@ export class EmojiMartComponent {
 
   addEmoji(event: any) {
     const sender = this.assigningComponent;
-    const threadId = this.threadId || '';
-    this.emojiService.emitEmojiEvent(event.emoji.native, sender, threadId);
+    if (this.message) {
+      this.emojiService.emitEmojiEvent(event.emoji.native, sender, this.message.timestamp, this.message);
+    } else {
+      this.emojiService.emitEmojiEvent(event.emoji.native, sender);
+    }
   }
 }

@@ -16,7 +16,7 @@
         </div>
 
         <app-emoji-mart [emojiImg]="'emoji-reaction.png'" [emojiImgHover]="'emoji-reaction-hover.png'"
-            [assigningComponent]="'MessageReactionComponent'" [threadId]="thread.threadId">
+            [assigningComponent]="'MessageReactionComponent'" [threadId]="thread.threadId" [message]="thread.messages[0]">
         </app-emoji-mart>
 
         <div class="icon">
@@ -43,7 +43,7 @@
             <h3>{{ threadUser.name }}</h3>
         </div>
         <div class="message" *ngIf="!editMessage">
-            <img src="{{ thread.messages[0].imgFileURL }}" alt="">
+            <img *ngIf="thread.messages[0].imgFileURL.length > 1" src="{{ thread.messages[0].imgFileURL }}" alt="">
             <span [class.other-users-message]="!isCurrentUser">
                 {{ thread.messages[0].content }}
             </span>
@@ -51,7 +51,7 @@
 
         <div class="message-textarea" *ngIf="editMessage">
             <div class="message-textarea-content">
-                <img *ngIf="thread.messages[0].imgFileURL" src="{{ thread.messages[0].imgFileURL }}" alt="">
+                <img *ngIf="thread.messages[0].imgFileURL.length > 1" src="{{ thread.messages[0].imgFileURL }}" alt="">
                 <textarea #editMessageBox>{{ thread.messages[0].content }}</textarea>
             </div>
             <div class="edit-message-btns">
