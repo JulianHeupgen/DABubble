@@ -1,44 +1,46 @@
 <div *ngFor="let message of threadMessages.slice(1); let i = index" (click)="getMessageContent(message)">
-    <div class="channel-chat-message">
-        <div class="reaction-menu">
+    <!-- <div *ngIf="message.sender"> -->
+        <div class="channel-chat-message">
+            <div class="reaction-menu">
 
 
-            <app-emoji-mart [emojiImg]="'emoji-reaction.png'" [emojiImgHover]="'emoji-reaction-hover.png'"
-                [assigningComponent]="'MessageReactionComponent'">
-            </app-emoji-mart>
-
-            <div class="icon">
-                <img class="not-hover-icon" src="../../../../assets/img/dots.png" alt="">
-                <img class="hover-icon" src="../../../../assets/img/dots-hover.png" alt="">
-            </div>
-
-        </div>
-        <div class="channel-chat-content">
-            <div class="channel-chat-time-sender">
-                <span>{{getFormattedTimeStamp(message.timestamp)}}</span>
-                <h3>{{ message.sender.name }}</h3>
-            </div>
-
-            <div class="message">
-                <img src="{{ message.imgFileURL }}" alt="">
-                <span>
-                    {{ message.content }}
-                </span>
-            </div>
-
-            <div class="reaction-bar">
-                <app-message-reaction [threadMessage]="message" [thread]="thread"
-                    [currentUser]="currentUser"></app-message-reaction>
                 <app-emoji-mart [emojiImg]="'emoji-reaction.png'" [emojiImgHover]="'emoji-reaction-hover.png'"
-                    [assigningComponent]="'MessageReactionComponent'" [threadId]="thread.threadId"
-                    *ngIf="message.emojiReactions.length > 0">
+                    [assigningComponent]="'MessageReactionComponent'" [threadId]="thread.threadId" [message]="message">
                 </app-emoji-mart>
+
+                <div class="icon">
+                    <img class="not-hover-icon" src="../../../../assets/img/dots.png" alt="">
+                    <img class="hover-icon" src="../../../../assets/img/dots-hover.png" alt="">
+                </div>
+
             </div>
+            <div class="channel-chat-content">
+                <div class="channel-chat-time-sender">
+                    <span>{{getFormattedTimeStamp(message.timestamp)}}</span>
+                    <h3>{{ message.sender.name }}</h3>
+                </div>
+
+                <div class="message">
+                    <img *ngIf="message.imgFileURL.length > 1" src="{{ message.imgFileURL }}" alt="">
+                    <span>
+                        {{ message.content }}
+                    </span>
+                </div>
+
+                <div class="reaction-bar">
+                    <app-message-reaction [threadMessage]="message" [thread]="thread"
+                        [currentUser]="currentUser"></app-message-reaction>
+                    <app-emoji-mart [emojiImg]="'emoji-reaction.png'" [emojiImgHover]="'emoji-reaction-hover.png'"
+                        [assigningComponent]="'MessageReactionComponent'" [threadId]="thread.threadId"
+                        *ngIf="message.emojiReactions.length > 0">
+                    </app-emoji-mart>
+                </div>
 
 
+            </div>
+            <div class="channel-chat-sender-img">
+                <img src="{{ message.sender.imageUrl }}" alt="">
+            </div>
         </div>
-        <div class="channel-chat-sender-img">
-            <img src="{{ message.sender.imageUrl }}" alt="">
-        </div>
-    </div>
+    <!-- </div> -->
 </div>

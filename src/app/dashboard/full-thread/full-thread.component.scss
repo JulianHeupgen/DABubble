@@ -38,7 +38,7 @@
     position: relative;
     @include flex-align-justify($ai: flex-start);
     gap: 30px;
-    padding: 10px 45px 40px 10px;
+    padding: 10px 20px 40px 20px;
 
     &:hover {
         background-color: #ECEEFE;

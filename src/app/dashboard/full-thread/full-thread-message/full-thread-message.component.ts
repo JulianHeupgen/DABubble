@@ -26,9 +26,10 @@ export class FullThreadMessageComponent {
   @Input() thread!: Thread;
   @Input() currentUser!: User;
   threadMessages: any[] = [];
+
   constructor(
     private dataService: DataService,
-  ) { }
+  ) {  }
 
   ngOnInit() {
     this.threadMessages = []
@@ -41,7 +42,7 @@ export class FullThreadMessageComponent {
       this.threadMessages.push(message)
     })
     console.log('threadMessages', this.threadMessages);
-    
+    console.log('thread', this.thread);    
   }
 
   getFormattedDatestamp(timestamp: number): any {
