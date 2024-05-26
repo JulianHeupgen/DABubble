@@ -7,7 +7,7 @@
     <div [matMenuTriggerFor]="menu" (menuOpened)="resetMenuState()" class="header-profile">
       <span>{{ user.name }}</span>
       <div class="profile-img-container">
-        <img class="profile-img" [src]="user.imageUrl"/>
+        <img class="profile-img" [src]="user.imageUrl" referrerpolicy="no-referrer"/>
         <div class="online-status"
              [class.online]="user.onlineStatus === 'online'"
              [class.offline]="user.onlineStatus === 'offline'"
