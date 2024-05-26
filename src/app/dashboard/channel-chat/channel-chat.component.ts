@@ -82,7 +82,7 @@ export class ChannelChatComponent {
   channels: any;
   channelId: string = "";
   currentChannel!: Channel;
-  channelParticipants: any = [];
+  channelParticipants: string[] = [];
   channelParticipantsCounter: number = 0;
   threads: any;
   channelThreads!: Thread[];
@@ -244,12 +244,13 @@ export class ChannelChatComponent {
   showChannelParticipants(channelId: string) {
     this.users.forEach((user: any) => {
       if (user.channels && user.channels.includes(channelId)) {
-        this.channelParticipants.push({
-          participantImage: user.imageUrl,
-        });
+        this.channelParticipants.push(
+          user.imageUrl,
+        );
         this.channelParticipantsCounter++;
       }
     });
+    console.log(this.channelParticipants)
   }
 
 
@@ -316,5 +317,9 @@ export class ChannelChatComponent {
          currentChannel: this.currentChannel }
     }
     );
+  }
+
+  trackByIndex(index: number, participant: any): number {
+    return participant;
   }
 }
