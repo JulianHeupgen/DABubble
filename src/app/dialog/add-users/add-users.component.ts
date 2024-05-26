@@ -76,19 +76,23 @@ export class AddUsersComponent {
       !this.selectedUsersIds.includes(user.id));
   }
 
+
   /**
    * This function adds the channel to specific users when it is created.
    * 
    * @returns - if the operation is successfully
    */
-  addChannelToSpecificUsers() {                            // User muss noch in collection "channels" zum "participants"-Array hinzugefügt werden !!!
+  addChannelToSpecificUsers() {               
     const batch = writeBatch(this.firestore);
+    const channelDocRef = doc(this.firestore, `channels/${this.data.channelId}`);
     this.selectedUsersIds.forEach(userId => {
       const userDocRef = doc(this.firestore, `users/${userId}`);
       batch.update(userDocRef, { channels: arrayUnion(this.data.channelId) });
+      batch.update(channelDocRef, { participants: arrayUnion(userId) });
     });
     return from(batch.commit());
   }
+
 
   /**
    * This function executes the final saving process of the addChannelToAllUsers or addChannelToSpecificUsers.
@@ -111,6 +115,7 @@ export class AddUsersComponent {
     });
   }
 
+
   /**
    * This function removes the selected user from the selectedUsers and selectedUsersIds array.
    * 
@@ -120,6 +125,7 @@ export class AddUsersComponent {
     this.selectedUsers = this.selectedUsers.filter(id => id !== userId);
     this.selectedUsersIds = this.selectedUsersIds.filter(id => id !== userId);
   }
+
 
   /**
    * This function searches for the username using the transferred userId from the allUsers array in the dataService.
@@ -132,6 +138,7 @@ export class AddUsersComponent {
     return user ? user.name : '';
   }
 
+
   /**
    * This function searches for the user avatar using the transferred userId from the allUsers array in the dataService.
    * 
@@ -142,6 +149,7 @@ export class AddUsersComponent {
     const user = this.dataService.allUsers.find(u => u.id === userId);
     return user ? user.imageUrl : '';
   }
+
 
   /**
    * Adds a user to the list of selected users if it is not already included and resets the associated form control element.
@@ -157,6 +165,7 @@ export class AddUsersComponent {
     this.userControl.reset();
   }
 
+  
   /**
    * Opens a menu based on the input value and the current status of the menu. 
    * The function checks that the input value is not empty and that the menu is not currently open before the menu is opened.
