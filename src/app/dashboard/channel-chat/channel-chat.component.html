@@ -1,5 +1,6 @@
 <mat-card class="channel-wrapper">
   <mat-card-header>
+
     <div class="channel-infos" *ngIf="currentChannel">
       <div class="header-left-container" [matMenuTriggerFor]="editChannelMenu">
         <div class="title"># {{ currentChannel.title }} </div>
@@ -16,7 +17,7 @@
       </div>
     </div>
 
-  <!-- MatMenu EditChannel (Bei Klick auf Channel-Titel)-->
+  <!-- MatMenu EditChannel (Click on channel title)-->
   <mat-menu #editChannelMenu >
     <div (click)="$event.stopPropagation()">
       <app-edit-channel *ngIf="currentChannel && currentUser && channelId"
@@ -24,7 +25,7 @@
     </div>
   </mat-menu>
 
-  <!-- MatMenu ChannelParticipants (Bei Klick auf Participants)-->
+  <!-- MatMenu ChannelParticipants (Click on participants)-->
   <mat-menu #channelParticipantsMenu class="channelParticipants">
     <div (click)="$event.stopPropagation()">
         <app-channel-participants *ngIf="currentChannel && users && currentUser" [currentChannel]="currentChannel" [users]="users"
@@ -34,18 +35,14 @@
 
 </mat-card-header>
 
-<!-- Channel Chatverlauf -->
+<!-- Channel history -->
   <div #threadContainer class="chat-history">
-    <!--ChannelThreadComponents rendern (immer nur die ERSTE Nachricht des jeweiligen Threads anzeigen):
-        Wenn Klick auf einen Thread, dann wird dieser rechts geöffnet mit dem kompletten Chatverlauf ( FullThreadComponent )
-      -->
     <div *ngFor="let thread of channelThreads">
       <app-channel-thread [thread]="thread"></app-channel-thread>
     </div>
-
   </div>
 
-  <!-- Channel Chat Inputfenster-->
+  <!-- Channel Chat Input -->
   <form [formGroup]="channelThreadMessage" class="text-box">
     <div #imgBox class="add-file-img-box"></div>
     <textarea #threadMessageBox formControlName="channelMessage" *ngIf="currentChannel"
@@ -81,7 +78,6 @@
           </mat-menu>
         </div>
       </div>
-
 
       <div class="send-message">
         <button class="not-hover-icon">

@@ -7,7 +7,6 @@
   </div>
 
   <!-- Channel Name -->
-
   <div class="editChannelName" *ngIf="!editChannelName_Activated">
     <div class="editChannelName-header">
       <div>Channel-Name</div>
@@ -17,7 +16,6 @@
   </div> 
 
   <!-- Channel Name Edit -->
-
   <div class="editChannelName2" *ngIf="editChannelName_Activated">
     <div class="editChannelName-header2">
       <div>Channel-Name</div>
@@ -28,7 +26,6 @@
   </div> 
 
   <!-- Channel Description -->
-
   <div class="editChannelDescription" *ngIf="!editChannelDescription_Activated">
     <div class="editChannelDescription-header">
       <div>Beschreibung</div>
@@ -43,7 +40,6 @@
   </div> 
 
   <!-- Channel Description Edit -->
-
   <div class="editChannelDescription2" *ngIf="editChannelDescription_Activated">
     <div class="editChannelDescription-header2">
       <div>Beschreibung</div>
@@ -59,7 +55,6 @@
   </div>
 
   <!-- Leave Channel Button -->
-
   <div class="leaveButton-container" *ngIf="!currentChannelIsDevTeamChannel">
     <button class="leaveChannel-button" (click)="leaveChannel()" 
      [routerLink]="['/dashboard/channel', 'Yk2dgejx9yy7iHLij1Qj' ]">Channel verlassen</button>
