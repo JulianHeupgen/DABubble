@@ -4,7 +4,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
 import { Observable, from, map, startWith, switchMap } from 'rxjs';
-import { Firestore, collection, getDocs, writeBatch, arrayUnion, doc } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs, writeBatch, arrayUnion, doc, docSnapshots } from '@angular/fire/firestore';
 import { MatSelectModule } from '@angular/material/select';
 import { DataService } from '../../services/data.service';
 import { MatIconModule } from '@angular/material/icon';
@@ -86,9 +86,11 @@ export class ChannelMembersComponent {
     return from(getDocs(usersCollection)).pipe(
       switchMap(querySnapshot => {
         const batch = writeBatch(this.firestore);
-        querySnapshot.forEach(doc => {
-          const userDocRef = doc.ref;
+        querySnapshot.forEach(docSnapshot => {
+          const userDocRef = docSnapshot.ref;
           batch.update(userDocRef, { channels: arrayUnion(this.data.channelId) });
+          const channelDocRef = doc(this.firestore, `channels/${this.data.channelId}`);
+          batch.update(channelDocRef, { participants: arrayUnion(docSnapshot.id) });
         });
         return from(batch.commit());
       })
@@ -103,9 +105,11 @@ export class ChannelMembersComponent {
    */
   addChannelToSpecificUsers() {
     const batch = writeBatch(this.firestore);
+    const channelDocRef = doc(this.firestore, `channels/${this.data.channelId}`);
     this.selectedUsersIds.forEach(userId => {
       const userDocRef = doc(this.firestore, `users/${userId}`);
       batch.update(userDocRef, { channels: arrayUnion(this.data.channelId) });
+      batch.update(channelDocRef, { participants: arrayUnion(userId) });
     });
     return from(batch.commit());
   }
