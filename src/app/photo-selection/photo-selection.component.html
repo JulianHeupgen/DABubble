@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-content>
       <div class="photoupload-header">
-        <img class="close-icon" (click)="closeDialog($event)" src="./../../assets/img/close.png">
+        <img *ngIf="showClose" class="close-icon" (click)="closeDialog($event)" src="./../../assets/img/close.png">
         <img *ngIf="showBackArrow" routerLink="/register" class="back-arrow" src="./../../assets/img/go-back.png">
         <h1 class="card-headline">
           Wähle deinen Avatar

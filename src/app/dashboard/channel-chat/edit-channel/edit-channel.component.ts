@@ -7,12 +7,13 @@ import { User } from '../../../models/user.class';
 import { DataService } from '../../../services/data.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-edit-channel',
   standalone: true,
-  imports: [MatFormField, MatLabel, FormsModule, MatInputModule, CommonModule],
+  imports: [MatFormField, MatLabel, FormsModule, MatInputModule, CommonModule, RouterLink],
   templateUrl: './edit-channel.component.html',
   styleUrl: './edit-channel.component.scss'
 })
@@ -23,12 +24,14 @@ export class EditChannelComponent {
   ngOnInit() {
     this.channelCreator = this.getChannelCreator();
     this.compareChannelCreatorWithCurrentUser();
+    this.checkIfDevTeamChannel();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['currentChannel']) {
       this.channelCreator = this.getChannelCreator();
       this.compareChannelCreatorWithCurrentUser();
+      this.checkIfDevTeamChannel();
     }
   }
 
@@ -45,6 +48,7 @@ export class EditChannelComponent {
   temporaryChannelDescription: string = '';
   channelCreator!: string;
   channelCreatorIsCurrentUser: boolean = false;
+  currentChannelIsDevTeamChannel: boolean = false;
 
 
    getChannelCreator(): string {
@@ -58,6 +62,11 @@ export class EditChannelComponent {
     const creatorId = this.currentChannel.createdBy;
     const currentUserId = this.currentUser.id;
     this.channelCreatorIsCurrentUser = creatorId === currentUserId;
+  }
+
+
+  checkIfDevTeamChannel() {
+    this.currentChannelIsDevTeamChannel = this.currentChannel.channelId === 'Yk2dgejx9yy7iHLij1Qj';
   }
 
 

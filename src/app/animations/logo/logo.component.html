@@ -1,25 +1,27 @@
 <div class="main-container" [class.defaultBg]="defaultBackground">
 
   <!-- logo-animation.component.html -->
-  <div [@resizeAndMove]="containerState" class="logo-container" (@resizeAndMove.done)="resizeAndMoveDone()">
+  <div [@resizeAndMove]="{ value: containerState, params: { scaleFactor: scaleFactor } }" class="logo-container" (@resizeAndMove.done)="resizeAndMoveDone()">
 
-    <img src="./../../../assets/img/logo-icon.png" class="icon" />
+    <img [style.width]="iconLogoWidth" src="./../../../assets/img/logo-icon.png" class="icon" />
 
-    <div [@grow] (@grow.done)="growDone()" *ngIf="startGrowing" class="text-container">
-      <img [@slideIn] (@slideIn.done)="slideDone()" src="./../../../assets/img/logo-text-white.png" *ngIf="textVisible" class="" />
+    <div
+      [@grow]="{ value: '', params: { textLogoWidth: textLogoWidth } }"
+      (@grow.done)="growDone()"
+      *ngIf="startGrowing"
+      class="text-container">
+
+        <img
+          [@slideIn]="{ value: '', params: { marginLeft: marginLeft } }"
+          (@slideIn.done)="slideDone()"
+          [style.width]="textLogoWidth"
+          *ngIf="textVisible" class=""
+          [src]="logoTextUrl"/>
+
     </div>
 
   </div>
 </div>
-
-
-
-
-
-
-
-
-
 
 <!-- Logo Animations Description
 

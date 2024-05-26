@@ -9,22 +9,12 @@
     overflow-y: scroll;
 
 
-    .title-and-closeButton {
-        @include flex-align-justify($jc: space-between);
+    .title {
+        @include flex-align-justify($jc: start);
 
         h2 {
             @include font-size-weight-color($fs: 24px, $fw: 500);
         } 
-
-        div {
-            cursor: pointer;
-            margin-bottom: 2px;
-
-            &:hover {
-                content: url(./../../../../assets/img/close_hover.png);
-                margin-bottom: 8px;
-            }
-        }
     }
 
 

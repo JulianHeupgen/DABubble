@@ -125,8 +125,26 @@ mat-card {
 
     }
 
-    button {
+    .next-btn {
       align-self: end;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      background-color: #444DF2;
+      border: none;
+
+      &:disabled {
+        cursor: default;
+        pointer-events: none;
+        color: rgba(0, 0, 0, 0.38);
+        background-color: rgba(0, 0, 0, 0.12);
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }

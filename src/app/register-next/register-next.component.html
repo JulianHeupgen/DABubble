@@ -3,6 +3,7 @@
 
   <app-photo-selection
     [showBackArrow]="true"
+    [showClose]="false"
     [onNext]="onRegistrationFinished.bind(this)"
     (selectedImg)="handleImage($event)"
   />

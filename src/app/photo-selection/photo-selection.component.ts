@@ -29,9 +29,13 @@ import {defaultAvatars} from "../configuration/default-avatars";
 })
 export class PhotoSelectionComponent {
 
-  @Input({required: true}) showBackArrow: boolean = true;
+  @Input({required: true}) showBackArrow: boolean = false;
+  @Input({required: true}) showClose: boolean = false;
+
   @Input({required: true}) onNext?: () => void;
+
   @Input() buttonText: string = 'Weiter';
+
   @Output() selectedImg = new EventEmitter<File | string>();
 
   fullName: string = 'Full Name';
@@ -52,8 +56,9 @@ export class PhotoSelectionComponent {
 
   constructor(
     private userRegService: UserRegistrationService,
-    public dialogRef: MatDialogRef<PhotoSelectionComponent>,
+    @Optional() public dialogRef: MatDialogRef<PhotoSelectionComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: {
+      showClose: boolean,
       showBackArrow: boolean,
       onNext?: () => void,
       buttonText: string
@@ -63,6 +68,7 @@ export class PhotoSelectionComponent {
   ngOnInit(): void {
     this.fullName = this.userRegService.getUserFullName();
     if (this.data) {
+      this.showClose = this.data.showClose;
       this.showBackArrow = this.data.showBackArrow;
       this.buttonText = this.data.buttonText;
       this.onNext = this.data.onNext;

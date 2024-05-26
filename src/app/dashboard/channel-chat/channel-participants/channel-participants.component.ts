@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Channel } from '../../../models/channel.class';
 import { CommonModule } from '@angular/common';
-import { MatMenuTrigger } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewProfileComponent } from '../../../dialog/view-profile/view-profile.component';
+import { AddUsersComponent } from '../../../dialog/add-users/add-users.component';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class ChannelParticipantsComponent {
   @Input() currentChannel!: Channel;
   @Input() users!: any;
   @Input() currentUser!: any;
-  @Input() matMenuTrigger!: MatMenuTrigger;
+  
 
   channelParticipants!: any[];
   
@@ -28,6 +28,14 @@ export class ChannelParticipantsComponent {
   ngOnInit() {
     this.spliceCurrentUser();
     this.getChannelParticipants();
+  }
+
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['currentChannel']) {
+      this.spliceCurrentUser();
+      this.getChannelParticipants();
+    }
   }
 
 
@@ -61,8 +69,12 @@ export class ChannelParticipantsComponent {
   }
 
 
-  closeMenu() {
-    this.matMenuTrigger.closeMenu();
+  openAddUsersDialog() {
+    this.dialog.open(AddUsersComponent, {
+      data: { 
+        channelId: this.currentChannel.channelId,
+        currentChannel: this.currentChannel }
+    });
   }
 
 }
