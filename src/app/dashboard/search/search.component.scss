@@ -54,23 +54,31 @@
 
 mat-option {
 
-
   span {
     margin: 0;
 
   }
+}
 
-  img {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-  }
+.user-img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+}
 
-
+.channel-img {
+  height: 24px;
+  width: 24px;
 }
 
 ::ng-deep .mat-mdc-option .mdc-list-item__primary-text {
   display: flex;
   align-items: center;
   gap: 8px;
+  font-family: 'Nunito', sans-serif !important;
+}
+
+h2 {
+  padding-left: 32px;
+  margin-top: 16px;
 }

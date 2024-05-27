@@ -8,11 +8,17 @@ import { Observable, map, startWith } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewProfileComponent } from '../../dialog/view-profile/view-profile.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [ReactiveFormsModule, MatAutocompleteModule, CommonModule],
+  imports: [
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    CommonModule,
+    RouterModule
+  ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
 })
@@ -31,6 +37,10 @@ export class SearchComponent {
 
   showUsers() {
     return this.dataService.allUsers;
+  }
+
+  showChannels() {
+    return this.dataService.allChannels;
   }
 
 testTest() {
