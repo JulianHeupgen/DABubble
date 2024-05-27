@@ -26,7 +26,7 @@
             <mat-autocomplete #auto="matAutocomplete" (opened)="isPanelOpen = true" (closed)="isPanelOpen = false">
                 <mat-option *ngFor="let user of filteredUsers | async" [value]="user.name"
                     (onSelectionChange)="toggleUserSelection(user.id, user.name)">
-                    <img class="user-chip-img" src="{{ getUserImg(user.id) }}" alt="">
+                    <img class="user-chip-img" src="{{ getUserImg(user.id) }}" referrerpolicy="no-referrer">
                     <p class="project-font">{{ user.name }}</p>
                 </mat-option>
             </mat-autocomplete>
@@ -39,7 +39,7 @@
                 <mat-chip-row class="mat-chip-row" *ngFor="let userId of selectedUsersIds" [removable]="true"
                     (removed)="removeUser(userId)">
                     <div class="chip-subcontainer">
-                        <img class="user-chip-img" src="{{ getUserImg(userId) }}">
+                        <img class="user-chip-img" src="{{ getUserImg(userId) }}" referrerpolicy="no-referrer">
                         <p>
                             {{ getUserName(userId) }}
                         </p>
