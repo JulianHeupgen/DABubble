@@ -51,3 +51,26 @@
     right: 20px;
   }
 }
+
+mat-option {
+
+
+  span {
+    margin: 0;
+
+  }
+
+  img {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+  }
+
+
+}
+
+::ng-deep .mat-mdc-option .mdc-list-item__primary-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
