@@ -105,6 +105,7 @@ export class FullThreadComponent {
         // console.log('FullThread:', this.thread)
         this.checkCurrentUser();
       }
+      this.getUsersOfThread();
     });
     this.filteredUsers = this.pingUserControlFullThread.valueChanges.pipe(
       startWith(''),
@@ -133,6 +134,8 @@ export class FullThreadComponent {
         }
       })
     })
+    console.log('this.users',this.users);
+    
   }
 
   closeThread() {

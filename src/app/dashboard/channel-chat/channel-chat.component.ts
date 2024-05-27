@@ -103,6 +103,7 @@ export class ChannelChatComponent {
     this.route.params.subscribe(params => {
       this.channelId = params['id'];
       console.log(this.channelId);
+      this.dataService.currentChannelId = this.channelId;
       this.reloadAll();
 
     });

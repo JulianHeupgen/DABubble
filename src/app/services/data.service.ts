@@ -1,5 +1,5 @@
 import {Injectable, inject} from '@angular/core';
-import {Firestore, addDoc, collection, deleteDoc, doc, onSnapshot, updateDoc} from '@angular/fire/firestore';
+import {Firestore, addDoc, collection, deleteDoc, doc, onSnapshot, query, updateDoc, where} from '@angular/fire/firestore';
 import {User} from '../models/user.class';
 import {Channel} from '../models/channel.class';
 import {Thread} from '../models/thread.class';
@@ -25,6 +25,8 @@ export class DataService {
   allChannels: Channel[] = [];
   allThreads: Thread[] = [];
   allUserChats: UserChat[] = [];
+
+  currentChannelId: string = 'Yk2dgejx9yy7iHLij1Qj'
 
 
   getUsersList() {
@@ -84,15 +86,31 @@ export class DataService {
 
 
 
+  // getThreadsList() {
+  //   return new Observable(observer => {
+  //     const unsubscribe = onSnapshot(this.getThreadCollection(), list => {
+  //       this.allThreads = [];
+  //       list.forEach(thread => this.allThreads.push(this.setThreadObject(thread.id, thread.data())))
+  //       observer.next(this.allThreads);
+  //     });
+  //   });
+
+  // }
+
+  // getThreadCollection() {
+  //   return collection(this.firestore, 'threads');
+  // }
+
   getThreadsList() {
-    return new Observable(observer => {
-      const unsubscribe = onSnapshot(this.getThreadCollection(), list => {
+    return new Observable<Thread[]>(observer => {
+      const threadQuery = query(this.getThreadCollection(), where('channelId', '==', this.currentChannelId));
+      const unsubscribe = onSnapshot(threadQuery, list => {
         this.allThreads = [];
-        list.forEach(thread => this.allThreads.push(this.setThreadObject(thread.id, thread.data())))
+        list.forEach(thread => this.allThreads.push(this.setThreadObject(thread.id, thread.data())));
         observer.next(this.allThreads);
       });
+      return { unsubscribe };
     });
-
   }
 
   getThreadCollection() {
