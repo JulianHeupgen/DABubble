@@ -74,14 +74,14 @@ export class MessageReactionComponent {
           emojiReaction.usersDetail = [];
         }
         emojiReaction.usersDetail.push(user);
-        console.log('this.threadMessage', this.threadMessage);        
+        // console.log('this.threadMessage', this.threadMessage);        
       }
       if (reactionUserId.id === user.id) {
         if (!emojiReaction.usersDetail) {
           emojiReaction.usersDetail = [];
         }
         emojiReaction.usersDetail.push(user);
-        console.log('this.threadMessage', this.threadMessage);        
+        // console.log('this.threadMessage', this.threadMessage);        
       }
     });
   }

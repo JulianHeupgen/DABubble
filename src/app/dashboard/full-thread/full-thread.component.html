@@ -1,6 +1,5 @@
 <div class="open-thread" 
-*ngIf="threadService.openThread && threadService.openThread && thread && thread.messages && thread.messages.length > 0" 
-[class.other-users-channel-chat-message]="currentUser.id != thread.messages[0]?.senderId">
+*ngIf="threadService.openThread && threadService.openThread && thread && thread.messages && thread.messages.length > 0">
     <div class="thread-header">
         <div class="headline">
             <h2>Thread</h2>
@@ -10,8 +9,8 @@
             <img src="../../../assets/img/close.png" alt="">
         </div>
     </div>
-    <div class="channel-history" *ngIf="thread && thread.messages && thread.messages[0] && threadOwnder">
-        <div class="channel-chat-message">
+    <div class="channel-history" *ngIf="thread && thread.messages && thread.messages[0] && threadOwner">
+        <div class="channel-chat-message" [class.other-users-channel-chat-message]="!isCurrentUser">
             <div class="reaction-menu">
 
 
@@ -28,17 +27,17 @@
             <div class="channel-chat-content">
                 <div class="channel-chat-time-sender">
                     <span>{{thread.getFormattedTimeStamp()}}</span>
-                    <h3>{{ threadOwnder.name }}</h3>
+                    <h3>{{ threadOwner.name }}</h3>
                 </div>
                 <div class="message">
-                    <img src="{{ thread.messages[0].imgFileURL }}" alt="">
+                    <img *ngIf="thread.messages[0].imgFileURL.length > 0" src="{{ thread.messages[0].imgFileURL }}" alt="">
                     <span>
                         {{ thread.messages[0].content }}
                     </span>
                 </div>
             </div>
             <div class="channel-chat-sender-img">
-                <img src="{{ threadOwnder.imageUrl }}" alt="">
+                <img src="{{ threadOwner.imageUrl }}" alt="">
             </div>
         </div>
 

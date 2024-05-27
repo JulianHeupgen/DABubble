@@ -39,13 +39,15 @@ import { Message } from '../../models/message.class';
   styleUrls: [
     './full-thread.component.scss',
     '../channel-chat/channel-chat.component.scss',
+    '../channel-chat/channel-thread/channel-thread.component.scss',
   ]
 })
 export class FullThreadComponent {
 
-  // openThread: boolean = false;
+  isCurrentUser: boolean = false;
+
   thread: Thread | null = null;
-  threadOwnder: User | null = null;
+  threadOwner: User | null = null;
   currentUser!: User;
   currentChannel!: Channel;
   users: any[] = [];
@@ -81,17 +83,30 @@ export class FullThreadComponent {
     this.threadService.currentThread$.subscribe(event => {
       if (event.thread) {
         this.thread = event.thread;
-        this.threadOwnder = event.threadOwner;
+        this.threadOwner = event.threadOwner;
         this.currentUser = event.currentUser;
         this.currentChannel = event.currentChannel;
         this.threadService.openThread = true;
-        console.log('FullThread:', this.thread)
+        // console.log('FullThread:', this.thread)
+        this.checkCurrentUser();
       }
     });
     this.filteredUsers = this.pingUserControlFullThread.valueChanges.pipe(
       startWith(''),
       map(value => this._filterUsers(value || ''))
     );
+  }
+
+  checkCurrentUser() {
+    if (this.thread) {      
+      let messageOwnerId = this.thread?.messages[0].senderId;
+      
+      if (messageOwnerId == this.currentUser.id) {
+        this.isCurrentUser = true;
+    } else {
+        this.isCurrentUser = false;
+    }
+    }
   }
 
   getUsersOfThread() {

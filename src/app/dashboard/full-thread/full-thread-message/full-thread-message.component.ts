@@ -45,7 +45,7 @@ export class FullThreadMessageComponent {
 
   listenForThreadChanges() {
     this.threadUnsubscribe = onSnapshot(doc(this.firebase, "threads", this.thread.threadId), (doc) => {
-      console.log('DocData', doc.data());
+      // console.log('DocData', doc.data());
       let data = doc.data();
       if (data) {
         let threadData = {
@@ -53,10 +53,8 @@ export class FullThreadMessageComponent {
           channelId: data['channelId'],
           messages: data['messages'],
           timestamp: data['timestamp'],
-        }
-        
-        this.thread = new Thread(threadData)
-        
+        };        
+        this.thread = new Thread(threadData)        
         this.loadThreadMessages();
         this.threadService.getReactionsForMessage(this.thread);
       }
@@ -73,8 +71,8 @@ export class FullThreadMessageComponent {
       })
       this.threadMessages.push(message);
     });
-    console.log('threadMessages', this.threadMessages);
-    console.log('thread', this.thread);
+    // console.log('threadMessages', this.threadMessages);
+    // console.log('thread', this.thread);
   }
 
   getFormattedDatestamp(timestamp: number): any {
@@ -98,7 +96,7 @@ export class FullThreadMessageComponent {
   }
 
   getMessageContent(element: any) {
-    console.log('Message Element:', element);
+    // console.log('Message Element:', element);
 
   }
 

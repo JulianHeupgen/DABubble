@@ -30,119 +30,12 @@
     }
 }
 
+.close-thread {
+    cursor: pointer;
+}
+
 .channel-history {
     height: 50%;
-}
-
-.channel-chat-message {
-    position: relative;
-    @include flex-align-justify($ai: flex-start);
-    gap: 30px;
-    padding: 10px 20px 40px 20px;
-
-    &:hover {
-        background-color: #ECEEFE;
-
-        .reaction-menu {
-            display: flex;
-        }
-    }
-
-    .channel-chat-content {
-        width: 100%;
-        @include flex-align-justify($ai: flex-end);
-        flex-direction: column;
-        gap: 8px;
-
-        .message {
-            padding: 15px;
-            border-radius: 30px 0 30px 30px;
-            background-color: #797EF3;
-            @include font-size-weight-color($cl: #FFFFFF);
-
-            img {
-                width: 200px;
-                border-radius: 10px;
-            }
-        }
-
-        .channel-chat-time-sender {
-            @include flex-align-justify();
-            text-align: end;
-            gap: 20px;
-
-            span {
-                @include font-size-weight-color($fs: 14px, $cl: #686868)
-            }
-
-            h3 {
-                cursor: pointer;
-                margin: 0;
-                @include font-size-weight-color($fw: 700);
-
-                &:hover {
-                    color: #444DF2;
-                }
-            }
-        }
-
-        .chat-reactions {
-            height: 40px;
-            width: 100%;
-        }
-    }
-
-    .channel-chat-sender-img {
-        height: 100%;
-        @include flex-align-justify($ai: flex-start);
-    }
-
-}
-
-.channel-chat-content {
-    padding-left: 0 !important;
-}
-
-.reaction-menu {
-    position: absolute;
-    top: -35px;
-    left: 5%;
-    @include flex-align-justify();
-    gap: 5px;
-    background-color: #FFFFFF;
-    border: 1px solid #ADB0D9;
-    border-radius: 25px 25px 0 25px;
-    padding: 3px 15px 3px 20px;
-    display: none;
-
-    .icon {
-        cursor: pointer;
-        @include flex-align-justify();
-        width: 40px;
-        height: 40px;
-
-        .hover-icon {
-            display: none;
-        }
-
-        &:hover {
-            background-color: #ECEEFE;
-            border-radius: 100%;
-
-            .not-hover-icon {
-                display: none;
-            }
-
-            .hover-icon {
-                display: flex;
-            }
-        }
-    }
-}
-
-.reaction-bar {
-    @include flex-align-justify($jc: right);
-    width: 100%;
 }
 
 .separation-line {
