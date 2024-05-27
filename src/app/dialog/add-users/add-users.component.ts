@@ -14,6 +14,7 @@ import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { User } from '../../models/user.class';
 import { Channel } from '../../models/channel.class';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @Component({
@@ -25,6 +26,7 @@ import { Channel } from '../../models/channel.class';
     FormsModule,
     ReactiveFormsModule,
     MatIconModule,
+    MatSelectModule,
     MatChipsModule,
     MatFormFieldModule,
     MatButtonModule,
@@ -71,7 +73,8 @@ export class AddUsersComponent {
     const filterValue = value.toLowerCase();
     return this.allUsers.filter(user =>
       user.name.toLowerCase().includes(filterValue) &&
-      !this.selectedUsersIds.includes(user.id));
+      !user.channels.includes(this.data.channelId) &&
+      !this.selectedUsersIds.includes(user.id))
   }
 
 
