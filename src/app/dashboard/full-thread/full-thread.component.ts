@@ -127,13 +127,16 @@ export class FullThreadComponent {
 
   getUsersOfThread() {
     this.users = []
+    const userMap = new Map<string, User>();
     this.thread?.messages.forEach(message => {
       this.dataService.allUsers.forEach(user => {
         if (user.id == message.senderId) {
-          this.users.push(user);
+          userMap.set(user.id, user);
+          // this.users.push(user);
         }
       })
     })
+    this.users = Array.from(userMap.values());
     console.log('this.users',this.users);
     
   }

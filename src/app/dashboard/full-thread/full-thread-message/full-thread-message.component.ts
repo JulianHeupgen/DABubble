@@ -39,6 +39,14 @@ export class FullThreadMessageComponent {
   ) { }
 
   ngOnInit() {
+    this.threadService.currentThread$.subscribe(event => {
+      if (event.thread) {
+        this.thread = event.thread;
+        this.currentUser = event.currentUser;
+      }
+      this.loadThreadMessages();
+      this.listenForThreadChanges();
+    });
     this.loadThreadMessages();
     this.listenForThreadChanges();
   }
