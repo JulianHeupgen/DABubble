@@ -4,7 +4,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
 import { Observable, from, map, startWith, switchMap } from 'rxjs';
-import { Firestore, collection, getDocs, writeBatch, arrayUnion, doc, docSnapshots } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs, writeBatch, arrayUnion, doc } from '@angular/fire/firestore';
 import { MatSelectModule } from '@angular/material/select';
 import { DataService } from '../../services/data.service';
 import { MatIconModule } from '@angular/material/icon';
