@@ -52,7 +52,7 @@ export class ChannelThreadComponent {
   }
 
   findThreadUser(messageOwnerId: string) {
-    this.dataService.allUsers.forEach( user => {
+    this.dataService.allUsers.forEach(user => {
       if (user.id == messageOwnerId) {
         this.threadUser = user;
         // console.log('Thread User',this.threadUser);
@@ -69,12 +69,15 @@ export class ChannelThreadComponent {
     return this.thread.getFormattedTimeStamp();
   }
 
-  openThread(thread: Thread) {
-    this.threadService.openThread = false;
-    setTimeout(() => {
-
-      this.threadService.changeThread(thread, this.threadUser, this.channelChat.currentChannel, this.channelChat.currentUser);
-    }, 1);
+  async openThread(thread: Thread) {
+    try {
+      await this.threadService.openFullThread(true);
+      setTimeout(() => {        
+        this.threadService.changeThread(thread, this.threadUser, this.channelChat.currentChannel, this.channelChat.currentUser);
+      }, 0);
+    } catch (error) {
+      console.error('Error opening thread:', error);
+    }
   }
 
   setHoverMenu() {

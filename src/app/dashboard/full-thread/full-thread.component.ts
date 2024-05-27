@@ -73,6 +73,21 @@ export class FullThreadComponent {
           this.addEmoji(event.emoji);
         }
       })
+      this.threadService.currentThread$.subscribe(event => {
+        if (event.thread) {
+          this.thread = event.thread;
+          this.threadOwner = event.threadOwner;
+          this.currentUser = event.currentUser;
+          this.currentChannel = event.currentChannel;
+          // this.threadService.openThread = true;
+          // console.log('FullThread:', this.thread)
+          this.checkCurrentUser();
+        }
+      });
+      this.filteredUsers = this.pingUserControlFullThread.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filterUsers(value || ''))
+      );
   }
 
   fullThreadMessage: FormGroup = this.formBuilder.group({
@@ -86,7 +101,7 @@ export class FullThreadComponent {
         this.threadOwner = event.threadOwner;
         this.currentUser = event.currentUser;
         this.currentChannel = event.currentChannel;
-        this.threadService.openThread = true;
+        // this.threadService.openThread = true;
         // console.log('FullThread:', this.thread)
         this.checkCurrentUser();
       }
@@ -121,7 +136,8 @@ export class FullThreadComponent {
   }
 
   closeThread() {
-    this.threadService.openThread = false;
+    // this.threadService.openThread = false;
+    this.threadService.openFullThread(false);
   }
 
   private _filterUsers(value: string): any[] {
