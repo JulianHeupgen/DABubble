@@ -38,7 +38,7 @@ export class Thread {
       } else {
         return this.dateIsNotToday(weekday, month, day);
       }
-    }
+  }
 
 
   dateIsNotToday(weekday: number, month: number, day: number) {
