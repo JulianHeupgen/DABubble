@@ -51,6 +51,7 @@ openProfile(participant: any) {
     data: participant
   }
  );
+ this.control.reset();
 }
 
 }
