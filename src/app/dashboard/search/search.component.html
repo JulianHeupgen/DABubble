@@ -12,14 +12,18 @@
     (opened)="isPanelOpen = true"
     (closed)="isPanelOpen = false"
   >
+  <h2 class="project-font">User</h2>
     @for (searchObjects of showUsers(); track searchObjects.authUserId) {
     <mat-option [value]="searchObjects.name" (click)="openProfile(searchObjects)">
-      <img src="{{ searchObjects.imageUrl }}" referrerpolicy="no-referrer">
+      <img class="user-img" src="{{ searchObjects.imageUrl }}" referrerpolicy="no-referrer">
       {{ searchObjects.name }}</mat-option>
     }
-    <!-- @for (searchObjects of this.dataService.allChannels; track searchObjects.channelId) {
-      <mat-option *ngFor="let searchObjects of filteredUsers | async" [value]="searchObjects.title">{{ searchObjects.title }}</mat-option>
-      } -->
+    <h2 class="project-font">Channels</h2>
+    @for (searchObjects of showChannels(); track searchObjects.channelId) {
+      <mat-option [value]="searchObjects.title" [routerLink]="['/dashboard/channel', searchObjects.channelId]">
+        <img class="channel-img" src="./assets/img/tag.png">
+        {{ searchObjects.title }}</mat-option>
+      }
   </mat-autocomplete>
   <img src="./assets/img/search.png" />
 </form>
