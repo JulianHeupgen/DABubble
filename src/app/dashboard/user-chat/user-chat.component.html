@@ -1,1 +1,64 @@
-<p> Hier erscheint der Chatverlauf von dir und Person XY </p>
+<mat-card class="userChat-wrapper">
+    <mat-card-header>
+      <div class="userChat-infos" *ngIf="currentUserChat">
+        <!-- User Image und Name; *ngIf=currentChannel muss noch geändert werden -->
+      </div>
+  </mat-card-header>
+  
+  <!-- Chat history -->
+    <div #messageContainer class="chat-history">
+      <div *ngFor="let message of userChatMessages">
+        <!-- Message Component einbinden oder ChannelThreadComponent wiederverwerten, da gleiche Logik ?   -->
+      </div>
+    </div>
+  
+    <!-- Channel Chat Input -->
+    <form [formGroup]="channelThreadMessage" class="text-box">
+      <div #imgBox class="add-file-img-box"></div>
+      <textarea #threadMessageBox formControlName="channelMessage" *ngIf="currentUserChat"
+        placeholder="Nachricht an #{{currentUserChat.participants}}"></textarea>
+      <div class="interactiv-btn-box">
+        <div class="interactive-btns">
+  
+          <app-add-img-to-message [showImgRef]="imgBox"></app-add-img-to-message>
+  
+          <div class="border-line"></div>
+          <app-emoji-mart
+          [emojiImg]="'emoticon.png'"
+          [emojiImgHover]="'emoticon-hover.png'"
+          [assigningComponent]="'ChannelChatComponent'"></app-emoji-mart>
+  
+          <div class="address-message-to-user">
+            <img class="not-hover-icon" src="../../../assets/img/ping-user.png" alt="">
+            <button class="hover-icon" mat-button [matMenuTriggerFor]="pingUser">
+              <img src="../../../assets/img/ping-user-hover.png" alt="">
+            </button>
+            <mat-menu #pingUser="matMenu" class="address-message-to-user-menu">
+              <mat-form-field class="example-full-width" (click)="$event.stopPropagation()">
+                <mat-label>User</mat-label>
+                <input type="text" placeholder="Pick one" aria-label="User" matInput [formControl]="pingUserControl"
+                  [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let user of filteredUsers | async" [value]="user.name"
+                    (click)="addUserToMessage(user)">
+                    &#64;{{ user.name }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </mat-menu>
+          </div>
+        </div>
+  
+        <div class="send-message">
+          <button class="not-hover-icon">
+            <img src="../../../assets/img/send-message.png" alt="">
+          </button>
+          <button type="submit" class="hover-icon" (click)="sendMessage(); removeChatInput()">
+            <img src="../../../assets/img/send-message-hover.png" alt="">
+          </button>
+  
+        </div>
+      </div>
+    </form>
+  </mat-card>
+  

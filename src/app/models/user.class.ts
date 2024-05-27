@@ -78,7 +78,13 @@ export class User {
   }
 
 
-  sendDirectMessage(recipient: User, messageContent: string): void {
+  async sendDirectMessage(recipient: User, messageContent: string, imgFile?: File) {
+    let imgFileURL;
+    if (imgFile) {                                          
+      let storage: StorageService = new StorageService;
+      let imgURL = await storage.uploadFile(imgFile) as string;
+      imgFileURL = imgURL;
+    }
 
     const existingUserChat = this.userChats.find(chat =>
       chat.participants.includes(recipient));                   

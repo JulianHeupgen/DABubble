@@ -1,4 +1,3 @@
-import { reload } from '@angular/fire/auth';
 import { User } from './user.class';
 
 export class Message {
