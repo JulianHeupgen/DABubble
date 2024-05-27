@@ -1,5 +1,3 @@
-import { Message } from './message.class';
-
 export class Thread {
   threadId: string;
   channelId: string;
@@ -23,17 +21,35 @@ export class Thread {
   }
 
 
-  getFormattedDatestamp(): any {
-    const date = new Date(this.timestamp);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Monate sind 0-basiert
-    const day = date.getDate().toString().padStart(2, '0');
+  // getFormattedDatestamp(): any {
+  //   const date = new Date(this.timestamp);
+  //   const year = date.getFullYear();
+  //   const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Monate sind 0-basiert
+  //   const day = date.getDate().toString().padStart(2, '0');
     
-    const formattedDate = `${year}-${month}-${day}`;
+  //   const formattedDate = `${year}-${month}-${day}`;
+  //   return formattedDate;
+  // }
+
+
+  // neue Funktion für formatted Datestamp; Format stimmt nun mit dem in Figma überein 
+  getFormattedDatestamp() {
+    const date = new Date(this.timestamp);
+    const month = date.getMonth(); 
+    const weekday = date.getDay();
+    const day = date.getDate();
+
+    const weekdays = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+    const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+
+    const weekdayName = weekdays[weekday];
+    const monthName = months[month];
+
+    const formattedDate = `${weekdayName}, ${day}. ${monthName}`;
     return formattedDate;
-  }
+}
 
-
+  
   getFormattedTimeStamp() {
     const date = new Date(this.timestamp);
     const hours = date.getHours().toString().padStart(2, '0');
