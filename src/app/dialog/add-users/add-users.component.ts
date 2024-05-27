@@ -64,7 +64,7 @@ export class AddUsersComponent {
 
   /**
    * Filter function for selecting users during input via keyboard. 
-   * Already selected users are filtered out.
+   * Channel members and already selected users are filtered out.
    * 
    * @param value - string data from filteredUsers Observable
    * @returns - the filtered user
