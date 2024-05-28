@@ -3,29 +3,20 @@ import { User } from './user.class';
 
 export class UserChat {
   userChatId: string;
-<<<<<<< Updated upstream
+  chatId: string;
   participants: string[];
   messages: Message[];
 
-  constructor(data: {
+  constructor(data:  {
     userChatId?: string,
-    participants?: string[],
+    chatId?: string,
+    participants?: string [],
     messages?: Message[]
   }) {
     this.userChatId = data.userChatId || '';
+    this.chatId = data.chatId || '';
     this.participants = data.participants || [];
     this.messages = data.messages || [];
-=======
-  chatId: string;
-  participants: User[];
-  messages: Message[];
-
-  constructor(participants: User[]) {
-    this.userChatId = '';
-    this.chatId = '';
-    this.participants = participants;
-    this.messages = [];
->>>>>>> Stashed changes
   }
 
 
