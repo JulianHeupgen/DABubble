@@ -3,6 +3,7 @@ import { User } from './user.class';
 
 export class UserChat {
   userChatId: string;
+<<<<<<< Updated upstream
   participants: string[];
   messages: Message[];
 
@@ -14,6 +15,17 @@ export class UserChat {
     this.userChatId = data.userChatId || '';
     this.participants = data.participants || [];
     this.messages = data.messages || [];
+=======
+  chatId: string;
+  participants: User[];
+  messages: Message[];
+
+  constructor(participants: User[]) {
+    this.userChatId = '';
+    this.chatId = '';
+    this.participants = participants;
+    this.messages = [];
+>>>>>>> Stashed changes
   }
 
 
@@ -25,6 +37,7 @@ export class UserChat {
   toJSON() {
     return {
       userChatId: this.userChatId,
+      chatId: this.chatId,
       participants: this.participants,
       messages: this.messages
     }
