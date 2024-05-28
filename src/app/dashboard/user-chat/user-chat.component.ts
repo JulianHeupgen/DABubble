@@ -81,6 +81,7 @@ export class UserChatComponent {
   userChats!: any;
   filteredUserChats!: any[];
   currentUserChat!: UserChat;
+  recipient!: User;
   imgFile: File | undefined = undefined;
 
 
@@ -115,7 +116,8 @@ export class UserChatComponent {
     this.dataSubscriptions();
     await this.loadUsers();
     await this.checkUserAuthId();
-    this.getUserChatInfos();
+    this.getUserChat();
+    this.getRecipient();
     this.filteredUsers = this.pingUserControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterUsers(value || ''))
@@ -190,25 +192,14 @@ export class UserChatComponent {
   }
 
 
-  getUserChatInfos() {
-    this.filterUserChats();
-    this.getCurrentUserChat();
-  }
-
-
-  filterUserChats() {
+  getUserChat() {
     this.filteredUserChats = [];
 
     for (let i = 0; i < this.userChats.length; i++) {
       if (this.userChats[i].participants.includes(this.currentUser.id)) {
         this.filteredUserChats.push(this.userChats[i]);
       }
-  }
-}
-
-
-  getCurrentUserChat() {
-    // this.getUserChatIdFromURL();
+    }
 
     for (let i = 0; i < this.filteredUserChats.length; i++) {
       if (this.filteredUserChats[i].participants.includes(this.currentUserChatId)) {
@@ -216,20 +207,8 @@ export class UserChatComponent {
         break;
       }
     }
-
   }
 
-
-  // getUserChatIdFromURL() {
-  //   this.route.params.subscribe(params => {
-  //     this.currentUserChatId = params['id'];
-
-  //     // if(this.users && this.userChats) {
-
-  //     //   this.getUserChatInfos();
-  //     // }
-  //   });
-  // }
 
 
   private _filterUsers(value: string): any[] {
@@ -267,7 +246,7 @@ export class UserChatComponent {
 
   ngOnDestroy() {
     this.userSub.unsubscribe();
-    this.emojiSubscription.unsubscribe();
+    this.userChatsSub.unsubscribe();
   }
 
 
@@ -277,9 +256,20 @@ export class UserChatComponent {
   }
 
 
+  getRecipient() {
+    const recipientData = this.users.find((user: any) => user.id === this.currentUserChatId);
+
+    if (recipientData) {
+      this.recipient = new User(recipientData);
+    } else {
+      console.error(`Recipient with id ${this.currentUserChatId} not found`);
+    }
+  }
+
+
   async sendMessage() {
     await this.currentUser.sendDirectMessage(
-      this.currentUser,                                   // aktuell Platzhalter; statt currentUser kommt der EMPFÄNGER hier rein !!
+      this.recipient,                                   
       this.channelThreadMessage.value.channelMessage,
       this.addImgToMessageComponent.imgFile,
     );

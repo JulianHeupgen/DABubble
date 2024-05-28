@@ -87,14 +87,15 @@ export class User {
     }
 
     const existingUserChat = this.userChats.find(chat =>
-      chat.participants.includes(recipient));                   
+      Array.isArray(chat.participants) && chat.participants.includes(recipient.id) 
+    );                   
 
     if (existingUserChat) {                                       
       const newMessage = new Message(this, messageContent);
       existingUserChat.addMessage(newMessage);
     } else {                                                      
       const newUserChat = new UserChat({
-        participants: [this, recipient],
+        participants: [this.id, recipient.id],
       });
       const newMessage = new Message(this, messageContent);
       newUserChat.addMessage(newMessage);

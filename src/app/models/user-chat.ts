@@ -3,12 +3,12 @@ import { User } from './user.class';
 
 export class UserChat {
   userChatId: string;
-  participants: User[];
+  participants: string[];
   messages: Message[];
 
   constructor(data: {
     userChatId?: string,
-    participants?: User[],
+    participants?: string[],
     messages?: Message[]
   }) {
     this.userChatId = data.userChatId || '';
