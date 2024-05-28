@@ -13,14 +13,14 @@
     (closed)="isPanelOpen = false"
   >
   <h2 class="project-font">User</h2>
-    @for (searchObjects of showUsers(); track searchObjects.authUserId) {
+    @for (searchObjects of users; track $index) {
     <mat-option [value]="searchObjects.name" (click)="openProfile(searchObjects)">
       <img class="user-img" src="{{ searchObjects.imageUrl }}" referrerpolicy="no-referrer">
       {{ searchObjects.name }}</mat-option>
     }
     <h2 class="project-font">Channels</h2>
-    @for (searchObjects of showChannels(); track searchObjects.channelId) {
-      <mat-option [value]="searchObjects.title" [routerLink]="['/dashboard/channel', searchObjects.channelId]">
+    @for (searchObjects of channels; track $index) {
+      <mat-option (onSelectionChange)="onSelection()" [value]="searchObjects.title" [routerLink]="['/dashboard/channel', searchObjects.channelId]">
         <img class="channel-img" src="./assets/img/tag.png">
         {{ searchObjects.title }}</mat-option>
       }
