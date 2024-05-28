@@ -93,7 +93,9 @@ export class User {
       const newMessage = new Message(this, messageContent);
       existingUserChat.addMessage(newMessage);
     } else {                                                      
-      const newUserChat = new UserChat([this, recipient]);
+      const newUserChat = new UserChat({
+        participants: [this, recipient],
+      });
       const newMessage = new Message(this, messageContent);
       newUserChat.addMessage(newMessage);
       this.userChats.push(newUserChat);

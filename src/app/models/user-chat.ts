@@ -6,10 +6,14 @@ export class UserChat {
   participants: User[];
   messages: Message[];
 
-  constructor(participants: User[]) {
-    this.userChatId = '';
-    this.participants = participants;
-    this.messages = [];
+  constructor(data: {
+    userChatId?: string,
+    participants?: User[],
+    messages?: Message[]
+  }) {
+    this.userChatId = data.userChatId || '';
+    this.participants = data.participants || [];
+    this.messages = data.messages || [];
   }
 
 

@@ -6,9 +6,9 @@
   </mat-card-header>
   
   <!-- Chat history -->
-    <div #messageContainer class="chat-history">
-      <div *ngFor="let message of userChatMessages">
-        <!-- Message Component einbinden oder ChannelThreadComponent wiederverwerten, da gleiche Logik ?   -->
+    <div #messageContainer class="chat-history" *ngIf="currentUserChat">
+      <div *ngFor="let message of currentUserChat.messages">
+        <div>{{message}}</div>
       </div>
     </div>
   

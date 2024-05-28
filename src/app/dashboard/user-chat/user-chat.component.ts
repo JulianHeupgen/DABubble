@@ -74,17 +74,27 @@ export class UserChatComponent {
       })
   }
 
-  userAuthId!: string;
   users: any;
+  userAuthId!: string;
   currentUser!: User;
-  userChatId!: string;
+  currentUserChatId!: string;
   userChats!: any;
+  filteredUserChats!: any[];
   currentUserChat!: UserChat;
-  userChatMessages!: Message[];
   imgFile: File | undefined = undefined;
 
 
+  // setUserChatObject(id: string, data: any): any {
+  //   return {
+  //     userChatId: id,
+  //     participants: data.participants,
+  //     messages: data.messages
+  //   }
+  // }
+
+
   private userSub: Subscription = new Subscription();
+  private userChatsSub: Subscription = new Subscription();
 
   //-------------------//
 
@@ -95,8 +105,7 @@ export class UserChatComponent {
 
   async ngOnInit() {
     this.route.params.subscribe(params => {
-      this.userChatId = params['id'];
-      console.log(this.userChatId);
+      this.currentUserChatId = params['id'];
       this.reloadAll();
     });
   }
@@ -126,11 +135,22 @@ export class UserChatComponent {
   //   }
   // }
 
-  private _filterUsers(value: string): any[] {
-    const filterValue = value.toLowerCase();
-    return this.users.filter((user: any) =>
-      user.name.toLowerCase().startsWith(filterValue)
-    );
+  
+  dataSubscriptions() {
+    if(this.userSub) {
+      this.userSub.unsubscribe();
+    }
+    this.userSub = this.dataService.getUsersList().subscribe((users: any) => {
+      this.users = users;
+    });
+
+
+    if(this.userChatsSub) {
+      this.userChatsSub.unsubscribe();
+    }
+    this.userChatsSub = this.dataService.getUserChatsList().subscribe((userChats: any) => {
+      this.userChats = userChats;
+    })
   }
 
 
@@ -140,25 +160,13 @@ export class UserChatComponent {
   }
 
 
-  dataSubscriptions() {
-    if (this.userSub) {
-      this.userSub.unsubscribe();
-    }
-    this.userSub = this.dataService.getUsersList().subscribe((users: any) => {
-      this.users = users;
-    });
-  }
-
-
   async checkUserAuthId() {
     try {
-
       await this.auth.getUserAuthId()
         .then(userId => {
           // if (userId) {
           this.userAuthId = userId;
           this.findCurrentUser();
-
           // } else {
           //   console.log("Kein Benutzer angemeldet.");
           // }
@@ -183,46 +191,52 @@ export class UserChatComponent {
 
 
   getUserChatInfos() {
+    this.filterUserChats();
     this.getCurrentUserChat();
-    this.getUserChatMessages(this.userChatId);
   }
+
+
+  filterUserChats() {
+    this.filteredUserChats = [];
+
+    for (let i = 0; i < this.userChats.length; i++) {
+      if (this.userChats[i].participants.includes(this.currentUser.id)) {
+        this.filteredUserChats.push(this.userChats[i]);
+      }
+  }
+}
 
 
   getCurrentUserChat() {
     // this.getUserChatIdFromURL();
 
-    for (let i = 0; i < this.userChats.length; i++) {
-      if (this.userChats[i].userChatId === this.userChatId) {
-        this.currentUserChat = new UserChat(this.userChats[i]);
-        console.log(this.currentUserChat);
+    for (let i = 0; i < this.filteredUserChats.length; i++) {
+      if (this.filteredUserChats[i].participants.includes(this.currentUserChatId)) {
+        this.currentUserChat = new UserChat(this.filteredUserChats[i]);
         break;
       }
     }
+
   }
 
 
-  getUserChatIdFromURL() {
-    this.route.params.subscribe(params => {
-      this.userChatId = params['id'];
-      console.log(this.userChatId);
-      // if(this.users && this.userChats) {
+  // getUserChatIdFromURL() {
+  //   this.route.params.subscribe(params => {
+  //     this.currentUserChatId = params['id'];
 
-      //   this.getUserChatInfos();
-      // }
-    });
-  }
+  //     // if(this.users && this.userChats) {
+
+  //     //   this.getUserChatInfos();
+  //     // }
+  //   });
+  // }
 
 
-  getUserChatMessages(userChatId: string) {
-    // this.userChatMessages = [];
-
-    // for (let i = 0; i < this.currentUserChat.messages.length; i++) {
-    //   if (this.currentUserChat.messages[i]. === userChatId) {
-    //     this.userChatMessages.push(new Message(this.currentUserChat.messages[i]));
-    //   }
-    // }
-
-   // this.sortMessagesByTimestamp();
+  private _filterUsers(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.users.filter((user: any) =>
+      user.name.toLowerCase().startsWith(filterValue)
+    );
   }
 
 
