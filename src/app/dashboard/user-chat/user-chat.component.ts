@@ -79,7 +79,6 @@ export class UserChatComponent {
   currentUser!: User;
   currentUserChatId!: string;
   userChats!: any;
-  filteredUserChats!: any[];
   currentUserChat!: UserChat;
   recipient!: User;
   imgFile: File | undefined = undefined;
@@ -116,8 +115,8 @@ export class UserChatComponent {
     this.dataSubscriptions();
     await this.loadUsers();
     await this.checkUserAuthId();
-    this.getUserChat();
     this.getRecipient();
+    this.getUserChat();
     this.filteredUsers = this.pingUserControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterUsers(value || ''))
@@ -192,23 +191,33 @@ export class UserChatComponent {
   }
 
 
+  getRecipient() {
+    const recipientData = this.users.find((user: any) => user.id === this.currentUserChatId);
+
+    if (recipientData) {
+      this.recipient = new User(recipientData);
+    } else {
+      console.error(`Recipient with id ${this.currentUserChatId} not found`);
+    }
+  }
+
+
   getUserChat() {
-    this.filteredUserChats = [];
+    let userChatsOfCurrentUser: any[] = [];
 
     for (let i = 0; i < this.userChats.length; i++) {
       if (this.userChats[i].participants.includes(this.currentUser.id)) {
-        this.filteredUserChats.push(this.userChats[i]);
+        userChatsOfCurrentUser.push(this.userChats[i]);
       }
     }
 
-    for (let i = 0; i < this.filteredUserChats.length; i++) {
-      if (this.filteredUserChats[i].participants.includes(this.currentUserChatId)) {
-        this.currentUserChat = new UserChat(this.filteredUserChats[i]);
+    for (let i = 0; i < userChatsOfCurrentUser.length; i++) {
+      if (userChatsOfCurrentUser[i].participants.includes(this.recipient.id)) {
+        this.currentUserChat = new UserChat(userChatsOfCurrentUser[i]);
         break;
       }
     }
   }
-
 
 
   private _filterUsers(value: string): any[] {
@@ -253,17 +262,6 @@ export class UserChatComponent {
   removeChatInput() {
     this.channelThreadMessage.reset();
     this.addImgToMessageComponent.removeImage();
-  }
-
-
-  getRecipient() {
-    const recipientData = this.users.find((user: any) => user.id === this.currentUserChatId);
-
-    if (recipientData) {
-      this.recipient = new User(recipientData);
-    } else {
-      console.error(`Recipient with id ${this.currentUserChatId} not found`);
-    }
   }
 
 
