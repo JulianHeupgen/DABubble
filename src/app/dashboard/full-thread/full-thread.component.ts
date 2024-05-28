@@ -8,16 +8,14 @@ import { DataService } from '../../services/data.service';
 import { ThreadService } from '../../services/thread.service';
 import { FullThreadMessageComponent } from './full-thread-message/full-thread-message.component';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable, Subscription, map, startWith } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
 import { AddImgToMessageComponent } from '../add-img-to-message/add-img-to-message.component';
 import { EmojiCommunicationService } from '../../services/emoji-communication.service';
-import { ChannelChatComponent } from '../channel-chat/channel-chat.component';
 import { Channel } from '../../models/channel.class';
-import { Message } from '../../models/message.class';
 
 @Component({
   selector: 'app-full-thread',
@@ -60,6 +58,7 @@ export class FullThreadComponent {
   @ViewChild("imgBoxFullThread") imgBoxFullThread!: ElementRef<any>;
   @ViewChild("fullThreadMessageBox") fullThreadMessageBox!: ElementRef;
   @ViewChild(AddImgToMessageComponent) addImgToMessageComponent!: AddImgToMessageComponent;
+  @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
   
   constructor(
     public threadService: ThreadService,
@@ -73,21 +72,6 @@ export class FullThreadComponent {
           this.addEmoji(event.emoji);
         }
       })
-      this.threadService.currentThread$.subscribe(event => {
-        if (event.thread) {
-          this.thread = event.thread;
-          this.threadOwner = event.threadOwner;
-          this.currentUser = event.currentUser;
-          this.currentChannel = event.currentChannel;
-          // this.threadService.openThread = true;
-          // console.log('FullThread:', this.thread)
-          this.checkCurrentUser();
-        }
-      });
-      this.filteredUsers = this.pingUserControlFullThread.valueChanges.pipe(
-        startWith(''),
-        map(value => this._filterUsers(value || ''))
-      );
   }
 
   fullThreadMessage: FormGroup = this.formBuilder.group({
@@ -97,20 +81,22 @@ export class FullThreadComponent {
   ngOnInit(): void {
     this.threadService.currentThread$.subscribe(event => {
       if (event.thread) {
-        this.thread = event.thread;
-        this.threadOwner = event.threadOwner;
-        this.currentUser = event.currentUser;
-        this.currentChannel = event.currentChannel;
-        // this.threadService.openThread = true;
-        // console.log('FullThread:', this.thread)
+        this.sortNewDataFromThreadService(event)
         this.checkCurrentUser();
       }
       this.getUsersOfThread();
+      this.filteredUsers = this.pingUserControlFullThread.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filterUsers(value || ''))
+      );
     });
-    this.filteredUsers = this.pingUserControlFullThread.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterUsers(value || ''))
-    );
+  }
+
+  sortNewDataFromThreadService(event: any) {
+    this.thread = event.thread;
+    this.threadOwner = event.threadOwner;
+    this.currentUser = event.currentUser;
+    this.currentChannel = event.currentChannel;
   }
 
   checkCurrentUser() {
@@ -154,7 +140,12 @@ export class FullThreadComponent {
   }
 
   addUserToMessage(user: User) {
-
+    if (this.fullThreadMessage && user) {
+      this.fullThreadMessageBox.nativeElement.value += "@" + user.name + " ";
+      this.pingUserControlFullThread.setValue("");
+      this.menuTrigger.closeMenu();
+    }
+    
   }
 
   async sendMessage() {
@@ -165,11 +156,7 @@ export class FullThreadComponent {
         this.addImgToMessageComponent.imgFile,
         this.thread
       );
-      // let newThread = new Thread(this.thread);
       let newThread = this.jsonToString(new Thread(this.thread));
-        // this.thread?.messages.push(newThreadMessage);
-        // console.log('Thread copy', newThreadMessageToString);
-        // console.log('Thread origin', newThread);
 
         this.dataService.updateThread(newThread);
       
