@@ -11,6 +11,7 @@ import { Channel } from '../../models/channel.class';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddChannelComponent } from '../../dialog/add-channel/add-channel.component';
+import { UserChat } from '../../models/user-chat';
 
 
 @Component({
@@ -57,7 +58,7 @@ export class SidenavComponent {
   selectedUser: User[] = [];
   allChannels: Partial<Channel>[] = [];
   channelTitles: { channelId: string, title: string }[] = [];
-  directMessageTitle: { imageUrl: string, onlineStatus: string, name: string, id: string }[] = [];
+  directMessageTitle: { imageUrl: string, onlineStatus: string, name: string, id: string, chatId: string }[] = [];
 
 
   private userSub = new Subscription();
@@ -180,6 +181,8 @@ export class SidenavComponent {
         if (selected.userChats && Array.isArray(selected.userChats)) {
           selected.userChats.forEach(chat => {
             const chatId = chat.userChatId;
+            console.log('CHAT ID', chat.chatId);
+            
             const matchedUser = this.users.find((user: User) => user.id === chatId);
             if (matchedUser) {
               let displayName = matchedUser.name;
@@ -191,7 +194,8 @@ export class SidenavComponent {
                   id: matchedUser.id,
                   imageUrl: matchedUser.imageUrl,
                   name: displayName,
-                  onlineStatus: matchedUser.onlineStatus
+                  onlineStatus: matchedUser.onlineStatus,
+                  chatId: chat.chatId
                 });
               }
             }
@@ -202,7 +206,90 @@ export class SidenavComponent {
       console.log('Keine ausgewählten Benutzer vorhanden.');
     }
     this.sortDirectMessageUsers();
+    console.log('DIRECT TITLE',this.directMessageTitle);
+    
   }
+
+
+  // getUserDirectMessages(): void {
+  //   this.directMessageTitle = [];
+  //   this.authService.getUserAuthId().then(myUserId => {
+  //     if (myUserId) {
+  //       this.dataService.getUserChatsList().subscribe((data: any) => {  // Use 'any' or 'unknown' and assert type inside
+  //         const userChats = data as UserChat[];  // Assert that 'data' is of type UserChat[]
+  //         userChats.forEach(chat => {
+  //           chat.participants.forEach((participant: User) => {
+  //             if (participant.id !== myUserId) {
+  //               const matchedUser = this.users.find((user: { id: string; }) => user.id === participant.id);
+  //               if (matchedUser) {
+  //                 let displayName = matchedUser.name;
+  //                 if (matchedUser.id === myUserId) {
+  //                   displayName += " (Du)";
+  //                 }
+  //                 if (!this.directMessageTitle.some(dm => dm.id === matchedUser.id)) {
+  //                   this.directMessageTitle.push({
+  //                     id: matchedUser.id,
+  //                     imageUrl: matchedUser.imageUrl,
+  //                     name: displayName,
+  //                     onlineStatus: matchedUser.onlineStatus
+  //                   });
+  //                 }
+  //               }
+  //             }
+  //           });
+  //         });
+  //         this.sortDirectMessageUsers();
+  //       }, error => console.error('Error fetching user chats', error));
+  //     } else {
+  //       console.log('Benutzer-ID nicht gefunden.');
+  //     }
+  //   });
+  // }
+  
+  // getUserDirectMessages(): void {
+  //   this.directMessageTitle = [];
+  //   const myUserId = this.selectedUser && this.selectedUser.length > 0 ? this.selectedUser[0].id : null;
+  
+  //   console.log('USER ID', myUserId);
+  
+  //   if (myUserId) {
+  //     this.dataService.getUserChatsList().subscribe({
+  //       next: (data: any) => {
+  //         const userChats = data as UserChat[];  // Assert that 'data' is of type UserChat[]
+  //         userChats.forEach(chat => {
+  //           chat.participants.forEach((participant: string) => { // Participant ist nun direkt eine ID
+  //             if (participant !== myUserId) { // Überprüfen, ob die ID nicht die eigene ist
+  //               const matchedUser = this.users.find((user: { id: string; }) => user.id === participant);
+  //               if (matchedUser) {
+  //                 let displayName = matchedUser.name;
+  //                 if (matchedUser.id === myUserId) {
+  //                   displayName += " (Du)";
+  //                 }
+  //                 if (!this.directMessageTitle.some(dm => dm.id === matchedUser.id)) {
+  //                   this.directMessageTitle.push({
+  //                     id: matchedUser.id,
+  //                     imageUrl: matchedUser.imageUrl,
+  //                     name: displayName,
+  //                     onlineStatus: matchedUser.onlineStatus
+  //                   });
+  //                 }
+  //               }
+  //             }
+  //           });
+  //         });
+  //         this.sortDirectMessageUsers();
+  //       },
+  //       error: (error) => console.error('Error fetching user chats', error),
+  //       complete: () => console.log('Finished processing user chats.')
+  //     });
+  //   } else {
+  //     console.log('Keine Benutzer-ID gefunden.');
+  //   }
+  // }
+  
+  
+  
+  
 
 
   /**
