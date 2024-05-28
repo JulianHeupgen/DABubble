@@ -181,8 +181,6 @@ export class SidenavComponent {
         if (selected.userChats && Array.isArray(selected.userChats)) {
           selected.userChats.forEach(chat => {
             const chatId = chat.userChatId;
-            console.log('CHAT ID', chat.chatId);
-            
             const matchedUser = this.users.find((user: User) => user.id === chatId);
             if (matchedUser) {
               let displayName = matchedUser.name;
@@ -206,8 +204,6 @@ export class SidenavComponent {
       console.log('Keine ausgewählten Benutzer vorhanden.');
     }
     this.sortDirectMessageUsers();
-    console.log('DIRECT TITLE',this.directMessageTitle);
-    
   }
 
 
