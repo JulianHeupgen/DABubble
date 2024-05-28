@@ -224,7 +224,7 @@ export class UserChatComponent {
     const filterValue = value.toLowerCase();
     return this.users.filter((user: any) =>
       user.name.toLowerCase().startsWith(filterValue)
-    );
+    )
   }
 
 
@@ -266,11 +266,22 @@ export class UserChatComponent {
 
 
   async sendMessage() {
-    await this.currentUser.sendDirectMessage(
+    let isNewUserChat = await this.currentUser.sendDirectMessage(
       this.recipient,                                   
       this.channelThreadMessage.value.channelMessage,
       this.addImgToMessageComponent.imgFile,
     );
+
+    if (isNewUserChat) {
+      this.dataService.addUserChat(this.currentUserChat);
+      this.dataService.updateUser(this.currentUser);
+      this.dataService.updateUser(this.recipient);
+    } else {
+      this.dataService.updateUserChat(this.currentUserChat);
+      this.dataService.updateUser(this.currentUser);
+      this.dataService.updateUser(this.recipient);
+    }
+    
   }
 
 }
