@@ -45,7 +45,7 @@ export class FullThreadMessageComponent {
         this.currentUser = event.currentUser;
       }
       this.loadThreadMessages();
-      this.listenForThreadChanges();
+      // this.listenForThreadChanges();
     });
     this.loadThreadMessages();
     this.listenForThreadChanges();
@@ -65,22 +65,26 @@ export class FullThreadMessageComponent {
         this.thread = new Thread(threadData)        
         this.loadThreadMessages();
         this.threadService.getReactionsForMessage(this.thread);
+        console.log('Listen to Firebase for Message of FullThread');
+        
       }
+
     });
   }
 
   loadThreadMessages() {
     this.threadMessages = [];
+    const userMap = new Map<string, User>();
+    this.dataService.allUsers.forEach(user => {
+      userMap.set(user.id, user);
+    });
+  
     this.thread.messages.forEach(message => {
-      this.dataService.allUsers.forEach(user => {
-        if (user.id == message.senderId) {
-          message.sender = user;
-        }
-      })
+      if (userMap.has(message.senderId)) {
+        message.sender = userMap.get(message.senderId);        
+      }
       this.threadMessages.push(message);
     });
-    // console.log('threadMessages', this.threadMessages);
-    // console.log('thread', this.thread);
   }
 
   getFormattedDatestamp(timestamp: number): any {
