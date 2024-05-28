@@ -10,6 +10,7 @@ import { ViewProfileComponent } from '../../dialog/view-profile/view-profile.com
 import { RouterModule } from '@angular/router';
 import { Channel } from '../../models/channel.class';
 import { AuthService } from '../../services/auth.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -41,20 +42,35 @@ export class SearchComponent {
   }
 
 
+  // ngOnInit() {
+  //   this.auth.getUserAuthId().then(userId => {
+  //     this.dataService.getUsersList().subscribe((users: any) => {
+  //       this.users = users;
+  //       this.currentUser = users.find((u: any) => u.authUserId === userId);
+  //       this.dataService.getChannelsList().subscribe((channels: any) => {
+  //         if (this.currentUser.channels) {
+  //           this.channels = channels.filter((channel: any) => this.currentUser.channels.includes(channel.channelId));
+  //         }
+  //       });
+  //     });
+  //   });
+  // }
+
   ngOnInit() {
-    this.auth.getUserAuthId().then(userId => {
-      this.dataService.getUsersList().subscribe((users: any) => {
+  this.auth.getUserAuthId().then(userId => {
+    this.dataService.getUsersList().pipe(
+      switchMap((users: any) => {
         this.users = users;
         this.currentUser = users.find((u: any) => u.authUserId === userId);
-        this.dataService.getChannelsList().subscribe((channels: any) => {
-          if (this.currentUser.channels) {
-            this.channels = channels.filter((channel: any) => this.currentUser.channels.includes(channel.channelId));
-          }
-        });
-      });
+        return this.dataService.getChannelsList();
+      })
+    ).subscribe((channels: any) => {
+      if (this.currentUser.channels) {
+        this.channels = channels.filter((channel: any) => this.currentUser.channels.includes(channel.channelId));
+      }
     });
+  });
   }
-
 
   showChannels(): Channel[] {
     if (!this.currentUser.channels) {
