@@ -1,5 +1,4 @@
 import { Message } from './message.class';
-import { User } from './user.class';
 
 export class UserChat {
   userChatId: string;
@@ -30,7 +29,7 @@ export class UserChat {
       userChatId: this.userChatId,
       chatId: this.chatId,
       participants: this.participants,
-      messages: this.messages
+      messages: this.messages.map(message => message.toJSON())
     }
   }
 

@@ -17,4 +17,15 @@ export class Message {
     this.imgFileURL = imgFileUrl !== undefined ? imgFileUrl : '';
   }
 
+  toJSON():any {
+    return {
+      senderId: this.senderId,
+      content: this.content,
+      timestamp: this.timestamp,
+      replies: this.replies.map(reply => reply.toJSON()),  
+      emojiReactions: this.emojiReactions,
+      imgFileURL: this.imgFileURL
+    };
+  }
+
 }

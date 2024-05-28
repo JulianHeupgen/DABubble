@@ -78,7 +78,7 @@ export class User {
   }
 
 
-  async sendDirectMessage(recipient: User, messageContent: string, imgFile?: File): Promise<boolean> {
+  async sendDirectMessage(recipient: User, messageContent: string, imgFile?: File): Promise<any> {
     let imgFileURL;
     if (imgFile) {                                          
       let storage: StorageService = new StorageService;
@@ -93,7 +93,7 @@ export class User {
     if (existingUserChat) {                                       
       const newMessage = new Message(this, messageContent);
       existingUserChat.addMessage(newMessage);
-      return true
+      return { ...existingUserChat, isNew: false }
     } else {                                                      
       const newUserChat = new UserChat({
         participants: [this.id, recipient.id],
@@ -102,7 +102,7 @@ export class User {
       newUserChat.addMessage(newMessage);
       this.userChats.push(newUserChat);
       recipient.userChats.push(newUserChat);
-      return false
+      return { ...newUserChat, isNew: true };
     }
   }
 
