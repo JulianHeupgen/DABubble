@@ -17,29 +17,42 @@
       </div>
     </div>
 
-  <!-- MatMenu EditChannel (Click on channel title)-->
-  <mat-menu #editChannelMenu >
-    <div (click)="$event.stopPropagation()">
-      <app-edit-channel *ngIf="currentChannel && currentUser && channelId"
-       [currentChannel]="currentChannel" [currentUser]="currentUser" [channelId]="channelId" [matMenuTrigger]="menuTrigger"></app-edit-channel>
-    </div>
-  </mat-menu>
+    <!-- MatMenu EditChannel (Click on channel title)-->
+    <mat-menu #editChannelMenu>
+      <div (click)="$event.stopPropagation()">
+        <app-edit-channel *ngIf="currentChannel && currentUser && channelId" [currentChannel]="currentChannel"
+          [currentUser]="currentUser" [channelId]="channelId" [matMenuTrigger]="menuTrigger"></app-edit-channel>
+      </div>
+    </mat-menu>
 
-  <!-- MatMenu ChannelParticipants (Click on participants)-->
-  <mat-menu #channelParticipantsMenu class="channelParticipants">
-    <div (click)="$event.stopPropagation()">
-        <app-channel-participants *ngIf="currentChannel && users && currentUser" [currentChannel]="currentChannel" [users]="users"
-         [currentUser]="currentUser" ></app-channel-participants>
-    </div>
-  </mat-menu>
+    <!-- MatMenu ChannelParticipants (Click on participants)-->
+    <mat-menu #channelParticipantsMenu class="channelParticipants">
+      <div (click)="$event.stopPropagation()">
+        <app-channel-participants *ngIf="currentChannel && users && currentUser" [currentChannel]="currentChannel"
+          [users]="users" [currentUser]="currentUser"></app-channel-participants>
+      </div>
+    </mat-menu>
 
-</mat-card-header>
+  </mat-card-header>
 
-<!-- Channel history -->
+  <!-- Channel history -->
   <div #threadContainer class="chat-history">
-    <div *ngFor="let thread of channelThreads">
-      <app-channel-thread [thread]="thread"></app-channel-thread>
+    <div *ngFor="let date of groupedChannelThreads | keyvalue">
+      
+      <div class="date-container">
+        <div class="date-line"></div>
+        <div class="date"> {{ date.key }} </div>
+        <div class="date-line"></div>
+      </div>
+      <div *ngFor="let thread of date.value">
+        <app-channel-thread [thread]="thread"></app-channel-thread>
+      </div>
     </div>
+
+    <!-- <div *ngFor="let thread of channelThreads">
+      <app-channel-thread [thread]="thread"></app-channel-thread>
+    </div> -->
+
   </div>
 
   <!-- Channel Chat Input -->
@@ -53,10 +66,8 @@
         <app-add-img-to-message [showImgRef]="imgBox"></app-add-img-to-message>
 
         <div class="border-line"></div>
-        <app-emoji-mart
-        [emojiImg]="'emoticon.png'"
-        [emojiImgHover]="'emoticon-hover.png'"
-        [assigningComponent]="'ChannelChatComponent'"></app-emoji-mart>
+        <app-emoji-mart [emojiImg]="'emoticon.png'" [emojiImgHover]="'emoticon-hover.png'"
+          [assigningComponent]="'ChannelChatComponent'"></app-emoji-mart>
 
         <div class="address-message-to-user">
           <img class="not-hover-icon" src="../../../assets/img/ping-user.png" alt="">

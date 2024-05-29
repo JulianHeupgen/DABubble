@@ -88,6 +88,8 @@ export class ChannelChatComponent {
   channelThreads!: Thread[];
   imgFile: File | undefined = undefined;
 
+  groupedChannelThreads : { [key: string]: Thread[] } = {};
+
   private userSub: Subscription = new Subscription();
   private channelSub: Subscription = new Subscription();
   private threadsSub: Subscription = new Subscription();
@@ -256,21 +258,52 @@ export class ChannelChatComponent {
   }
 
 
+  // getChannelThreads(channelId: string) {
+  //   this.channelThreads = [];
+
+  //   for (let i = 0; i < this.threads.length; i++) {
+  //     if (this.threads[i].channelId === channelId) {
+  //       this.channelThreads.push(new Thread(this.threads[i]));
+  //     }
+  //   }
+
+  //   this.sortThreadByFirstMessageTimestamp();
+  // }
+
+  // sortThreadByFirstMessageTimestamp() {
+  //   this.channelThreads.sort((a, b) => a.timestamp - b.timestamp);
+  // }
+
   getChannelThreads(channelId: string) {
-    this.channelThreads = [];
-
-    for (let i = 0; i < this.threads.length; i++) {
-      if (this.threads[i].channelId === channelId) {
-        this.channelThreads.push(new Thread(this.threads[i]));
-      }
-    }
-
+    this.channelThreads = []
+    this.threads.forEach( (thread: Thread) => {
+      this.channelThreads.push(new Thread(thread));
+    })
+    this.groupedChannelThreads  = this.groupThreadsByDate(this.channelThreads);
     this.sortThreadByFirstMessageTimestamp();
   }
 
   sortThreadByFirstMessageTimestamp() {
     this.channelThreads.sort((a, b) => a.timestamp - b.timestamp);
   }
+
+  groupThreadsByDate(threads: Thread[]): { [key: string]: Thread[] } {
+    return threads.reduce((groups, thread) => {
+      const date = new Date(thread.timestamp).toLocaleDateString();
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(thread);
+      return groups;
+    }, {} as { [key: string]: Thread[] });
+  }
+
+
+
+
+
+
+
 
   channelThreadMessage: FormGroup = this.formBuilder.group({
     channelMessage: "",
