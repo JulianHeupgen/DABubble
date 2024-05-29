@@ -15,12 +15,16 @@
             <input [(ngModel)]="channelName" type="text" placeholder="z.B. Kooperationsprojekte">
         </div>
         <div class="error-message-container">
-            <p *ngIf="showNameError && channelName.length < 3">
+            @if (showNameError && channelName.length < 3) { 
+                <p>
                 Der Channel-Name muss mindestens 3 Zeichen lang sein.
-            </p>
-            <p *ngIf="showDuplicateError">
-                Dieser Channel-Name wird bereits verwendet! Bitte wähle einen anderen!
-            </p>
+                </p>
+            }
+            @if (showDuplicateError) {
+                <p>
+                    Dieser Channel-Name wird bereits verwendet! Bitte wähle einen anderen!
+                </p>
+            }
         </div>
     </div>
     <div class="input-section">
@@ -28,6 +32,7 @@
         <input [(ngModel)]="channelDescription" type="text" placeholder="Dein Text hier">
     </div>
     <div class="btn-section">
-        <button [ngClass]="{'btn-enabled': channelName.length >= 3, 'btn-disabled': channelName.length < 3}" (click)="createChannel()">Erstellen</button>
+        <button [ngClass]="{'btn-enabled': channelName.length >= 3, 'btn-disabled': channelName.length < 3}"
+            (click)="createChannel()">Erstellen</button>
     </div>
 </div>

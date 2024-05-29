@@ -1,4 +1,5 @@
-<div class="main-container" *ngIf="opened" [@fadeInOut]="opened ? 'open' : 'closed'">
+@if (opened) {
+<div class="main-container" [@fadeInOut]="opened ? 'open' : 'closed'">
     <mat-drawer-container class="sidenav-container" autosize>
         <mat-drawer #drawer class="sidenav" mode="side" [opened]="opened">
             <div class="inner-container">
@@ -19,22 +20,29 @@
                         </div>
                         <img class="add-icon" src="./assets/img/add_channel.png" (click)="openDialog()">
                     </div>
-                    <div *ngIf="showChannels" class="channels-container">
-                        <div *ngFor="let user of selectedUser" class="channel-subcontainer">
-                            <div *ngFor="let channel of channelTitles; index as i" class="channel"
-                                [routerLink]="['/dashboard/channel', channel.channelId]"
+                    @if (showChannels) {
+                    <div class="channels-container">
+                        @for (user of selectedUser; track $index) {
+                        <div class="channel-subcontainer">
+                            @for (channel of channelTitles; track $index) {
+                            <div class="channel" [routerLink]="['/dashboard/channel', channel.channelId]"
                                 [routerLinkActive]="['active-channel']">
                                 <img class="tag-img" src="./assets/img/tag.png">
                                 <p>{{ channel.title }}</p>
                             </div>
+                            }
                         </div>
+                        }
                     </div>
-                    <div *ngIf="showChannels" class="add-channel-container">
+                    }
+                    @if (showChannels) {
+                    <div class="add-channel-container">
                         <div class="add-channel-subcontainer" (click)="openDialog()">
                             <img src="./assets/img/add_circle.png">
                             <p>Channel hinzufügen</p>
                         </div>
                     </div>
+                    }
                 </div>
                 <div class="private-message-container">
                     <div class="private-message-headline-container" (click)="toggleSidenav('private')">
@@ -45,7 +53,8 @@
                             <h2 class="private-headline project-font">Direktnachrichten</h2>
                         </div>
                     </div>
-                    <div class="direct-message-user-container" *ngIf="showDirectMessages">
+                    @if (showDirectMessages) {
+                    <div class="direct-message-user-container">
                         @for (user of selectedUser; track $index) {
                         <div class="user-subcontainer">
                             @for (chat of directMessageTitle; track $index) {
@@ -68,11 +77,13 @@
                         </div>
                         }
                     </div>
+                    }
                 </div>
             </div>
         </mat-drawer>
     </mat-drawer-container>
 </div>
+}
 @if (opened) {
 <img class="img-as-button" src="./assets/img/sidemenu_close_normal.png" (click)="toggleSidenav('sidenav')">
 }
