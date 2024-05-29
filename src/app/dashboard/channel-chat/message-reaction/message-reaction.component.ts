@@ -44,17 +44,18 @@ export class MessageReactionComponent {
   ngOnInit() {
     this.usersForReaction = [];
     this.threadService.currentMessages$.subscribe(event => {
-      if (event.update = 'updateReaction') {
+      if (event.update === 'updateReaction') {
         if (event.thread) {
           this.thread = event.thread;
           // console.log('event', event.thread);
-          this.dataService.allUsers.forEach(user => {
-            this.getEmojiReactions(user);
-          })
-          this.updateThreadMessageReactions();
+          this.processEmojiReactions();
         }
       }
     });
+    this.processEmojiReactions();
+  }
+
+  processEmojiReactions() {
     this.dataService.allUsers.forEach(user => {
       this.getEmojiReactions(user);
     });
@@ -69,19 +70,11 @@ export class MessageReactionComponent {
 
   searchUserInReactions(user: User, emojiReaction: any) {
     emojiReaction.users.forEach((reactionUserId: any) => {
-      if (reactionUserId === user.id) {
+      if (reactionUserId === user.id || reactionUserId.id === user.id) {
         if (!emojiReaction.usersDetail) {
           emojiReaction.usersDetail = [];
         }
         emojiReaction.usersDetail.push(user);
-        // console.log('this.threadMessage', this.threadMessage);        
-      }
-      if (reactionUserId.id === user.id) {
-        if (!emojiReaction.usersDetail) {
-          emojiReaction.usersDetail = [];
-        }
-        emojiReaction.usersDetail.push(user);
-        // console.log('this.threadMessage', this.threadMessage);        
       }
     });
   }
@@ -127,11 +120,7 @@ export class MessageReactionComponent {
   }
 
   convertThreadMessagesToString(thread: any) {
-    let threadMessages: string[] = [];
-    thread.messages.forEach((message: any) => {
-      threadMessages.push(JSON.stringify(message));
-    });
-    thread.messages = threadMessages;
+    thread.messages = thread.messages.map((message: any) => JSON.stringify(message));
   }
 
   isUserInReaction(chatReaction: any) {
