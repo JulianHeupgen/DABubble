@@ -19,26 +19,28 @@
     </div>
 
     <!-- Select single users to add to channel -->
-    <div class="input-section" *ngIf="selectedOption === 'specific'">
+    @if (selectedOption === 'specific') {
+    <div class="input-section">
         <form>
             <input type="text" placeholder="Benutzer durchsuchen" [formControl]="userControl" [matAutocomplete]="auto"
                 class="example-input" [class.mat-autocomplete-panel-open]="isPanelOpen">
             <mat-autocomplete #auto="matAutocomplete" (opened)="isPanelOpen = true" (closed)="isPanelOpen = false">
-                <mat-option *ngFor="let user of filteredUsers | async" [value]="user.name"
-                    (onSelectionChange)="toggleUserSelection(user.id, user.name)">
+                @for (user of filteredUsers | async; track $index) {
+                <mat-option [value]="user.name" (onSelectionChange)="toggleUserSelection(user.id, user.name)">
                     <img class="user-chip-img" src="{{ getUserImg(user.id) }}" referrerpolicy="no-referrer">
                     <p class="project-font">{{ user.name }}</p>
                 </mat-option>
+                }
             </mat-autocomplete>
         </form>
 
         <!-- Show selected users as chips -->
-        <div *ngIf="selectedUsersIds.length > 0">
+        @if (selectedUsersIds.length > 0) {
+        <div>
             <input style="display: none;" [matChipInputFor]="chipGrid" [matChipInputAddOnBlur]="true" />
             <mat-chip-grid #chipGrid>
                 @for (userId of selectedUsersIds; track $index) {
-                    <mat-chip-row class="mat-chip-row" [removable]="true"
-                    (removed)="removeUser(userId)">
+                <mat-chip-row class="mat-chip-row" [removable]="true" (removed)="removeUser(userId)">
                     <div class="chip-subcontainer">
                         <img class="user-chip-img" src="{{ getUserImg(userId) }}" referrerpolicy="no-referrer">
                         <p>
@@ -50,10 +52,13 @@
                 }
             </mat-chip-grid>
         </div>
+        }
     </div>
-
+    }
     <div class="btn-section">
-        <button [ngClass]="{'btn-enabled': (selectedOption === 'all' || (selectedOption === 'specific' && selectedUsers.length > 0)), 'btn-disabled': !(selectedOption === 'all' || (selectedOption === 'specific' && selectedUsers.length > 0))}" [disabled]="!(selectedOption === 'all' || (selectedOption === 'specific' && selectedUsers.length > 0))"
+        <button
+            [ngClass]="{'btn-enabled': (selectedOption === 'all' || (selectedOption === 'specific' && selectedUsers.length > 0)), 'btn-disabled': !(selectedOption === 'all' || (selectedOption === 'specific' && selectedUsers.length > 0))}"
+            [disabled]="!(selectedOption === 'all' || (selectedOption === 'specific' && selectedUsers.length > 0))"
             (click)="save()">Erstellen</button>
     </div>
 </div>
