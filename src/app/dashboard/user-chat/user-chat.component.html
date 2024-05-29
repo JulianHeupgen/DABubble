@@ -6,9 +6,9 @@
   </mat-card-header>
   
   <!-- Chat history -->
-    <div #messageContainer class="chat-history">
-      <div *ngFor="let message of userChatMessages">
-        <!-- Message Component einbinden oder ChannelThreadComponent wiederverwerten, da gleiche Logik ?   -->
+    <div #messageContainer class="chat-history" *ngIf="currentUserChat">
+      <div *ngFor="let message of currentUserChat.messages">
+        <div>{{message}}</div>
       </div>
     </div>
   
@@ -16,7 +16,7 @@
     <form [formGroup]="channelThreadMessage" class="text-box">
       <div #imgBox class="add-file-img-box"></div>
       <textarea #threadMessageBox formControlName="channelMessage" *ngIf="currentUserChat"
-        placeholder="Nachricht an #{{currentUserChat.participants}}"></textarea>
+        placeholder="Nachricht an #{{ recipient.name }}"></textarea>
       <div class="interactiv-btn-box">
         <div class="interactive-btns">
   

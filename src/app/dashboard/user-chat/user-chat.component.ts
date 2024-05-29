@@ -74,17 +74,27 @@ export class UserChatComponent {
       })
   }
 
-  userAuthId!: string;
   users: any;
+  userAuthId!: string;
   currentUser!: User;
-  userChatId!: string;
+  currentUserChatId!: string;
   userChats!: any;
   currentUserChat!: UserChat;
-  userChatMessages!: Message[];
+  recipient!: User;
   imgFile: File | undefined = undefined;
 
 
+  // setUserChatObject(id: string, data: any): any {
+  //   return {
+  //     userChatId: id,
+  //     participants: data.participants,
+  //     messages: data.messages
+  //   }
+  // }
+
+
   private userSub: Subscription = new Subscription();
+  private userChatsSub: Subscription = new Subscription();
 
   //-------------------//
 
@@ -95,8 +105,7 @@ export class UserChatComponent {
 
   async ngOnInit() {
     this.route.params.subscribe(params => {
-      this.userChatId = params['id'];
-      console.log(this.userChatId);
+      this.currentUserChatId = params['id'];
       this.reloadAll();
     });
   }
@@ -106,7 +115,8 @@ export class UserChatComponent {
     this.dataSubscriptions();
     await this.loadUsers();
     await this.checkUserAuthId();
-    this.getUserChatInfos();
+    this.getRecipient();
+    this.getUserChat();
     this.filteredUsers = this.pingUserControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterUsers(value || ''))
@@ -126,11 +136,22 @@ export class UserChatComponent {
   //   }
   // }
 
-  private _filterUsers(value: string): any[] {
-    const filterValue = value.toLowerCase();
-    return this.users.filter((user: any) =>
-      user.name.toLowerCase().startsWith(filterValue)
-    );
+  
+  dataSubscriptions() {
+    if(this.userSub) {
+      this.userSub.unsubscribe();
+    }
+    this.userSub = this.dataService.getUsersList().subscribe((users: any) => {
+      this.users = users;
+    });
+
+
+    if(this.userChatsSub) {
+      this.userChatsSub.unsubscribe();
+    }
+    this.userChatsSub = this.dataService.getUserChatsList().subscribe((userChats: any) => {
+      this.userChats = userChats;
+    })
   }
 
 
@@ -140,25 +161,13 @@ export class UserChatComponent {
   }
 
 
-  dataSubscriptions() {
-    if (this.userSub) {
-      this.userSub.unsubscribe();
-    }
-    this.userSub = this.dataService.getUsersList().subscribe((users: any) => {
-      this.users = users;
-    });
-  }
-
-
   async checkUserAuthId() {
     try {
-
       await this.auth.getUserAuthId()
         .then(userId => {
           // if (userId) {
           this.userAuthId = userId;
           this.findCurrentUser();
-
           // } else {
           //   console.log("Kein Benutzer angemeldet.");
           // }
@@ -182,47 +191,40 @@ export class UserChatComponent {
   }
 
 
-  getUserChatInfos() {
-    this.getCurrentUserChat();
-    this.getUserChatMessages(this.userChatId);
+  getRecipient() {
+    const recipientData = this.users.find((user: any) => user.id === this.currentUserChatId);
+
+    if (recipientData) {
+      this.recipient = new User(recipientData);
+    } else {
+      console.error(`Recipient with id ${this.currentUserChatId} not found`);
+    }
   }
 
 
-  getCurrentUserChat() {
-    // this.getUserChatIdFromURL();
+  getUserChat() {
+    let userChatsOfCurrentUser: any[] = [];
 
     for (let i = 0; i < this.userChats.length; i++) {
-      if (this.userChats[i].userChatId === this.userChatId) {
-        this.currentUserChat = new UserChat(this.userChats[i]);
-        console.log(this.currentUserChat);
+      if (this.userChats[i].participants.includes(this.currentUser.id)) {
+        userChatsOfCurrentUser.push(this.userChats[i]);
+      }
+    }
+
+    for (let i = 0; i < userChatsOfCurrentUser.length; i++) {
+      if (userChatsOfCurrentUser[i].participants.includes(this.recipient.id)) {
+        this.currentUserChat = new UserChat(userChatsOfCurrentUser[i]);
         break;
       }
     }
   }
 
 
-  getUserChatIdFromURL() {
-    this.route.params.subscribe(params => {
-      this.userChatId = params['id'];
-      console.log(this.userChatId);
-      // if(this.users && this.userChats) {
-
-      //   this.getUserChatInfos();
-      // }
-    });
-  }
-
-
-  getUserChatMessages(userChatId: string) {
-    // this.userChatMessages = [];
-
-    // for (let i = 0; i < this.currentUserChat.messages.length; i++) {
-    //   if (this.currentUserChat.messages[i]. === userChatId) {
-    //     this.userChatMessages.push(new Message(this.currentUserChat.messages[i]));
-    //   }
-    // }
-
-   // this.sortMessagesByTimestamp();
+  private _filterUsers(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.users.filter((user: any) =>
+      user.name.toLowerCase().startsWith(filterValue)
+    )
   }
 
 
@@ -253,7 +255,7 @@ export class UserChatComponent {
 
   ngOnDestroy() {
     this.userSub.unsubscribe();
-    this.emojiSubscription.unsubscribe();
+    this.userChatsSub.unsubscribe();
   }
 
 
@@ -264,11 +266,21 @@ export class UserChatComponent {
 
 
   async sendMessage() {
-    await this.currentUser.sendDirectMessage(
-      this.currentUser,                                   // aktuell Platzhalter; statt currentUser kommt der EMPFÄNGER hier rein !!
+    let userChat = await this.currentUser.sendDirectMessage(
+      this.recipient,                                   
       this.channelThreadMessage.value.channelMessage,
       this.addImgToMessageComponent.imgFile,
     );
+
+    if (userChat.isNew) {
+      await this.dataService.addUserChat(userChat.newUserChat);
+    } else {
+      await this.dataService.updateUserChat(userChat.existingUserChat);
+    }
+
+    await this.dataService.updateUser(this.currentUser);
+    await this.dataService.updateUser(this.recipient); 
   }
 
 }
+

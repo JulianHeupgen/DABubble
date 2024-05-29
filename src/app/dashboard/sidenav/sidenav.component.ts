@@ -57,7 +57,7 @@ export class SidenavComponent {
   selectedUser: User[] = [];
   allChannels: Partial<Channel>[] = [];
   channelTitles: { channelId: string, title: string }[] = [];
-  directMessageTitle: { imageUrl: string, onlineStatus: string, name: string, id: string }[] = [];
+  directMessageTitle: { imageUrl: string, onlineStatus: string, name: string, id: string, chatId: string }[] = [];
 
 
   private userSub = new Subscription();
@@ -191,7 +191,8 @@ export class SidenavComponent {
                   id: matchedUser.id,
                   imageUrl: matchedUser.imageUrl,
                   name: displayName,
-                  onlineStatus: matchedUser.onlineStatus
+                  onlineStatus: matchedUser.onlineStatus,
+                  chatId: chat.chatId
                 });
               }
             }

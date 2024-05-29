@@ -78,7 +78,7 @@ export class User {
   }
 
 
-  async sendDirectMessage(recipient: User, messageContent: string, imgFile?: File) {
+  async sendDirectMessage(recipient: User, messageContent: string, imgFile?: File): Promise<any> {
     let imgFileURL;
     if (imgFile) {                                          
       let storage: StorageService = new StorageService;
@@ -87,17 +87,22 @@ export class User {
     }
 
     const existingUserChat = this.userChats.find(chat =>
-      chat.participants.includes(recipient));                   
+      Array.isArray(chat.participants) && chat.participants.includes(recipient.id) 
+    );                   
 
     if (existingUserChat) {                                       
       const newMessage = new Message(this, messageContent);
       existingUserChat.addMessage(newMessage);
+      return { ...existingUserChat, isNew: false }
     } else {                                                      
-      const newUserChat = new UserChat([this, recipient]);
+      const newUserChat = new UserChat({
+        participants: [this.id, recipient.id],
+      });
       const newMessage = new Message(this, messageContent);
       newUserChat.addMessage(newMessage);
       this.userChats.push(newUserChat);
       recipient.userChats.push(newUserChat);
+      return { ...newUserChat, isNew: true };
     }
   }
 
