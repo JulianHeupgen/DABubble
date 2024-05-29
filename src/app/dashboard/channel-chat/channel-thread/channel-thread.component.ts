@@ -9,6 +9,7 @@ import { DataService } from '../../../services/data.service';
 import { ThreadService } from '../../../services/thread.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { User } from '../../../models/user.class';
+import { deleteObject, getStorage, ref } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-channel-thread',
@@ -32,6 +33,9 @@ export class ChannelThreadComponent {
   isCurrentUser: boolean = false;
   setReactionMenuHover: boolean = false;
   editMessage: boolean = false;
+
+  imgFile: string = '';
+  isImgFileEdited: boolean = false;
 
   constructor(
     public channelChat: ChannelChatComponent,
@@ -72,7 +76,7 @@ export class ChannelThreadComponent {
   async openThread(thread: Thread) {
     try {
       await this.threadService.openFullThread(true);
-      setTimeout(() => {        
+      setTimeout(() => {
         this.threadService.changeThread(thread, this.threadUser, this.channelChat.currentChannel, this.channelChat.currentUser);
       }, 0);
     } catch (error) {
@@ -91,12 +95,29 @@ export class ChannelThreadComponent {
 
   cancelEditMessage() {
     this.editMessage = false;
+    this.isImgFileEdited = false;
   }
 
   async saveEditMessage(messageElement: Thread) {
     messageElement.messages[0].content = this.editMessageBox.nativeElement.value
+    if(this.isImgFileEdited) {
+    const storage = getStorage();
+    const desertRef = ref(storage, this.imgFile);
+    deleteObject(desertRef).then(() => {
+      messageElement.messages[0].imgFileURL = '';
+    }).catch((error) => {
+      // Uh-oh, an error occurred!
+    });
+    
+    }
     await this.dataService.updateThread(messageElement)
     this.editMessage = false;
+  }
+
+  deleteImg(obj: any) {
+    this.imgFile = obj.messages[0].imgFileURL;  
+    this.isImgFileEdited = true;
+    obj.messages[0].imgFileURL = '';
   }
 }
 
