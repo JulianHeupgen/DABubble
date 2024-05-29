@@ -36,7 +36,8 @@
         <div *ngIf="selectedUsersIds.length > 0">
             <input style="display: none;" [matChipInputFor]="chipGrid" [matChipInputAddOnBlur]="true" />
             <mat-chip-grid #chipGrid>
-                <mat-chip-row class="mat-chip-row" *ngFor="let userId of selectedUsersIds" [removable]="true"
+                @for (userId of selectedUsersIds; track $index) {
+                    <mat-chip-row class="mat-chip-row" [removable]="true"
                     (removed)="removeUser(userId)">
                     <div class="chip-subcontainer">
                         <img class="user-chip-img" src="{{ getUserImg(userId) }}" referrerpolicy="no-referrer">
@@ -46,12 +47,13 @@
                     </div>
                     <button matChipRemove (click)="removeUser(userId)"><img src="./assets/img/close.png"></button>
                 </mat-chip-row>
+                }
             </mat-chip-grid>
         </div>
     </div>
 
     <div class="btn-section">
-        <button [disabled]="!(selectedOption === 'all' || (selectedOption === 'specific' && selectedUsers.length > 0))"
+        <button [ngClass]="{'btn-enabled': (selectedOption === 'all' || (selectedOption === 'specific' && selectedUsers.length > 0)), 'btn-disabled': !(selectedOption === 'all' || (selectedOption === 'specific' && selectedUsers.length > 0))}" [disabled]="!(selectedOption === 'all' || (selectedOption === 'specific' && selectedUsers.length > 0))"
             (click)="save()">Erstellen</button>
     </div>
 </div>

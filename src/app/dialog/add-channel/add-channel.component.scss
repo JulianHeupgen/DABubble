@@ -74,17 +74,24 @@ input {
     justify-content: right;
 
     button {
-        cursor: pointer;
         border-radius: 25px;
         border: none;
-        background-color: #444DF2;
         padding: 12px 25px;
         @include font-size-weight-color($fw: 700, $cl: #FFFFFF);
-
-        &:hover {
-            background-color: #797EF3;
-        }
     }
+}
+
+.btn-enabled {
+    background-color: $purple;
+
+    &:hover {
+        background-color: $purpleHover;
+        cursor: pointer;
+    }
+}
+
+.btn-disabled {
+    background-color: $deactivated;
 }
 
 .input-channel-name {

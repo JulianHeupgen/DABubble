@@ -1,18 +1,8 @@
 <form class="search-bar">
-  <input
-    type="text"
-    placeholder="Code learning durchsuchen"
-    [formControl]="control"
-    [matAutocomplete]="auto"
-    class="example-input"
-    [class.mat-autocomplete-panel-open]="isPanelOpen"
-  />
-  <mat-autocomplete
-    #auto="matAutocomplete"
-    (opened)="isPanelOpen = true"
-    (closed)="isPanelOpen = false"
-  >
-  <h2 class="project-font">User</h2>
+  <input type="text" placeholder="Code learning durchsuchen" [formControl]="control" [matAutocomplete]="auto"
+    class="example-input" [class.mat-autocomplete-panel-open]="isPanelOpen" />
+  <mat-autocomplete #auto="matAutocomplete" (opened)="isPanelOpen = true" (closed)="isPanelOpen = false">
+    <h2 class="project-font">User</h2>
     @for (searchObjects of filteredUsers | async; track $index) {
     <mat-option [value]="searchObjects.name" (click)="openProfile(searchObjects)">
       <img class="user-img" src="{{ searchObjects.imageUrl }}" referrerpolicy="no-referrer">
@@ -20,13 +10,11 @@
     }
     <h2 class="project-font">Channels</h2>
     @for (searchObjects of filteredChannels | async; track $index) {
-      <mat-option (onSelectionChange)="onSelection()" [value]="searchObjects.title" [routerLink]="['/dashboard/channel', searchObjects.channelId]">
-        <img class="channel-img" src="./assets/img/tag.png">
-        {{ searchObjects.title }}</mat-option>
-      }
+    <mat-option (onSelectionChange)="onSelection()" [value]="searchObjects.title"
+      [routerLink]="['/dashboard/channel', searchObjects.channelId]">
+      <img class="channel-img" src="./assets/img/tag.png">
+      {{ searchObjects.title }}</mat-option>
+    }
   </mat-autocomplete>
   <img src="./assets/img/search.png" />
 </form>
-
-<!-- <button (click)="testTest()">TEST</button> -->
-<!-- <button (click)="openProfile(searchObjects.authUserId)">PROFILE</button> -->
