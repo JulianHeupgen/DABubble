@@ -278,6 +278,7 @@ export class UserChatComponent {
       await this.dataService.updateUser(this.currentUser);
       await this.dataService.updateUser(this.recipient);
     } else {
+      console.log(userChat.currentUserChat);
       await this.dataService.updateUserChat(userChat.currentUserChat);
     }
   }

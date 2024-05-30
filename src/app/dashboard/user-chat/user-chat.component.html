@@ -8,7 +8,7 @@
   <!-- Chat history -->
     <div #messageContainer class="chat-history" *ngIf="currentUserChat">
       <div *ngFor="let message of currentUserChat.messages">
-        <div>{{message}}</div>
+        <div>{{message.content}}</div>
       </div>
     </div>
   

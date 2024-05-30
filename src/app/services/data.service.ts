@@ -218,7 +218,6 @@ export class DataService {
 
 
   async updateUserChat(userChat: UserChat) {
-    console.log(userChat);
     let docRef = this.getUserChatDocRef(userChat.userChatId);
     await updateDoc(docRef, userChat.toJSON()).catch((err) => {
       console.error(err)

@@ -85,18 +85,6 @@ export class User {
       let imgURL = await storage.uploadFile(imgFile) as string;
       imgFileURL = imgURL;
     }
-
-    // let existingUserChat = this.userChats.find(chat =>
-    //    chat.userChatId == recipient.id); 
-       
-    // console.log(existingUserChat);
-
-    // if (existingUserChat) { 
-    //   if (!(existingUserChat instanceof UserChat)) {
-    //     if(currentUserChat) {
-    //       existingUserChat = currentUserChat;
-    //     }
-    //   }  
     
     if(currentUserChat) {
       const newMessage = new Message(this, messageContent);
@@ -112,21 +100,6 @@ export class User {
       recipient.userChats.push(newUserChat);
       return { newUserChat, isNew: true };
     }
-
-      // const newMessage = new Message(this, messageContent);
-      // existingUserChat.addMessage(newMessage);
-      // console.log(existingUserChat);
-      // return { existingUserChat, isNew: false }
-    // } else {                                                      
-    //   const newUserChat = new UserChat({
-    //     participants: [this.id, recipient.id],
-    //   });
-    //   const newMessage = new Message(this, messageContent);
-    //   newUserChat.addMessage(newMessage);
-    //   this.userChats.push(newUserChat);
-    //   recipient.userChats.push(newUserChat);
-    //   return { newUserChat, isNew: true };
-    // }
   }
 
 
