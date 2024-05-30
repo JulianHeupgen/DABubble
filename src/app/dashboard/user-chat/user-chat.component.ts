@@ -51,7 +51,7 @@ import { Message } from '../../models/message.class';
 export class UserChatComponent {
 
   @ViewChild("messageContainer") messageContainer!: ElementRef;
-  @ViewChild("threadMessageBox") threadMessageBox!: ElementRef;
+  @ViewChild("messageBox") messageBox!: ElementRef;
   @ViewChild("imgBox") imgBox!: ElementRef<any>;
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
   @ViewChild(AddImgToMessageComponent) addImgToMessageComponent!: AddImgToMessageComponent;
@@ -233,20 +233,20 @@ export class UserChatComponent {
   }
 
 
-  channelThreadMessage: FormGroup = this.formBuilder.group({
-    channelMessage: "",
+  userChatMessage: FormGroup = this.formBuilder.group({
+    message: "",
   });
 
 
   addEmoji(emoji: string) {
-    let textAreaElement = this.threadMessageBox.nativeElement;
+    let textAreaElement = this.messageBox.nativeElement;
     textAreaElement.value += emoji;
   }
 
 
   addUserToMessage(user: any) {
-    if (this.threadMessageBox && user) {
-      this.threadMessageBox.nativeElement.value += "@" + user.name + " ";
+    if (this.messageBox && user) {
+      this.messageBox.nativeElement.value += "@" + user.name + " ";
       this.pingUserControl.setValue("");
       this.menuTrigger.closeMenu();
     }
@@ -260,7 +260,7 @@ export class UserChatComponent {
 
 
   removeChatInput() {
-    this.channelThreadMessage.reset();
+    this.userChatMessage.reset();
     this.addImgToMessageComponent.removeImage();
   }
 
@@ -268,9 +268,11 @@ export class UserChatComponent {
   async sendMessage() {
     let userChat = await this.currentUser.sendDirectMessage(
       this.recipient,                                   
-      this.channelThreadMessage.value.channelMessage,
+      this.userChatMessage.value.message,
       this.addImgToMessageComponent.imgFile,
     );
+
+    console.log(userChat);
 
     if (userChat.isNew) {
       await this.dataService.addUserChat(userChat.newUserChat);

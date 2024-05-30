@@ -86,11 +86,16 @@ export class User {
       imgFileURL = imgURL;
     }
 
-    const existingUserChat = this.userChats.find(chat =>
-      Array.isArray(chat.participants) && chat.participants.includes(recipient.id) 
-    );                   
+    let existingUserChat = this.userChats.find(chat =>
+       chat.userChatId == recipient.id); 
+       
+    console.log(existingUserChat);
 
-    if (existingUserChat) {                                       
+    if (existingUserChat) { 
+      if (!(existingUserChat instanceof UserChat)) {
+        existingUserChat = new UserChat(existingUserChat);
+      }     
+
       const newMessage = new Message(this, messageContent);
       existingUserChat.addMessage(newMessage);
       return { ...existingUserChat, isNew: false }
