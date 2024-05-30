@@ -21,7 +21,8 @@ import { ChannelThreadComponent } from '../channel-chat/channel-thread/channel-t
 import { EditChannelComponent } from '../channel-chat/edit-channel/edit-channel.component';
 import { ChannelParticipantsComponent } from '../channel-chat/channel-participants/channel-participants.component';
 import { UserChat } from '../../models/user-chat';
-import { Message } from '../../models/message.class';
+import { UserChatMessageComponent } from './user-chat-message/user-chat-message.component';
+
 
 @Component({
   selector: 'app-user-chat',
@@ -44,7 +45,8 @@ import { Message } from '../../models/message.class';
     EmojiMartComponent,
     AddImgToMessageComponent,
     EditChannelComponent,
-    ChannelParticipantsComponent],
+    ChannelParticipantsComponent,
+    UserChatMessageComponent],
   templateUrl: './user-chat.component.html',
   styleUrl: './user-chat.component.scss'
 })
@@ -274,11 +276,10 @@ export class UserChatComponent {
     );
 
     if (userChat.isNew) {
-      await this.dataService.addUserChat(userChat.newUserChat);
+      await this.dataService.addUserChat(userChat.currentUserChat);
       await this.dataService.updateUser(this.currentUser);
       await this.dataService.updateUser(this.recipient);
     } else {
-      console.log(userChat.currentUserChat);
       await this.dataService.updateUserChat(userChat.currentUserChat);
     }
   }

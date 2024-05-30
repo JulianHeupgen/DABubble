@@ -78,27 +78,27 @@ export class User {
   }
 
 
-  async sendDirectMessage(recipient: User, messageContent: string, currentUserChat?: UserChat, imgFile?: File): Promise<any> {
+  async sendDirectMessage(recipient: User, messageContent: string, currentUserChat: UserChat, imgFile?: File): Promise<any> {
     let imgFileURL;
     if (imgFile) {                                          
       let storage: StorageService = new StorageService;
       let imgURL = await storage.uploadFile(imgFile) as string;
       imgFileURL = imgURL;
     }
-    
-    if(currentUserChat) {
+
+    if(currentUserChat != undefined) {
       const newMessage = new Message(this, messageContent);
       currentUserChat.addMessage(newMessage);
       return { currentUserChat, isNew: false }
     } else {
-        const newUserChat = new UserChat({
+        currentUserChat = new UserChat({
           participants: [this.id, recipient.id],
         });
         const newMessage = new Message(this, messageContent);
-        newUserChat.addMessage(newMessage);
-        this.userChats.push(newUserChat);
-        recipient.userChats.push(newUserChat);
-        return { newUserChat, isNew: true };
+        currentUserChat.addMessage(newMessage);
+        this.userChats.push(currentUserChat);
+        recipient.userChats.push(currentUserChat);
+        return { currentUserChat, isNew: true };
       }
     }
 
