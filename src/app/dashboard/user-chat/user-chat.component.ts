@@ -273,17 +273,13 @@ export class UserChatComponent {
       this.addImgToMessageComponent.imgFile,
     );
 
-    console.log(userChat.isNew);
-
     if (userChat.isNew) {
       await this.dataService.addUserChat(userChat.newUserChat);
       await this.dataService.updateUser(this.currentUser);
       await this.dataService.updateUser(this.recipient);
     } else {
-      console.log(userChat.existingUserChat);
-      await this.dataService.updateUserChat(userChat.existingUserChat);
+      await this.dataService.updateUserChat(userChat.currentUserChat);
     }
-
   }
 
 }

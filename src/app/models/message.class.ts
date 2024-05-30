@@ -17,7 +17,7 @@ export class Message {
     this.imgFileURL = imgFileUrl !== undefined ? imgFileUrl : '';
   }
 
-  toJSON():any {
+  toJSON(): {} {
     return {
       senderId: this.senderId,
       content: this.content,
