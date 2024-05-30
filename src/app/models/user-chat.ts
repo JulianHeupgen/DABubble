@@ -24,7 +24,7 @@ export class UserChat {
   }
 
 
-  toJSON() {
+  toJSON(): {} {
     return {
       userChatId: this.userChatId,
       chatId: this.chatId,
