@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Thread } from '../../../models/thread.class';
 import { EmojiMartComponent } from '../../emoji-mart/emoji-mart.component';
 import { CommonModule } from '@angular/common';
@@ -8,6 +8,9 @@ import { User } from '../../../models/user.class';
 import { Firestore, Unsubscribe, doc, onSnapshot } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
 import { ThreadService } from '../../../services/thread.service';
+import { MatMenuModule } from '@angular/material/menu';
+import { deleteObject, getStorage, ref } from '@angular/fire/storage';
+import { Message } from '../../../models/message.class';
 
 @Component({
   selector: 'app-full-thread-message',
@@ -16,6 +19,7 @@ import { ThreadService } from '../../../services/thread.service';
     CommonModule,
     EmojiMartComponent,
     MessageReactionComponent,
+    MatMenuModule,
   ],
   templateUrl: './full-thread-message.component.html',
   styleUrls: [
@@ -28,7 +32,15 @@ export class FullThreadMessageComponent {
 
   @Input() thread!: Thread;
   @Input() currentUser!: User;
+  @ViewChild("editMessageReply") editMessageReply!: ElementRef;
+
   threadMessages: any[] = [];
+  imgFile: string = '';
+
+  
+  setReactionMenuHover: boolean = false;
+  editMessage: boolean = false;
+  isImgFileEdited: boolean = false;
 
   private threadUnsubscribe!: Unsubscribe;
 
@@ -62,13 +74,12 @@ export class FullThreadMessageComponent {
           messages: data['messages'],
           timestamp: data['timestamp'],
         };        
-        this.thread = new Thread(threadData)        
+        this.thread = new Thread(threadData);
+        this.threadService.getThreadChanges(this.thread)        
         this.loadThreadMessages();
         this.threadService.getReactionsForMessage(this.thread);
-        console.log('Listen to Firebase for Message of FullThread');
-        
+        console.log('Listen to Firebase for Message of FullThread');        
       }
-
     });
   }
 
@@ -85,6 +96,11 @@ export class FullThreadMessageComponent {
       }
       this.threadMessages.push(message);
     });
+  }
+
+  isCurrentUser(obj: any) {
+  console.log('isCurrentUSer', obj);
+  
   }
 
   getFormattedDatestamp(timestamp: number): any {
@@ -112,6 +128,52 @@ export class FullThreadMessageComponent {
 
   }
 
+  editThreadMessageReply(obj: any) {
+    console.log(obj);
+    this.setReactionMenuHover = false;
+    this.editMessage = true;
+  }
+
+  deleteThreadMessageReply(threadObj: any, message: Message) {
+    const index = threadObj.messages.findIndex((msg: Message) => msg.timestamp === message.timestamp);
+    if (index !== -1) {
+      threadObj.messages.splice(index, 1);
+    }
+    console.log('newThread:', threadObj);
+    this.threadService.copyThreadForFirebase(threadObj)
+  }
+
+  setHoverMenu() {
+    this.setReactionMenuHover = true;
+  }
+
+  cancelEditMessage() {
+    this.editMessage = false;
+    this.isImgFileEdited = false;
+  }
+
+  async saveEditMessage(threadObj: Thread, message: Message) {
+    message.content = this.editMessageReply.nativeElement.value
+    console.log('NewThread:', threadObj);
+    
+    if(this.isImgFileEdited) {
+    const storage = getStorage();
+    const desertRef = ref(storage, this.imgFile);
+    deleteObject(desertRef).then(() => {
+      message.imgFileURL = '';
+    }).catch((error) => {
+      // Uh-oh, an error occurred!
+    });    
+    }
+    this.threadService.copyThreadForFirebase(threadObj)
+    this.editMessage = false;
+  }
+
+  deleteImg(obj: any) {
+    this.imgFile = obj.imgFileURL;  
+    this.isImgFileEdited = true;
+    obj.imgFileURL = '';
+  }
 
   ngOnDestroy() {
     this.threadUnsubscribe();

@@ -11,10 +11,12 @@ import { DataService } from './data.service';
 export class ThreadService {
 
   private threadSource = new Subject<any>();
+  private threadChangesSource = new Subject<any>();
   private threadMessageSource = new Subject<any>();
   private openCurrentFullThreadSource = new Subject<any>();
 
   currentThread$ = this.threadSource.asObservable();
+  updateThread$ = this.threadChangesSource.asObservable();
   currentMessages$ = this.threadMessageSource.asObservable();
   openCurrentThread$ = this.openCurrentFullThreadSource.asObservable();
   // isCurrentUser: boolean = false;
@@ -41,6 +43,11 @@ export class ThreadService {
   getReactionsForMessage(thread: Thread) {
     let update = 'updateReaction'
     this.threadMessageSource.next({ thread, update });
+  }
+
+  getThreadChanges(thread: Thread) {
+    let update = 'updateThread'
+    this.threadChangesSource.next({ thread, update });
   }
 
   copyThreadForFirebase(originThread: Thread) {

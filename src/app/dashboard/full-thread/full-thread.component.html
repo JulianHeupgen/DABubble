@@ -10,19 +10,18 @@
     </div>
     <div class="channel-history" *ngIf="thread && thread.messages && thread.messages[0] && threadOwner">
         <div class="channel-chat-message" [class.other-users-channel-chat-message]="!isCurrentUser">
-            <div class="reaction-menu">
+            <div class="reaction-menu" *ngIf="!currentUser">
 
 
-                <app-emoji-mart [emojiImg]="'emoji-reaction.png'" [emojiImgHover]="'emoji-reaction-hover.png'"
-                    [assigningComponent]="'MessageReactionComponent'">
-                </app-emoji-mart>
 
                 <div class="icon">
                     <img class="not-hover-icon" src="../../../../assets/img/dots.png" alt="">
                     <img class="hover-icon" src="../../../../assets/img/dots-hover.png" alt="">
                 </div>
-
             </div>
+
+
+            
             <div class="channel-chat-content">
                 <div class="channel-chat-time-sender">
                     <span>{{thread.getFormattedTimeStamp()}}</span>

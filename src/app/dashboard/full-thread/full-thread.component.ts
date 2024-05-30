@@ -72,6 +72,13 @@ export class FullThreadComponent {
           this.addEmoji(event.emoji);
         }
       })
+      this.threadService.currentMessages$.subscribe(event => {
+        if (event.update === 'updateReaction') {
+          if (event.thread) {
+            this.thread = event.thread;
+          }
+        }
+      });
   }
 
   fullThreadMessage: FormGroup = this.formBuilder.group({
