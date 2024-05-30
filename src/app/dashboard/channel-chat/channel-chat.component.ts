@@ -148,10 +148,6 @@ export class ChannelChatComponent {
     this.channelParticipantsCounter = 0;
   }
 
-  async loadUsers() {
-    this.users = await firstValueFrom(this.dataService.getUsersList());
-    this.channels = await firstValueFrom(this.dataService.getChannelsList());
-  }
 
   dataSubscriptions() {
     if (this.userSub) {
@@ -179,6 +175,12 @@ export class ChannelChatComponent {
   }
 
 
+  async loadUsers() {
+    this.users = await firstValueFrom(this.dataService.getUsersList());
+    this.channels = await firstValueFrom(this.dataService.getChannelsList());
+  }
+
+
   async checkUserAuthId() {
     try {
 
@@ -202,7 +204,6 @@ export class ChannelChatComponent {
 
 
 
-
   async findCurrentUser() {
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].authUserId === this.userAuthId) {
@@ -211,6 +212,7 @@ export class ChannelChatComponent {
       }
     }
   }
+
 
   getChannelInfos() {
     this.resetParticipantsData();
@@ -232,6 +234,7 @@ export class ChannelChatComponent {
       }
     }
   }
+
 
   getChannelIdFromURL() {
     this.route.params.subscribe(params => {
@@ -274,6 +277,7 @@ export class ChannelChatComponent {
   //   this.channelThreads.sort((a, b) => a.timestamp - b.timestamp);
   // }
 
+
   getChannelThreads(channelId: string) {
     this.channelThreads = []
     this.threads.forEach( (thread: Thread) => {
@@ -283,9 +287,11 @@ export class ChannelChatComponent {
     this.sortThreadByFirstMessageTimestamp();
   }
 
+
   sortThreadByFirstMessageTimestamp() {
     this.channelThreads.sort((a, b) => a.timestamp - b.timestamp);
   }
+
 
   groupThreadsByDate(threads: Thread[]): { [key: string]: Thread[] } {
     return threads.reduce((groups, thread) => {
@@ -297,12 +303,6 @@ export class ChannelChatComponent {
       return groups;
     }, {} as { [key: string]: Thread[] });
   }
-
-
-
-
-
-
 
 
   channelThreadMessage: FormGroup = this.formBuilder.group({

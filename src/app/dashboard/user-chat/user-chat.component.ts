@@ -274,12 +274,12 @@ export class UserChatComponent {
 
     if (userChat.isNew) {
       await this.dataService.addUserChat(userChat.newUserChat);
+      await this.dataService.updateUser(this.currentUser);
+      await this.dataService.updateUser(this.recipient);
     } else {
       await this.dataService.updateUserChat(userChat.existingUserChat);
     }
 
-    await this.dataService.updateUser(this.currentUser);
-    await this.dataService.updateUser(this.recipient); 
   }
 
 }
