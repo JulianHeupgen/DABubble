@@ -92,15 +92,15 @@ export class User {
       return { currentUserChat, isNew: false }
     } else {
         const newUserChat = new UserChat({
-        participants: [this.id, recipient.id],
-      });
-      const newMessage = new Message(this, messageContent);
-      newUserChat.addMessage(newMessage);
-      this.userChats.push(newUserChat);
-      recipient.userChats.push(newUserChat);
-      return { newUserChat, isNew: true };
+          participants: [this.id, recipient.id],
+        });
+        const newMessage = new Message(this, messageContent);
+        newUserChat.addMessage(newMessage);
+        this.userChats.push(newUserChat);
+        recipient.userChats.push(newUserChat);
+        return { newUserChat, isNew: true };
+      }
     }
-  }
 
 
   addReply(message: Message, sender: User, replyContent: string): void {       

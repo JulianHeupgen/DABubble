@@ -13,13 +13,14 @@
     </div>
     <div class="status-container">
         <div class="status-inner-container">
-            <img class="status-color" [class.online]="data.onlineStatus === 'online'" [class.offline]="data.onlineStatus === 'offline'">
+            <img class="status-color" [class.online]="data.onlineStatus === 'online'" 
+            [class.offline]="data.onlineStatus === 'offline'">
             <div class="status">{{ data.onlineStatus }}</div>
         </div>
     </div>
     <div class="email-container">
         <div class="email-inner-container">
-            <img src="./../../../assets/img/mail.png">
+            <img src="assets/img/mail.png">
             <div class="email">E-Mail-Adresse</div>
         </div>
     </div>
@@ -27,7 +28,9 @@
         <a href="mailto: {{ data.email }}">{{ data.email }}</a>
     </div>
     <div class="button-container">
-        <button [routerLink]="['/dashboard/chat', data.id ]" (click)="closeProfile()" ><img src="assets/img/mail.png">Nachricht</button>
+        <button [routerLink]="['/dashboard/chat', data.id ]" (click)="closeProfile()">
+            <img src="assets/img/mail.png">Nachricht
+        </button>
     </div>
 </div>
 

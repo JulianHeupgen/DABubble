@@ -64,8 +64,7 @@ export class ChannelParticipantsComponent {
   showProfile(participant: any) {
      this.dialog.open(ViewProfileComponent, {
        data: participant
-     }
-    );
+    });
   }
 
 
