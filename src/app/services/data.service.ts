@@ -236,6 +236,12 @@ export class DataService {
     });
   }
 
+  async deleteThread(threadId: string) {
+    await deleteDoc(this.getThreadDocRef(threadId)).catch((err) => {
+      console.error(err)
+    })
+  }
+
 
   openThread(threadElement: Thread) {
     console.log('threadElement', threadElement);

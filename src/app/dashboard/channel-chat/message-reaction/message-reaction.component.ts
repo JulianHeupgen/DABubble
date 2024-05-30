@@ -105,23 +105,23 @@ export class MessageReactionComponent {
     if (!reactionExists) {
       this.getNewReactionToMessage(threadMessage, userReaction);
     }
-    this.updateThreadInFirebase();
+    this.threadService.copyThreadForFirebase(this.thread);
   }
 
-  updateThreadInFirebase() {
-    const threadCopy = new Thread({ ...this.thread });
-    threadCopy.messages = [...this.thread.messages];
-    this.convertThreadMessagesToString(threadCopy);
-    this.dataService.updateThread(threadCopy).then(() => {
-      console.log('Thread successfully updated in Firebase');
-    }).catch(err => {
-      console.error('Update failed', err);
-    });
-  }
+  // updateThreadInFirebase() {
+  //   const threadCopy = new Thread({ ...this.thread });
+  //   threadCopy.messages = [...this.thread.messages];
+  //   this.threadService.convertThreadMessagesToString(threadCopy);
+  //   this.dataService.updateThread(threadCopy).then(() => {
+  //     console.log('Thread successfully updated in Firebase');
+  //   }).catch(err => {
+  //     console.error('Update failed', err);
+  //   });
+  // }
 
-  convertThreadMessagesToString(thread: any) {
-    thread.messages = thread.messages.map((message: any) => JSON.stringify(message));
-  }
+  // convertThreadMessagesToString(thread: any) {
+  //   thread.messages = thread.messages.map((message: any) => JSON.stringify(message));
+  // }
 
   isUserInReaction(chatReaction: any) {
     return chatReaction.users.findIndex((u: any) => u.id === this.currentUser.id);

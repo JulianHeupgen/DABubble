@@ -28,6 +28,7 @@
       </button>
       <mat-menu class="edit-message-btn" #editMessage="matMenu">
         <button mat-menu-item (click)="editThreadMessage()">Nachricht bearbeiten</button>
+        <button class="delete-btn" mat-menu-item (click)="dataService.deleteThread(this.thread.threadId)">Nachricht löschen</button>
       </mat-menu>
     </div>
 

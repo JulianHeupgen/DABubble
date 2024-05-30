@@ -107,10 +107,9 @@ export class ChannelThreadComponent {
       messageElement.messages[0].imgFileURL = '';
     }).catch((error) => {
       // Uh-oh, an error occurred!
-    });
-    
+    });    
     }
-    await this.dataService.updateThread(messageElement)
+    this.threadService.copyThreadForFirebase(messageElement)
     this.editMessage = false;
   }
 

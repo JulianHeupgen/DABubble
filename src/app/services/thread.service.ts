@@ -3,6 +3,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { Thread } from '../models/thread.class';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,9 @@ export class ThreadService {
   // isCurrentUser: boolean = false;
   // openThread: boolean = false;
 
-  constructor() { }
+  constructor(
+    private dataService: DataService,
+  ) { }
 
   changeThread(thread: Thread, threadOwner: User, currentChannel: Channel, currentUser: User): Promise<void> {
     return new Promise((resolve) => {
@@ -38,5 +41,20 @@ export class ThreadService {
   getReactionsForMessage(thread: Thread) {
     let update = 'updateReaction'
     this.threadMessageSource.next({ thread, update });
+  }
+
+  copyThreadForFirebase(originThread: Thread) {
+    const threadCopy = new Thread({ ...originThread });
+    threadCopy.messages = [...originThread.messages];
+    this.convertThreadMessagesToString(threadCopy);
+    this.dataService.updateThread(threadCopy).then(() => {
+      console.log('Thread successfully updated in Firebase');
+    }).catch(err => {
+      console.error('Update failed', err);
+    });
+  }
+
+  convertThreadMessagesToString(thread: any) {
+    thread.messages = thread.messages.map((message: any) => JSON.stringify(message));
   }
 }
