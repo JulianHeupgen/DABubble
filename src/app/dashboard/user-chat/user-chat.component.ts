@@ -269,16 +269,18 @@ export class UserChatComponent {
     let userChat = await this.currentUser.sendDirectMessage(
       this.recipient,                                   
       this.userChatMessage.value.message,
+      this.currentUserChat,
       this.addImgToMessageComponent.imgFile,
     );
 
-    console.log(userChat);
+    console.log(userChat.isNew);
 
     if (userChat.isNew) {
       await this.dataService.addUserChat(userChat.newUserChat);
       await this.dataService.updateUser(this.currentUser);
       await this.dataService.updateUser(this.recipient);
     } else {
+      console.log(userChat.existingUserChat);
       await this.dataService.updateUserChat(userChat.existingUserChat);
     }
 

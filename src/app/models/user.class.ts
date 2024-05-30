@@ -78,7 +78,7 @@ export class User {
   }
 
 
-  async sendDirectMessage(recipient: User, messageContent: string, imgFile?: File): Promise<any> {
+  async sendDirectMessage(recipient: User, messageContent: string, currentUserChat?: UserChat, imgFile?: File): Promise<any> {
     let imgFileURL;
     if (imgFile) {                                          
       let storage: StorageService = new StorageService;
@@ -93,12 +93,15 @@ export class User {
 
     if (existingUserChat) { 
       if (!(existingUserChat instanceof UserChat)) {
-        existingUserChat = new UserChat(existingUserChat);
+        if(currentUserChat) {
+          existingUserChat = currentUserChat;
+        }
       }     
 
       const newMessage = new Message(this, messageContent);
       existingUserChat.addMessage(newMessage);
-      return { ...existingUserChat, isNew: false }
+      console.log(existingUserChat);
+      return { existingUserChat, isNew: false }
     } else {                                                      
       const newUserChat = new UserChat({
         participants: [this.id, recipient.id],
@@ -107,7 +110,7 @@ export class User {
       newUserChat.addMessage(newMessage);
       this.userChats.push(newUserChat);
       recipient.userChats.push(newUserChat);
-      return { ...newUserChat, isNew: true };
+      return { newUserChat, isNew: true };
     }
   }
 
