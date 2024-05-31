@@ -69,7 +69,7 @@ export class FullThreadMessageComponent {
       let data = doc.data();
       if (data) {
         let threadData = {
-          threadId: data['threadId'],
+          threadId: this.thread.threadId,
           channelId: data['channelId'],
           messages: data['messages'],
           timestamp: data['timestamp'],
@@ -141,10 +141,6 @@ export class FullThreadMessageComponent {
     }
     console.log('newThread:', threadObj);
     this.threadService.copyThreadForFirebase(threadObj)
-  }
-
-  setHoverMenu() {
-    this.setReactionMenuHover = true;
   }
 
   cancelEditMessage() {

@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { AddImgToMessageComponent } from '../add-img-to-message/add-img-to-message.component';
 import { EmojiCommunicationService } from '../../services/emoji-communication.service';
 import { Channel } from '../../models/channel.class';
+import { deleteObject, getStorage, ref } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-full-thread',
@@ -52,18 +53,24 @@ export class FullThreadComponent {
   emojiSubscription: Subscription;
   imgFile: File | undefined = undefined;
 
+  imgFileLink: string = '';
+  setReactionMenuHover: boolean = false;
+  editMessage: boolean = false;
+  isImgFileEdited: boolean = false;
+
   pingUserControlFullThread = new FormControl("");
   filteredUsers!: Observable<any[]>;
 
   @ViewChild("imgBoxFullThread") imgBoxFullThread!: ElementRef<any>;
   @ViewChild("fullThreadMessageBox") fullThreadMessageBox!: ElementRef;
+  @ViewChild("editFullThreadMessageBox") editFullThreadMessageBox!: ElementRef;
   @ViewChild(AddImgToMessageComponent) addImgToMessageComponent!: AddImgToMessageComponent;
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
   
   constructor(
     public threadService: ThreadService,
     private formBuilder: FormBuilder,
-    private dataService: DataService,
+    public dataService: DataService,
     private emojiService: EmojiCommunicationService,
   ) {
     this.emojiSubscription = this.emojiService.emojiEvent$.subscribe(
@@ -187,5 +194,36 @@ export class FullThreadComponent {
   removeChatInput() {
     this.fullThreadMessage.reset();
     this.addImgToMessageComponent.removeImage();
+  }
+
+  editThreadMessage() {
+    this.setReactionMenuHover = false;
+    this.editMessage = true;
+  }
+
+  cancelEditMessage() {
+    this.editMessage = false;
+    this.isImgFileEdited = false;
+  }
+
+  deleteImg(obj: any) {
+    this.imgFileLink = obj.messages[0].imgFileURL;  
+    this.isImgFileEdited = true;
+    obj.messages[0].imgFileURL = '';
+  }
+
+  async saveEditMessage(messageElement: Thread) {
+    messageElement.messages[0].content = this.editFullThreadMessageBox.nativeElement.value
+    if(this.isImgFileEdited) {
+    const storage = getStorage();
+    const desertRef = ref(storage, this.imgFileLink);
+    deleteObject(desertRef).then(() => {
+      messageElement.messages[0].imgFileURL = '';
+    }).catch((error) => {
+      // Uh-oh, an error occurred!
+    });    
+    }
+    this.threadService.copyThreadForFirebase(messageElement)
+    this.editMessage = false;
   }
 }

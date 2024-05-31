@@ -84,10 +84,6 @@ export class ChannelThreadComponent {
     }
   }
 
-  setHoverMenu() {
-    this.setReactionMenuHover = true;
-  }
-
   editThreadMessage() {
     this.setReactionMenuHover = false;
     this.editMessage = true;

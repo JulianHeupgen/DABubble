@@ -23,7 +23,7 @@
 
     <div class="icon" *ngIf="isCurrentUser">
       <img class="not-hover-icon" src="../../../../assets/img/dots.png" alt="">
-      <button class="hover-icon" mat-button [matMenuTriggerFor]="editMessage" (click)="setHoverMenu()">
+      <button class="hover-icon" mat-button [matMenuTriggerFor]="editMessage" (click)="setReactionMenuHover = true">
         <img src="../../../../assets/img/dots-hover.png" alt="">
       </button>
       <mat-menu class="edit-message-btn" #editMessage="matMenu">

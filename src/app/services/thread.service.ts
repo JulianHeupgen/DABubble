@@ -19,6 +19,7 @@ export class ThreadService {
   updateThread$ = this.threadChangesSource.asObservable();
   currentMessages$ = this.threadMessageSource.asObservable();
   openCurrentThread$ = this.openCurrentFullThreadSource.asObservable();
+  
   // isCurrentUser: boolean = false;
   // openThread: boolean = false;
 
@@ -26,6 +27,9 @@ export class ThreadService {
     private dataService: DataService,
   ) { }
 
+
+  //subrcribes//
+  
   changeThread(thread: Thread, threadOwner: User, currentChannel: Channel, currentUser: User): Promise<void> {
     return new Promise((resolve) => {
       this.threadSource.next({ thread, threadOwner, currentChannel, currentUser });
@@ -49,6 +53,11 @@ export class ThreadService {
     let update = 'updateThread'
     this.threadChangesSource.next({ thread, update });
   }
+
+
+  //Functions//
+
+
 
   copyThreadForFirebase(originThread: Thread) {
     const threadCopy = new Thread({ ...originThread });
