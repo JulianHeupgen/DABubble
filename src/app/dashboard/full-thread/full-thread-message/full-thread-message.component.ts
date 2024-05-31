@@ -38,8 +38,8 @@ export class FullThreadMessageComponent {
   imgFile: string = '';
 
   
-  setReactionMenuHover: boolean = false;
-  editMessage: boolean = false;
+  // setReactionMenuHover: boolean = false;
+  // editMessage: boolean = false;
   isImgFileEdited: boolean = false;
 
   private threadUnsubscribe!: Unsubscribe;
@@ -78,7 +78,7 @@ export class FullThreadMessageComponent {
         this.threadService.getThreadChanges(this.thread)        
         this.loadThreadMessages();
         this.threadService.getReactionsForMessage(this.thread);
-        console.log('Listen to Firebase for Message of FullThread');        
+        console.log('Listen to Firebase for Message of FullThread', this.thread);        
       }
     });
   }
@@ -98,10 +98,10 @@ export class FullThreadMessageComponent {
     });
   }
 
-  isCurrentUser(obj: any) {
-  console.log('isCurrentUSer', obj);
+  // isCurrentUser(obj: any) {
+  // console.log('isCurrentUSer', obj);
   
-  }
+  // }
 
   getFormattedDatestamp(timestamp: number): any {
     const date = new Date(timestamp);
@@ -123,19 +123,19 @@ export class FullThreadMessageComponent {
     return formattedTime;
   }
 
-  getMessageContent(element: any) {
-    // console.log('Message Element:', element);
+  // getMessageContent(element: any) {
+  //   // console.log('Message Element:', element);
 
+  // }
+
+  editThreadMessageReply(messageObj: Message) {    
+    messageObj.hoverReactionbar = true;
+    messageObj.editMode = true;
   }
 
-  editThreadMessageReply(obj: any) {
-    console.log(obj);
-    this.setReactionMenuHover = false;
-    this.editMessage = true;
-  }
-
-  deleteThreadMessageReply(threadObj: any, message: Message) {
-    const index = threadObj.messages.findIndex((msg: Message) => msg.timestamp === message.timestamp);
+  deleteThreadMessageReply(threadObj: any, messageObj: Message) {
+    messageObj.hoverReactionbar = true;
+    const index = threadObj.messages.findIndex((msg: Message) => msg.timestamp === messageObj.timestamp);
     if (index !== -1) {
       threadObj.messages.splice(index, 1);
     }
@@ -143,32 +143,36 @@ export class FullThreadMessageComponent {
     this.threadService.copyThreadForFirebase(threadObj)
   }
 
-  cancelEditMessage() {
-    this.editMessage = false;
+  cancelEditMessage(messageObj: Message) {
+    messageObj.editMode = false;
     this.isImgFileEdited = false;
   }
 
-  async saveEditMessage(threadObj: Thread, message: Message) {
-    message.content = this.editMessageReply.nativeElement.value
+  async saveEditMessage(threadObj: Thread, messageObj: Message) {
+    messageObj.content = this.editMessageReply.nativeElement.value
     console.log('NewThread:', threadObj);
     
     if(this.isImgFileEdited) {
     const storage = getStorage();
     const desertRef = ref(storage, this.imgFile);
     deleteObject(desertRef).then(() => {
-      message.imgFileURL = '';
+      messageObj.imgFileURL = '';
     }).catch((error) => {
       // Uh-oh, an error occurred!
     });    
     }
     this.threadService.copyThreadForFirebase(threadObj)
-    this.editMessage = false;
+    messageObj.editMode = false;
   }
 
   deleteImg(obj: any) {
     this.imgFile = obj.imgFileURL;  
     this.isImgFileEdited = true;
     obj.imgFileURL = '';
+  }
+
+  setHoverReactionbar(messageObj: Message) {
+    messageObj.hoverReactionbar = true;
   }
 
   ngOnDestroy() {

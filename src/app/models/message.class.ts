@@ -7,6 +7,8 @@ export class Message {
   replies: Message[];
   emojiReactions: string[];
   imgFileURL: string;
+  editMode: boolean;
+  hoverReactionbar: boolean;
 
   constructor(sender: User, content: string, imgFileUrl?: string) {
     this.senderId = sender.id;
@@ -15,6 +17,8 @@ export class Message {
     this.replies = [];
     this.emojiReactions = [];
     this.imgFileURL = imgFileUrl !== undefined ? imgFileUrl : '';
+    this.editMode = false;
+    this.hoverReactionbar = false
   }
 
   toJSON(): {} {
@@ -24,7 +28,9 @@ export class Message {
       timestamp: this.timestamp,
       replies: this.replies.map(reply => reply.toJSON()),  
       emojiReactions: this.emojiReactions,
-      imgFileURL: this.imgFileURL
+      imgFileURL: this.imgFileURL,
+      editMode: this.editMode,
+      hoverReactionbar: this.hoverReactionbar,
     };
   }
 

@@ -283,8 +283,8 @@ export class ChannelChatComponent {
     this.threads.forEach( (thread: Thread) => {
       this.channelThreads.push(new Thread(thread));
     })
-    this.groupedChannelThreads  = this.groupThreadsByDate(this.channelThreads);
     this.sortThreadByFirstMessageTimestamp();
+    this.groupedChannelThreads  = this.groupThreadsByDate(this.channelThreads);
   }
 
 

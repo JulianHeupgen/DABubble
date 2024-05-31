@@ -1,3 +1,5 @@
+import { Message } from "./message.class";
+
 export class Thread {
   threadId: string;
   channelId: string;
@@ -19,8 +21,8 @@ export class Thread {
       this.messageStringtoJSON();
     }
   }
-  
-  
+
+
   getFormattedDatestamp() {
     const date = new Date(this.timestamp);
     const month = date.getMonth();
@@ -32,12 +34,12 @@ export class Thread {
     const todayYear = today.getFullYear();
     const todayMonth = today.getMonth();
     const todayDay = today.getDate();
-  
+
     if (todayYear === year && todayMonth === month && todayDay === day) {
-        return "Heute";
-      } else {
-        return this.dateIsNotToday(weekday, month, day);
-      }
+      return "Heute";
+    } else {
+      return this.dateIsNotToday(weekday, month, day);
+    }
   }
 
 
@@ -47,12 +49,12 @@ export class Thread {
 
     const weekdayName = weekdays[weekday];
     const monthName = months[month];
-  
+
     const formattedDate = `${weekdayName}, ${day}. ${monthName}`;
     return formattedDate;
   }
 
-  
+
   getFormattedTimeStamp() {
     const date = new Date(this.timestamp);
     const hours = date.getHours().toString().padStart(2, '0');
@@ -69,21 +71,30 @@ export class Thread {
     this.messages.forEach(message => {
       if (typeof message === 'string') {
         let jsonMessage = JSON.parse(message)
-        newMessages.push(jsonMessage);        
+        let messageObject = this.convertMessageToOpbject(jsonMessage)
+        newMessages.push(messageObject);
       } else {
         newMessages.push(message);
       }
     })
     this.messages = newMessages;
-    this.sortMessagesByTimestamp();    
+    this.sortMessagesByTimestamp();
   }
 
+  convertMessageToOpbject(jsonMessage: any) {
+    let messageObject = new Message(jsonMessage.senderId, jsonMessage.content, jsonMessage.imgFileURL);
+    messageObject.senderId = jsonMessage.senderId;
+    messageObject.timestamp = jsonMessage.timestamp;
+    messageObject.replies = jsonMessage.replies;
+    messageObject.emojiReactions = jsonMessage.emojiReactions;
+    return messageObject;
+  }
 
   sortMessagesByTimestamp() {
     return this.messages.sort((a, b) => a.timestamp - b.timestamp);
   }
 
-  
+
   toJSON() {
     return {
       threadId: this.threadId,

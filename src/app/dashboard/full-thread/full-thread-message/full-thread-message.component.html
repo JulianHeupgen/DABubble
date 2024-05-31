@@ -1,7 +1,7 @@
-<div *ngFor="let message of threadMessages.slice(1); let i = index" (click)="getMessageContent(message)">
+<div *ngFor="let message of threadMessages.slice(1); let i = index">
     <!-- <div *ngIf="message.sender"> -->
         <div class="channel-chat-message" [class.other-users-channel-chat-message]="currentUser.id != message.senderId">
-            <div class="reaction-menu" [class.set-reaaction-menu-hover]="setReactionMenuHover">
+            <div class="reaction-menu" [class.set-reaaction-menu-hover]="message.editMode">
 
 
                 <app-emoji-mart [emojiImg]="'emoji-reaction.png'" [emojiImgHover]="'emoji-reaction-hover.png'"
@@ -10,7 +10,7 @@
 
                 <div class="icon" *ngIf="message.sender.id == currentUser.id">
                     <img class="not-hover-icon" src="../../../../assets/img/dots.png" alt="">
-                    <button class="hover-icon" mat-button [matMenuTriggerFor]="editMessage" (click)="setReactionMenuHover = true">
+                    <button class="hover-icon" mat-button [matMenuTriggerFor]="editMessage" (click)="setHoverReactionbar(message)">
                       <img src="../../../../assets/img/dots-hover.png" alt="">
                     </button>
                     <mat-menu class="edit-message-btn" #editMessage="matMenu">
@@ -26,7 +26,7 @@
                     <h3>{{ message.sender.name }}</h3>
                 </div>
 
-                <div class="message" *ngIf="!editMessage">
+                <div class="message" *ngIf="!message.editMode">
                     <div *ngIf="message.imgFileURL.length > 1">
                         <img src="{{ message.imgFileURL }}" alt="">
                     </div>
@@ -35,7 +35,7 @@
                     </span>
                 </div>
 
-                <div class="message-textarea" *ngIf="editMessage">
+                <div class="message-textarea" *ngIf="message.editMode">
                     <div class="message-textarea-content">
                       <div class="img-container"  *ngIf="message.imgFileURL.length > 1">
                         <img class="delete-icon" src="../../../../assets/img/close.png" alt="" (click)="deleteImg(message)">
@@ -44,7 +44,7 @@
                         <textarea #editMessageReply>{{ message.content }}</textarea>
                     </div>
                     <div class="edit-message-btns">
-                      <span (click)="cancelEditMessage()">Abbrechen</span>
+                      <span (click)="cancelEditMessage(message)">Abbrechen</span>
                       <span (click)="saveEditMessage(this.thread, message)">Speichern</span>
                     </div>
                   </div>

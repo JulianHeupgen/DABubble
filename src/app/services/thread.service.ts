@@ -4,6 +4,7 @@ import { Thread } from '../models/thread.class';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
 import { DataService } from './data.service';
+import { deleteObject, getStorage, ref } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -72,5 +73,15 @@ export class ThreadService {
 
   convertThreadMessagesToString(thread: any) {
     thread.messages = thread.messages.map((message: any) => JSON.stringify(message));
+  }
+
+  deletFileOfMessage(imgFileLink: string) {
+    const storage = getStorage();
+    const desertRef = ref(storage, imgFileLink);
+    deleteObject(desertRef).then(() => {
+      return
+    }).catch((error) => {
+      // Uh-oh, an error occurred!
+    }); 
   }
 }
