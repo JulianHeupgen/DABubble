@@ -225,14 +225,15 @@ export class UserChatComponent {
           if (message.senderId === this.users[i].id) {
             let messageSender = this.users[i];
 
-        const messageObject = new Message(messageSender, message.content);
+        const messageObject = new Message(messageSender, message.content);  // Message Klasse: Parameterübergabe muss nochmal geändert werden !
         this.currentUserChatMessages.push(messageObject);
-        this.currentUserChat.messages = this.currentUserChatMessages;
       }
-    }
+    }}
   }
+  
+  this.currentUserChat.messages = this.currentUserChatMessages;
 }
-}
+
 
 
   private _filterUsers(value: string): any[] {

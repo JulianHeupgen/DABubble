@@ -11,8 +11,8 @@
   </mat-card-header>
   
   <!-- Chat history -->
-    <div #messageContainer class="chat-history" *ngIf="currentUserChat">
-      <div *ngFor="let message of currentUserChatMessages">
+    <div #messageContainer class="chat-history" *ngIf="currentUserChatMessages">
+      <div *ngFor="let message of currentUserChat.messages">
         <app-user-chat-message [message]="message"></app-user-chat-message>
       </div>
     </div>
