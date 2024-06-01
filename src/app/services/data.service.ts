@@ -5,6 +5,7 @@ import {Channel} from '../models/channel.class';
 import {Thread} from '../models/thread.class';
 import {UserChat} from '../models/user-chat';
 import {BehaviorSubject, Observable} from 'rxjs';
+import { Unsubscribe } from '@angular/fire/auth';
 
 
 @Injectable({
@@ -28,7 +29,7 @@ export class DataService {
 
   currentChannelId: string = 'Yk2dgejx9yy7iHLij1Qj'
   groupedChannelThreads: BehaviorSubject<{ [key: string]: Thread[] }> = new BehaviorSubject({});
-
+  private threadUnsubscribe!: Unsubscribe;
 
   getUsersList() {
     return new Observable(observer => {
@@ -106,7 +107,7 @@ export class DataService {
 
   getThreadsList() {
     const threadQuery = query(this.getThreadCollection(), where('channelId', '==', this.currentChannelId));
-    const unsubscribe = onSnapshot(threadQuery, list => {
+    this.threadUnsubscribe = onSnapshot(threadQuery, list => {
       this.allThreads = [];
       list.forEach(thread => this.allThreads.push(new Thread(this.setThreadObject(thread.id, thread.data()))));      
       // let threadsObj: Thread[] = [];
@@ -267,6 +268,10 @@ export class DataService {
 
   openThread(threadElement: Thread) {
     console.log('threadElement', threadElement);
+  }
+
+  ngOnDestroy() {
+    this.threadUnsubscribe();
   }
 
 }
