@@ -86,24 +86,13 @@ export class UserChatComponent {
   imgFile: File | undefined = undefined;
 
 
-  // setUserChatObject(id: string, data: any): any {
-  //   return {
-  //     userChatId: id,
-  //     participants: data.participants,
-  //     messages: data.messages
-  //   }
-  // }
-
-
   private userSub: Subscription = new Subscription();
   private userChatsSub: Subscription = new Subscription();
 
-  //-------------------//
 
   pingUserControl = new FormControl("");
   filteredUsers!: Observable<any[]>;
 
-  //------------------//
 
   async ngOnInit() {
     this.route.params.subscribe(params => {

@@ -1,7 +1,12 @@
 <mat-card class="userChat-wrapper">
     <mat-card-header>
-      <div class="userChat-infos" *ngIf="currentUserChat">
-        <!-- User Image und Name; *ngIf=currentChannel muss noch geändert werden -->
+      <div class="userChat-infos" *ngIf="recipient">
+        <div class="profileImg-and-onlineStatus">
+          <img class="profile-img" src="{{ recipient.imageUrl }}">
+          <img class="online-status" [class.online]="recipient.onlineStatus === 'online'"
+           [class.offline]="recipient.onlineStatus === 'offline'">
+        </div>
+        <span>{{ recipient.name }}</span>
       </div>
   </mat-card-header>
   
