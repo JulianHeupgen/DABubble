@@ -217,36 +217,27 @@ export class UserChatComponent {
   getMessagesFromCurrentUserChat() {
     this.currentUserChatMessages = [];
 
-    if(this.currentUserChat) {
-      for (let i = 0; i < this.currentUserChat.messages.length; i++) {
-        const message = this.currentUserChat.messages[i];
-
-        for (let i = 0; i < this.users.length; i++) {
-          if (message.senderId === this.users[i].id) {
-            let messageSender = this.users[i];
-
-        const messageObject = new Message(messageSender, message.content);  // Message Klasse: Parameterübergabe muss nochmal geändert werden !
-        this.currentUserChatMessages.push(messageObject);
-      }
+     if(this.currentUserChat) {
+       for (let i = 0; i < this.currentUserChat.messages.length; i++) {
+         const message = this.currentUserChat.messages[i];
+         const messageObject = Message.fromJSON(message);
+         this.currentUserChatMessages.push(messageObject);
     }}
+   this.currentUserChat.messages = this.currentUserChatMessages;
   }
-  
-  this.currentUserChat.messages = this.currentUserChatMessages;
+
+
+private _filterUsers(value: string): any[] {
+  const filterValue = value.toLowerCase();
+  return this.users.filter((user: any) =>
+     user.name.toLowerCase().startsWith(filterValue)
+)
 }
 
 
-
-  private _filterUsers(value: string): any[] {
-    const filterValue = value.toLowerCase();
-    return this.users.filter((user: any) =>
-      user.name.toLowerCase().startsWith(filterValue)
-    )
-  }
-
-
-  sortMessagesByTimestamp() {
-    this.userChats.sort((a: any, b: any) => a.timestamp - b.timestamp);
-  }
+sortMessagesByTimestamp() {
+  this.userChats.sort((a: any, b: any) => a.timestamp - b.timestamp);
+}
 
 
   userChatMessage: FormGroup = this.formBuilder.group({
