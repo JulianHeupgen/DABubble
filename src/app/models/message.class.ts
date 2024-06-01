@@ -2,6 +2,7 @@ import { User } from './user.class';
 
 export class Message {
   senderId: string;
+  senderName: string;
   content: string;
   timestamp: Number;
   replies: Message[];
@@ -10,8 +11,9 @@ export class Message {
   editMode: boolean;
   hoverReactionbar: boolean;
 
-  constructor(sender: User, content: string, imgFileUrl?: string) {
-    this.senderId = sender.id;
+  constructor(sender: Partial<User>, content: string, imgFileUrl?: string) {
+    this.senderId = sender.id || '';
+    this.senderName = sender.name || '';
     this.content = content;
     this.timestamp = new Date().getTime();
     this.replies = [];
@@ -24,6 +26,7 @@ export class Message {
   toJSON(): {} {
     return {
       senderId: this.senderId,
+      senderName: this.senderName,
       content: this.content,
       timestamp: this.timestamp,
       replies: this.replies.map(reply => reply.toJSON()),  
@@ -34,4 +37,22 @@ export class Message {
     };
   }
 
+  static fromJSON(json: any): Message {
+    const message = new Message(
+      { id: json.senderId,
+        name: json.senderName
+      },
+      json.content,
+      json.imgFileURL
+    );
+    message.timestamp = json.timestamp;
+    message.replies = json.replies.map((reply: any) => Message.fromJSON(reply));
+    message.emojiReactions = json.emojiReactions;
+    message.editMode = json.editMode;
+    message.hoverReactionbar = json.hoverReactionbar;
+    
+    return message;
+  }
+
 }
+

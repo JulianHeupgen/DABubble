@@ -10,7 +10,7 @@
     }
     <h2 class="project-font">Channels</h2>
     @for (searchObjects of filteredChannels | async; track $index) {
-    <mat-option (onSelectionChange)="onSelection()" [value]="searchObjects.title"
+    <mat-option (click)="onSelection()" (onSelectionChange)="onSelection()" [value]="searchObjects.title"
       [routerLink]="['/dashboard/channel', searchObjects.channelId]">
       <img class="channel-img" src="./assets/img/tag.png">
       {{ searchObjects.title }}</mat-option>

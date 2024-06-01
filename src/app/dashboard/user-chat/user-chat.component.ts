@@ -22,6 +22,7 @@ import { EditChannelComponent } from '../channel-chat/edit-channel/edit-channel.
 import { ChannelParticipantsComponent } from '../channel-chat/channel-participants/channel-participants.component';
 import { UserChat } from '../../models/user-chat';
 import { UserChatMessageComponent } from './user-chat-message/user-chat-message.component';
+import { Message } from '../../models/message.class';
 
 
 @Component({
@@ -79,31 +80,20 @@ export class UserChatComponent {
   users: any;
   userAuthId!: string;
   currentUser!: User;
+  recipient!: User;
   currentUserChatId!: string;
   userChats!: any;
   currentUserChat!: UserChat;
-  recipient!: User;
   imgFile: File | undefined = undefined;
-
-
-  // setUserChatObject(id: string, data: any): any {
-  //   return {
-  //     userChatId: id,
-  //     participants: data.participants,
-  //     messages: data.messages
-  //   }
-  // }
-
+  currentUserChatMessages!: Message[];
 
   private userSub: Subscription = new Subscription();
   private userChatsSub: Subscription = new Subscription();
 
-  //-------------------//
 
   pingUserControl = new FormControl("");
   filteredUsers!: Observable<any[]>;
 
-  //------------------//
 
   async ngOnInit() {
     this.route.params.subscribe(params => {
@@ -219,20 +209,35 @@ export class UserChatComponent {
         break;
       }
     }
+
+    this.getMessagesFromCurrentUserChat();
   }
 
 
-  private _filterUsers(value: string): any[] {
-    const filterValue = value.toLowerCase();
-    return this.users.filter((user: any) =>
-      user.name.toLowerCase().startsWith(filterValue)
-    )
+  getMessagesFromCurrentUserChat() {
+    this.currentUserChatMessages = [];
+
+     if(this.currentUserChat) {
+       for (let i = 0; i < this.currentUserChat.messages.length; i++) {
+         const message = this.currentUserChat.messages[i];
+         const messageObject = Message.fromJSON(message);
+         this.currentUserChatMessages.push(messageObject);
+    }}
+   this.currentUserChat.messages = this.currentUserChatMessages;
   }
 
 
-  sortMessagesByTimestamp() {
-    this.userChats.sort((a: any, b: any) => a.timestamp - b.timestamp);
-  }
+private _filterUsers(value: string): any[] {
+  const filterValue = value.toLowerCase();
+  return this.users.filter((user: any) =>
+     user.name.toLowerCase().startsWith(filterValue)
+)
+}
+
+
+sortMessagesByTimestamp() {
+  this.userChats.sort((a: any, b: any) => a.timestamp - b.timestamp);
+}
 
 
   userChatMessage: FormGroup = this.formBuilder.group({
@@ -282,6 +287,7 @@ export class UserChatComponent {
     } else {
       await this.dataService.updateUserChat(userChat.currentUserChat);
     }
+
   }
 
 }
