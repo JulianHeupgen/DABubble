@@ -22,6 +22,7 @@ import { EditChannelComponent } from '../channel-chat/edit-channel/edit-channel.
 import { ChannelParticipantsComponent } from '../channel-chat/channel-participants/channel-participants.component';
 import { UserChat } from '../../models/user-chat';
 import { UserChatMessageComponent } from './user-chat-message/user-chat-message.component';
+import { Message } from '../../models/message.class';
 
 
 @Component({
@@ -79,12 +80,12 @@ export class UserChatComponent {
   users: any;
   userAuthId!: string;
   currentUser!: User;
+  recipient!: User;
   currentUserChatId!: string;
   userChats!: any;
   currentUserChat!: UserChat;
-  recipient!: User;
   imgFile: File | undefined = undefined;
-
+  currentUserChatMessages!: Message[];
 
   private userSub: Subscription = new Subscription();
   private userChatsSub: Subscription = new Subscription();
@@ -208,7 +209,30 @@ export class UserChatComponent {
         break;
       }
     }
+
+    this.getMessagesFromCurrentUserChat();
   }
+
+
+  getMessagesFromCurrentUserChat() {
+    this.currentUserChatMessages = [];
+
+    if(this.currentUserChat) {
+      for (let i = 0; i < this.currentUserChat.messages.length; i++) {
+        const message = this.currentUserChat.messages[i];
+
+        for (let i = 0; i < this.users.length; i++) {
+          if (message.senderId === this.users[i].id) {
+            let messageSender = this.users[i];
+
+        const messageObject = new Message(messageSender, message.content);
+        this.currentUserChatMessages.push(messageObject);
+        this.currentUserChat.messages = this.currentUserChatMessages;
+      }
+    }
+  }
+}
+}
 
 
   private _filterUsers(value: string): any[] {
@@ -271,6 +295,7 @@ export class UserChatComponent {
     } else {
       await this.dataService.updateUserChat(userChat.currentUserChat);
     }
+
   }
 
 }
