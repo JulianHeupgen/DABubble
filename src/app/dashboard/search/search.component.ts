@@ -46,11 +46,11 @@ export class SearchComponent {
    * Initializes the user and channel data after the component is loaded.
    *
    * This function fetches user and channel data from the data service and populates the following properties:
-   *  * `users`: An array of all users.
-   *  * `currentUser`: The currently authenticated user object.
-   *  * `channels`: An array of all channels (if the user has channel information).
-   *  * `filteredUsers`: An array of filtered users (implementation assumed to be in `initFilteredUsers`).
-   *  * `filteredChannels`: An array of filtered channels (implementation assumed to be in `initFilteredChannel`).
+   * `users`: An array of all users.
+   * `currentUser`: The currently authenticated user object.
+   * `channels`: An array of all channels (if the user has channel information).
+   * `filteredUsers`: An array of filtered users (implementation assumed to be in `initFilteredUsers`).
+   * `filteredChannels`: An array of filtered channels (implementation assumed to be in `initFilteredChannel`).
    *
    * It also handles potential errors during data fetching.
    */
