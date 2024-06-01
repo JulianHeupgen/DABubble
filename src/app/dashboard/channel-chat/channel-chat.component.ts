@@ -52,12 +52,17 @@ import { AddUsersComponent } from '../../dialog/add-users/add-users.component';
   styleUrl: "./channel-chat.component.scss",
 })
 export class ChannelChatComponent {
+
   @ViewChild("threadContainer") threadContainer!: ElementRef;
   @ViewChild("threadMessageBox") threadMessageBox!: ElementRef;
   @ViewChild("imgBox") imgBox!: ElementRef<any>;
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
   @ViewChild(AddImgToMessageComponent) addImgToMessageComponent!: AddImgToMessageComponent;
+  
   emojiSubscription: Subscription;
+  
+  groupedChannelThreads$!: Observable<{ [key: string]: Thread[] }>;
+
   constructor(
     public dataService: DataService,
     private route: ActivatedRoute,
@@ -88,8 +93,6 @@ export class ChannelChatComponent {
   channelThreads!: Thread[];
   imgFile: File | undefined = undefined;
 
-  groupedChannelThreads : { [key: string]: Thread[] } = {};
-
   private userSub: Subscription = new Subscription();
   private channelSub: Subscription = new Subscription();
   private threadsSub: Subscription = new Subscription();
@@ -104,10 +107,11 @@ export class ChannelChatComponent {
   async ngOnInit() {
     this.route.params.subscribe(params => {
       this.channelId = params['id'];
+      this.dataService.getThreadsList();
       console.log(this.channelId);
       this.dataService.currentChannelId = this.channelId;
       this.reloadAll();
-
+      this.groupedChannelThreads$ = this.dataService.groupedChannelThreads.asObservable();
     });
   }
 
@@ -163,15 +167,13 @@ export class ChannelChatComponent {
       this.users = users;
 
     });
-    this.channelSub = this.dataService
-      .getChannelsList()
-      .subscribe((channels) => {
+    this.channelSub = this.dataService.getChannelsList().subscribe((channels) => {
         this.channels = channels;
       });
-    this.threadsSub = this.dataService.getThreadsList().subscribe((threads) => {
-      this.threads = threads;
-      console.log('threads:', this.threads);
-    })
+    // this.threadsSub = this.dataService.getThreadsList().subscribe((threads) => {
+    //   this.threads = threads;
+    //   console.log('threads:', this.threads);
+    // })
   }
 
 
@@ -218,7 +220,7 @@ export class ChannelChatComponent {
     this.resetParticipantsData();
     this.getCurrentChannel();
     this.showChannelParticipants(this.channelId);
-    this.getChannelThreads(this.channelId);
+    // this.getChannelThreads(this.channelId);
   }
 
 
@@ -278,31 +280,29 @@ export class ChannelChatComponent {
   // }
 
 
-  getChannelThreads(channelId: string) {
-    this.channelThreads = []
-    this.threads.forEach( (thread: Thread) => {
-      this.channelThreads.push(new Thread(thread));
-    })
-    this.sortThreadByFirstMessageTimestamp();
-    this.groupedChannelThreads  = this.groupThreadsByDate(this.channelThreads);
-  }
+  // getChannelThreads(channelId: string) {
+  //   this.channelThreads = []
+  //   this.threads.forEach( (thread: Thread) => {
+  //     this.channelThreads.push(new Thread(thread));
+  //   })
+  // }
 
 
-  sortThreadByFirstMessageTimestamp() {
-    this.channelThreads.sort((a, b) => a.timestamp - b.timestamp);
-  }
+  // sortThreadByFirstMessageTimestamp() {
+  //   this.channelThreads.sort((a, b) => a.timestamp - b.timestamp);
+  // }
 
 
-  groupThreadsByDate(threads: Thread[]): { [key: string]: Thread[] } {
-    return threads.reduce((groups, thread) => {
-      const date = new Date(thread.timestamp).toLocaleDateString();
-      if (!groups[date]) {
-        groups[date] = [];
-      }
-      groups[date].push(thread);
-      return groups;
-    }, {} as { [key: string]: Thread[] });
-  }
+  // groupThreadsByDate(threads: Thread[]): { [key: string]: Thread[] } {
+  //   return threads.reduce((groups, thread) => {
+  //     const date = new Date(thread.timestamp).toLocaleDateString();
+  //     if (!groups[date]) {
+  //       groups[date] = [];
+  //     }
+  //     groups[date].push(thread);
+  //     return groups;
+  //   }, {} as { [key: string]: Thread[] });
+  // }
 
 
   channelThreadMessage: FormGroup = this.formBuilder.group({

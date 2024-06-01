@@ -36,8 +36,8 @@
   </mat-card-header>
 
   <!-- Channel history -->
-  <div #threadContainer class="chat-history">
-    <div *ngFor="let date of groupedChannelThreads | keyvalue">
+  <div #threadContainer class="chat-history" *ngIf="currentUser && groupedChannelThreads$">
+    <div *ngFor="let date of (groupedChannelThreads$ | async) | keyvalue">
       
       <div class="date-container">
         <div class="date-line"></div>

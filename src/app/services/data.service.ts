@@ -4,7 +4,7 @@ import {User} from '../models/user.class';
 import {Channel} from '../models/channel.class';
 import {Thread} from '../models/thread.class';
 import {UserChat} from '../models/user-chat';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 
 @Injectable({
@@ -27,6 +27,7 @@ export class DataService {
   allUserChats: UserChat[] = [];
 
   currentChannelId: string = 'Yk2dgejx9yy7iHLij1Qj'
+  groupedChannelThreads: BehaviorSubject<{ [key: string]: Thread[] }> = new BehaviorSubject({});
 
 
   getUsersList() {
@@ -84,32 +85,37 @@ export class DataService {
     }
   }
 
-
-
-  // getThreadsList() {
-  //   return new Observable(observer => {
-  //     const unsubscribe = onSnapshot(this.getThreadCollection(), list => {
+  // getThreadsList(): Observable<Thread[]> {
+  //   return new Observable<Thread[]>(observer => {
+  //     const threadQuery = query(this.getThreadCollection(), where('channelId', '==', this.currentChannelId));
+  //     const unsubscribe = onSnapshot(threadQuery, list => {
   //       this.allThreads = [];
-  //       list.forEach(thread => this.allThreads.push(this.setThreadObject(thread.id, thread.data())))
+  //       list.forEach(thread => this.allThreads.push(new Thread(this.setThreadObject(thread.id, thread.data()))));      
+  //       // let threadsObj: Thread[] = [];
+  //       // this.allThreads.forEach(thread => threadsObj.push(new Thread(thread)))     
+
+  //       this.sortThreadByFirstMessageTimestamp();
+  //       const groupedThreads = this.groupThreadsByDate();
+  //       this.groupedChannelThreads.next(groupedThreads); // Update the BehaviorSubject
   //       observer.next(this.allThreads);
   //     });
+  //     return { unsubscribe };
   //   });
-
   // }
 
-  // getThreadCollection() {
-  //   return collection(this.firestore, 'threads');
-  // }
 
   getThreadsList() {
-    return new Observable<Thread[]>(observer => {
-      const threadQuery = query(this.getThreadCollection(), where('channelId', '==', this.currentChannelId));
-      const unsubscribe = onSnapshot(threadQuery, list => {
-        this.allThreads = [];
-        list.forEach(thread => this.allThreads.push(this.setThreadObject(thread.id, thread.data())));
-        observer.next(this.allThreads);
-      });
-      return { unsubscribe };
+    const threadQuery = query(this.getThreadCollection(), where('channelId', '==', this.currentChannelId));
+    const unsubscribe = onSnapshot(threadQuery, list => {
+      this.allThreads = [];
+      list.forEach(thread => this.allThreads.push(new Thread(this.setThreadObject(thread.id, thread.data()))));      
+      // let threadsObj: Thread[] = [];
+      // this.allThreads.forEach(thread => threadsObj.push(new Thread(thread)))     
+
+      this.sortThreadByFirstMessageTimestamp();
+      const groupedThreads = this.groupThreadsByDate();
+      this.groupedChannelThreads.next(groupedThreads); // Update the BehaviorSubject
+      // observer.next(this.allThreads);
     });
   }
 
@@ -125,6 +131,22 @@ export class DataService {
       timestamp: data.timestamp
     }
   }
+
+  sortThreadByFirstMessageTimestamp() {
+    this.allThreads.sort((a, b) => a.timestamp - b.timestamp);
+  }
+
+  groupThreadsByDate(): { [key: string]: Thread[] } {
+    return this.allThreads.reduce((groups, thread) => {
+      const date = new Date(thread.timestamp).toLocaleDateString();
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(thread);
+      return groups;
+    }, {} as { [key: string]: Thread[] });
+  }
+
 
 
 
