@@ -30,10 +30,11 @@ app-password-reset {
 //   font-family: Roboto, "Helvetica Neue", sans-serif;
 // }
 
-app-channel-chat {
+app-channel-chat, app-user-chat {
   width: 100%;
   height: calc(100vh - 180px);
 }
+
 
 * {
   font-family: 'Nunito', sans-serif;
