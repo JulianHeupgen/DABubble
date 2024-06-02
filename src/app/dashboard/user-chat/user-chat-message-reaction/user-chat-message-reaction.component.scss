@@ -1,0 +1,68 @@
+@import '../../../../mixin.scss';
+
+.chat-reactions {
+    @include flex-align-justify($jc: right);
+    flex-direction: row-reverse;
+    gap: 20px;
+    .reaction {
+        position: relative;
+        max-width: 64px;
+        max-height: 34px;
+        cursor: pointer;
+        @include flex-align-justify();
+        gap: 10px;
+        border-radius: 20px;
+        padding: 5px 10px;
+        border: 1px solid #ADB0D9;
+
+        &:hover {
+            border: 1px solid #797EF3;
+            .who-reacted {
+                display: flex;
+            }
+        }
+    }
+
+    img {
+        width: 24px;
+    }
+
+    span {
+        @include font-size-weight-color($fs: 16px)
+    }
+}
+
+.emoji {
+    font-size: 20px !important;
+}
+
+.who-reacted {
+    position: absolute;
+    bottom: 33px;
+    left: 50%;
+    max-width: 160px;
+    border-radius: 30px 30px 30px 0;
+    padding: 15px 10px;
+    background-color: #444DF2;
+    @include flex-align-justify($df: none);
+    flex-direction: column;
+    gap: 5px;
+    text-wrap: nowrap;
+}
+
+.user-reacted {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    
+    span {
+        @include font-size-weight-color($fs: 16px !important, $fw: 700 !important, $cl: #FFFFFF !important);
+    }
+    
+
+}
+
+.had-reacted {
+    @include font-size-weight-color($fs: 16px !important, $cl: #FFFFFF !important);
+}
