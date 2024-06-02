@@ -18,7 +18,7 @@ export class DataService {
   constructor() {
     this.getUsersList();
     this.getChannelsList();
-    this.getThreadsList();
+    // this.getThreadsList();
     this.getUserChatsList();
   }
 
@@ -27,6 +27,8 @@ export class DataService {
   allThreads: Thread[] = [];
   allUserChats: UserChat[] = [];
 
+  groupedThreads: any = []
+  firstLoad: boolean = false;
   currentChannelId: string = 'Yk2dgejx9yy7iHLij1Qj'
   groupedChannelThreads: BehaviorSubject<{ [key: string]: Thread[] }> = new BehaviorSubject({});
   private threadUnsubscribe!: Unsubscribe;
@@ -106,19 +108,85 @@ export class DataService {
 
 
   getThreadsList() {
+    this.groupedThreads = {};
+    this.firstLoad = true;
+  
     const threadQuery = query(this.getThreadCollection(), where('channelId', '==', this.currentChannelId));
-    this.threadUnsubscribe = onSnapshot(threadQuery, list => {
-      this.allThreads = [];
-      list.forEach(thread => this.allThreads.push(new Thread(this.setThreadObject(thread.id, thread.data()))));      
-      // let threadsObj: Thread[] = [];
-      // this.allThreads.forEach(thread => threadsObj.push(new Thread(thread)))     
-
-      this.sortThreadByFirstMessageTimestamp();
-      const groupedThreads = this.groupThreadsByDate();
-      this.groupedChannelThreads.next(groupedThreads); // Update the BehaviorSubject
-      // observer.next(this.allThreads);
+    const unsubscribe = onSnapshot(threadQuery, list => {
+      list.docChanges().forEach(change => {
+        const threadData = this.setThreadObject(change.doc.id, change.doc.data());
+  
+        if (change.type === 'added') {
+          const newThread = new Thread(threadData);
+          this.allThreads.push(newThread);
+  
+          if (!this.firstLoad) {
+            this.addThreadToGroup(newThread);
+          }
+        } else if (change.type === 'modified') {
+          const modifiedThreadIndex = this.allThreads.findIndex(thread => thread.threadId === change.doc.id);
+          if (modifiedThreadIndex !== -1) {
+            this.allThreads[modifiedThreadIndex] = new Thread(threadData);
+            this.updateThreadInGroup(this.allThreads[modifiedThreadIndex]);
+          }
+        } else if (change.type === 'removed') {
+          const removedThreadIndex = this.allThreads.findIndex(thread => thread.threadId === change.doc.id);
+        if (removedThreadIndex !== -1) {
+          const removedThread = this.allThreads.splice(removedThreadIndex, 1)[0];
+          this.removeThreadFromGroup(removedThread);
+        }
+        }
+      });
+  
+      if (this.firstLoad) {
+        this.sortThreadByFirstMessageTimestamp();
+        this.groupedThreads = this.groupThreadsByDate();
+        this.firstLoad = false;
+      }
+  
+      // Update the BehaviorSubject
+      console.log(this.groupedThreads);
+      
+      this.groupedChannelThreads.next(this.groupedThreads);
     });
   }
+
+  addThreadToGroup(newThread: Thread) {
+    const date = new Date(newThread.timestamp).toLocaleDateString();
+    if (!this.groupedThreads[date]) {
+      this.groupedThreads[date] = [];
+    }
+    this.groupedThreads[date].push(newThread);
+  }
+  
+  updateThreadInGroup(updatedThread: Thread) {
+    const date = new Date(updatedThread.timestamp).toLocaleDateString();
+    if (this.groupedThreads[date]) {
+      const threadIndex = this.groupedThreads[date].findIndex((thread: Thread) => thread.threadId === updatedThread.threadId);
+      if (threadIndex !== -1) {
+        this.groupedThreads[date][threadIndex] = updatedThread;
+      }
+    }
+  }
+  
+removeThreadFromGroup(thread: Thread) {
+  const date = new Date(thread.timestamp).toLocaleDateString();
+  const group = this.groupedThreads[date];
+
+  if (group) {
+    const threadIndex = group.findIndex((t: any) => t.threadId === thread.threadId);
+    if (threadIndex !== -1) {
+      group.splice(threadIndex, 1);
+      if (group.length === 0) {
+        delete this.groupedThreads[date];
+      } else {
+        this.groupedThreads[date] = group;
+      }
+    }
+  }
+}
+
+
 
   getThreadCollection() {
     return collection(this.firestore, 'threads');
