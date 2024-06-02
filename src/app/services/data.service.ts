@@ -6,6 +6,7 @@ import {Thread} from '../models/thread.class';
 import {UserChat} from '../models/user-chat';
 import {BehaviorSubject, Observable} from 'rxjs';
 import { Unsubscribe } from '@angular/fire/auth';
+import { Message } from '../models/message.class';
 
 
 @Injectable({
@@ -319,6 +320,10 @@ removeThreadFromGroup(thread: Thread) {
     return doc(collection(this.firestore, 'directMessages'), userChatId)
   }
 
+  async updateMessage(message: Message) {
+    // Message suchen und updaten
+  }
+
 
 
   async deleteUserChat(userChatId: string) {
@@ -331,6 +336,10 @@ removeThreadFromGroup(thread: Thread) {
     await deleteDoc(this.getThreadDocRef(threadId)).catch((err) => {
       console.error(err)
     })
+  }
+
+  async deleteMessage(message: Message) {
+    // Message suchen und löschen
   }
 
 

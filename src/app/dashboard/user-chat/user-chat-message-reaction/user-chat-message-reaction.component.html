@@ -1,0 +1,35 @@
+<div class="chat-reactions">
+    <div class="reaction" *ngFor="let reactions of threadMessage.emojiReactions"
+      (click)="reactToMessage(this.threadMessage, reactions.reaction)">
+  
+      <div class="who-reacted">
+        <ng-container *ngIf="reactions.reaction.includes('png')">
+          <img src="../../../../assets/img/{{ reactions.reaction }}" alt="">
+        </ng-container>
+        <ng-container *ngIf="!reactions.reaction.includes('png')">
+          <span class="emoji">{{ reactions.reaction }}</span>
+        </ng-container>
+  
+        <div class="user-reacted">
+          <span>
+            {{ reactions.users[0].id === currentUser.id ? 'Du' : reactions.users[0].name }}
+          </span>
+          <span *ngIf="reactions.users.length > 1">und</span>
+          <span *ngIf="reactions.users.length > 1 && reactions.users.length < 3">
+            {{ reactions.users[1].id === currentUser.id ? 'Du' : reactions.users[1].name }}
+          </span>
+          <span *ngIf="reactions.users.length > 2">{{ reactions.users.length - 1 }} weitere</span>
+        </div>
+        <span class="had-reacted">hat reagiert</span>
+      </div>
+  
+  
+      <ng-container *ngIf="reactions.reaction.includes('png')">
+        <img src="../../../../assets/img/{{ reactions.reaction }}" alt="">
+      </ng-container>
+      <ng-container *ngIf="!reactions.reaction.includes('png')">
+        <span class="emoji">{{ reactions.reaction }}</span>
+      </ng-container>
+      <span>{{ reactions.count }}</span>
+    </div>
+  </div>
