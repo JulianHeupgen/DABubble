@@ -1,10 +1,10 @@
-import {Injectable, inject} from '@angular/core';
-import {Firestore, addDoc, collection, deleteDoc, doc, onSnapshot, query, updateDoc, where} from '@angular/fire/firestore';
-import {User} from '../models/user.class';
-import {Channel} from '../models/channel.class';
-import {Thread} from '../models/thread.class';
-import {UserChat} from '../models/user-chat';
-import {BehaviorSubject, Observable} from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { Firestore, addDoc, collection, deleteDoc, doc, onSnapshot, query, updateDoc, where } from '@angular/fire/firestore';
+import { User } from '../models/user.class';
+import { Channel } from '../models/channel.class';
+import { Thread } from '../models/thread.class';
+import { UserChat } from '../models/user-chat';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Unsubscribe } from '@angular/fire/auth';
 import { Message } from '../models/message.class';
 
@@ -87,16 +87,16 @@ export class DataService {
       createdBy: data.createdBy
     }
   }
-  
+
   getThreadsList() {
     this.groupedThreads = {};
     this.firstLoad = true;
-  
+
     const threadQuery = query(this.getThreadCollection(), where('channelId', '==', this.currentChannelId));
     const unsubscribe = onSnapshot(threadQuery, list => {
       list.docChanges().forEach(change => {
         const threadData = this.setThreadObject(change.doc.id, change.doc.data());
-  
+
         if (change.type === 'added') {
           this.addThreads(threadData);
         } else if (change.type === 'modified') {
@@ -105,7 +105,7 @@ export class DataService {
           this.removeThreads(change);
         }
       });
-  
+
       if (this.firstLoad) {
         this.sortThreadByFirstMessageTimestamp();
         this.groupedThreads = this.groupThreadsByDate();
@@ -147,7 +147,7 @@ export class DataService {
     }
     this.groupedThreads[date].push(thread);
   }
-  
+
   updateThreadInGroup(thread: Thread) {
     const date = new Date(thread.timestamp).toISOString().split('T')[0];
     const group = this.groupedThreads[date];
@@ -158,11 +158,11 @@ export class DataService {
       }
     }
   }
-  
+
   removeThreadFromGroup(thread: Thread) {
     const date = new Date(thread.timestamp).toISOString().split('T')[0];
     const group = this.groupedThreads[date];
-  
+
     if (group) {
       const threadIndex = group.findIndex((t: Thread) => t.threadId === thread.threadId);
       if (threadIndex !== -1) {
@@ -203,8 +203,18 @@ export class DataService {
   }
 
   formatDateForDisplay(date: string): string {
-    const [year, month, day] = date.split('-');
-    return `${day}-${month}-${year}`;
+    const today = new Date().toISOString().split('T')[0];
+    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
+    
+    if (date === today) {
+      return 'Heute';
+    } else if (date === yesterday) {
+      return 'Gestern';
+    } else {
+      const [year, month, day] = date.split('-');
+      return `${day}.${month}.${year}`;
+    }
+    
   }
 
 
