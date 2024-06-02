@@ -27,7 +27,7 @@ export class DataService {
   allThreads: Thread[] = [];
   allUserChats: UserChat[] = [];
 
-  groupedThreads: any = []
+  groupedThreads: any = [];
   firstLoad: boolean = false;
   currentChannelId: string = 'Yk2dgejx9yy7iHLij1Qj'
   groupedChannelThreads: BehaviorSubject<{ [key: string]: Thread[] }> = new BehaviorSubject({});

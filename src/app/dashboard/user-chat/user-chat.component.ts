@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatList, MatListModule } from '@angular/material/list';
@@ -21,8 +21,7 @@ import { ChannelThreadComponent } from '../channel-chat/channel-thread/channel-t
 import { EditChannelComponent } from '../channel-chat/edit-channel/edit-channel.component';
 import { ChannelParticipantsComponent } from '../channel-chat/channel-participants/channel-participants.component';
 import { UserChat } from '../../models/user-chat';
-import { UserChatMessageComponent } from './user-chat-message/user-chat-message.component';
-import { Message } from '../../models/message.class';
+import { Thread } from '../../models/thread.class';
 
 
 @Component({
@@ -46,19 +45,20 @@ import { Message } from '../../models/message.class';
     EmojiMartComponent,
     AddImgToMessageComponent,
     EditChannelComponent,
-    ChannelParticipantsComponent,
-    UserChatMessageComponent],
+    ChannelParticipantsComponent
+  ],
   templateUrl: './user-chat.component.html',
   styleUrl: './user-chat.component.scss'
 })
 export class UserChatComponent {
 
-  @ViewChild("messageContainer") messageContainer!: ElementRef;
-  @ViewChild("messageBox") messageBox!: ElementRef;
+  @ViewChild("threadContainer") threadContainer!: ElementRef;
+  @ViewChild("threadMessageBox") threadMessageBox!: ElementRef;
   @ViewChild("imgBox") imgBox!: ElementRef<any>;
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
   @ViewChild(AddImgToMessageComponent) addImgToMessageComponent!: AddImgToMessageComponent;
   emojiSubscription: Subscription;
+
 
   constructor(
     public dataService: DataService,
@@ -85,7 +85,7 @@ export class UserChatComponent {
   userChats!: any;
   currentUserChat!: UserChat;
   imgFile: File | undefined = undefined;
-  currentUserChatMessages!: Message[];
+  currentUserChatThreads!: Thread[];
 
   private userSub: Subscription = new Subscription();
   private userChatsSub: Subscription = new Subscription();
@@ -115,18 +115,6 @@ export class UserChatComponent {
     );
   }
 
-  // ngAfterViewChecked() {
-  //   this.scrollToBottom();
-  // }
-
-  // scrollToBottom() {
-  //   try {
-  //     this.threadContainer.nativeElement.scrollTop =
-  //       this.threadContainer.nativeElement.scrollHeight;
-  //   } catch (err) {
-  //     console.error("Could not scroll to bottom:", err);
-  //   }
-  // }
 
   
   dataSubscriptions() {
@@ -157,12 +145,8 @@ export class UserChatComponent {
     try {
       await this.auth.getUserAuthId()
         .then(userId => {
-          // if (userId) {
           this.userAuthId = userId;
           this.findCurrentUser();
-          // } else {
-          //   console.log("Kein Benutzer angemeldet.");
-          // }
         })
         .catch(error => {
           console.error("Fehler beim Abrufen der Benutzer-ID:", error);
@@ -210,20 +194,19 @@ export class UserChatComponent {
       }
     }
 
-    this.getMessagesFromCurrentUserChat();
+    this.getThreadsFromCurrentUserChat();
   }
 
 
-  getMessagesFromCurrentUserChat() {
-    this.currentUserChatMessages = [];
+  getThreadsFromCurrentUserChat() {
+    this.currentUserChatThreads = [];
 
      if(this.currentUserChat) {
-       for (let i = 0; i < this.currentUserChat.messages.length; i++) {
-         const message = this.currentUserChat.messages[i];
-         const messageObject = Message.fromJSON(message);
-         this.currentUserChatMessages.push(messageObject);
+       for (let i = 0; i < this.currentUserChat.threads.length; i++) {
+         const thread = this.currentUserChat.threads[i];
+         this.currentUserChatThreads.push(thread);
     }}
-   this.currentUserChat.messages = this.currentUserChatMessages;
+   this.currentUserChat.threads = this.currentUserChatThreads;
   }
 
 
@@ -240,20 +223,20 @@ sortMessagesByTimestamp() {
 }
 
 
-  userChatMessage: FormGroup = this.formBuilder.group({
-    message: "",
+  channelThreadMessage: FormGroup = this.formBuilder.group({
+    channelMessage: "",
   });
 
 
   addEmoji(emoji: string) {
-    let textAreaElement = this.messageBox.nativeElement;
+    let textAreaElement = this.threadMessageBox.nativeElement;
     textAreaElement.value += emoji;
   }
 
 
   addUserToMessage(user: any) {
-    if (this.messageBox && user) {
-      this.messageBox.nativeElement.value += "@" + user.name + " ";
+    if (this.threadMessageBox && user) {
+      this.threadMessageBox.nativeElement.value += "@" + user.name + " ";
       this.pingUserControl.setValue("");
       this.menuTrigger.closeMenu();
     }
@@ -267,7 +250,7 @@ sortMessagesByTimestamp() {
 
 
   removeChatInput() {
-    this.userChatMessage.reset();
+    this.channelThreadMessage.reset();
     this.addImgToMessageComponent.removeImage();
   }
 
@@ -275,7 +258,7 @@ sortMessagesByTimestamp() {
   async sendMessage() {
     let userChat = await this.currentUser.sendDirectMessage(
       this.recipient,                                   
-      this.userChatMessage.value.message,
+      this.channelThreadMessage.value.message,
       this.currentUserChat,
       this.addImgToMessageComponent.imgFile,
     );

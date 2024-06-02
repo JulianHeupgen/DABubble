@@ -11,16 +11,17 @@
   </mat-card-header>
   
   <!-- Chat history -->
-    <div #messageContainer class="chat-history" *ngIf="currentUserChatMessages">
-      <div *ngFor="let message of currentUserChat.messages">
-        <app-user-chat-message [message]="message"></app-user-chat-message>
+    <div #threadContainer class="chat-history" *ngIf="currentUserChatThreads">
+      <div *ngFor="let thread of currentUserChat.threads">
+        <app-channel-thread [thread]="thread"></app-channel-thread>
       </div>
     </div>
+
   
     <!-- Channel Chat Input -->
-    <form [formGroup]="userChatMessage" class="text-box">
+    <form [formGroup]="channelThreadMessage" class="text-box">
       <div #imgBox class="add-file-img-box"></div>
-      <textarea #messageBox formControlName="message" *ngIf="currentUserChat"
+      <textarea #threadMessageBox formControlName="channelMessage" *ngIf="currentUserChat"
         placeholder="Nachricht an #{{ recipient.name }}"></textarea>
       <div class="interactiv-btn-box">
         <div class="interactive-btns">
@@ -34,9 +35,9 @@
           [assigningComponent]="'ChannelChatComponent'"></app-emoji-mart>
   
           <div class="address-message-to-user">
-            <img class="not-hover-icon" src="../../../assets/img/ping-user.png" alt="">
+            <img class="not-hover-icon" src="assets/img/ping-user.png">
             <button class="hover-icon" mat-button [matMenuTriggerFor]="pingUser">
-              <img src="../../../assets/img/ping-user-hover.png" alt="">
+              <img src="assets/img/ping-user-hover.png">
             </button>
             <mat-menu #pingUser="matMenu" class="address-message-to-user-menu">
               <mat-form-field class="example-full-width" (click)="$event.stopPropagation()">
@@ -56,10 +57,10 @@
   
         <div class="send-message">
           <button class="not-hover-icon">
-            <img src="../../../assets/img/send-message.png" alt="">
+            <img src="assets/img/send-message.png" alt="">
           </button>
           <button type="submit" class="hover-icon" (click)="sendMessage(); removeChatInput()">
-            <img src="../../../assets/img/send-message-hover.png" alt="">
+            <img src="assets/img/send-message-hover.png" alt="">
           </button>
   
         </div>

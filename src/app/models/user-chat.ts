@@ -1,26 +1,26 @@
-import { Message } from './message.class';
+import { Thread } from './thread.class';
 
 export class UserChat {
   userChatId: string;
   chatId: string;
   participants: string[];
-  messages: Message[];
+  threads: Thread[];
 
   constructor(data:  {
     userChatId?: string,
     chatId?: string,
     participants?: string [],
-    messages?: Message[]
+    threads?: Thread[]
   }) {
     this.userChatId = data.userChatId || '';
     this.chatId = data.chatId || '';
     this.participants = data.participants || [];
-    this.messages = data.messages || [];
+    this.threads = data.threads || [];
   }
 
 
-  addMessage(message: Message): void {
-    this.messages.push(message);
+  addThread(thread: Thread): void {
+    this.threads.push(thread);
   }
 
 
@@ -29,7 +29,7 @@ export class UserChat {
       userChatId: this.userChatId,
       chatId: this.chatId,
       participants: this.participants,
-      messages: this.messages.map(message => message.toJSON())
+      messages: this.threads.map(thread => thread.toJSON())
     }
   }
 

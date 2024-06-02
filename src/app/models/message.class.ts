@@ -37,7 +37,7 @@ export class Message {
     };
   }
 
-  static fromJSON(json: any): Message {
+  static fromJSON(json: any): Message {       // wird Methode noch benötigt ?
     const message = new Message(
       { id: json.senderId,
         name: json.senderName
@@ -52,46 +52,6 @@ export class Message {
     message.hoverReactionbar = json.hoverReactionbar;
     
     return message;
-  }
-
-  getFormattedDatestamp() {
-    const date = new Date(this.timestamp);
-    const month = date.getMonth();
-    const weekday = date.getDay();
-    const day = date.getDate();
-    const year = date.getFullYear();
-
-    const today = new Date();
-    const todayYear = today.getFullYear();
-    const todayMonth = today.getMonth();
-    const todayDay = today.getDate();
-
-    if (todayYear === year && todayMonth === month && todayDay === day) {
-      return "Heute";
-    } else {
-      return this.dateIsNotToday(weekday, month, day);
-    }
-  }
-
-  dateIsNotToday(weekday: number, month: number, day: number) {
-    const weekdays = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
-    const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
-
-    const weekdayName = weekdays[weekday];
-    const monthName = months[month];
-
-    const formattedDate = `${weekdayName}, ${day}. ${monthName}`;
-    return formattedDate;
-  }
-
-  getFormattedTimeStamp() {
-    const date = new Date(this.timestamp);
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-
-    const formattedTime = `${hours}:${minutes} Uhr`;
-
-    return formattedTime;
   }
 
 }
