@@ -41,7 +41,7 @@
       
       <div class="date-container">
         <div class="date-line"></div>
-        <div class="date"> {{ date.key }} </div>
+        <div class="date"> {{ dataService.formatDateForDisplay(date.key) }} </div>
         <div class="date-line"></div>
       </div>
       <div *ngFor="let thread of date.value">

@@ -18,7 +18,6 @@ export class DataService {
   constructor() {
     this.getUsersList();
     this.getChannelsList();
-    // this.getThreadsList();
     this.getUserChatsList();
   }
 
@@ -87,26 +86,7 @@ export class DataService {
       createdBy: data.createdBy
     }
   }
-
-  // getThreadsList(): Observable<Thread[]> {
-  //   return new Observable<Thread[]>(observer => {
-  //     const threadQuery = query(this.getThreadCollection(), where('channelId', '==', this.currentChannelId));
-  //     const unsubscribe = onSnapshot(threadQuery, list => {
-  //       this.allThreads = [];
-  //       list.forEach(thread => this.allThreads.push(new Thread(this.setThreadObject(thread.id, thread.data()))));      
-  //       // let threadsObj: Thread[] = [];
-  //       // this.allThreads.forEach(thread => threadsObj.push(new Thread(thread)))     
-
-  //       this.sortThreadByFirstMessageTimestamp();
-  //       const groupedThreads = this.groupThreadsByDate();
-  //       this.groupedChannelThreads.next(groupedThreads); // Update the BehaviorSubject
-  //       observer.next(this.allThreads);
-  //     });
-  //     return { unsubscribe };
-  //   });
-  // }
-
-
+  
   getThreadsList() {
     this.groupedThreads = {};
     this.firstLoad = true;
@@ -117,24 +97,11 @@ export class DataService {
         const threadData = this.setThreadObject(change.doc.id, change.doc.data());
   
         if (change.type === 'added') {
-          const newThread = new Thread(threadData);
-          this.allThreads.push(newThread);
-  
-          if (!this.firstLoad) {
-            this.addThreadToGroup(newThread);
-          }
+          this.addThreads(threadData);
         } else if (change.type === 'modified') {
-          const modifiedThreadIndex = this.allThreads.findIndex(thread => thread.threadId === change.doc.id);
-          if (modifiedThreadIndex !== -1) {
-            this.allThreads[modifiedThreadIndex] = new Thread(threadData);
-            this.updateThreadInGroup(this.allThreads[modifiedThreadIndex]);
-          }
+          this.modifyThreads(threadData, change);
         } else if (change.type === 'removed') {
-          const removedThreadIndex = this.allThreads.findIndex(thread => thread.threadId === change.doc.id);
-        if (removedThreadIndex !== -1) {
-          const removedThread = this.allThreads.splice(removedThreadIndex, 1)[0];
-          this.removeThreadFromGroup(removedThread);
-        }
+          this.removeThreads(change);
         }
       });
   
@@ -143,50 +110,68 @@ export class DataService {
         this.groupedThreads = this.groupThreadsByDate();
         this.firstLoad = false;
       }
-  
-      // Update the BehaviorSubject
-      console.log(this.groupedThreads);
-      
       this.groupedChannelThreads.next(this.groupedThreads);
     });
   }
 
-  addThreadToGroup(newThread: Thread) {
-    const date = new Date(newThread.timestamp).toLocaleDateString();
+  addThreads(threadData: any) {
+    const newThread = new Thread(threadData);
+    this.allThreads.push(newThread);
+
+    if (!this.firstLoad) {
+      this.addThreadToGroup(newThread);
+    }
+  }
+
+  modifyThreads(threadData: any, change: any) {
+    const modifiedThreadIndex = this.allThreads.findIndex(thread => thread.threadId === change.doc.id);
+    if (modifiedThreadIndex !== -1) {
+      this.allThreads[modifiedThreadIndex] = new Thread(threadData);
+      this.updateThreadInGroup(this.allThreads[modifiedThreadIndex]);
+    }
+  }
+
+  removeThreads(change: any) {
+    const removedThreadIndex = this.allThreads.findIndex(thread => thread.threadId === change.doc.id);
+    if (removedThreadIndex !== -1) {
+      const removedThread = this.allThreads.splice(removedThreadIndex, 1)[0];
+      this.removeThreadFromGroup(removedThread);
+    }
+  }
+
+  addThreadToGroup(thread: Thread) {
+    const date = new Date(thread.timestamp).toISOString().split('T')[0]; // Format: YYYY-MM-DD
     if (!this.groupedThreads[date]) {
       this.groupedThreads[date] = [];
     }
-    this.groupedThreads[date].push(newThread);
+    this.groupedThreads[date].push(thread);
   }
   
-  updateThreadInGroup(updatedThread: Thread) {
-    const date = new Date(updatedThread.timestamp).toLocaleDateString();
-    if (this.groupedThreads[date]) {
-      const threadIndex = this.groupedThreads[date].findIndex((thread: Thread) => thread.threadId === updatedThread.threadId);
+  updateThreadInGroup(thread: Thread) {
+    const date = new Date(thread.timestamp).toISOString().split('T')[0];
+    const group = this.groupedThreads[date];
+    if (group) {
+      const threadIndex = group.findIndex((t: Thread) => t.threadId === thread.threadId);
       if (threadIndex !== -1) {
-        this.groupedThreads[date][threadIndex] = updatedThread;
+        group[threadIndex] = thread;
       }
     }
   }
   
-removeThreadFromGroup(thread: Thread) {
-  const date = new Date(thread.timestamp).toLocaleDateString();
-  const group = this.groupedThreads[date];
-
-  if (group) {
-    const threadIndex = group.findIndex((t: any) => t.threadId === thread.threadId);
-    if (threadIndex !== -1) {
-      group.splice(threadIndex, 1);
-      if (group.length === 0) {
-        delete this.groupedThreads[date];
-      } else {
-        this.groupedThreads[date] = group;
+  removeThreadFromGroup(thread: Thread) {
+    const date = new Date(thread.timestamp).toISOString().split('T')[0];
+    const group = this.groupedThreads[date];
+  
+    if (group) {
+      const threadIndex = group.findIndex((t: Thread) => t.threadId === thread.threadId);
+      if (threadIndex !== -1) {
+        group.splice(threadIndex, 1);
+        if (group.length === 0) {
+          delete this.groupedThreads[date];
+        }
       }
     }
   }
-}
-
-
 
   getThreadCollection() {
     return collection(this.firestore, 'threads');
@@ -207,7 +192,7 @@ removeThreadFromGroup(thread: Thread) {
 
   groupThreadsByDate(): { [key: string]: Thread[] } {
     return this.allThreads.reduce((groups, thread) => {
-      const date = new Date(thread.timestamp).toLocaleDateString();
+      const date = new Date(thread.timestamp).toISOString().split('T')[0]; // Format: YYYY-MM-DD
       if (!groups[date]) {
         groups[date] = [];
       }
@@ -216,7 +201,10 @@ removeThreadFromGroup(thread: Thread) {
     }, {} as { [key: string]: Thread[] });
   }
 
-
+  formatDateForDisplay(date: string): string {
+    const [year, month, day] = date.split('-');
+    return `${day}-${month}-${year}`;
+  }
 
 
   getUserChatsList() {
@@ -269,8 +257,6 @@ removeThreadFromGroup(thread: Thread) {
       console.log("Document written with ID: ", docRef?.id)
     });
   }
-
-
 
   async updateUser(user: User) {
     let docRef = this.getUserDocRef(user.id);
