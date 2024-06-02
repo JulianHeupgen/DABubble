@@ -16,9 +16,8 @@ import { CommonModule } from '@angular/common';
 })
 export class UserChatMessageReactionComponent {
 
-  @Input() threadMessage!: any;
   @Input() currentUser!: User;
-  @Input() message!: Message;
+  @Input() message!: any;
 
   usersForReaction: User[] = [];
   emojiSubscription: Subscription;
@@ -29,8 +28,8 @@ export class UserChatMessageReactionComponent {
     private messageService: MessageService
   ) {
     this.emojiSubscription = this.emojiService.emojiEvent$.subscribe(event => {
-      if (event.sender === 'UserChatMessageReactionComponent' && event.messageTimestamp === this.threadMessage.timestamp) {
-        this.reactToMessage(this.threadMessage, event.emoji);
+      if (event.sender === 'UserChatMessageReactionComponent' && event.messageTimestamp === this.message.timestamp) {
+        this.reactToMessage(this.message, event.emoji);
       }
     });
   }
@@ -59,7 +58,7 @@ export class UserChatMessageReactionComponent {
 
 
   getEmojiReactions(user: User) {
-    this.threadMessage.emojiReactions.forEach((emojiReaction: any) => {
+    this.message.emojiReactions.forEach((emojiReaction: any) => {
       this.searchUserInReactions(user, emojiReaction);
     });
   }
@@ -78,7 +77,7 @@ export class UserChatMessageReactionComponent {
 
 
   updateThreadMessageReactions() {
-    this.threadMessage.emojiReactions = this.threadMessage.emojiReactions.map((reaction: any) => {
+    this.message.emojiReactions = this.message.emojiReactions.map((reaction: any) => {
       reaction.users = reaction.usersDetail || reaction.users;
       delete reaction.usersDetail;
       return reaction;

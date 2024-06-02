@@ -1,6 +1,6 @@
 <div class="chat-reactions">
-    <div class="reaction" *ngFor="let reactions of threadMessage.emojiReactions"
-      (click)="reactToMessage(this.threadMessage, reactions.reaction)">
+    <div class="reaction" *ngFor="let reactions of message.emojiReactions"
+      (click)="reactToMessage(this.message, reactions.reaction)">
   
       <div class="who-reacted">
         <ng-container *ngIf="reactions.reaction.includes('png')">
