@@ -104,5 +104,10 @@ export class Thread {
     }
   }
 
+  static fromJSON(json: any): Thread { 
+    const thread = new Thread(json);
+    return thread;
+  }
+
 }
 
