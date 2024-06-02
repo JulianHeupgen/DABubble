@@ -17,11 +17,9 @@ import { EmojiMartComponent } from '../emoji-mart/emoji-mart.component';
 import { CommonModule } from '@angular/common';
 import { AddImgToMessageComponent } from '../add-img-to-message/add-img-to-message.component';
 import { EmojiCommunicationService } from '../../services/emoji-communication.service';
-import { ChannelThreadComponent } from '../channel-chat/channel-thread/channel-thread.component';
-import { EditChannelComponent } from '../channel-chat/edit-channel/edit-channel.component';
-import { ChannelParticipantsComponent } from '../channel-chat/channel-participants/channel-participants.component';
 import { UserChat } from '../../models/user-chat';
 import { Thread } from '../../models/thread.class';
+import { ChannelThreadComponent } from '../channel-chat/channel-thread/channel-thread.component';
 
 
 @Component({
@@ -35,7 +33,6 @@ import { Thread } from '../../models/thread.class';
     MatList,
     MatListModule,
     CommonModule,
-    ChannelThreadComponent,
     ReactiveFormsModule,
     MatDialogModule,
     MatMenuModule,
@@ -44,8 +41,7 @@ import { Thread } from '../../models/thread.class';
     MatAutocompleteModule,
     EmojiMartComponent,
     AddImgToMessageComponent,
-    EditChannelComponent,
-    ChannelParticipantsComponent
+    ChannelThreadComponent
   ],
   templateUrl: './user-chat.component.html',
   styleUrl: './user-chat.component.scss'
@@ -116,7 +112,7 @@ export class UserChatComponent {
   }
 
 
-  
+
   dataSubscriptions() {
     if(this.userSub) {
       this.userSub.unsubscribe();
