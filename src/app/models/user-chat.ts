@@ -29,7 +29,7 @@ export class UserChat {
       userChatId: this.userChatId,
       chatId: this.chatId,
       participants: this.participants,
-      messages: this.threads.map(thread => thread.toJSON())
+      threads: this.threads.map(thread => thread.toJSON())
     }
   }
 

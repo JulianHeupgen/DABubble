@@ -235,7 +235,7 @@ export class DataService {
     return {
       userChatId: id,
       participants: data.participants,
-      messages: data.messages
+      threads: data.threads
     }
   }
 
