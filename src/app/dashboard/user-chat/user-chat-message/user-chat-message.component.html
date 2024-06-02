@@ -5,26 +5,21 @@
       <div class="reaction-menu" [class.set-reaction-menu-hover]="setReactionMenuHover">
     
         <div class="icon" (click)="messageReaction.reactToMessage(message, 'check-mark.png')">
-          <img src="../../../../assets/img/check-mark.png">
+          <img src="assets/img/check-mark.png">
         </div>
     
         <div class="icon" (click)="messageReaction.reactToMessage(message, 'hands-up.png')">
-          <img src="../../../../assets/img/hands-up.png">
+          <img src="assets/img/hands-up.png">
         </div>
     
         <app-emoji-mart [emojiImg]="'emoji-reaction.png'" [emojiImgHover]="'emoji-reaction-hover.png'"
           [assigningComponent]="'UserChatMessageReactionComponent'" [threadId]="message.senderId" [message]="message">
         </app-emoji-mart>
     
-        <div class="icon">
-          <img class="not-hover-icon" src="../../../../assets/img/comment.png">
-          <img class="hover-icon" src="../../../../assets/img/comment-hover.png">
-        </div>
-    
         <div class="icon" *ngIf="isCurrentUser">
-          <img class="not-hover-icon" src="../../../../assets/img/dots.png" alt="">
+          <img class="not-hover-icon" src="assets/img/dots.png">
           <button class="hover-icon" mat-button [matMenuTriggerFor]="editMessage" (click)="setReactionMenuHover = true">
-            <img src="../../../../assets/img/dots-hover.png" alt="">
+            <img src="assets/img/dots-hover.png">
           </button>
           <mat-menu class="edit-message-btn" #editMessage="matMenu">
             <button mat-menu-item (click)="editThreadMessage()">Nachricht bearbeiten</button>
@@ -49,7 +44,7 @@
         <div class="message-textarea" *ngIf="editMessage">
           <div class="message-textarea-content">
             <div class="img-container" *ngIf="message.imgFileURL.length > 1">
-              <img class="delete-icon" src="../../../../assets/img/close.png" (click)="deleteImg(this.message)">
+              <img class="delete-icon" src="assets/img/close.png" (click)="deleteImg(this.message)">
               <img class="message-img" src="{{ message.imgFileURL }}">
             </div>
               <textarea #editMessageBox>{{ message.content }}</textarea>
