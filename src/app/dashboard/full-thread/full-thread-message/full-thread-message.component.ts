@@ -6,7 +6,7 @@ import { DataService } from '../../../services/data.service';
 import { MessageReactionComponent } from '../../channel-chat/message-reaction/message-reaction.component';
 import { User } from '../../../models/user.class';
 import { Firestore, Unsubscribe, doc, onSnapshot } from '@angular/fire/firestore';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ThreadService } from '../../../services/thread.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { deleteObject, getStorage, ref } from '@angular/fire/storage';
@@ -25,7 +25,8 @@ import { Message } from '../../../models/message.class';
   styleUrls: [
     './full-thread-message.component.scss',
     '../full-thread.component.scss',
-    '../../channel-chat/channel-thread/channel-thread.component.scss'
+    '../../channel-chat/channel-thread/channel-thread.component.scss',
+    '../../channel-chat/channel-chat.component.scss',
   ]
 })
 export class FullThreadMessageComponent {
@@ -36,7 +37,7 @@ export class FullThreadMessageComponent {
 
   threadMessages: any[] = [];
   imgFile: string = '';
-
+  groupedMessages: { [key: string]: any[] } = {};
   
   // setReactionMenuHover: boolean = false;
   // editMessage: boolean = false;
@@ -45,7 +46,7 @@ export class FullThreadMessageComponent {
   private threadUnsubscribe!: Unsubscribe;
 
   constructor(
-    private dataService: DataService,
+    public dataService: DataService,
     public threadService: ThreadService,
     private firebase: Firestore
   ) { }
@@ -56,16 +57,16 @@ export class FullThreadMessageComponent {
         this.thread = event.thread;
         this.currentUser = event.currentUser;
       }
-      this.loadThreadMessages();
-      // this.listenForThreadChanges();
+      // this.loadThreadMessages();
+      this.listenForThreadChanges();
     });
-    this.loadThreadMessages();
-    this.listenForThreadChanges();
+      this.listenForThreadChanges();
+      // this.loadThreadMessages();
   }
 
   listenForThreadChanges() {
+    this.groupedMessages = {};
     this.threadUnsubscribe = onSnapshot(doc(this.firebase, "threads", this.thread.threadId), (doc) => {
-      // console.log('DocData', doc.data());
       let data = doc.data();
       if (data) {
         let threadData = {
@@ -96,12 +97,20 @@ export class FullThreadMessageComponent {
       }
       this.threadMessages.push(message);
     });
+    this.threadMessages.splice(0,1);
+    this.groupedMessages = this.groupThreadsByDate();
   }
 
-  // isCurrentUser(obj: any) {
-  // console.log('isCurrentUSer', obj);
-  
-  // }
+  groupThreadsByDate(): { [key: string]: Thread[] } {
+    return this.threadMessages.reduce((groups, thread) => {
+      const date = new Date(thread.timestamp).toISOString().split('T')[0]; // Format: YYYY-MM-DD
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(thread);
+      return groups;
+    }, {} as { [key: string]: Thread[] });
+  }
 
   getFormattedDatestamp(timestamp: number): any {
     const date = new Date(timestamp);
@@ -123,11 +132,6 @@ export class FullThreadMessageComponent {
     return formattedTime;
   }
 
-  // getMessageContent(element: any) {
-  //   // console.log('Message Element:', element);
-
-  // }
-
   editThreadMessageReply(messageObj: Message) {    
     messageObj.hoverReactionbar = true;
     messageObj.editMode = true;
@@ -139,7 +143,6 @@ export class FullThreadMessageComponent {
     if (index !== -1) {
       threadObj.messages.splice(index, 1);
     }
-    console.log('newThread:', threadObj);
     this.threadService.copyThreadForFirebase(threadObj)
   }
 
@@ -149,8 +152,7 @@ export class FullThreadMessageComponent {
   }
 
   async saveEditMessage(threadObj: Thread, messageObj: Message) {
-    messageObj.content = this.editMessageReply.nativeElement.value
-    console.log('NewThread:', threadObj);
+    messageObj.content = this.editMessageReply.nativeElement.value;
     
     if(this.isImgFileEdited) {
     const storage = getStorage();
