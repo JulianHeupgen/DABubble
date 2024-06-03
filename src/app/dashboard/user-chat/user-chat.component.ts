@@ -205,8 +205,8 @@ export class UserChatComponent {
 
      if(this.currentUserChat) {
        for (let i = 0; i < this.currentUserChat.threads.length; i++) {
-         let thread = this.currentUserChat.threads[i];
-         thread = Thread.fromJSON(thread);
+         let threadData = this.currentUserChat.threads[i];
+         let thread = Thread.fromJSON(threadData);
          this.currentUserChatThreads.push(thread);
     }}
    this.currentUserChat.threads = this.currentUserChatThreads;

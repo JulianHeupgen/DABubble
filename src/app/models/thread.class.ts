@@ -9,7 +9,7 @@ export class Thread {
   constructor(data: {
     threadId?: string,
     channelId?: string,
-    messages?: string[],
+    messages?: any[],
     timestamp: any
   }) {
     this.threadId = data.threadId || '';
@@ -99,13 +99,18 @@ export class Thread {
     return {
       threadId: this.threadId,
       channelId: this.channelId,
-      messages: this.messages,
+      messages: this.messages.map(message => message.toJSON()),
       timestamp: this.timestamp
     }
   }
 
   static fromJSON(json: any): Thread { 
-    const thread = new Thread(json);
+    const thread = new Thread({
+      threadId: json.threadId,
+      channelId: json.channelId,
+      messages: json.messages,
+      timestamp: json.timestamp
+    });
     return thread;
   }
 

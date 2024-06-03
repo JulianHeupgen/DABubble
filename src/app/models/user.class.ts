@@ -87,7 +87,7 @@ export class User {
     }
 
     if(currentUserChat != undefined) {
-      const newThread = new Thread({timestamp: new Date});
+      const newThread = new Thread({timestamp: new Date().getTime});
       let newMessage = new Message(this, messageContent, imgFileURL);
       newThread.messages.push(newMessage);
       currentUserChat.addThread(newThread);
@@ -97,7 +97,7 @@ export class User {
         currentUserChat = new UserChat({
           participants: [this.id, recipient.id],
         });
-        const newThread = new Thread({timestamp: new Date});
+        const newThread = new Thread({timestamp: new Date().getTime()});
         let newMessage = new Message(this, messageContent, imgFileURL);
         newThread.messages.push(newMessage);
         currentUserChat.addThread(newThread);

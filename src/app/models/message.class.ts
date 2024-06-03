@@ -37,7 +37,7 @@ export class Message {
     };
   }
 
-  static fromJSON(json: any): Message {       // wird Methode noch benötigt ?
+  static fromJSON(json: any): Message {       
     const message = new Message(
       { id: json.senderId,
         name: json.senderName
