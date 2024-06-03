@@ -7,7 +7,6 @@ import { StorageService } from '../../services/storage.service';
 import { DataService } from '../../services/data.service';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.class';
-import { Observable, Subscription, firstValueFrom, map, startWith } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -20,6 +19,11 @@ import { EmojiCommunicationService } from '../../services/emoji-communication.se
 import { UserChat } from '../../models/user-chat';
 import { Thread } from '../../models/thread.class';
 import { ChannelThreadComponent } from '../channel-chat/channel-thread/channel-thread.component';
+import { ChannelChatComponent } from '../channel-chat/channel-chat.component';
+import { Subscription, Observable, firstValueFrom } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { ThreadService } from '../../services/thread.service';
+import { DashboardComponent } from '../dashboard.component';
 
 
 @Component({
@@ -41,11 +45,13 @@ import { ChannelThreadComponent } from '../channel-chat/channel-thread/channel-t
     MatAutocompleteModule,
     EmojiMartComponent,
     AddImgToMessageComponent,
-    ChannelThreadComponent
+    ChannelThreadComponent,
+    ChannelChatComponent
   ],
   templateUrl: './user-chat.component.html',
-  styleUrl: './user-chat.component.scss'
+  styleUrl: './user-chat.component.scss',
 })
+
 export class UserChatComponent {
 
   @ViewChild("threadContainer") threadContainer!: ElementRef;
@@ -55,7 +61,6 @@ export class UserChatComponent {
   @ViewChild(AddImgToMessageComponent) addImgToMessageComponent!: AddImgToMessageComponent;
   emojiSubscription: Subscription;
 
-
   constructor(
     public dataService: DataService,
     private route: ActivatedRoute,
@@ -63,6 +68,7 @@ export class UserChatComponent {
     private auth: AuthService,
     private formBuilder: FormBuilder,
     private emojiService: EmojiCommunicationService,
+    public threadService: ThreadService,
     public dialog: MatDialog
   ) {
     this.emojiSubscription = this.emojiService.emojiEvent$.subscribe(

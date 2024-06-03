@@ -49,8 +49,9 @@ import { AddUsersComponent } from '../../dialog/add-users/add-users.component';
     ChannelParticipantsComponent
   ],
   templateUrl: "./channel-chat.component.html",
-  styleUrl: "./channel-chat.component.scss",
+  styleUrl: "./channel-chat.component.scss"
 })
+
 export class ChannelChatComponent {
 
   @ViewChild("threadContainer") threadContainer!: ElementRef;

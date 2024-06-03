@@ -21,8 +21,9 @@ import { deleteObject, getStorage, ref } from '@angular/fire/storage';
     MatMenuModule,
   ],
   templateUrl: './channel-thread.component.html',
-  styleUrl: './channel-thread.component.scss'
+  styleUrl: './channel-thread.component.scss',
 })
+
 export class ChannelThreadComponent {
 
   @Input() thread!: Thread;
@@ -33,7 +34,6 @@ export class ChannelThreadComponent {
   isCurrentUser: boolean = false;
   setReactionMenuHover: boolean = false;
   editMessage: boolean = false;
-
   imgFile: string = '';
   isImgFileEdited: boolean = false;
 
@@ -41,7 +41,7 @@ export class ChannelThreadComponent {
     public channelChat: ChannelChatComponent,
     public dashboard: DashboardComponent,
     public dataService: DataService,
-    public threadService: ThreadService,
+    public threadService: ThreadService
   ) { }
 
   ngOnInit() {
@@ -77,7 +77,7 @@ export class ChannelThreadComponent {
     try {
       await this.threadService.openFullThread(true);
       setTimeout(() => {
-        this.threadService.changeThread(thread, this.threadUser, this.channelChat.currentChannel, this.channelChat.currentUser);
+        this.threadService.changeThread(thread, this.threadUser, this.channelChat.currentChannel, this.channelChat.currentUser); 
       }, 0);
     } catch (error) {
       console.error('Error opening thread:', error);
