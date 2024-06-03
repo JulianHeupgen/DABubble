@@ -61,6 +61,7 @@ export class UserChatComponent {
   @ViewChild("imgBox") imgBox!: ElementRef<any>;
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
   @ViewChild(AddImgToMessageComponent) addImgToMessageComponent!: AddImgToMessageComponent;
+
   emojiSubscription: Subscription;
 
   constructor(
