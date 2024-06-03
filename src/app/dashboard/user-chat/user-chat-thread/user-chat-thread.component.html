@@ -1,0 +1,85 @@
+@defer (on idle; prefetch on idle) {
+
+    <div class="channel-chat-message" [class.other-users-channel-chat-message]="!currentUserIsMessageOwner">
+    
+      <div class="reaction-menu" [class.set-reaaction-menu-hover]="setReactionMenuHover">
+    
+        <div class="icon" (click)="messageReaction.reactToThread(thread.messages[0], 'check-mark.png')">
+          <img src="assets/img/check-mark.png" alt="">
+        </div>
+    
+        <div class="icon" (click)="messageReaction.reactToThread(thread.messages[0], 'hands-up.png')">
+          <img src="assets/img/hands-up.png" alt="">
+        </div>
+    
+        <app-emoji-mart [emojiImg]="'emoji-reaction.png'" [emojiImgHover]="'emoji-reaction-hover.png'"
+          [assigningComponent]="'MessageReactionComponent'" [threadId]="thread.threadId" [message]="thread.messages[0]">
+        </app-emoji-mart>
+    
+        <div class="icon" *ngIf="currentUserIsMessageOwner">
+          <img class="not-hover-icon" src="assets/img/dots.png" alt="">
+          <button class="hover-icon" mat-button [matMenuTriggerFor]="editMessage" (click)="setReactionMenuHover = true">
+            <img src="assets/img/dots-hover.png" alt="">
+          </button>
+          <mat-menu class="edit-message-btn" #editMessage="matMenu">
+            <button mat-menu-item (click)="editThreadMessage()">Nachricht bearbeiten</button>
+            <button class="delete-btn" mat-menu-item (click)="dataService.deleteThread(this.thread.threadId)">Nachricht löschen</button>
+          </mat-menu>
+        </div>
+    
+      </div>
+    
+      <div class="channel-chat-content">
+        <div class="channel-chat-time-sender">
+          <span>{{ formattedTimeStamp() }}</span>
+          <h3>{{ threadUser.name }}</h3>
+        </div>
+        <div class="message" *ngIf="!editMessage">
+          <img *ngIf="thread.messages[0].imgFileURL.length > 1" src="{{ thread.messages[0].imgFileURL }}" alt="">
+          <span [class.other-users-message]="!currentUserIsMessageOwner">
+            {{ thread.messages[0].content }}
+          </span>
+        </div>
+    
+        <div class="message-textarea" *ngIf="editMessage">
+          <div class="message-textarea-content">
+            <div class="img-container" *ngIf="thread.messages[0].imgFileURL.length > 1">
+              <img class="delete-icon" src="../../../../assets/img/close.png" alt="" (click)="deleteImg(this.thread)">
+              <img class="message-img" src="{{ thread.messages[0].imgFileURL }}" alt="">
+            </div>
+              <textarea #editMessageBox>{{ thread.messages[0].content }}</textarea>
+          </div>
+          <div class="edit-message-btns">
+            <span (click)="cancelEditMessage()">Abbrechen</span>
+            <span (click)="saveEditMessage(this.thread)">Speichern</span>
+          </div>
+        </div>
+    
+        <div class="reaction-and-answercount">
+    
+          <span *ngIf="thread.messages.length > 1 && thread.messages.length < 3">
+            {{ thread.messages.length - 1 }} Antwort
+          </span>
+    
+          <span *ngIf="thread.messages.length >= 3">
+            {{ thread.messages.length - 1 }} Antworten
+          </span>
+    
+          <div class="reaction-bar">
+            <app-message-reaction [threadMessage]="thread.messages[0]" [thread]="thread"
+              [currentUser]="userChat.currentUser"></app-message-reaction>
+            <app-emoji-mart [emojiImg]="'emoji-reaction.png'" [emojiImgHover]="'emoji-reaction-hover.png'"
+              [assigningComponent]="'MessageReactionComponent'" [threadId]="thread.threadId"
+              *ngIf="thread.messages[0].emojiReactions.length > 0">
+            </app-emoji-mart>
+          </div>
+        </div>
+    
+      </div>
+    
+      <div class="channel-chat-sender-img">
+        <img src="{{ threadUser.imageUrl }}" alt="">
+      </div>
+    
+    </div>
+    }
