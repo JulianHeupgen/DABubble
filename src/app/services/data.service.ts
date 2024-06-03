@@ -90,7 +90,6 @@ export class DataService {
   getThreadsList() {
     this.groupedThreads = {};
     this.firstLoad = true;
-
     const threadQuery = query(this.getThreadCollection(), where('channelId', '==', this.currentChannelId));
     const unsubscribe = onSnapshot(threadQuery, list => {
       list.docChanges().forEach(change => {
@@ -204,7 +203,7 @@ export class DataService {
   formatDateForDisplay(date: string): string {
     const today = new Date().toISOString().split('T')[0];
     const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
-    
+
     if (date === today) {
       return 'Heute';
     } else if (date === yesterday) {
@@ -213,7 +212,7 @@ export class DataService {
       const [year, month, day] = date.split('-');
       return `${day}.${month}.${year}`;
     }
-    
+
   }
 
 

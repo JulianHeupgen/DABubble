@@ -24,6 +24,7 @@ import { Subscription, Observable, firstValueFrom } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ThreadService } from '../../services/thread.service';
 import { DashboardComponent } from '../dashboard.component';
+import { UserChatThreadComponent } from './user-chat-thread/user-chat-thread.component';
 
 
 @Component({
@@ -46,7 +47,8 @@ import { DashboardComponent } from '../dashboard.component';
     EmojiMartComponent,
     AddImgToMessageComponent,
     ChannelThreadComponent,
-    ChannelChatComponent
+    ChannelChatComponent,
+    UserChatThreadComponent
   ],
   templateUrl: './user-chat.component.html',
   styleUrl: './user-chat.component.scss',
@@ -59,6 +61,7 @@ export class UserChatComponent {
   @ViewChild("imgBox") imgBox!: ElementRef<any>;
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
   @ViewChild(AddImgToMessageComponent) addImgToMessageComponent!: AddImgToMessageComponent;
+
   emojiSubscription: Subscription;
 
   constructor(
@@ -204,11 +207,12 @@ export class UserChatComponent {
     this.currentUserChatThreads = [];
 
      if(this.currentUserChat) {
-       for (let i = 0; i < this.currentUserChat.threads.length; i++) {
-         let threadData = this.currentUserChat.threads[i];
-         let thread = Thread.fromJSON(threadData);
-         this.currentUserChatThreads.push(thread);
-    }}
+      if(this.currentUserChat.threads.length > 0) {
+        for (let i = 0; i < this.currentUserChat.threads.length; i++) {
+          let threadData = this.currentUserChat.threads[i];
+          let thread = Thread.fromJSON(threadData);
+          this.currentUserChatThreads.push(thread);
+    }}}
    this.currentUserChat.threads = this.currentUserChatThreads;
   }
 
