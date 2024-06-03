@@ -1,66 +1,59 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Thread } from '../../../models/thread.class';
-import { CommonModule } from '@angular/common';
-import { EmojiMartComponent } from '../../emoji-mart/emoji-mart.component';
-import { ChannelChatComponent } from '../channel-chat.component';
-import { MessageReactionComponent } from '../message-reaction/message-reaction.component';
-import { DashboardComponent } from '../../dashboard.component';
+import { MessageReactionComponent } from '../../channel-chat/message-reaction/message-reaction.component';
+import { User } from '../../../models/user.class';
+import { UserChatComponent } from '../user-chat.component';
 import { DataService } from '../../../services/data.service';
 import { ThreadService } from '../../../services/thread.service';
-import { MatMenuModule } from '@angular/material/menu';
-import { User } from '../../../models/user.class';
+import { EmojiMartComponent } from '../../emoji-mart/emoji-mart.component';
+import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { deleteObject, getStorage, ref } from '@angular/fire/storage';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-channel-thread',
+  selector: 'app-user-chat-thread',
   standalone: true,
-  imports: [
-    CommonModule,
-    MessageReactionComponent,
-    EmojiMartComponent,
-    MatMenuModule,
-  ],
-  templateUrl: './channel-thread.component.html',
-  styleUrl: './channel-thread.component.scss',
+  imports: [EmojiMartComponent, MatMenuTrigger, MatMenu, MessageReactionComponent, CommonModule],
+  templateUrl: './user-chat-thread.component.html',
+  styleUrl: './user-chat-thread.component.scss'
 })
-
-export class ChannelThreadComponent {
+export class UserChatThreadComponent {
 
   @Input() thread!: Thread;
 
   @ViewChild(MessageReactionComponent) messageReaction!: MessageReactionComponent;
   @ViewChild("editMessageBox") editMessageBox!: ElementRef;
-  threadUser!: User
-  isCurrentUser: boolean = false;
+  threadOwner!: User
+  currentUserIsMessageOwner: boolean = false;
   setReactionMenuHover: boolean = false;
   editMessage: boolean = false;
   imgFile: string = '';
   isImgFileEdited: boolean = false;
 
+
   constructor(
-    public channelChat: ChannelChatComponent,
-    public dashboard: DashboardComponent,
+    public userChat: UserChatComponent,
     public dataService: DataService,
     public threadService: ThreadService
-  ) { }
+  ) {}
+
 
   ngOnInit() {
-    let currentUserId = this.channelChat.currentUser.id;
+    let currentUserId = this.userChat.currentUser.id;
     let messageOwnerId = this.thread.messages[0].senderId
     if (currentUserId == messageOwnerId) {
-      this.isCurrentUser = true;
+      this.currentUserIsMessageOwner = true;
+      this.threadOwner = this.userChat.currentUser;
     } else {
-      this.isCurrentUser = false;
+      this.currentUserIsMessageOwner = false;
+      this.findThreadOwner(messageOwnerId);
     }
-    this.findThreadUser(messageOwnerId);
   }
 
-  findThreadUser(messageOwnerId: string) {
+  findThreadOwner(messageOwnerId: string) {
     this.dataService.allUsers.forEach(user => {
       if (user.id == messageOwnerId) {
-        this.threadUser = user;
-        // console.log('Thread User',this.threadUser);
-
+        this.threadOwner = user;
       }
     })
   }
@@ -71,17 +64,6 @@ export class ChannelThreadComponent {
 
   formattedTimeStamp(): any {
     return this.thread.getFormattedTimeStamp();
-  }
-
-  async openThread(thread: Thread) {
-    try {
-      await this.threadService.openFullThread(true);
-      setTimeout(() => {
-        this.threadService.changeThread(thread, this.threadUser, this.channelChat.currentChannel, this.channelChat.currentUser); 
-      }, 0);
-    } catch (error) {
-      console.error('Error opening thread:', error);
-    }
   }
 
   editThreadMessage() {
@@ -102,7 +84,7 @@ export class ChannelThreadComponent {
     deleteObject(desertRef).then(() => {
       messageElement.messages[0].imgFileURL = '';
     }).catch((error) => {
-      // Uh-oh, an error occurred!
+      console.log(error);
     });    
     }
     this.threadService.copyThreadForFirebase(messageElement)
@@ -114,5 +96,5 @@ export class ChannelThreadComponent {
     this.isImgFileEdited = true;
     obj.messages[0].imgFileURL = '';
   }
-}
 
+}
