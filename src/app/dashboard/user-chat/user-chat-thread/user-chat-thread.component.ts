@@ -23,7 +23,7 @@ export class UserChatThreadComponent {
 
   @ViewChild(MessageReactionComponent) messageReaction!: MessageReactionComponent;
   @ViewChild("editMessageBox") editMessageBox!: ElementRef;
-  threadUser!: User
+  threadOwner!: User
   currentUserIsMessageOwner: boolean = false;
   setReactionMenuHover: boolean = false;
   editMessage: boolean = false;
@@ -43,16 +43,17 @@ export class UserChatThreadComponent {
     let messageOwnerId = this.thread.messages[0].senderId
     if (currentUserId == messageOwnerId) {
       this.currentUserIsMessageOwner = true;
+      this.threadOwner = this.userChat.currentUser;
     } else {
       this.currentUserIsMessageOwner = false;
+      this.findThreadOwner(messageOwnerId);
     }
-    this.findThreadOwner(messageOwnerId);
   }
 
   findThreadOwner(messageOwnerId: string) {
     this.dataService.allUsers.forEach(user => {
       if (user.id == messageOwnerId) {
-        this.threadUser = user;
+        this.threadOwner = user;
       }
     })
   }
