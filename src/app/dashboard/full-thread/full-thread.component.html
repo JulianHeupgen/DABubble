@@ -8,76 +8,82 @@
             <img src="../../../assets/img/close.png" alt="">
         </div>
     </div>
+
+
     <div class="channel-history" *ngIf="thread && thread.messages && thread.messages[0] && threadOwner">
-        <div class="channel-chat-message" [class.other-users-channel-chat-message]="!isCurrentUser">
-            <div class="reaction-menu" *ngIf="isCurrentUser">
-                <div class="icon" *ngIf="isCurrentUser">
-                    <img class="not-hover-icon" src="../../../../assets/img/dots.png" alt="">
-                    <button class="hover-icon" mat-button [matMenuTriggerFor]="editMessage"
-                        (click)="setReactionMenuHover= true">
-                        <img src="../../../../assets/img/dots-hover.png" alt="">
-                    </button>
-                    <mat-menu class="edit-message-btn" #editMessage="matMenu">
-                        <button mat-menu-item (click)="editThreadMessage(this.thread.messages[0])">Nachricht bearbeiten</button>
-                        <button class="delete-btn" mat-menu-item
-                            (click)="dataService.deleteThread(this.thread.threadId)">Nachricht löschen</button>
-                    </mat-menu>
+        <div class="chat-history">
+
+
+            <div class="channel-chat-message" [class.other-users-channel-chat-message]="!isCurrentUser">
+                <div class="reaction-menu" *ngIf="isCurrentUser">
+                    <div class="icon" *ngIf="isCurrentUser">
+                        <img class="not-hover-icon" src="../../../../assets/img/dots.png" alt="">
+                        <button class="hover-icon" mat-button [matMenuTriggerFor]="editMessage"
+                            (click)="setReactionMenuHover= true">
+                            <img src="../../../../assets/img/dots-hover.png" alt="">
+                        </button>
+                        <mat-menu class="edit-message-btn" #editMessage="matMenu">
+                            <button mat-menu-item (click)="editThreadMessage(this.thread.messages[0])">Nachricht
+                                bearbeiten</button>
+                            <button class="delete-btn" mat-menu-item
+                                (click)="dataService.deleteThread(this.thread.threadId)">Nachricht löschen</button>
+                        </mat-menu>
+                    </div>
+
+
+
                 </div>
 
 
 
-            </div>
+                <div class="channel-chat-content">
+                    <div class="channel-chat-time-sender">
+                        <span>{{thread.getFormattedTimeStamp()}}</span>
+                        <h3>{{ threadOwner.name }}</h3>
+                    </div>
 
 
+                    <div class="message" *ngIf="!thread.messages[0].editMode">
+                        <img *ngIf="thread.messages[0].imgFileURL.length > 0" src="{{ thread.messages[0].imgFileURL }}"
+                            alt="">
+                        <span>
+                            {{ thread.messages[0].content }}
+                        </span>
+                    </div>
 
-            <div class="channel-chat-content">
-                <div class="channel-chat-time-sender">
-                    <span>{{thread.getFormattedTimeStamp()}}</span>
-                    <h3>{{ threadOwner.name }}</h3>
-                </div>
-
-
-                <div class="message" *ngIf="!thread.messages[0].editMode">
-                    <img *ngIf="thread.messages[0].imgFileURL.length > 0" src="{{ thread.messages[0].imgFileURL }}"
-                        alt="">
-                    <span>
-                        {{ thread.messages[0].content }}
-                    </span>
-                </div>
-
-                <div class="message-textarea" *ngIf="thread.messages[0].editMode">
-                    <div class="message-textarea-content">
-                        <div class="img-container" *ngIf="thread.messages[0].imgFileURL.length > 1">
-                            <img class="delete-icon" src="../../../../assets/img/close.png" alt=""
-                                (click)="deleteImg(this.thread)">
-                            <img class="message-img" src="{{ thread.messages[0].imgFileURL }}" alt="">
+                    <div class="message-textarea" *ngIf="thread.messages[0].editMode">
+                        <div class="message-textarea-content">
+                            <div class="img-container" *ngIf="thread.messages[0].imgFileURL.length > 1">
+                                <img class="delete-icon" src="../../../../assets/img/close.png" alt=""
+                                    (click)="deleteImg(this.thread)">
+                                <img class="message-img" src="{{ thread.messages[0].imgFileURL }}" alt="">
+                            </div>
+                            <textarea #editFullThreadMessageBox>{{ thread.messages[0].content }}</textarea>
                         </div>
-                        <textarea #editFullThreadMessageBox>{{ thread.messages[0].content }}</textarea>
+                        <div class="edit-message-btns">
+                            <span (click)="cancelEditMessage(this.thread.messages[0])">Abbrechen</span>
+                            <span (click)="saveEditMessage(this.thread)">Speichern</span>
+                        </div>
                     </div>
-                    <div class="edit-message-btns">
-                        <span (click)="cancelEditMessage(this.thread.messages[0])">Abbrechen</span>
-                        <span (click)="saveEditMessage(this.thread)">Speichern</span>
-                    </div>
+
+
+
                 </div>
-
-
-
+                <div class="channel-chat-sender-img">
+                    <img src="{{ threadOwner.imageUrl }}" alt="">
+                </div>
             </div>
-            <div class="channel-chat-sender-img">
-                <img src="{{ threadOwner.imageUrl }}" alt="">
+
+            <div class="separation-line">
+                <span>
+                    {{ thread.messages.length - 1 }} Antworten
+                </span>
+                <div></div>
             </div>
+
+            <app-full-thread-message [thread]="thread" [currentUser]="currentUser"></app-full-thread-message>
+
         </div>
-
-        <div class="separation-line">
-            <span>
-                {{ thread.messages.length - 1 }} Antworten
-            </span>
-            <div></div>
-        </div>
-
-        <app-full-thread-message [thread]="thread" [currentUser]="currentUser"></app-full-thread-message>
-
-
 
         <form [formGroup]="fullThreadMessage" class="text-box">
             <div #imgBoxFullThread class="add-file-img-box"></div>

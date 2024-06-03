@@ -58,9 +58,9 @@ export class ChannelChatComponent {
   @ViewChild("imgBox") imgBox!: ElementRef<any>;
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
   @ViewChild(AddImgToMessageComponent) addImgToMessageComponent!: AddImgToMessageComponent;
-  
+
   emojiSubscription: Subscription;
-  
+
   groupedChannelThreads$!: Observable<{ [key: string]: Thread[] }>;
 
   constructor(
@@ -92,11 +92,12 @@ export class ChannelChatComponent {
   threads: any;
   channelThreads!: Thread[];
   imgFile: File | undefined = undefined;
+  scrollToBottomOnLoad: boolean = true;
 
   private userSub: Subscription = new Subscription();
   private channelSub: Subscription = new Subscription();
   private threadsSub: Subscription = new Subscription();
-
+  private scrollEventSubscription: any;
   //-------------------//
 
   pingUserControl = new FormControl("");
@@ -107,9 +108,9 @@ export class ChannelChatComponent {
   async ngOnInit() {
     this.route.params.subscribe(params => {
       this.channelId = params['id'];
-      this.dataService.getThreadsList();
       console.log(this.channelId);
       this.dataService.currentChannelId = this.channelId;
+      this.dataService.getThreadsList();
       this.reloadAll();
       this.groupedChannelThreads$ = this.dataService.groupedChannelThreads.asObservable();
     });
@@ -128,15 +129,37 @@ export class ChannelChatComponent {
   }
 
   // ngAfterViewChecked() {
-  //   this.scrollToBottom();
+  //   // Subscribe to the threads observable to detect when threads are loaded
+  //   if (this.threadContainer) {
+  //     this.groupedChannelThreads$.subscribe(() => {
+  //       if (this.scrollToBottomOnLoad) {
+  //         this.scrollToBottom();
+  //         this.scrollToBottomOnLoad = false;
+  //       }
+  //     });
+
+  //     // Add scroll event listener
+  //     this.scrollEventSubscription = this.threadContainer.nativeElement.addEventListener('scroll', () => {
+  //       const container = this.threadContainer.nativeElement;
+  //       if (container.scrollHeight - container.scrollTop === container.clientHeight) {
+  //         this.scrollToBottomOnLoad = true;
+  //         console.log(this.scrollToBottomOnLoad);
+          
+  //       } else {
+  //         this.scrollToBottomOnLoad = false;
+  //         console.log(this.scrollToBottomOnLoad);
+  //       }
+  //     });
+  //   }
   // }
 
   // scrollToBottom() {
-  //   try {
-  //     this.threadContainer.nativeElement.scrollTop =
-  //       this.threadContainer.nativeElement.scrollHeight;
-  //   } catch (err) {
-  //     console.error("Could not scroll to bottom:", err);
+  //   if (this.threadContainer) {
+  //     try {
+  //       this.threadContainer.nativeElement.scrollTop = this.threadContainer.nativeElement.scrollHeight;
+  //     } catch (err) {
+  //       console.error("Could not scroll to bottom:", err);
+  //     }
   //   }
   // }
 
@@ -168,8 +191,8 @@ export class ChannelChatComponent {
 
     });
     this.channelSub = this.dataService.getChannelsList().subscribe((channels) => {
-        this.channels = channels;
-      });
+      this.channels = channels;
+    });
     // this.threadsSub = this.dataService.getThreadsList().subscribe((threads) => {
     //   this.threads = threads;
     //   console.log('threads:', this.threads);
@@ -225,7 +248,6 @@ export class ChannelChatComponent {
 
 
   getCurrentChannel() {
-    // this.getChannelIdFromURL();
 
     for (let i = 0; i < this.channels.length; i++) {
       if (this.channels[i].channelId === this.channelId) {
@@ -242,10 +264,6 @@ export class ChannelChatComponent {
     this.route.params.subscribe(params => {
       this.channelId = params['id'];
       console.log(this.channelId);
-      // if(this.users && this.channels) {
-
-      //   this.getChannelInfos();
-      // }
     });
   }
 
@@ -261,48 +279,6 @@ export class ChannelChatComponent {
     });
     console.log(this.channelParticipants)
   }
-
-
-  // getChannelThreads(channelId: string) {
-  //   this.channelThreads = [];
-
-  //   for (let i = 0; i < this.threads.length; i++) {
-  //     if (this.threads[i].channelId === channelId) {
-  //       this.channelThreads.push(new Thread(this.threads[i]));
-  //     }
-  //   }
-
-  //   this.sortThreadByFirstMessageTimestamp();
-  // }
-
-  // sortThreadByFirstMessageTimestamp() {
-  //   this.channelThreads.sort((a, b) => a.timestamp - b.timestamp);
-  // }
-
-
-  // getChannelThreads(channelId: string) {
-  //   this.channelThreads = []
-  //   this.threads.forEach( (thread: Thread) => {
-  //     this.channelThreads.push(new Thread(thread));
-  //   })
-  // }
-
-
-  // sortThreadByFirstMessageTimestamp() {
-  //   this.channelThreads.sort((a, b) => a.timestamp - b.timestamp);
-  // }
-
-
-  // groupThreadsByDate(threads: Thread[]): { [key: string]: Thread[] } {
-  //   return threads.reduce((groups, thread) => {
-  //     const date = new Date(thread.timestamp).toLocaleDateString();
-  //     if (!groups[date]) {
-  //       groups[date] = [];
-  //     }
-  //     groups[date].push(thread);
-  //     return groups;
-  //   }, {} as { [key: string]: Thread[] });
-  // }
 
 
   channelThreadMessage: FormGroup = this.formBuilder.group({
@@ -327,6 +303,9 @@ export class ChannelChatComponent {
     this.channelSub.unsubscribe();
     this.threadsSub.unsubscribe();
     this.emojiSubscription.unsubscribe();
+    if (this.scrollEventSubscription) {
+      this.threadContainer.nativeElement.removeEventListener('scroll', this.scrollEventSubscription);
+    }
   }
 
   removeChatInput() {
@@ -348,8 +327,9 @@ export class ChannelChatComponent {
   openAddUsersDialog() {
     this.dialog.open(AddUsersComponent, {
       data: {
-         channelId: this.channelId,
-         currentChannel: this.currentChannel }
+        channelId: this.channelId,
+        currentChannel: this.currentChannel
+      }
     }
     );
   }
