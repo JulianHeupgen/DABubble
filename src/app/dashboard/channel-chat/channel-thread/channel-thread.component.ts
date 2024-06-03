@@ -77,7 +77,7 @@ export class ChannelThreadComponent {
     try {
       await this.threadService.openFullThread(true);
       setTimeout(() => {
-        this.threadService.changeThread(thread, this.threadUser, this.channelChat.currentChannel, this.channelChat.currentUser); 
+        this.threadService.changeThread(thread, this.threadUser, this.channelChat.currentChannel, this.channelChat.currentUser);
       }, 0);
     } catch (error) {
       console.error('Error opening thread:', error);
@@ -103,14 +103,14 @@ export class ChannelThreadComponent {
       messageElement.messages[0].imgFileURL = '';
     }).catch((error) => {
       // Uh-oh, an error occurred!
-    });    
+    });
     }
     this.threadService.copyThreadForFirebase(messageElement)
     this.editMessage = false;
   }
 
   deleteImg(obj: any) {
-    this.imgFile = obj.messages[0].imgFileURL;  
+    this.imgFile = obj.messages[0].imgFileURL;
     this.isImgFileEdited = true;
     obj.messages[0].imgFileURL = '';
   }
