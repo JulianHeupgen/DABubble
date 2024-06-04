@@ -173,36 +173,96 @@ export class SidenavComponent {
   /**
    * Get and set direct messages to display in the sidenav.
    */
+  // getUserDirectMessages(): void {
+  //   this.directMessageTitle = [];
+  //   if (this.selectedUser && this.selectedUser.length > 0) {
+  //     this.selectedUser.forEach((selected: User) => {
+  //       if (selected.userChats && Array.isArray(selected.userChats)) {
+  //         selected.userChats.forEach(chat => {
+  //           const chatId = chat.userChatId;
+  //           const matchedUser = this.users.find((user: User) => user.id === chatId);
+  //           if (matchedUser) {
+  //             let displayName = matchedUser.name;
+  //             if (matchedUser.id === this.selectedUser[0].id) {
+  //               displayName += " (Du)";
+  //             }
+  //             if (!this.directMessageTitle.some(dm => dm.id === matchedUser.id)) {
+  //               this.directMessageTitle.push({
+  //                 id: matchedUser.id,
+  //                 imageUrl: matchedUser.imageUrl,
+  //                 name: displayName,
+  //                 onlineStatus: matchedUser.onlineStatus,
+  //                 chatId: chat.chatId
+  //               });
+  //             }
+  //           }
+  //         });
+  //       }
+  //     });
+  //   } else {
+  //     console.log('Keine ausgewählten Benutzer vorhanden.');
+  //   }
+  //   this.sortDirectMessageUsers();
+  // }
+
+  /**
+   * Main method that is called to display all direct message chats in the sidebar.
+   * 
+   * @returns - null if no user is found
+   */
   getUserDirectMessages(): void {
     this.directMessageTitle = [];
-    if (this.selectedUser && this.selectedUser.length > 0) {
-      this.selectedUser.forEach((selected: User) => {
-        if (selected.userChats && Array.isArray(selected.userChats)) {
-          selected.userChats.forEach(chat => {
-            const chatId = chat.userChatId;
-            const matchedUser = this.users.find((user: User) => user.id === chatId);
-            if (matchedUser) {
-              let displayName = matchedUser.name;
-              if (matchedUser.id === this.selectedUser[0].id) {
-                displayName += " (Du)";
-              }
-              if (!this.directMessageTitle.some(dm => dm.id === matchedUser.id)) {
-                this.directMessageTitle.push({
-                  id: matchedUser.id,
-                  imageUrl: matchedUser.imageUrl,
-                  name: displayName,
-                  onlineStatus: matchedUser.onlineStatus,
-                  chatId: chat.chatId
-                });
-              }
-            }
-          });
-        }
-      });
-    } else {
+    if (!this.selectedUser || this.selectedUser.length === 0) {
       console.log('Keine ausgewählten Benutzer vorhanden.');
+      return;
     }
+    this.selectedUser.forEach(user => this.processUser(user));
     this.sortDirectMessageUsers();
+  }
+
+
+
+  // Definiert eine Methode zur Verarbeitung einzelner Benutzer
+  private processUser(selected: User): void {
+    if (!selected.userChats || !Array.isArray(selected.userChats)) return;
+    selected.userChats.forEach(chat => {
+      const matchedUser = this.findUserById(chat.userChatId);
+      if (!matchedUser) return;
+      const displayName = this.buildDisplayName(matchedUser);
+      if (this.isUniqueDirectMessage(matchedUser.id)) {
+        this.addDirectMessage(matchedUser, displayName, chat.chatId);
+      }
+    });
+  }
+
+  // Hilfsmethode, um einen Benutzer anhand der ID zu finden
+  private findUserById(userId: string): User | undefined {
+    return this.users.find((user: User) => user.id === userId);
+  }
+
+  // Erstellt den Anzeigenamen für die Direktnachricht
+  private buildDisplayName(user: User): string {
+    let displayName = user.name;
+    if (user.id === this.selectedUser[0].id) {
+      displayName += " (Du)";
+    }
+    return displayName;
+  }
+
+  // Überprüft, ob die Direktnachricht einzigartig ist
+  private isUniqueDirectMessage(userId: string): boolean {
+    return !this.directMessageTitle.some(dm => dm.id === userId);
+  }
+
+  // Fügt eine neue Direktnachricht hinzu
+  private addDirectMessage(user: User, displayName: string, chatId: string): void {
+    this.directMessageTitle.push({
+      id: user.id,
+      imageUrl: user.imageUrl,
+      name: displayName,
+      onlineStatus: user.onlineStatus,
+      chatId: chatId
+    });
   }
 
 
