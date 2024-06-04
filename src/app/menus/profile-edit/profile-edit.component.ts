@@ -148,6 +148,7 @@ export class ProfileEditComponent {
         if (!newEmail) {
           return
         }
+        await this.auth.updateAuthUserEmail(newEmail);
         await this.auth.updateFirebaseUser({email: newEmail});
         this.snackbar.showSnackBar('E-Mail changed successful. ', 'Ok');
         console.log('User Email updated with success.');

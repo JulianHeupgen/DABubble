@@ -42,7 +42,7 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    public authservice: AuthService,
+    public authService: AuthService,
     private auth: Auth,
     private firebase: Firestore,
     private router: Router,
@@ -53,7 +53,7 @@ export class LoginComponent {
     let email = this.loginData.value.email || '';
     let password = this.loginData.value.password || '';
     event.preventDefault();
-    let logInSuccess = await this.authservice.signIn(email, password);
+    let logInSuccess = await this.authService.signIn(email, password);
     if (logInSuccess) {
       this.logInFalse = false;
       this.router.navigate(['/dashboard/']);
@@ -64,16 +64,28 @@ export class LoginComponent {
   }
 
   async guestLogin() {
+    this.authService.signIn('max@mustermann.com', '123456')
+      .then(() => {
+        console.log('Guest signed in with sucess.');
+        this.router.navigate(['/dashboard/']);
+      })
+      .catch(error => {
+        console.error('Could not sign up. Signing up with anonymous login. ');
+        this.anonymousUserLogin();
+      })
+  }
+
+  /**
+   * Fallback method in case auth does not get Guest User - when for example deleted
+   */
+  anonymousUserLogin() {
     const auth = getAuth();
     signInAnonymously(auth)
       .then(() => {
-        console.log(auth);
-        
         this.router.navigate(['/dashboard/']);
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        console.error('Could not sign up with guest account. ', error);
       });
   }
 

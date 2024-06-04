@@ -45,6 +45,7 @@ export class AuthService {
   ) {
   }
 
+  AUTHUSER = getAuth();
 
   /* TEST SPACE */
 
@@ -180,6 +181,20 @@ export class AuthService {
       console.error('Error updating user online Status.', error);
       throw error;
     }
+  }
+
+  async updateAuthUserEmail(newMail: string): Promise<void> {
+    if (!this.AUTHUSER.currentUser) {
+      return Promise.reject('No user!');
+    }
+
+    return updateEmail(this.AUTHUSER.currentUser, newMail)
+      .then(() => {
+        console.log('E-Mail updated successfully.');
+      })
+      .catch((err) => {
+        console.error('Error updating user email.', err);
+      })
   }
 
   /**

@@ -14,6 +14,7 @@ import { ProfileViewComponent } from '../../menus/profile-view/profile-view.comp
 import { HeaderProfileService } from '../../services/header-profile.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { SearchComponent } from '../search/search.component';
+import {ChannelChatComponent} from "../channel-chat/channel-chat.component";
 
 @Component({
   selector: 'app-header',
