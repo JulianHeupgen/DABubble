@@ -10,12 +10,12 @@ export class UserChat {
     userChatId?: string,
     chatId?: string,
     participants?: string [],
-    threads?: Thread[]
+    threads?: string []
   }) {
     this.userChatId = data.userChatId || '';
     this.chatId = data.chatId || '';
     this.participants = data.participants || [];
-    this.threads = data.threads || [];
+    this.threads = (data.threads || []).map(threadString => new Thread(JSON.parse(threadString)));
   }
 
 

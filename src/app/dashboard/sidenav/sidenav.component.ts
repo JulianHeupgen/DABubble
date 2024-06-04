@@ -171,38 +171,92 @@ export class SidenavComponent {
 
 
   /**
-   * Get and set direct messages to display in the sidenav.
+   * Processes user chats to prepare direct messages for display in the HTML.
+   * 
+   * @returns - void
    */
   getUserDirectMessages(): void {
     this.directMessageTitle = [];
-    if (this.selectedUser && this.selectedUser.length > 0) {
-      this.selectedUser.forEach((selected: User) => {
-        if (selected.userChats && Array.isArray(selected.userChats)) {
-          selected.userChats.forEach(chat => {
-            const chatId = chat.userChatId;
-            const matchedUser = this.users.find((user: User) => user.id === chatId);
-            if (matchedUser) {
-              let displayName = matchedUser.name;
-              if (matchedUser.id === this.selectedUser[0].id) {
-                displayName += " (Du)";
-              }
-              if (!this.directMessageTitle.some(dm => dm.id === matchedUser.id)) {
-                this.directMessageTitle.push({
-                  id: matchedUser.id,
-                  imageUrl: matchedUser.imageUrl,
-                  name: displayName,
-                  onlineStatus: matchedUser.onlineStatus,
-                  chatId: chat.chatId
-                });
-              }
-            }
-          });
-        }
-      });
-    } else {
+    if (!this.selectedUser || this.selectedUser.length === 0) {
       console.log('Keine ausgewählten Benutzer vorhanden.');
+      return;
     }
+    this.selectedUser.forEach(user => this.processUser(user));
     this.sortDirectMessageUsers();
+  }
+
+
+  /**
+   * Processes individual user chats to extract relevant direct message information.
+   * 
+   * @param selected - The user object containing their chat data.
+   * @returns - void
+   */
+  private processUser(selected: User): void {
+    if (!selected.userChats || !Array.isArray(selected.userChats)) return;
+    selected.userChats.forEach(chat => {
+      const matchedUser = this.findUserById(chat.userChatId);
+      if (!matchedUser) return;
+      const displayName = this.buildDisplayName(matchedUser);
+      if (this.isUniqueDirectMessage(matchedUser.id)) {
+        this.addDirectMessage(matchedUser, displayName, chat.chatId);
+      }
+    });
+  }
+
+
+  /**
+   * Finds a user object by their ID from the user list.
+   * 
+   * @param userId - The ID of the user to find.
+   * @returns - The user object if found, otherwise undefined.
+   */
+  private findUserById(userId: string): User | undefined {
+    return this.users.find((user: User) => user.id === userId);
+  }
+
+ 
+  /**
+   * Builds a display name for a user, optionally adding "(Du)" for the selected user.
+   * 
+   * @param user - The user object for whom to build the display name.
+   * @returns - The formatted display name.
+   */
+  private buildDisplayName(user: User): string {
+    let displayName = user.name;
+    if (user.id === this.selectedUser[0].id) {
+      displayName += " (Du)";
+    }
+    return displayName;
+  }
+
+
+  /**
+   * Checks if a user represents a unique direct message (not already added).
+   * 
+   * @param userId - The ID of the user to check.
+   * @returns - True if the user is a unique direct message, false otherwise.
+   */
+  private isUniqueDirectMessage(userId: string): boolean {
+    return !this.directMessageTitle.some(dm => dm.id === userId);
+  }
+
+  
+  /**
+   * Adds processed direct message data to the `directMessageTitle` array for rendering.
+   * 
+   * @param user - The user object containing details for the direct message.
+   * @param displayName - The user's formatted display name.
+   * @param chatId - The ID of the chat associated with the direct message.
+   */
+  private addDirectMessage(user: User, displayName: string, chatId: string): void {
+    this.directMessageTitle.push({
+      id: user.id,
+      imageUrl: user.imageUrl,
+      name: displayName,
+      onlineStatus: user.onlineStatus,
+      chatId: chatId
+    });
   }
 
 

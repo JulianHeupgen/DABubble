@@ -23,7 +23,6 @@ import { ChannelChatComponent } from '../channel-chat/channel-chat.component';
 import { Subscription, Observable, firstValueFrom } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ThreadService } from '../../services/thread.service';
-import { DashboardComponent } from '../dashboard.component';
 import { UserChatThreadComponent } from './user-chat-thread/user-chat-thread.component';
 
 
@@ -209,8 +208,7 @@ export class UserChatComponent {
      if(this.currentUserChat) {
       if(this.currentUserChat.threads.length > 0) {
         for (let i = 0; i < this.currentUserChat.threads.length; i++) {
-          let threadData = this.currentUserChat.threads[i];
-          let thread = Thread.fromJSON(threadData);
+          let thread = this.currentUserChat.threads[i];
           this.currentUserChatThreads.push(thread);
     }}}
    this.currentUserChat.threads = this.currentUserChatThreads;
@@ -269,6 +267,8 @@ sortMessagesByTimestamp() {
       this.currentUserChat,
       this.addImgToMessageComponent.imgFile,
     );
+
+    console.log(userChat);
 
     if (userChat.isNew) {
       await this.dataService.addUserChat(userChat.currentUserChat);
