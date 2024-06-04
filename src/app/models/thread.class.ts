@@ -71,7 +71,7 @@ export class Thread {
     this.messages.forEach(message => {
       if (typeof message === 'string') {
         let jsonMessage = JSON.parse(message)
-        let messageObject = this.convertMessageToOpbject(jsonMessage)
+        let messageObject = this.convertMessageToObject(jsonMessage)
         newMessages.push(messageObject);
       } else {
         newMessages.push(message);
@@ -81,7 +81,7 @@ export class Thread {
     this.sortMessagesByTimestamp();
   }
 
-  convertMessageToOpbject(jsonMessage: any) {
+  convertMessageToObject(jsonMessage: any) {
     let messageObject = new Message(jsonMessage.senderId, jsonMessage.content, jsonMessage.imgFileURL);
     messageObject.senderId = jsonMessage.senderId;
     messageObject.timestamp = jsonMessage.timestamp;
