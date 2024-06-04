@@ -28,9 +28,9 @@ export class DataService {
 
   groupedThreads: any = [];
   firstLoad: boolean = false;
-  currentChannelId: string = 'Yk2dgejx9yy7iHLij1Qj'
+  currentChannelId!: string;
   groupedChannelThreads: BehaviorSubject<{ [key: string]: Thread[] }> = new BehaviorSubject({});
-  private threadUnsubscribe!: Unsubscribe;
+  private threadUnsubscribe: Unsubscribe | null = null;
 
   getUsersList() {
     return new Observable(observer => {
@@ -88,13 +88,21 @@ export class DataService {
   }
 
   getThreadsList() {
-    this.groupedThreads = {};
+    this.groupedThreads = [];
+    this.allThreads = [];
     this.firstLoad = true;
+  
+    // Entferne den alten Listener, falls vorhanden
+    if (this.threadUnsubscribe) {
+      this.threadUnsubscribe();
+      this.threadUnsubscribe = null;
+    }
+  
     const threadQuery = query(this.getThreadCollection(), where('channelId', '==', this.currentChannelId));
-    const unsubscribe = onSnapshot(threadQuery, list => {
+    this.threadUnsubscribe = onSnapshot(threadQuery, list => {
       list.docChanges().forEach(change => {
         const threadData = this.setThreadObject(change.doc.id, change.doc.data());
-
+  
         if (change.type === 'added') {
           this.addThreads(threadData);
         } else if (change.type === 'modified') {
@@ -103,7 +111,7 @@ export class DataService {
           this.removeThreads(change);
         }
       });
-
+  
       if (this.firstLoad) {
         this.sortThreadByFirstMessageTimestamp();
         this.groupedThreads = this.groupThreadsByDate();
@@ -335,7 +343,9 @@ export class DataService {
   }
 
   ngOnDestroy() {
-    this.threadUnsubscribe();
+    if (this.threadUnsubscribe) {
+      this.threadUnsubscribe();
+    }
   }
 
 }
