@@ -188,14 +188,12 @@ export class UserChatComponent {
     for (let i = 0; i < this.userChats.length; i++) {
       if (this.userChats[i].participants.includes(this.currentUser.id)) {
         userChatsOfCurrentUser.push(this.userChats[i]);
-        console.log(userChatsOfCurrentUser);
       }
     }
 
     for (let i = 0; i < userChatsOfCurrentUser.length; i++) {
       if (userChatsOfCurrentUser[i].participants.includes(this.recipient.id)) {
         this.currentUserChat = new UserChat(userChatsOfCurrentUser[i]);
-        console.log(this.currentUserChat);
         break;
       }
     }
@@ -210,8 +208,7 @@ export class UserChatComponent {
      if(this.currentUserChat) {
       if(this.currentUserChat.threads.length > 0) {
         for (let i = 0; i < this.currentUserChat.threads.length; i++) {
-          let threadData = this.currentUserChat.threads[i];
-          let thread = Thread.fromJSON(threadData);
+          let thread = this.currentUserChat.threads[i];
           this.currentUserChatThreads.push(thread);
     }}}
    this.currentUserChat.threads = this.currentUserChatThreads;
@@ -270,6 +267,8 @@ sortMessagesByTimestamp() {
       this.currentUserChat,
       this.addImgToMessageComponent.imgFile,
     );
+
+    console.log(userChat);
 
     if (userChat.isNew) {
       await this.dataService.addUserChat(userChat.currentUserChat);
