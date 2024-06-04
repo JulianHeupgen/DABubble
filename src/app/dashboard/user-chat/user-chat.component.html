@@ -13,7 +13,7 @@
   <!-- Chat history -->
     <div #threadContainer class="chat-history" *ngIf="currentUserChatThreads">
       <div *ngFor="let thread of currentUserChat.threads">
-        <app-user-chat-thread [thread]="thread"></app-user-chat-thread>
+           <app-user-chat-thread [thread]="thread"></app-user-chat-thread>  
       </div>
     </div>
 

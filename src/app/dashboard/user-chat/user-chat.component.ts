@@ -23,7 +23,6 @@ import { ChannelChatComponent } from '../channel-chat/channel-chat.component';
 import { Subscription, Observable, firstValueFrom } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ThreadService } from '../../services/thread.service';
-import { DashboardComponent } from '../dashboard.component';
 import { UserChatThreadComponent } from './user-chat-thread/user-chat-thread.component';
 
 
@@ -189,12 +188,14 @@ export class UserChatComponent {
     for (let i = 0; i < this.userChats.length; i++) {
       if (this.userChats[i].participants.includes(this.currentUser.id)) {
         userChatsOfCurrentUser.push(this.userChats[i]);
+        console.log(userChatsOfCurrentUser);
       }
     }
 
     for (let i = 0; i < userChatsOfCurrentUser.length; i++) {
       if (userChatsOfCurrentUser[i].participants.includes(this.recipient.id)) {
         this.currentUserChat = new UserChat(userChatsOfCurrentUser[i]);
+        console.log(this.currentUserChat);
         break;
       }
     }
