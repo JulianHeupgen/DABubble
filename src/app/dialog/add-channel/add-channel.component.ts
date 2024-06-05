@@ -108,7 +108,7 @@ export class AddChannelComponent {
       this.showDuplicateError = true;
       return false;
     }
-    return false;
+    return true;
   }
 
 

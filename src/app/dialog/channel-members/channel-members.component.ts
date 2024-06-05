@@ -116,34 +116,35 @@ export class ChannelMembersComponent {
 
 
   /**
-   * This function executes the final saving process of the addChannelToAllUsers or addChannelToSpecificUsers.
-   * 
-   * @returns - if the operation is not succesfully
+   * Saves the channel settings based on the selected option. Closes the dialog on success.
+   * It handles two scenarios: adding to all users or specific users based on the user's selection.
    */
-  save() {
+  async save() {
     if (!this.data.channelId) {
       console.error('Keine ID verfügbar!');
       return;
     }
-    if (this.selectedOption === 'all') {
-      this.addChannelToAllUsers().subscribe({
-        next: () => {
-          this.dialogRef.close();
-        },
-        error: (error) => {
-          console.error('Fehler beim hinzufügen der Kanal ID!', error);
-        }
-      });
-    } else if (this.selectedOption === 'specific') {
-      this.addChannelToSpecificUsers().subscribe({
-        next: () => {
-          this.dialogRef.close();
-        },
-        error: (error) => {
-          console.error('Fehler beim hinzufügen der Kanal ID!', error);
-        }
-      });
+    try {
+      await this.performChannelAddition();
+      this.dialogRef.close();
+    } catch (error) {
+      console.error('Fehler beim hinzufügen der Channel ID!', error);
     }
+  }
+
+
+  /**
+   * Performs the addition of the channel to all or specific users based on the selected option.
+   * @returns {Promise<void>} A promise that resolves when the addition is completed.
+   */
+  performChannelAddition(): Promise<void> {
+    const additionMethod = this.selectedOption === 'all' ? this.addChannelToAllUsers() : this.addChannelToSpecificUsers();
+    return new Promise((resolve, reject) => {
+      additionMethod.subscribe({
+        next: resolve,
+        error: reject
+      });
+    });
   }
 
 
