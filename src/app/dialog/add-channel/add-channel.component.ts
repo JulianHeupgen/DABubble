@@ -75,38 +75,66 @@ export class AddChannelComponent {
 
 
   /**
-   * Creates a new channel asynchronously based on the data entered. 
-   * First checks whether the channel name meets the minimum length of 3 characters. 
-   * If the name is valid, a channel object is created and saved via a data service. 
-   * Errors of the process are logged in the console. 
-   * If successful, forms are also reset and a dialog for managing channel members is opened.
-   * 
-   * @returns - if operation is not successfully
-   * @throws {Error} - Displays a warning in the console if the channel cannot be created.
+   * Attempts to create a new channel based on the provided channel name and description.
+   * It validates the channel name, creates the channel data, and attempts to add it to the data service.
+   * If successful, it proceeds with post-creation UI actions; otherwise, it logs a warning.
    */
   async createChannel() {
-    if (this.channelName.length < 3) {
-      this.showNameError = true;
+    if (!this.isValidChannelName(this.channelName)) {
       return;
     }
-    if (this.checkChannelNameExists(this.channelName)) {
-      this.showDuplicateError = true;
-      return;
-    }
-    const newChannelData = new Channel({
-      title: this.channelName,
-      description: this.channelDescription,
-      participants: [],
-      createdBy: this.currentUser.id
-      // threads: []
-    });
+    const newChannelData = this.prepareNewChannelData(this.channelName, this.channelDescription);
     try {
       this.createdChannelId = await this.dataService.addChannel(newChannelData);
-      this.resetForm();
-      this.openChannelMembersDialog();
+      this.postChannelCreation();
     } catch (error) {
       console.warn('Fehler beim Erstellen', error);
     }
+  }
+
+
+  /**
+   * Validates the channel name by checking its length and uniqueness.
+   * Shows error messages through UI flags if validations fail.
+   * @param {string} channelName - The name of the channel to validate.
+   * @returns {boolean} True if the channel name is valid, otherwise false.
+   */
+  isValidChannelName(channelName: string): boolean {
+    if (channelName.length < 3) {
+      this.showNameError = true;
+      return false;
+    }
+    if (this.checkChannelNameExists(channelName)) {
+      this.showDuplicateError = true;
+      return false;
+    }
+    return false;
+  }
+
+
+  /**
+   * Prepares the data for a new channel, including its title, description, initial participant list, and creator.
+   * @param {string} title - The title of the channel.
+   * @param {string} description - A description of the channel.
+   * @returns {Channel} The new channel object ready to be added to the data service.
+   */
+  prepareNewChannelData(title: string, description: string): Channel {
+    return new Channel({
+      title,
+      description,
+      participants: [],
+      createdBy: this.currentUser.id
+    });
+  }
+
+
+  /**
+   * Executes post-channel creation actions, which include resetting the form and opening a dialog
+   * for channel members.
+   */
+  postChannelCreation() {
+    this.resetForm();
+    this.openChannelMembersDialog();
   }
 
 
