@@ -40,7 +40,7 @@ export class UserChatThreadComponent {
 
   ngOnInit() {
     let currentUserId = this.userChat.currentUser.id;
-    let messageOwnerId = this.thread.messages[0].senderId
+    let messageOwnerId = this.thread.messages[0].senderId;
     if (currentUserId == messageOwnerId) {
       this.currentUserIsMessageOwner = true;
       this.threadOwner = this.userChat.currentUser;

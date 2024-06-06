@@ -74,7 +74,8 @@ export class Thread {
         let messageObject = this.convertMessageToObject(jsonMessage)
         newMessages.push(messageObject);
       } else {
-        newMessages.push(message);
+        let messageObject = this.convertMessageToObject(message); 
+        newMessages.push(messageObject);
       }
     })
     this.messages = newMessages;
@@ -99,7 +100,7 @@ export class Thread {
     return {
       threadId: this.threadId,
       channelId: this.channelId,
-      messages: this.messages.map(message => message.toJSON()),
+      messages: this.messages,  
       timestamp: this.timestamp
     }
   }

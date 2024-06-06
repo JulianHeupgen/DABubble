@@ -193,7 +193,9 @@ export class UserChatComponent {
 
     for (let i = 0; i < userChatsOfCurrentUser.length; i++) {
       if (userChatsOfCurrentUser[i].participants.includes(this.recipient.id)) {
+        console.log(userChatsOfCurrentUser[i]);
         this.currentUserChat = new UserChat(userChatsOfCurrentUser[i]);
+        console.log(this.currentUserChat);
         break;
       }
     }
@@ -261,23 +263,34 @@ sortMessagesByTimestamp() {
 
 
   async sendMessage() {
-    let userChat = await this.currentUser.sendDirectMessage(
-      this.recipient,                                   
-      this.channelThreadMessage.value.message,
-      this.currentUserChat,
-      this.addImgToMessageComponent.imgFile,
-    );
+    if(this.threadMessageBox.nativeElement.value.length > 0) {
 
-    console.log(userChat);
+      let userChat = await this.currentUser.sendDirectMessage(
+        this.recipient,                                   
+        this.threadMessageBox.nativeElement.value,
+        this.currentUserChat,
+        this.addImgToMessageComponent.imgFile,
+      );
 
-    if (userChat.isNew) {
-      await this.dataService.addUserChat(userChat.currentUserChat);
-      await this.dataService.updateUser(this.currentUser);
-      await this.dataService.updateUser(this.recipient);
-    } else {
-      await this.dataService.updateUserChat(userChat.currentUserChat);
+      console.log(userChat);
+
+      if (!userChat.isNew) {
+        console.log("not new");
+        console.log(userChat.currentUserChat.userChatId);
+        console.log(userChat.currentUserChat.participants);
+        let userChatObject: UserChat = new UserChat({ userChatId: userChat.currentUserChat.userChatId, chatId: userChat.currentUserChat.chatId, 
+                                                 participants: userChat.currentUserChat.participants, 
+                                                 threads: userChat.currentUserChat.threads });
+          console.log(userChatObject);
+          await this.dataService.updateUserChat(userChatObject);
+      } else {
+        let userChat2: UserChat = new UserChat({ userChatId: userChat.userChatId, chatId: userChat.chatId, 
+                                                 participants: userChat.participants, threads: userChat.threads });
+          await this.dataService.addUserChat(userChat2);
+        await this.dataService.updateUser(this.currentUser);
+        await this.dataService.updateUser(this.recipient);
+      }
     }
-
   }
 
 }
