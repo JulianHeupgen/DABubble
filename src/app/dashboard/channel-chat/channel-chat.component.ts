@@ -11,7 +11,7 @@ import { ChannelThreadComponent } from './channel-thread/channel-thread.componen
 import { User } from '../../models/user.class';
 import { Thread } from '../../models/thread.class';
 import { Observable, Subscription, firstValueFrom, map, startWith } from 'rxjs';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
@@ -275,7 +275,7 @@ export class ChannelChatComponent {
 
 
   channelThreadMessage: FormGroup = this.formBuilder.group({
-    channelMessage: "",
+    channelMessage: ['', Validators.required],
   });
 
   addEmoji(emoji: string) {
@@ -310,13 +310,19 @@ export class ChannelChatComponent {
   }
 
   async sendMessage() {
-    let newThread = await this.currentUser.sendChannelMessage(
-      this.currentChannel,
-      this.channelThreadMessage.value.channelMessage,
-      this.addImgToMessageComponent.imgFile,
-    );
-    if (newThread instanceof Thread) {
-      this.dataService.addThread(newThread);
+    if(this.threadMessageBox.nativeElement.value.length > 0) {
+
+      let newThread = await this.currentUser.sendChannelMessage(
+        this.currentChannel,
+        this.threadMessageBox.nativeElement.value,
+        this.addImgToMessageComponent.imgFile,
+      );
+      if (newThread instanceof Thread) {
+        this.dataService.addThread(newThread);
+      }
+    } else {
+      console.log('Nachricht nicht gesendet');
+      
     }
   }
 

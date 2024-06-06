@@ -66,7 +66,7 @@ export class FullThreadComponent {
   @ViewChild("editFullThreadMessageBox") editFullThreadMessageBox!: ElementRef;
   @ViewChild(AddImgToMessageComponent) addImgToMessageComponent!: AddImgToMessageComponent;
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
-  
+
   constructor(
     public threadService: ThreadService,
     private formBuilder: FormBuilder,
@@ -79,13 +79,13 @@ export class FullThreadComponent {
           this.addEmoji(event.emoji);
         }
       })
-      this.threadService.currentMessages$.subscribe(event => {
-        if (event.update === 'updateReaction') {
-          if (event.thread) {
-            this.thread = event.thread;
-          }
+    this.threadService.currentMessages$.subscribe(event => {
+      if (event.update === 'updateReaction') {
+        if (event.thread) {
+          this.thread = event.thread;
         }
-      });
+      }
+    });
   }
 
   fullThreadMessage: FormGroup = this.formBuilder.group({
@@ -104,7 +104,7 @@ export class FullThreadComponent {
         map(value => this._filterUsers(value || ''))
       );
     });
-    
+
   }
 
   sortNewDataFromThreadService(event: any) {
@@ -115,14 +115,14 @@ export class FullThreadComponent {
   }
 
   checkCurrentUser() {
-    if (this.thread) {      
+    if (this.thread) {
       let messageOwnerId = this.thread?.messages[0].senderId;
-      
+
       if (messageOwnerId == this.currentUser.id) {
         this.isCurrentUser = true;
-    } else {
+      } else {
         this.isCurrentUser = false;
-    }
+      }
     }
   }
 
@@ -138,9 +138,9 @@ export class FullThreadComponent {
       })
     })
     this.users = Array.from(userMap.values());
-    console.log('this.users',this.users);
+    console.log('this.users', this.users);
     console.log('Thread Messages is:', this.thread?.messages[0]);
-    
+
   }
 
   closeThread() {
@@ -161,21 +161,22 @@ export class FullThreadComponent {
       this.pingUserControlFullThread.setValue("");
       this.menuTrigger.closeMenu();
     }
-    
+
   }
 
   async sendMessage() {
-    if(this.thread) {
-      await this.currentUser.sendChannelMessage(
-        this.currentChannel,
-        this.fullThreadMessage.value.threadMessage,
-        this.addImgToMessageComponent.imgFile,
-        this.thread
-      );
-      let newThread = this.jsonToString(new Thread(this.thread));
+    if (this.thread) {
+      if (this.fullThreadMessageBox.nativeElement.value.length > 0) {
+        await this.currentUser.sendChannelMessage(
+          this.currentChannel,
+          this.fullThreadMessageBox.nativeElement.value,
+          this.addImgToMessageComponent.imgFile,
+          this.thread
+        );
+        let newThread = this.jsonToString(new Thread(this.thread));
 
         this.dataService.updateThread(newThread);
-      
+      }
     }
   }
 
@@ -198,27 +199,27 @@ export class FullThreadComponent {
     this.addImgToMessageComponent.removeImage();
   }
 
-  editThreadMessage(messageObj:Message) {
+  editThreadMessage(messageObj: Message) {
     this.setReactionMenuHover = false;
     messageObj.editMode = true;
   }
 
-  cancelEditMessage(messageObj:Message) {
+  cancelEditMessage(messageObj: Message) {
     messageObj.editMode = false;
     this.isImgFileEdited = false;
   }
 
   deleteImg(obj: any) {
-    this.imgFileLink = obj.messages[0].imgFileURL;  
+    this.imgFileLink = obj.messages[0].imgFileURL;
     this.isImgFileEdited = true;
     obj.messages[0].imgFileURL = '';
   }
 
   async saveEditMessage(messageElement: Thread) {
     messageElement.messages[0].content = this.editFullThreadMessageBox.nativeElement.value
-    if(this.isImgFileEdited) { 
-    this.threadService.deletFileOfMessage(this.imgFileLink)
-    messageElement.messages[0].imgFileURL = '';
+    if (this.isImgFileEdited) {
+      this.threadService.deletFileOfMessage(this.imgFileLink)
+      messageElement.messages[0].imgFileURL = '';
     }
     this.threadService.copyThreadForFirebase(messageElement)
     messageElement.messages[0].editMode = false;
