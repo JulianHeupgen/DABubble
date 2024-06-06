@@ -275,23 +275,34 @@ sortMessagesByTimestamp() {
       console.log(userChat);
 
       if (!userChat.isNew) {
-        console.log("not new");
+        console.log("UserChat already exists");
         console.log(userChat.currentUserChat.userChatId);
         console.log(userChat.currentUserChat.participants);
-        let userChatObject: UserChat = new UserChat({ userChatId: userChat.currentUserChat.userChatId, chatId: userChat.currentUserChat.chatId, 
-                                                 participants: userChat.currentUserChat.participants, 
-                                                 threads: userChat.currentUserChat.threads });
+
+        let userChatObject: UserChat = new UserChat({ 
+          userChatId: userChat.currentUserChat.userChatId,
+          chatId: userChat.currentUserChat.chatId, 
+          participants: userChat.currentUserChat.participants, 
+          threads: userChat.currentUserChat.threads });
+
           console.log(userChatObject);
           await this.dataService.updateUserChat(userChatObject);
+
       } else {
-        let userChat2: UserChat = new UserChat({ userChatId: userChat.userChatId, chatId: userChat.chatId, 
-                                                 participants: userChat.participants, threads: userChat.threads });
-          await this.dataService.addUserChat(userChat2);
-        await this.dataService.updateUser(this.currentUser);
-        await this.dataService.updateUser(this.recipient);
+        console.log("create new UserChat");
+
+        let userChatObject: UserChat = new UserChat({ 
+          userChatId: userChat.userChatId, 
+          chatId: userChat.chatId, 
+          participants: userChat.participants,
+          threads: userChat.threads });
+
+          await this.dataService.addUserChat(userChatObject);
+          await this.dataService.updateUser(this.currentUser);
+          await this.dataService.updateUser(this.recipient);
+        }
       }
     }
+  
   }
-
-}
 
