@@ -91,18 +91,18 @@ export class DataService {
     this.groupedThreads = [];
     this.allThreads = [];
     this.firstLoad = true;
-  
+
     // Entferne den alten Listener, falls vorhanden
     if (this.threadUnsubscribe) {
       this.threadUnsubscribe();
       this.threadUnsubscribe = null;
     }
-  
+
     const threadQuery = query(this.getThreadCollection(), where('channelId', '==', this.currentChannelId));
     this.threadUnsubscribe = onSnapshot(threadQuery, list => {
       list.docChanges().forEach(change => {
         const threadData = this.setThreadObject(change.doc.id, change.doc.data());
-  
+
         if (change.type === 'added') {
           this.addThreads(threadData);
         } else if (change.type === 'modified') {
@@ -111,7 +111,7 @@ export class DataService {
           this.removeThreads(change);
         }
       });
-  
+
       if (this.firstLoad) {
         this.sortThreadByFirstMessageTimestamp();
         this.groupedThreads = this.groupThreadsByDate();
@@ -168,14 +168,15 @@ export class DataService {
   removeThreadFromGroup(thread: Thread) {
     const date = new Date(thread.timestamp).toISOString().split('T')[0];
     const group = this.groupedThreads[date];
+    const today = new Date().toISOString().split('T')[0];
 
     if (group) {
       const threadIndex = group.findIndex((t: Thread) => t.threadId === thread.threadId);
       if (threadIndex !== -1) {
         group.splice(threadIndex, 1);
-        if (group.length === 0) {
-          delete this.groupedThreads[date];
-        }
+        // if (group.length === 0 && this.groupedThreads[date] != this.groupedThreads[today]) {
+        //   delete this.groupedThreads[date];
+        // }
       }
     }
   }
@@ -198,7 +199,8 @@ export class DataService {
   }
 
   groupThreadsByDate(): { [key: string]: Thread[] } {
-    return this.allThreads.reduce((groups, thread) => {
+    // Reduzieren der Threads, um sie nach Datum zu gruppieren
+    const groupedThreads = this.allThreads.reduce((groups, thread) => {
       const date = new Date(thread.timestamp).toISOString().split('T')[0]; // Format: YYYY-MM-DD
       if (!groups[date]) {
         groups[date] = [];
@@ -206,6 +208,14 @@ export class DataService {
       groups[date].push(thread);
       return groups;
     }, {} as { [key: string]: Thread[] });
+
+    // Hinzufügen einer leeren Gruppe für das heutige Datum, falls nicht vorhanden
+    const today = new Date().toISOString().split('T')[0];
+    if (!groupedThreads[today]) {
+      groupedThreads[today] = [];
+    }
+
+    return groupedThreads;
   }
 
   formatDateForDisplay(date: string): string {

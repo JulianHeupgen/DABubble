@@ -39,7 +39,7 @@
   <div #threadContainer class="chat-history" *ngIf="currentUser && groupedChannelThreads$">
     <div *ngFor="let date of (groupedChannelThreads$ | async) | keyvalue">
       
-      <div class="date-container">
+      <div *ngIf="!(date.value.length == 0)" class="date-container">
         <div class="date-line"></div>
         <div class="date"> {{ dataService.formatDateForDisplay(date.key) }} </div>
         <div class="date-line"></div>
