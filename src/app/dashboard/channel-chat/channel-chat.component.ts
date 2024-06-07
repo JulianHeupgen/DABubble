@@ -93,7 +93,10 @@ export class ChannelChatComponent {
   threads: any;
   channelThreads!: Thread[];
   imgFile: File | undefined = undefined;
-  scrollToBottomOnLoad: boolean = true;
+
+  // isUserScrolledBottom: boolean = true;
+  shouldScrollToBottom: boolean = true;
+  addListenerForScroll: boolean = true
 
   private userSub: Subscription = new Subscription();
   private channelSub: Subscription = new Subscription();
@@ -136,25 +139,32 @@ export class ChannelChatComponent {
     );
   }
 
-  // ngAfterViewInit() {
-  //   // Add scroll event listener
-  //   this.scrollEventSubscription = this.threadContainer.nativeElement.addEventListener('scroll', () => {
-  //     const container = this.threadContainer.nativeElement;
-  //     if (container.scrollHeight - container.scrollTop === container.clientHeight) {
-  //       this.scrollToBottomOnLoad = true;
-  //     } else {
-  //       this.scrollToBottomOnLoad = false;
-  //     }
-  //   });
-  // }
+  ngAfterViewChecked() {
+    if (this.shouldScrollToBottom && this.threadContainer) {
+      this.scrollToBottom();
+      if (this.addListenerForScroll) {
+        this.threadContainer.nativeElement.addEventListener('scroll', this.handleScroll.bind(this));
+        this.addListenerForScroll = false;
+      }
+    }
+  }
 
-  // scrollToBottom() {
-  //   try {
-  //     this.threadContainer.nativeElement.scrollTop = this.threadContainer.nativeElement.scrollHeight;
-  //   } catch (err) {
-  //     console.error("Could not scroll to bottom:", err);
-  //   }
-  // }
+  scrollToBottom() {
+    if (this.threadContainer) {
+      try {
+        this.threadContainer.nativeElement.scrollTop = this.threadContainer.nativeElement.scrollHeight;
+      } catch (err) {
+        console.error("Could not scroll to bottom:", err);
+      }
+    }
+  }
+
+  handleScroll() {
+    const threshold = 1; // Adjust threshold as needed
+    const position = this.threadContainer.nativeElement.scrollTop + this.threadContainer.nativeElement.offsetHeight;
+    const height = this.threadContainer.nativeElement.scrollHeight;
+    this.shouldScrollToBottom = position > height - threshold;
+  }
 
   private _filterUsers(value: string): any[] {
     const filterValue = value.toLowerCase();
@@ -294,13 +304,10 @@ export class ChannelChatComponent {
   ngOnDestroy() {
     this.userSub.unsubscribe();
     this.channelSub.unsubscribe();
-    // this.threadsSub.unsubscribe();
+    this.threadContainer.nativeElement.removeEventListener('scroll', this.handleScroll.bind(this));
     this.emojiSubscription.unsubscribe();
     if (this.routeSub) {
       this.routeSub.unsubscribe();
-    }
-    if (this.scrollEventSubscription) {
-      this.threadContainer.nativeElement.removeEventListener('scroll', this.scrollEventSubscription);
     }
   }
 
@@ -310,7 +317,7 @@ export class ChannelChatComponent {
   }
 
   async sendMessage() {
-    if(this.threadMessageBox.nativeElement.value.length > 0) {
+    if (this.threadMessageBox.nativeElement.value.length > 0) {
 
       let newThread = await this.currentUser.sendChannelMessage(
         this.currentChannel,
@@ -322,7 +329,7 @@ export class ChannelChatComponent {
       }
     } else {
       console.log('Nachricht nicht gesendet');
-      
+
     }
   }
 

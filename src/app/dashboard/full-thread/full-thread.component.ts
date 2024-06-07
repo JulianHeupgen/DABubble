@@ -57,6 +57,8 @@ export class FullThreadComponent {
   imgFileLink: string = '';
   setReactionMenuHover: boolean = false;
   isImgFileEdited: boolean = false;
+  shouldScrollToBottom: boolean = true;
+  addListenerForScroll: boolean = true
 
   pingUserControlFullThread = new FormControl("");
   filteredUsers!: Observable<any[]>;
@@ -66,6 +68,7 @@ export class FullThreadComponent {
   @ViewChild("editFullThreadMessageBox") editFullThreadMessageBox!: ElementRef;
   @ViewChild(AddImgToMessageComponent) addImgToMessageComponent!: AddImgToMessageComponent;
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
+  @ViewChild("fullThreadContainer") fullThreadContainer!: ElementRef;
 
   constructor(
     public threadService: ThreadService,
@@ -105,6 +108,33 @@ export class FullThreadComponent {
       );
     });
 
+  }
+
+  ngAfterViewChecked() {
+    if (this.shouldScrollToBottom && this.fullThreadContainer) {
+      this.scrollToBottom();
+      if (this.addListenerForScroll) {
+        this.fullThreadContainer.nativeElement.addEventListener('scroll', this.handleScroll.bind(this));
+        this.addListenerForScroll = false;
+      }
+    }
+  }
+
+  scrollToBottom() {
+    if (this.fullThreadContainer) {
+      try {
+        this.fullThreadContainer.nativeElement.scrollTop = this.fullThreadContainer.nativeElement.scrollHeight;
+      } catch (err) {
+        console.error("Could not scroll to bottom:", err);
+      }
+    }
+  }
+
+  handleScroll() {
+    const threshold = 1; // Adjust threshold as needed
+    const position = this.fullThreadContainer.nativeElement.scrollTop + this.fullThreadContainer.nativeElement.offsetHeight;
+    const height = this.fullThreadContainer.nativeElement.scrollHeight;
+    this.shouldScrollToBottom = position > height - threshold;
   }
 
   sortNewDataFromThreadService(event: any) {

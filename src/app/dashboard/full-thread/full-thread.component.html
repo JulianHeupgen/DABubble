@@ -11,7 +11,7 @@
 
 
     <div class="channel-history" *ngIf="thread && thread.messages && thread.messages[0] && threadOwner">
-        <div class="chat-history">
+        <div #fullThreadContainer class="chat-history">
 
 
             <div class="channel-chat-message" [class.other-users-channel-chat-message]="!isCurrentUser">
