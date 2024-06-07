@@ -15,7 +15,9 @@ export class UserChat {
     this.userChatId = data.userChatId || '';
     this.chatId = data.chatId || '';
     this.participants = data.participants || [];
-    this.threads = data.threads ? data.threads.map(thread => new Thread(thread)) : [];  //(data.threads || []).map(threadString => new Thread(JSON.parse(threadString)));
+    this.threads = (data.threads || []).map(thread => 
+      typeof thread === 'string' ? new Thread(JSON.parse(thread)) : new Thread(thread)
+    );
   }
 
 

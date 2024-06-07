@@ -17,7 +17,6 @@
       </div>
     </div>
 
-  
     <!-- User Chat Input -->
     <form [formGroup]="channelThreadMessage" class="text-box">
       <div #imgBox class="add-file-img-box"></div>
@@ -34,25 +33,6 @@
           [emojiImgHover]="'emoticon-hover.png'"
           [assigningComponent]="'ChannelChatComponent'"></app-emoji-mart>
   
-          <div class="address-message-to-user">
-            <img class="not-hover-icon" src="assets/img/ping-user.png">
-            <button class="hover-icon" mat-button [matMenuTriggerFor]="pingUser">
-              <img src="assets/img/ping-user-hover.png">
-            </button>
-            <mat-menu #pingUser="matMenu" class="address-message-to-user-menu">
-              <mat-form-field class="example-full-width" (click)="$event.stopPropagation()">
-                <mat-label>User</mat-label>
-                <input type="text" placeholder="Pick one" aria-label="User" matInput [formControl]="pingUserControl"
-                  [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option *ngFor="let user of filteredUsers | async" [value]="user.name"
-                    (click)="addUserToMessage(user)">
-                    &#64;{{ user.name }}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
-            </mat-menu>
-          </div>
         </div>
   
         <div class="send-message">

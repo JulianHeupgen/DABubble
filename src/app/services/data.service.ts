@@ -6,6 +6,8 @@ import { Thread } from '../models/thread.class';
 import { UserChat } from '../models/user-chat';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Unsubscribe } from '@angular/fire/auth';
+import { UserChatJson } from '../interfaces/user-chat-json.interface';
+
 
 
 @Injectable({
@@ -322,11 +324,20 @@ export class DataService {
 
 
   async updateUserChat(userChat: UserChat) {
+    let userChatCopy = new UserChat(userChat.toJSON());
+    let threadsAsString = userChatCopy.threads.map(thread => JSON.stringify(thread));
+    let userChatJson = userChatCopy.toJSON() as UserChatJson;
+    userChatJson.threads = threadsAsString;
+
+    let userChatForFirebase: { [key: string]: any } = userChatJson;
+
     let docRef = this.getUserChatDocRef(userChat.userChatId);
-    await updateDoc(docRef, userChat.toJSON()).catch((err) => {
+
+    await updateDoc(docRef, userChatForFirebase).catch((err) => {
       console.error(err)
     });
   }
+
 
   getUserChatDocRef(userChatId: string) {
     return doc(collection(this.firestore, 'directMessages'), userChatId)

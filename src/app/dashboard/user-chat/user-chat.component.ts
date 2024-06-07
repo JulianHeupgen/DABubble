@@ -99,7 +99,7 @@ export class UserChatComponent {
   filteredUsers!: Observable<any[]>;
 
 
-  async ngOnInit() {
+  ngOnInit() {
     this.route.params.subscribe(params => {
       this.currentUserChatId = params['id'];
       this.reloadAll();
@@ -113,10 +113,6 @@ export class UserChatComponent {
     await this.checkUserAuthId();
     this.getRecipient();
     this.getUserChat();
-    this.filteredUsers = this.pingUserControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterUsers(value || ''))
-    );
   }
 
 
@@ -279,14 +275,14 @@ sortMessagesByTimestamp() {
         console.log(userChat.currentUserChat.userChatId);
         console.log(userChat.currentUserChat.participants);
 
-        let userChatObject: UserChat = new UserChat({ 
-          userChatId: userChat.currentUserChat.userChatId,
-          chatId: userChat.currentUserChat.chatId, 
-          participants: userChat.currentUserChat.participants, 
-          threads: userChat.currentUserChat.threads });
+        // let userChatObject: UserChat = new UserChat({ 
+        //   userChatId: userChat.currentUserChat.userChatId,
+        //   chatId: userChat.currentUserChat.chatId, 
+        //   participants: userChat.currentUserChat.participants, 
+        //   threads: userChat.currentUserChat.threads });
 
-          console.log(userChatObject);
-          await this.dataService.updateUserChat(userChatObject);
+          console.log(userChat.currentUserChat);
+          await this.dataService.updateUserChat(userChat.currentUserChat);
 
       } else {
         console.log("create new UserChat");
