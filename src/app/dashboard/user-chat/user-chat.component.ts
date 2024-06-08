@@ -193,25 +193,24 @@ export class UserChatComponent {
       }
     }
 
-    this.getThreadsFromCurrentUserChat();
+    if(this.currentUserChat){
+      this.getThreadsFromCurrentUserChat();
+    }
   }
 
 
   getThreadsFromCurrentUserChat() {
     this.currentUserChatThreads = [];
 
-     if(this.currentUserChat) {
       if(this.currentUserChat.threads.length > 0) {
-
         for (let i = 0; i < this.currentUserChat.threads.length; i++) {
           let thread = this.currentUserChat.threads[i];
           this.currentUserChatThreads.push(thread);
         }
-
       } else { 
         this.emptyUserChat = true;
       }
-    }
+
     this.currentUserChat.threads = this.currentUserChatThreads;
   }
   
@@ -271,6 +270,8 @@ export class UserChatComponent {
         await this.dataService.updateUser(this.currentUser);
         await this.dataService.updateUser(this.recipient);
       }
+    } else {
+      console.log("Keine Nachricht eingegeben!");
     }
   }
 
