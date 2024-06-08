@@ -21,7 +21,6 @@ import { Thread } from '../../models/thread.class';
 import { ChannelThreadComponent } from '../channel-chat/channel-thread/channel-thread.component';
 import { ChannelChatComponent } from '../channel-chat/channel-chat.component';
 import { Subscription, Observable, firstValueFrom } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
 import { ThreadService } from '../../services/thread.service';
 import { UserChatThreadComponent } from './user-chat-thread/user-chat-thread.component';
 
@@ -90,6 +89,7 @@ export class UserChatComponent {
   currentUserChat!: UserChat;
   imgFile: File | undefined = undefined;
   currentUserChatThreads!: Thread[];
+  emptyUserChat: boolean = false;
 
   private userSub: Subscription = new Subscription();
   private userChatsSub: Subscription = new Subscription();
@@ -114,7 +114,6 @@ export class UserChatComponent {
     this.getRecipient();
     this.getUserChat();
   }
-
 
 
   dataSubscriptions() {
@@ -188,7 +187,7 @@ export class UserChatComponent {
     }
 
     for (let i = 0; i < userChatsOfCurrentUser.length; i++) {
-      if (userChatsOfCurrentUser[i].participants.includes(this.recipient.id)) {
+      if (userChatsOfCurrentUser[i].participants.includes(this.recipient.id)) {  // Beim UserChat mit sich selbst, trifft das auf alle UserChats zu !!
         this.currentUserChat = new UserChat(userChatsOfCurrentUser[i]);
         break;
       }
@@ -203,11 +202,17 @@ export class UserChatComponent {
 
      if(this.currentUserChat) {
       if(this.currentUserChat.threads.length > 0) {
+
         for (let i = 0; i < this.currentUserChat.threads.length; i++) {
           let thread = this.currentUserChat.threads[i];
           this.currentUserChatThreads.push(thread);
-    }}}
-   this.currentUserChat.threads = this.currentUserChatThreads;
+        }
+
+      } else { 
+        this.emptyUserChat = true;
+      }
+    }
+    this.currentUserChat.threads = this.currentUserChatThreads;
   }
   
   
@@ -250,6 +255,7 @@ export class UserChatComponent {
 
   async sendMessage() {
     if(this.threadMessageBox.nativeElement.value.length > 0) {
+      this.emptyUserChat = false;
 
       let userChat = await this.currentUser.sendDirectMessage(
         this.recipient,                                   

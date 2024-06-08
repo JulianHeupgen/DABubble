@@ -57,6 +57,11 @@ mat-card-header {
 .chat-history {
     height: 75%;
     overflow-y: auto;
+
+    .emptyUserChat {
+        @include font-size-weight-color($fs: 24px, $fw: 700);
+        padding: 35px;
+    }
 }
 
 .text-box {
