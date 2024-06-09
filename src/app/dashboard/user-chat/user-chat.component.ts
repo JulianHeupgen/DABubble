@@ -180,9 +180,6 @@ export class UserChatComponent {
   getUserChat() {
     let userChatsOfCurrentUser: any[] = [];
 
-    console.log(this.currentUser.id);
-    console.log(this.recipient.id);
-
     for (let i = 0; i < this.userChats.length; i++) {
       if (this.userChats[i].participants.includes(this.currentUser.id)) {
         userChatsOfCurrentUser.push(this.userChats[i]);
