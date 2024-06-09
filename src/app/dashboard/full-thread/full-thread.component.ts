@@ -168,9 +168,6 @@ export class FullThreadComponent {
       })
     })
     this.users = Array.from(userMap.values());
-    console.log('this.users', this.users);
-    console.log('Thread Messages is:', this.thread?.messages[0]);
-
   }
 
   closeThread() {

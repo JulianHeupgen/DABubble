@@ -78,8 +78,7 @@ export class FullThreadMessageComponent {
         this.thread = new Thread(threadData);
         this.threadService.getThreadChanges(this.thread)        
         this.loadThreadMessages();
-        this.threadService.getReactionsForMessage(this.thread);
-        console.log('Listen to Firebase for Message of FullThread', this.thread);        
+        this.threadService.getReactionsForMessage(this.thread);        
       }
     });
   }

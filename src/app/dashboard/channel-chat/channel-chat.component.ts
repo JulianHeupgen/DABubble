@@ -113,7 +113,6 @@ export class ChannelChatComponent {
   async ngOnInit() {
     this.routeSub = this.route.params.subscribe(params => {
       this.channelId = params['id'];
-      console.log(this.channelId);
       this.dataService.currentChannelId = this.channelId;
       this.dataService.getThreadsList();
       this.reloadAll();
@@ -186,9 +185,6 @@ export class ChannelChatComponent {
     if (this.channelSub) {
       this.channelSub.unsubscribe();
     }
-    // if (this.threadsSub) {
-    //   this.threadsSub.unsubscribe();
-    // }
     this.userSub = this.dataService.getUsersList().subscribe((users: any) => {
       this.users = users;
 
@@ -196,10 +192,6 @@ export class ChannelChatComponent {
     this.channelSub = this.dataService.getChannelsList().subscribe((channels) => {
       this.channels = channels;
     });
-    // this.threadsSub = this.dataService.getThreadsList().subscribe((threads) => {
-    //   this.threads = threads;
-    //   console.log('threads:', this.threads);
-    // })
   }
 
 
@@ -214,13 +206,8 @@ export class ChannelChatComponent {
 
       await this.auth.getUserAuthId()
         .then(userId => {
-          // if (userId) {
           this.userAuthId = userId;
           this.findCurrentUser();
-
-          // } else {
-          //   console.log("Kein Benutzer angemeldet.");
-          // }
         })
         .catch(error => {
           console.error("Fehler beim Abrufen der Benutzer-ID:", error);
@@ -255,7 +242,6 @@ export class ChannelChatComponent {
     for (let i = 0; i < this.channels.length; i++) {
       if (this.channels[i].channelId === this.channelId) {
         this.currentChannel = new Channel(this.channels[i]);
-        console.log(this.currentChannel);
 
         break;
       }
@@ -266,7 +252,6 @@ export class ChannelChatComponent {
   getChannelIdFromURL() {
     this.route.params.subscribe(params => {
       this.channelId = params['id'];
-      console.log(this.channelId);
     });
   }
 
@@ -280,7 +265,6 @@ export class ChannelChatComponent {
         this.channelParticipantsCounter++;
       }
     });
-    console.log(this.channelParticipants)
   }
 
 

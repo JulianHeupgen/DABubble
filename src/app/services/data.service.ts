@@ -263,7 +263,6 @@ export class DataService {
   async addChannel(channel: Channel): Promise<string> {
     try {
       const docRef = await addDoc(this.getChannelCollection(), channel.toJSON());
-      console.log("Document written with ID: ", docRef.id);
       return docRef.id;
     } catch (err) {
       console.error("Fehler beim Hinzufügen des Kanals: ", err);

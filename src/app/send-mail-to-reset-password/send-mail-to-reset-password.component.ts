@@ -61,7 +61,6 @@ export class SendMailToResetPasswordComponent {
     if (this.emailData.valid) {
       const auth = getAuth();
       const email: string = this.emailData.value.email || '';
-      console.log('E-Mail:', email);
 
       sendPasswordResetEmail(auth, email)
         .then(() => {
