@@ -180,15 +180,21 @@ export class UserChatComponent {
   getUserChat() {
     let userChatsOfCurrentUser: any[] = [];
 
+    console.log(this.currentUser.id);
+    console.log(this.recipient.id);
+
     for (let i = 0; i < this.userChats.length; i++) {
       if (this.userChats[i].participants.includes(this.currentUser.id)) {
         userChatsOfCurrentUser.push(this.userChats[i]);
       }
     }
 
+    // hier Fallunterscheidung einbauen: falls currentUser.id != recipient.id, dann unterer Teil ausführen (2. for-Schleife)
+    // Aber falls currentUser.id == recipient.id: Dann den UserChat wählen, der 2 Mal currentUser.id enthält (extra Funktion bauen) !
+
     for (let i = 0; i < userChatsOfCurrentUser.length; i++) {
       if (userChatsOfCurrentUser[i].participants.includes(this.recipient.id)) {  // Beim UserChat mit sich selbst, trifft das auf alle UserChats zu !!
-        this.currentUserChat = new UserChat(userChatsOfCurrentUser[i]);
+        this.currentUserChat = new UserChat(userChatsOfCurrentUser[i]);  // zusätzlichen Fall abdecken, falls: currentUser.id == recipient.id    !
         break;
       }
     }
