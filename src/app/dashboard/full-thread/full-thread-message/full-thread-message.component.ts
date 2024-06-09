@@ -6,7 +6,6 @@ import { DataService } from '../../../services/data.service';
 import { MessageReactionComponent } from '../../channel-chat/message-reaction/message-reaction.component';
 import { User } from '../../../models/user.class';
 import { Firestore, Unsubscribe, doc, onSnapshot } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ThreadService } from '../../../services/thread.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { deleteObject, getStorage, ref } from '@angular/fire/storage';
@@ -39,8 +38,6 @@ export class FullThreadMessageComponent {
   imgFile: string = '';
   groupedMessages: { [key: string]: any[] } = {};
   
-  // setReactionMenuHover: boolean = false;
-  // editMessage: boolean = false;
   isImgFileEdited: boolean = false;
 
   private threadUnsubscribe!: Unsubscribe;
@@ -57,11 +54,9 @@ export class FullThreadMessageComponent {
         this.thread = event.thread;
         this.currentUser = event.currentUser;
       }
-      // this.loadThreadMessages();
       this.listenForThreadChanges();
     });
       this.listenForThreadChanges();
-      // this.loadThreadMessages();
   }
 
   listenForThreadChanges() {
@@ -125,7 +120,6 @@ export class FullThreadMessageComponent {
     const date = new Date(timestamp);
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
-
     const formattedTime = `${hours}:${minutes} Uhr`;
 
     return formattedTime;
@@ -158,9 +152,7 @@ export class FullThreadMessageComponent {
     const desertRef = ref(storage, this.imgFile);
     deleteObject(desertRef).then(() => {
       messageObj.imgFileURL = '';
-    }).catch((error) => {
-      // Uh-oh, an error occurred!
-    });    
+    }).catch((error) => { });    
     }
     this.threadService.copyThreadForFirebase(threadObj)
     messageObj.editMode = false;

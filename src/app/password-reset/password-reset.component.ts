@@ -3,11 +3,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
-
-import { AuthService } from '../services/auth.service';
-import { Auth, confirmPasswordReset } from '@angular/fire/auth';
-import { Firestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -49,9 +44,6 @@ export class PasswordResetComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authservice: AuthService,
-    private auth: Auth,
-    private firebase: Firestore,
     private router: Router,
 
     private activatedRoute: ActivatedRoute,

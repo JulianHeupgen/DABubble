@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { DataService } from '../services/data.service';
-import { Firestore, getDocs } from '@angular/fire/firestore';
 import { getAuth, sendPasswordResetEmail } from '@angular/fire/auth';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -46,9 +43,6 @@ export class SendMailToResetPasswordComponent {
   bannerState = '';
 
   constructor(
-    private firestore: Firestore,
-    private authService: AuthService,
-    private dataService: DataService,
     private formBuilder: FormBuilder,
     private router: Router
   ) { }

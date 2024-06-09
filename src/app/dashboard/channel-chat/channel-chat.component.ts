@@ -100,13 +100,17 @@ export class ChannelChatComponent {
 
   private userSub: Subscription = new Subscription();
   private channelSub: Subscription = new Subscription();
-  private threadsSub: Subscription = new Subscription();
   private routeSub!: Subscription;
-  private scrollEventSubscription: any;
   //-------------------//
 
   pingUserControl = new FormControl("");
   filteredUsers!: Observable<any[]>;
+
+  //------------------//
+
+  channelThreadMessage: FormGroup = this.formBuilder.group({
+    channelMessage: ['', Validators.required],
+  });
 
   //------------------//
 
@@ -117,12 +121,6 @@ export class ChannelChatComponent {
       this.dataService.getThreadsList();
       this.reloadAll();
       this.groupedChannelThreads$ = this.dataService.groupedChannelThreads.asObservable();
-      // this.groupedChannelThreads$.subscribe(() => {
-      //   if (this.scrollToBottomOnLoad) {
-      //     this.scrollToBottom();
-      //     this.scrollToBottomOnLoad = false;
-      //   }
-      // });
     });
   }
 
@@ -159,7 +157,7 @@ export class ChannelChatComponent {
   }
 
   handleScroll() {
-    const threshold = 1; // Adjust threshold as needed
+    const threshold = 1;
     const position = this.threadContainer.nativeElement.scrollTop + this.threadContainer.nativeElement.offsetHeight;
     const height = this.threadContainer.nativeElement.scrollHeight;
     this.shouldScrollToBottom = position > height - threshold;
@@ -233,16 +231,13 @@ export class ChannelChatComponent {
     this.resetParticipantsData();
     this.getCurrentChannel();
     this.showChannelParticipants(this.channelId);
-    // this.getChannelThreads(this.channelId);
   }
 
 
   getCurrentChannel() {
-
     for (let i = 0; i < this.channels.length; i++) {
       if (this.channels[i].channelId === this.channelId) {
         this.currentChannel = new Channel(this.channels[i]);
-
         break;
       }
     }
@@ -268,9 +263,7 @@ export class ChannelChatComponent {
   }
 
 
-  channelThreadMessage: FormGroup = this.formBuilder.group({
-    channelMessage: ['', Validators.required],
-  });
+
 
   addEmoji(emoji: string) {
     let textAreaElement = this.threadMessageBox.nativeElement;
@@ -302,7 +295,6 @@ export class ChannelChatComponent {
 
   async sendMessage() {
     if (this.threadMessageBox.nativeElement.value.length > 0) {
-
       let newThread = await this.currentUser.sendChannelMessage(
         this.currentChannel,
         this.threadMessageBox.nativeElement.value,
@@ -313,7 +305,6 @@ export class ChannelChatComponent {
       }
     } else {
       console.log('Nachricht nicht gesendet');
-
     }
   }
 

@@ -5,8 +5,6 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { Thread } from '../../../models/thread.class';
 import { DataService } from '../../../services/data.service';
-import { Unsubscribe } from '@angular/fire/auth';
-import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
 import { ThreadService } from '../../../services/thread.service';
 
 @Component({
@@ -25,14 +23,12 @@ export class MessageReactionComponent {
 
   usersForReaction: User[] = [];
 
-  // private threadUnsubscribe!: Unsubscribe;
   emojiSubscription: Subscription;
 
   constructor(
     private emojiService: EmojiCommunicationService,
     private dataService: DataService,
     private threadService: ThreadService,
-    // private firebase: Firestore,
   ) {
     this.emojiSubscription = this.emojiService.emojiEvent$.subscribe(event => {
       if (event.sender === 'MessageReactionComponent' && event.messageTimestamp === this.threadMessage.timestamp) {
@@ -79,7 +75,6 @@ export class MessageReactionComponent {
   }
 
   updateThreadMessageReactions() {
-    // This function ensures that the threadMessage is updated with detailed user information
     this.threadMessage.emojiReactions = this.threadMessage.emojiReactions.map((reaction: any) => {
       reaction.users = reaction.usersDetail || reaction.users;
       delete reaction.usersDetail;
@@ -137,6 +132,5 @@ export class MessageReactionComponent {
 
   ngOnDestroy() {
     this.emojiSubscription.unsubscribe();
-    // this.threadUnsubscribe();
   }
 }
