@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, collection, deleteDoc, doc, onSnapshot, query, updateDoc, where } from '@angular/fire/firestore';
+import { Firestore, addDoc, arrayUnion, collection, deleteDoc, doc, onSnapshot, query, updateDoc, where } from '@angular/fire/firestore';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
 import { Thread } from '../models/thread.class';
@@ -303,6 +303,17 @@ export class DataService {
 
   getUserDocRef(userId: string) {
     return doc(collection(this.firestore, 'users'), userId);
+  }
+
+
+  async updateUserChatsOfUser(user: User, userChatId: string) {
+    let docRef = this.getUserDocRef(user.id);
+    const newUserChat = { 
+      userChatId: userChatId
+      };
+    await updateDoc(docRef, {
+      userChats: arrayUnion(newUserChat)  
+    });
   }
 
 

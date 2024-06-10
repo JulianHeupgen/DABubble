@@ -278,8 +278,8 @@ export class UserChatComponent {
         await this.dataService.updateUserChat(userChat.currentUserChat);
       } else {
         await this.dataService.addUserChat(userChat.currentUserChat);
-        await this.dataService.updateUser(this.currentUser);
-        await this.dataService.updateUser(this.recipient);
+        await this.dataService.updateUserChatsOfUser(this.currentUser, this.recipient.id);
+        await this.dataService.updateUserChatsOfUser(this.recipient, this.currentUser.id);
       }
     } else {
       console.log("Keine Nachricht eingegeben!");
