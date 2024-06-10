@@ -186,18 +186,27 @@ export class UserChatComponent {
       }
     }
 
-    // hier Fallunterscheidung einbauen: falls currentUser.id != recipient.id, dann unterer Teil ausführen (2. for-Schleife)
-    // Aber falls currentUser.id == recipient.id: Dann den UserChat wählen, der 2 Mal currentUser.id enthält (extra Funktion bauen) !
-
-    for (let i = 0; i < userChatsOfCurrentUser.length; i++) {
-      if (userChatsOfCurrentUser[i].participants.includes(this.recipient.id)) {  // Beim UserChat mit sich selbst, trifft das auf alle UserChats zu !!
-        this.currentUserChat = new UserChat(userChatsOfCurrentUser[i]);  // zusätzlichen Fall abdecken, falls: currentUser.id == recipient.id    !
-        break;
+    if(this.currentUser.id == this.recipient.id) {
+      for (let i = 0; i < userChatsOfCurrentUser.length; i++) {
+        if (userChatsOfCurrentUser[i].participants[0] == userChatsOfCurrentUser[i].participants[1]) {  
+          this.currentUserChat = new UserChat(userChatsOfCurrentUser[i]);  
+          break;
+        }
+      }
+    } else {
+      for (let i = 0; i < userChatsOfCurrentUser.length; i++) {
+        if (userChatsOfCurrentUser[i].participants.includes(this.recipient.id)) {  
+          this.currentUserChat = new UserChat(userChatsOfCurrentUser[i]);  
+          break;
+        }
       }
     }
 
     if(this.currentUserChat){
       this.getThreadsFromCurrentUserChat();
+    } else {
+       this.currentUserChatThreads = [];
+       this.emptyUserChat = true;
     }
   }
 
@@ -209,12 +218,11 @@ export class UserChatComponent {
         for (let i = 0; i < this.currentUserChat.threads.length; i++) {
           let thread = this.currentUserChat.threads[i];
           this.currentUserChatThreads.push(thread);
+          this.emptyUserChat = false;
         }
       } else { 
         this.emptyUserChat = true;
       }
-
-    this.currentUserChat.threads = this.currentUserChatThreads;
   }
   
   
