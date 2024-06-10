@@ -44,7 +44,6 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     public authService: AuthService,
     private auth: Auth,
-    private firebase: Firestore,
     private router: Router,
   ) { }
 
@@ -88,17 +87,4 @@ export class LoginComponent {
         console.error('Could not sign up with guest account. ', error);
       });
   }
-
-  // async signIn(email: string, password: string) {
-  //   try {
-  //     const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
-  //     return userCredential.user;
-  //   } catch (error) {
-  //     return null;
-  //   }
-  // }
-
-  // signInWidthGoogle() {
-  //   this.authservice.signInWidthGoogle();
-  // }
 }

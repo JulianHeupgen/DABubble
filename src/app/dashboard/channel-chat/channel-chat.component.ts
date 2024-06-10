@@ -100,9 +100,7 @@ export class ChannelChatComponent {
 
   private userSub: Subscription = new Subscription();
   private channelSub: Subscription = new Subscription();
-  private threadsSub: Subscription = new Subscription();
   private routeSub!: Subscription;
-  private scrollEventSubscription: any;
   //-------------------//
 
   pingUserControl = new FormControl("");
@@ -110,20 +108,19 @@ export class ChannelChatComponent {
 
   //------------------//
 
+  channelThreadMessage: FormGroup = this.formBuilder.group({
+    channelMessage: ['', Validators.required],
+  });
+
+  //------------------//
+
   async ngOnInit() {
     this.routeSub = this.route.params.subscribe(params => {
       this.channelId = params['id'];
-      console.log(this.channelId);
       this.dataService.currentChannelId = this.channelId;
       this.dataService.getThreadsList();
       this.reloadAll();
       this.groupedChannelThreads$ = this.dataService.groupedChannelThreads.asObservable();
-      // this.groupedChannelThreads$.subscribe(() => {
-      //   if (this.scrollToBottomOnLoad) {
-      //     this.scrollToBottom();
-      //     this.scrollToBottomOnLoad = false;
-      //   }
-      // });
     });
   }
 
@@ -160,7 +157,7 @@ export class ChannelChatComponent {
   }
 
   handleScroll() {
-    const threshold = 1; // Adjust threshold as needed
+    const threshold = 1;
     const position = this.threadContainer.nativeElement.scrollTop + this.threadContainer.nativeElement.offsetHeight;
     const height = this.threadContainer.nativeElement.scrollHeight;
     this.shouldScrollToBottom = position > height - threshold;
@@ -186,9 +183,6 @@ export class ChannelChatComponent {
     if (this.channelSub) {
       this.channelSub.unsubscribe();
     }
-    // if (this.threadsSub) {
-    //   this.threadsSub.unsubscribe();
-    // }
     this.userSub = this.dataService.getUsersList().subscribe((users: any) => {
       this.users = users;
 
@@ -196,10 +190,6 @@ export class ChannelChatComponent {
     this.channelSub = this.dataService.getChannelsList().subscribe((channels) => {
       this.channels = channels;
     });
-    // this.threadsSub = this.dataService.getThreadsList().subscribe((threads) => {
-    //   this.threads = threads;
-    //   console.log('threads:', this.threads);
-    // })
   }
 
 
@@ -214,13 +204,8 @@ export class ChannelChatComponent {
 
       await this.auth.getUserAuthId()
         .then(userId => {
-          // if (userId) {
           this.userAuthId = userId;
           this.findCurrentUser();
-
-          // } else {
-          //   console.log("Kein Benutzer angemeldet.");
-          // }
         })
         .catch(error => {
           console.error("Fehler beim Abrufen der Benutzer-ID:", error);
@@ -246,17 +231,13 @@ export class ChannelChatComponent {
     this.resetParticipantsData();
     this.getCurrentChannel();
     this.showChannelParticipants(this.channelId);
-    // this.getChannelThreads(this.channelId);
   }
 
 
   getCurrentChannel() {
-
     for (let i = 0; i < this.channels.length; i++) {
       if (this.channels[i].channelId === this.channelId) {
         this.currentChannel = new Channel(this.channels[i]);
-        console.log(this.currentChannel);
-
         break;
       }
     }
@@ -266,7 +247,6 @@ export class ChannelChatComponent {
   getChannelIdFromURL() {
     this.route.params.subscribe(params => {
       this.channelId = params['id'];
-      console.log(this.channelId);
     });
   }
 
@@ -280,13 +260,10 @@ export class ChannelChatComponent {
         this.channelParticipantsCounter++;
       }
     });
-    console.log(this.channelParticipants)
   }
 
 
-  channelThreadMessage: FormGroup = this.formBuilder.group({
-    channelMessage: ['', Validators.required],
-  });
+
 
   addEmoji(emoji: string) {
     let textAreaElement = this.threadMessageBox.nativeElement;
@@ -318,7 +295,6 @@ export class ChannelChatComponent {
 
   async sendMessage() {
     if (this.threadMessageBox.nativeElement.value.length > 0) {
-
       let newThread = await this.currentUser.sendChannelMessage(
         this.currentChannel,
         this.threadMessageBox.nativeElement.value,
@@ -329,7 +305,6 @@ export class ChannelChatComponent {
       }
     } else {
       console.log('Nachricht nicht gesendet');
-
     }
   }
 

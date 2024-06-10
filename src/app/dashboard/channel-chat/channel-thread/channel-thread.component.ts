@@ -59,8 +59,6 @@ export class ChannelThreadComponent {
     this.dataService.allUsers.forEach(user => {
       if (user.id == messageOwnerId) {
         this.threadUser = user;
-        // console.log('Thread User',this.threadUser);
-
       }
     })
   }

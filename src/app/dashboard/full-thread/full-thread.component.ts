@@ -16,7 +16,6 @@ import { MatInputModule } from '@angular/material/input';
 import { AddImgToMessageComponent } from '../add-img-to-message/add-img-to-message.component';
 import { EmojiCommunicationService } from '../../services/emoji-communication.service';
 import { Channel } from '../../models/channel.class';
-import { deleteObject, getStorage, ref } from '@angular/fire/storage';
 import { Message } from '../../models/message.class';
 
 @Component({
@@ -131,7 +130,7 @@ export class FullThreadComponent {
   }
 
   handleScroll() {
-    const threshold = 1; // Adjust threshold as needed
+    const threshold = 1;
     const position = this.fullThreadContainer.nativeElement.scrollTop + this.fullThreadContainer.nativeElement.offsetHeight;
     const height = this.fullThreadContainer.nativeElement.scrollHeight;
     this.shouldScrollToBottom = position > height - threshold;
@@ -163,18 +162,13 @@ export class FullThreadComponent {
       this.dataService.allUsers.forEach(user => {
         if (user.id == message.senderId) {
           userMap.set(user.id, user);
-          // this.users.push(user);
         }
       })
     })
     this.users = Array.from(userMap.values());
-    console.log('this.users', this.users);
-    console.log('Thread Messages is:', this.thread?.messages[0]);
-
   }
 
   closeThread() {
-    // this.threadService.openThread = false;
     this.threadService.openFullThread(false);
   }
 
