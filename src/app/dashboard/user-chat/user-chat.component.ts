@@ -218,8 +218,8 @@ export class UserChatComponent {
         for (let i = 0; i < this.currentUserChat.threads.length; i++) {
           let thread = this.currentUserChat.threads[i];
           this.currentUserChatThreads.push(thread);
-          this.emptyUserChat = false;
         }
+        this.emptyUserChat = false;
       } else { 
         this.emptyUserChat = true;
       }
