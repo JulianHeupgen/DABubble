@@ -7,8 +7,6 @@ import { UserChat } from '../models/user-chat';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Unsubscribe } from '@angular/fire/auth';
 import { UserChatJson } from '../interfaces/user-chat-json.interface';
-import { UserJson } from '../interfaces/user-json.interface';
-
 
 
 @Injectable({
