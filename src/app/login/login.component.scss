@@ -55,8 +55,9 @@ mat-card {
     padding: 18px 32px;
 
     mat-card-content {
+        overflow-y: auto;
         text-align: center;
-        @include flex-align-justify();
+        @include flex-align-justify($jc: flex-start);
         flex-direction: column;
         gap: 30px;
 
@@ -259,6 +260,7 @@ form {
     mat-card {
         width: 95%;
         mat-card-content {
+            padding: 16px 0;
             h1 {
                 font-size: 32px;
             }
@@ -276,6 +278,45 @@ form {
 
         .guest-login-btn {
             text-wrap: nowrap;
+        }
+    }
+}
+
+@media (max-width: 450px) {
+    mat-card {
+        padding: 18px 18px;
+        mat-card-content {
+            gap: 10px;
+            h1 {
+                margin: 0;
+            }
+            form {
+                gap: 10px;
+            }
+            span {
+                font-size: 16px;
+            }
+        }
+    }
+    .go-to-register {
+        bottom: 10px;
+        span {
+            font-size: 14px;
+        }
+    }
+
+    .input-login {
+        input {
+            padding: 18px 20px 18px 40px;
+        }
+        mat-icon {
+            left: 10px;
+        }
+    }
+
+    .login-btn-field {
+        button {
+            padding: 12px 15px;
         }
     }
 }
