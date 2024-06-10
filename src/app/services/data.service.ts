@@ -313,7 +313,7 @@ export class DataService {
       userChats: arrayUnion(newUserChat)  
     });
   }
-
+ 
 
   async updateChannel(channel: Channel) {
     let docRef = this.getChannelDocRef(channel.channelId);
