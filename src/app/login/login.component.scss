@@ -225,3 +225,57 @@ form {
         text-decoration: none;
     }
 }
+
+@media (max-width: 1050px) {
+    mat-card {
+        width: 60%;
+    }
+}
+
+@media (max-width: 800px) {
+    mat-card {
+        width: 90%;
+    }
+
+    .imprint-privacy {
+        a {
+            display: none;
+        }
+    }
+
+    .go-to-register {
+        width: 70%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        top: unset;
+        right: unset;
+        bottom: 40px;
+        gap: unset;
+    }
+}
+
+@media (max-width: 600px) {
+    mat-card {
+        width: 95%;
+        mat-card-content {
+            h1 {
+                font-size: 32px;
+            }
+
+            span {
+                font-size: 17px;
+            }
+        }
+    }
+
+    .login-btn-field {
+        width: 100%;
+        gap: unset;
+        justify-content: space-between;
+
+        .guest-login-btn {
+            text-wrap: nowrap;
+        }
+    }
+}
