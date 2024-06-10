@@ -7,8 +7,6 @@ import { UserChat } from '../models/user-chat';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Unsubscribe } from '@angular/fire/auth';
 import { UserChatJson } from '../interfaces/user-chat-json.interface';
-import { UserJson } from '../interfaces/user-json.interface';
-
 
 
 @Injectable({
@@ -84,7 +82,6 @@ export class DataService {
       channelId: id,
       title: data.title,
       participants: data.participants,
-      threads: data.threads,
       description: data.description,
       createdBy: data.createdBy
     }
@@ -315,7 +312,7 @@ export class DataService {
       userChats: arrayUnion(newUserChat)  
     });
   }
-
+ 
 
   async updateChannel(channel: Channel) {
     let docRef = this.getChannelDocRef(channel.channelId);
