@@ -117,7 +117,7 @@ export class DataService {
 
       if (this.firstLoad) {
         this.sortThreadByFirstMessageTimestamp();
-        this.groupedThreads = this.groupThreadsByDate();
+        this.groupedThreads = this.groupThreadsByDate(this.allThreads);
         this.firstLoad = false;
       }
       this.groupedChannelThreads.next(this.groupedThreads);
@@ -201,9 +201,9 @@ export class DataService {
     this.allThreads.sort((a, b) => a.timestamp - b.timestamp);
   }
 
-  groupThreadsByDate(): { [key: string]: Thread[] } {
+  groupThreadsByDate(threads: Thread[]): { [key: string]: Thread[] } {
     // Reduzieren der Threads, um sie nach Datum zu gruppieren
-    const groupedThreads = this.allThreads.reduce((groups, thread) => {
+    const groupedThreads = threads.reduce((groups, thread) => {
       const date = new Date(thread.timestamp).toISOString().split('T')[0]; // Format: YYYY-MM-DD
       if (!groups[date]) {
         groups[date] = [];
