@@ -7,6 +7,7 @@ import { UserChat } from '../models/user-chat';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Unsubscribe } from '@angular/fire/auth';
 import { UserChatJson } from '../interfaces/user-chat-json.interface';
+import { UserJson } from '../interfaces/user-json.interface';
 
 
 
@@ -279,7 +280,14 @@ export class DataService {
   }
 
   async addUserChat(userChat: UserChat) {
-    await addDoc(this.getUserChatsCollection(), userChat.toJSON()).catch((err) => {
+    let userChatCopy = new UserChat(userChat.toJSON());
+    let threadsAsString = userChatCopy.threads.map(thread => JSON.stringify(thread));
+    let userChatJson = userChatCopy.toJSON() as UserChatJson;
+    userChatJson.threads = threadsAsString;
+
+    let userChatForFirebase: { [key: string]: any } = userChatJson;
+
+    await addDoc(this.getUserChatsCollection(), userChatForFirebase).catch((err) => {
       console.error(err)
     }).then((docRef) => {
       console.log("Document written with ID: ", docRef?.id)
