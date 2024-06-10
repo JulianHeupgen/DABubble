@@ -82,7 +82,6 @@ export class DataService {
       channelId: id,
       title: data.title,
       participants: data.participants,
-      threads: data.threads,
       description: data.description,
       createdBy: data.createdBy
     }

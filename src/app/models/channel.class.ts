@@ -1,10 +1,8 @@
-import { Thread } from './thread.class';
 import { User } from './user.class';
 
 export class Channel {
   title: string;
   participants: User[];
-  // threads: Thread[];   // überhaupt notwendig?
   channelId: string;
   description: string;
   createdBy: string;
@@ -13,14 +11,12 @@ export class Channel {
     channelId?: string,
     title?: string,
     participants?: User[],
-    // threads?: Thread[],
     description?: string,
     createdBy?: string
   }) {
     this.channelId = data.channelId || '';
     this.title = data.title || '';
     this.participants = data.participants || [];
-    // this.threads = data.threads || [];
     this.description = data.description || '';
     this.createdBy = data.createdBy || '';
   }
@@ -41,25 +37,11 @@ export class Channel {
   }
 
 
-  // addThread(thread: Thread): void {
-  //   this.threads.push(thread);
-  // }
-
-  
-  // removeThread(thread: Thread): void {
-  //   const index = this.threads.indexOf(thread);
-  //   if (index !== -1) {
-  //     this.threads.splice(index, 1);
-  //   }
-  // }
-
-  
   toJSON() {
     return {
         channelId: this.channelId,
         title: this.title,
         participants: this.participants,
-        // threads: this.threads,
         description: this.description,
         createdBy: this.createdBy
     };
