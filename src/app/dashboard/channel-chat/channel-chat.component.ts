@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
@@ -72,7 +72,8 @@ export class ChannelChatComponent {
     private auth: AuthService,
     private formBuilder: FormBuilder,
     private emojiService: EmojiCommunicationService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private cdRef: ChangeDetectorRef,
   ) {
     this.emojiSubscription = this.emojiService.emojiEvent$.subscribe(
       (event) => {
@@ -144,6 +145,7 @@ export class ChannelChatComponent {
         this.addListenerForScroll = false;
       }
     }
+    this.cdRef.detectChanges();
   }
 
   scrollToBottom() {

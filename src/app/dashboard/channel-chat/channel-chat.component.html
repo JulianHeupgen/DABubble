@@ -56,9 +56,9 @@
   </div>
 
   <!-- Channel Chat Input -->
-  <form [formGroup]="channelThreadMessage" class="text-box">
+  <form [formGroup]="channelThreadMessage" class="text-box" *ngIf="currentChannel">
     <div #imgBox class="add-file-img-box"></div>
-    <textarea #threadMessageBox required formControlName="channelMessage" *ngIf="currentChannel"
+    <textarea #threadMessageBox required formControlName="channelMessage"
       placeholder="Nachricht an #{{currentChannel.title}}"></textarea>
     <div class="interactiv-btn-box">
       <div class="interactive-btns">
