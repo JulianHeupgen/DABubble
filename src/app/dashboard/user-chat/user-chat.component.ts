@@ -121,7 +121,7 @@ export class UserChatComponent {
     if(this.userSub) {
       this.userSub.unsubscribe();
     }
-    this.userSub = this.dataService.getUsersList().subscribe((users: any) => {
+    this.userSub = this.dataService.getUsersList().subscribe( (users: any) => {
       this.users = users;
     });
 
@@ -129,7 +129,7 @@ export class UserChatComponent {
     if(this.userChatsSub) {
       this.userChatsSub.unsubscribe();
     }
-    this.userChatsSub = this.dataService.getUserChatsList().subscribe((userChats: any) => {
+    this.userChatsSub = this.dataService.getUserChatsList().subscribe(async (userChats: any) => {
       this.userChats = userChats;
     })
   }
@@ -157,7 +157,7 @@ export class UserChatComponent {
   }
 
 
-  async findCurrentUser() {
+  findCurrentUser() {
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].authUserId === this.userAuthId) {
         this.currentUser = new User(this.users[i]);
@@ -254,12 +254,6 @@ export class UserChatComponent {
   }
 
 
-  ngOnDestroy() {
-    this.userSub.unsubscribe();
-    this.userChatsSub.unsubscribe();
-  }
-
-
   removeChatInput() {
     this.channelThreadMessage.reset();
     this.addImgToMessageComponent.removeImage();
@@ -287,6 +281,12 @@ export class UserChatComponent {
     } else {
       console.log("Keine Nachricht eingegeben!");
     }
+  }
+
+
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
+    this.userChatsSub.unsubscribe();
   }
 
 }
