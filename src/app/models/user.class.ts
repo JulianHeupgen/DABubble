@@ -78,7 +78,7 @@ export class User {
   }
 
 
-  async sendDirectMessage(recipient: User, messageContent: string, currentUserChat: UserChat, imgFile?: File): Promise<any> {
+  async sendDirectMessage(recipient: User, messageContent: string, currentUserChat: UserChat | undefined, imgFile?: File): Promise<any> {
     let imgFileURL;
     if (imgFile) {                                          
       let storage: StorageService = new StorageService;

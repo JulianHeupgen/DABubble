@@ -86,7 +86,7 @@ export class UserChatComponent {
   recipient!: User;
   currentUserChatId!: string;
   userChats!: any;
-  currentUserChat!: UserChat;
+  currentUserChat!: UserChat | undefined;
   imgFile: File | undefined = undefined;
   currentUserChatThreads!: Thread[];
   emptyUserChat: boolean = false;
@@ -102,6 +102,7 @@ export class UserChatComponent {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.currentUserChatId = params['id'];
+      this.currentUserChat = undefined;
       this.reloadAll();
     });
   }
@@ -214,6 +215,7 @@ export class UserChatComponent {
   getThreadsFromCurrentUserChat() {
     this.currentUserChatThreads = [];
     
+    if(this.currentUserChat) {
       if(this.currentUserChat.threads.length > 0) {
         for (let i = 0; i < this.currentUserChat.threads.length; i++) {
           let thread = this.currentUserChat.threads[i];
@@ -223,6 +225,7 @@ export class UserChatComponent {
       } else { 
         this.emptyUserChat = true;
       }
+    }
   }
   
   
