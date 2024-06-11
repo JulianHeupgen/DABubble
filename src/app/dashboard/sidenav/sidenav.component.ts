@@ -11,6 +11,7 @@ import { Channel } from '../../models/channel.class';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddChannelComponent } from '../../dialog/add-channel/add-channel.component';
+import { SearchComponent } from '../search/search.component';
 
 
 @Component({
@@ -24,7 +25,8 @@ import { AddChannelComponent } from '../../dialog/add-channel/add-channel.compon
     MatDrawerContainer,
     MatDrawerContent,
     RouterModule,
-    MatDialogModule
+    MatDialogModule,
+    SearchComponent
   ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',

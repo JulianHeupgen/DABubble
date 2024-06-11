@@ -292,3 +292,24 @@
 .rotate-90 {
     transform: rotate(90deg);
 }
+
+app-search {
+    border: 1px solid $lightpurple;
+    border-radius: 42px;
+    margin-bottom: 32px;
+    display: none;
+}
+
+@media (max-width: 650px) {
+    .headline-container {
+        display: none;
+    }
+
+    .img-as-button {
+        display: none;
+    }
+
+    app-search {
+        display: block;
+    }
+}

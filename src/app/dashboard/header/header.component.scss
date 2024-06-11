@@ -53,12 +53,15 @@
 
 .profile-img-container {
   position: relative;
-  width: 70px;
-  height: 70px;
+  width: auto;
+  max-width: 70px;
+  height: auto;
+  max-height: 70px;
 }
 
 .profile-img {
-  height: 70px;
+  height: auto;
+  max-height: 70px;
   width: 70px;
   border-radius: 50%;
 }
@@ -70,7 +73,8 @@
 }
 
 .logo {
-  height: 70px;
+  height: auto;
+  max-height: 70px;
   width: 243px;
 }
 
@@ -128,5 +132,52 @@
         background-color: #797df327 !important;
       }
     }
+  }
+}
+
+@media (max-width: 1100px) {
+  .logo {
+    width: 161px;
+  }
+
+  .profile-img {
+    width: 48px;
+  }
+
+  .online-status {
+    width: 14px;
+    height: 14px;
+  }
+
+  .header-profile {
+    span {
+      font-size: 24px;
+    }
+  }
+}
+
+@media (max-width: 960px) {
+  .arrow-down {
+    display: none;
+  }
+
+  .header-profile {
+    span {
+      font-size: 20px;
+    }
+  }
+}
+
+@media (max-width: 830px) {
+  .header-profile {
+    span {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  app-search {
+    display: none;
   }
 }

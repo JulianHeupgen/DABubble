@@ -82,3 +82,30 @@ h2 {
   padding-left: 32px;
   margin-top: 16px;
 }
+
+.responsive-input {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  .search-bar {
+    input {
+      font-size: 20px;
+    }
+
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  .desktop-input {
+    display: none;
+  }
+
+  .responsive-input {
+    display: block;
+  }
+}
