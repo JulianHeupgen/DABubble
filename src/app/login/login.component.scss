@@ -238,6 +238,10 @@ form {
         width: 90%;
     }
 
+    .logo {
+        display: none;
+    }
+
     .imprint-privacy {
         a {
             display: none;
@@ -251,7 +255,7 @@ form {
         justify-content: space-between;
         top: unset;
         right: unset;
-        bottom: 40px;
+        bottom: 10px;
         gap: unset;
     }
 }
@@ -259,8 +263,11 @@ form {
 @media (max-width: 600px) {
     mat-card {
         width: 95%;
+        height: 90vh;
+        padding: 5px 20px;
         mat-card-content {
             padding: 16px 0;
+            gap: 20px;
             h1 {
                 font-size: 32px;
             }
@@ -279,6 +286,10 @@ form {
         .guest-login-btn {
             text-wrap: nowrap;
         }
+    }
+
+    form {
+        gap: 20px;
     }
 }
 
@@ -318,5 +329,9 @@ form {
         button {
             padding: 12px 15px;
         }
+    }
+
+    .google-login-btn {
+        padding: 11px 20px;
     }
 }
