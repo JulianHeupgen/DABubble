@@ -11,7 +11,7 @@
   </mat-card-header>
   
   <!-- Chat history -->
-    <div #threadContainer class="chat-history" *ngIf="currentUserChatThreads">
+    <div #threadContainer class="chat-history">
       <div class="emptyUserChat" *ngIf="emptyUserChat">Starte einen Chat !</div>
       <div *ngFor="let thread of currentUserChatThreads">
            <app-user-chat-thread [thread]="thread"></app-user-chat-thread>  
@@ -19,9 +19,9 @@
     </div>
 
     <!-- User Chat Input -->
-    <form [formGroup]="channelThreadMessage" class="text-box">
+    <form [formGroup]="channelThreadMessage" class="text-box" *ngIf="currentUserChatThreads">
       <div #imgBox class="add-file-img-box"></div>
-      <textarea #threadMessageBox formControlName="channelMessage" *ngIf="currentUserChatThreads"
+      <textarea #threadMessageBox formControlName="channelMessage" 
         placeholder="Nachricht an #{{ recipient.name }}"></textarea>
       <div class="interactiv-btn-box">
         <div class="interactive-btns">
