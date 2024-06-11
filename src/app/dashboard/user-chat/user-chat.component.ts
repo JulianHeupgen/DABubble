@@ -121,7 +121,7 @@ export class UserChatComponent {
     if(this.userSub) {
       this.userSub.unsubscribe();
     }
-    this.userSub = this.dataService.getUsersList().subscribe( (users: any) => {
+    this.userSub = this.dataService.getUsersList().subscribe((users: any) => {
       this.users = users;
     });
 
@@ -129,7 +129,7 @@ export class UserChatComponent {
     if(this.userChatsSub) {
       this.userChatsSub.unsubscribe();
     }
-    this.userChatsSub = this.dataService.getUserChatsList().subscribe(async (userChats: any) => {
+    this.userChatsSub = this.dataService.getUserChatsList().subscribe((userChats: any) => {
       this.userChats = userChats;
     })
   }
