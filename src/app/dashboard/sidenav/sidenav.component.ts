@@ -57,7 +57,7 @@ export class SidenavComponent {
   selectedUser: User[] = [];
   allChannels: Partial<Channel>[] = [];
   channelTitles: { channelId: string, title: string }[] = [];
-  directMessageTitle: { imageUrl: string, onlineStatus: string, name: string, id: string, chatId: string }[] = [];
+  directMessageTitle: { imageUrl: string, onlineStatus: string, name: string, id: string }[] = [];
 
 
   private userSub = new Subscription();
@@ -199,7 +199,7 @@ export class SidenavComponent {
       if (!matchedUser) return;
       const displayName = this.buildDisplayName(matchedUser);
       if (this.isUniqueDirectMessage(matchedUser.id)) {
-        this.addDirectMessage(matchedUser, displayName, chat.chatId);
+        this.addDirectMessage(matchedUser, displayName);
       }
     });
   }
@@ -249,13 +249,12 @@ export class SidenavComponent {
    * @param displayName - The user's formatted display name.
    * @param chatId - The ID of the chat associated with the direct message.
    */
-  private addDirectMessage(user: User, displayName: string, chatId: string): void {
+  private addDirectMessage(user: User, displayName: string): void {
     this.directMessageTitle.push({
       id: user.id,
       imageUrl: user.imageUrl,
       name: displayName,
-      onlineStatus: user.onlineStatus,
-      chatId: chatId
+      onlineStatus: user.onlineStatus
     });
   }
 
