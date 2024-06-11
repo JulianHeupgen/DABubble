@@ -151,8 +151,11 @@ export class SearchComponent {
    * @param participant - The participant object to display in the profile view.
    */
   openProfile(participant: any): void {
-    this.dialog.open(ViewProfileComponent, { data: participant });
-    this.control.reset();
+    const dialogRef = this.dialog.open(ViewProfileComponent, { data: participant });
+    dialogRef.afterClosed().subscribe(() => {
+      this.control.reset();
+      this.isPanelOpen = false;
+    });
   }
 
 
@@ -163,5 +166,6 @@ export class SearchComponent {
    */
   onSelection(): void {
     this.control.reset();
+    this.isPanelOpen = false;
   }
 }
