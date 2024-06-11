@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { DataService } from '../../services/data.service';
 import { User } from '../../models/user.class';
 import { CommonModule } from '@angular/common';
@@ -25,6 +25,8 @@ import { Observable, map, startWith, switchMap } from 'rxjs';
 })
 
 export class SearchComponent {
+  @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
+  @ViewChild(MatAutocompleteTrigger) autocompleteTrigger!: MatAutocompleteTrigger;
 
   control = new FormControl('');
   isPanelOpen: boolean = false;
@@ -155,6 +157,8 @@ export class SearchComponent {
     dialogRef.afterClosed().subscribe(() => {
       this.control.reset();
       this.isPanelOpen = false;
+      this.searchInput.nativeElement.blur();
+      this.autocompleteTrigger.closePanel();
     });
   }
 
@@ -167,5 +171,7 @@ export class SearchComponent {
   onSelection(): void {
     this.control.reset();
     this.isPanelOpen = false;
+    this.searchInput.nativeElement.blur();
+    this.autocompleteTrigger.closePanel();
   }
 }
