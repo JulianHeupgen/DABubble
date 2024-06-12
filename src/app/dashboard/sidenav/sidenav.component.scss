@@ -329,4 +329,8 @@ app-search {
         width: 100%;
         height: calc(100vh - 101px);
     }
+
+    ::ng-deep .mat-drawer-inner-container {
+        overflow: unset !important;
+    }
 }
