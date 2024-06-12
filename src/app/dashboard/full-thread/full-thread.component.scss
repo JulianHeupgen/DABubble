@@ -70,3 +70,9 @@ app-full-thread-message {
     gap: 5px;
     // padding-top: 40px;
 }
+
+@media (max-width: 800px) {
+    .open-thread {
+        width: 100%;
+    }
+}

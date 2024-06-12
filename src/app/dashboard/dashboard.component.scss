@@ -26,3 +26,9 @@ app-full-thread {
         z-index: 2;
     }
 }
+
+@media (max-width: 800px) {
+    app-full-thread {
+        width: 90%;
+    }
+}
