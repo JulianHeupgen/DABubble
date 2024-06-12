@@ -12,3 +12,17 @@ app-full-thread {
     width: min-content;
 }
 
+@media (max-width: 1400px) {
+    app-full-thread {
+        position: absolute;
+        right: 25px;
+    }
+}
+
+@media (max-width: 1050px) {
+    app-sidenav {
+        position: absolute;
+        left: 5px;
+        z-index: 2;
+    }
+}
