@@ -305,11 +305,32 @@ app-search {
         display: none;
     }
 
-    .img-as-button {
+    .img-as-button,
+    .img-as-button-open {
         display: none;
     }
 
     app-search {
         display: block;
+    }
+
+    .main-container {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .sidenav-container {
+        width: 100%;
+        border-radius: 0;
+        height: calc(100vh - 101px);
+    }
+
+    .sidenav {
+        width: 100%;
+        height: calc(100vh - 101px);
+    }
+
+    ::ng-deep .mat-drawer-inner-container {
+        overflow: unset !important;
     }
 }
