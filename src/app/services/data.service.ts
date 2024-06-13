@@ -390,6 +390,25 @@ export class DataService {
   }
 
 
+  async deleteUserChatThread(userChatId: string | undefined, index: number | undefined) {
+    if (userChatId !== undefined && index !== undefined) {
+      try {
+        let docRef = this.getUserChatDocRef(userChatId);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          let currentThreads = docSnap.data()['threads'];
+            currentThreads.splice(index, 1);
+            await updateDoc(docRef, { threads: currentThreads });
+          } else {
+            console.log("No such document!");
+          }
+        } catch (err) {
+          console.error("Error deleting thread: ", err);
+        }
+      }
+    }
+
+
   openThread(threadElement: Thread) {
     console.log('threadElement', threadElement);
   }
