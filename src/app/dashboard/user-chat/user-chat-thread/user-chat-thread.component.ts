@@ -21,7 +21,7 @@ export class UserChatThreadComponent {
 
   @Input() thread!: Thread;
   @Input() userChatId!: string | undefined;
-  @Input() index!: number | undefined;
+  @Input() userChatIndex!: number | undefined;
 
   @ViewChild(MessageReactionComponent) messageReaction!: MessageReactionComponent;
   @ViewChild("editMessageBox") editMessageBox!: ElementRef;

@@ -23,7 +23,7 @@
           </button>
           <mat-menu class="edit-message-btn" #editMessage="matMenu">
             <button mat-menu-item (click)="editThreadMessage()">Nachricht bearbeiten</button>
-            <button class="delete-btn" mat-menu-item (click)="dataService.deleteUserChatThread(this.userChatId, this.index)">Nachricht löschen</button>
+            <button class="delete-btn" mat-menu-item (click)="dataService.deleteUserChatThread(this.userChatId, this.userChatIndex)">Nachricht löschen</button>
           </mat-menu>
         </div>
     
@@ -51,14 +51,19 @@
           </div>
           <div class="edit-message-btns">
             <span (click)="cancelEditMessage()">Abbrechen</span>
-            <span (click)="saveEditMessage(this.thread, this.userChatId, this.index)">Speichern</span>
+            <span (click)="saveEditMessage(this.thread, this.userChatId, this.userChatIndex)">Speichern</span>
           </div>
         </div>
     
         <div class="reaction">
           <div class="reaction-bar">
-            <app-message-reaction [threadMessage]="thread.messages[0]" [thread]="thread"
-              [currentUser]="userChat.currentUser"></app-message-reaction>
+            <app-message-reaction 
+            [threadMessage]="thread.messages[0]" 
+            [thread]="thread"
+            [currentUser]="userChat.currentUser"
+            [userChatId]="userChatId"
+            [userChatIndex]="userChatIndex"
+              ></app-message-reaction>
             <app-emoji-mart [emojiImg]="'emoji-reaction.png'" [emojiImgHover]="'emoji-reaction-hover.png'"
               [assigningComponent]="'MessageReactionComponent'" [threadId]="thread.threadId"
               *ngIf="thread.messages[0].emojiReactions.length > 0">

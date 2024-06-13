@@ -20,6 +20,8 @@ export class MessageReactionComponent {
   @Input() threadMessage!: any;
   @Input() currentUser!: User;
   @Input() thread!: Thread;
+  @Input() userChatId!: string | undefined;
+  @Input() userChatIndex!: number | undefined;
 
   usersForReaction: User[] = [];
 
@@ -99,7 +101,11 @@ export class MessageReactionComponent {
     if (!reactionExists) {
       this.getNewReactionToMessage(threadMessage, userReaction);
     }
-    this.threadService.copyThreadForFirebase(this.thread);
+    if (this.thread.channelId.length > 1) {
+      this.threadService.copyThreadForFirebase(this.thread);
+    } else {
+      this.threadService.copyUserChatThreadForFirebase(this.thread, this.userChatId, this.userChatIndex)
+    }
   }
 
   isUserInReaction(chatReaction: any) {
