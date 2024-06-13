@@ -125,6 +125,7 @@
             gap: 20px;
 
             span {
+                text-wrap: nowrap;
                 @include font-size-weight-color($fs: 14px, $cl: #686868)
             }
 
@@ -256,6 +257,7 @@
 
     .channel-chat-time-sender {
         flex-direction: row-reverse !important;
+        text-align: left !important;
     }
 
     .message {
@@ -282,6 +284,17 @@
             &:focus {
                 outline: none
             }
+        }
+    }
+}
+
+@media (max-width: 550px) {
+    .channel-chat-message {
+        padding: 10px 10px;
+        gap: 15px;
+        .channel-chat-content {
+            padding-left: 0;
+            padding-right: 0;
         }
     }
 }

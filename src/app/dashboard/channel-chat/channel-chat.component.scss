@@ -64,11 +64,11 @@ mat-card-header {
                 }
             }
         }
-        
+
         .header-right-container {
             display: flex;
             align-items: center;
-        
+
             .participants-container {
                 display: flex;
                 align-items: center;
@@ -80,14 +80,14 @@ mat-card-header {
                 &:hover {
                     background-color: $backgroundHover;
                 }
-        
+
                 .participants-img {
                     margin-left: -20px;
                     height: 45px;
                     width: 45px;
                     border-radius: 50%;
                 }
-        
+
                 .participant-counter {
                     padding: 0 18px 0 18px;
                     @include font-size-weight-color($fw: 600);
@@ -97,10 +97,19 @@ mat-card-header {
                     }
                 }
             }
-        
+
             .addUser-btn {
                 cursor: pointer;
-                
+
+                &:hover {
+                    content: url('./../../../assets/img/add_user_hover.png');
+                }
+            }
+
+            .showUser-btn {
+                display: none;
+                cursor: pointer;
+
                 &:hover {
                     content: url('./../../../assets/img/add_user_hover.png');
                 }
@@ -146,9 +155,6 @@ mat-card-header {
             outline: 1px solid #535AF1;
         }
     }
-    textarea.ng-invalid.ng-touched {
-        border-color: red;
-      }
 }
 
 .interactiv-btn-box {
@@ -266,5 +272,46 @@ mat-card-header {
         &:hover {
             background-color: unset !important;
         }
+    }
+}
+
+@media (max-width: 650px) {
+    .participants-container {
+        display: none !important;
+    }
+    // .participants-img {
+    //     display: none;
+    // }
+
+    // .participant-counter {
+    //     display: none;
+    // }
+
+    .addUser-btn {
+        display: none;
+    }
+
+    .showUser-btn {
+        display: block !important;
+    }
+}
+
+@media (max-width: 500px) {
+    mat-card-header {
+        text-wrap: nowrap;
+
+        .channel-infos {
+            .header-left-container {
+                .title {
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+
+    .channel-wrapper {
+        height: 100%;
+        margin: 20px 5px 20px 5px;
+        border-radius: 30px;
     }
 }

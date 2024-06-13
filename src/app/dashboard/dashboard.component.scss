@@ -27,6 +27,12 @@ app-full-thread {
     }
 }
 
+@media (max-width: 800px) {
+    app-full-thread {
+        width: 90%;
+    }
+}
+
 @media (max-width: 650px) {
     .sidenav-and-router {
         padding-left: 0;
