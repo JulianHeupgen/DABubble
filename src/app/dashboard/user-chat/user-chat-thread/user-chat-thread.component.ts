@@ -20,6 +20,8 @@ import { CommonModule } from '@angular/common';
 export class UserChatThreadComponent {
 
   @Input() thread!: Thread;
+  @Input() userChatId!: string | undefined;
+  @Input() index!: number | undefined;
 
   @ViewChild(MessageReactionComponent) messageReaction!: MessageReactionComponent;
   @ViewChild("editMessageBox") editMessageBox!: ElementRef;
@@ -76,8 +78,8 @@ export class UserChatThreadComponent {
     this.isImgFileEdited = false;
   }
 
-  async saveEditMessage(messageElement: Thread) {
-    messageElement.messages[0].content = this.editMessageBox.nativeElement.value
+  async saveEditMessage(messageElement: Thread, userChatId: string | undefined, index: number | undefined) {
+    messageElement.messages[0].content = this.editMessageBox.nativeElement.value;
     if(this.isImgFileEdited) {
     const storage = getStorage();
     const desertRef = ref(storage, this.imgFile);
@@ -87,7 +89,7 @@ export class UserChatThreadComponent {
       console.log(error);
     });    
     }
-    this.threadService.copyThreadForFirebase(messageElement)
+    this.threadService.copyUserChatThreadForFirebase(messageElement, userChatId, index);
     this.editMessage = false;
   }
 

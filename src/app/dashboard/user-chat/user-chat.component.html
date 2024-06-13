@@ -13,8 +13,8 @@
   <!-- Chat history -->
     <div #threadContainer class="chat-history">
       <div class="emptyUserChat" *ngIf="emptyUserChat">Starte einen Chat !</div>
-        <div *ngFor="let thread of currentUserChatThreads">
-             <app-user-chat-thread [thread]="thread"></app-user-chat-thread>  
+        <div *ngFor="let thread of currentUserChatThreads; let i = index">
+             <app-user-chat-thread [thread]="thread" [userChatId]="currentUserChat?.userChatId" [index]="i"></app-user-chat-thread>  
         </div>
     </div>
 

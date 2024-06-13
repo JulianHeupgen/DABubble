@@ -84,4 +84,17 @@ export class ThreadService {
       // Uh-oh, an error occurred!
     }); 
   }
+
+
+  copyUserChatThreadForFirebase(originThread: Thread, userChatId: string | undefined, index: number | undefined) {
+    const threadCopy = new Thread({ ...originThread });
+    threadCopy.messages = [...originThread.messages];
+    this.convertThreadMessagesToString(threadCopy);
+
+    this.dataService.updateUserChatThread(threadCopy, userChatId, index).then(() => {
+      console.log('Thread successfully updated in Firebase');
+    }).catch(err => {
+      console.error('Update failed', err);
+    });
+  }
 }

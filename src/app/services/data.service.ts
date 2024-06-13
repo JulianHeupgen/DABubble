@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, arrayUnion, collection, deleteDoc, doc, onSnapshot, query, updateDoc, where } from '@angular/fire/firestore';
+import { Firestore, addDoc, arrayUnion, collection, deleteDoc, doc, getDoc, onSnapshot, query, updateDoc, where } from '@angular/fire/firestore';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
 import { Thread } from '../models/thread.class';
@@ -358,6 +358,24 @@ export class DataService {
   }
 
 
+  async updateUserChatThread(thread: Thread, userChatId: string | undefined, index: number | undefined) {
+    if (userChatId !== undefined && index !== undefined) {
+      try {
+        let docRef = this.getUserChatDocRef(userChatId);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          let currentThreads = docSnap.data()['threads'];
+          currentThreads[index] = thread.toJSON();
+          await updateDoc(docRef, { threads: currentThreads });
+        } else {
+          console.log("No such document!");
+        }
+      } catch (err) {
+        console.error("Error updating document: ", err);
+      }
+    }
+  }
+
 
   async deleteUserChat(userChatId: string) {
     await deleteDoc(this.getUserChatDocRef(userChatId)).catch((err) => {
@@ -370,7 +388,6 @@ export class DataService {
       console.error(err)
     })
   }
-
 
 
   openThread(threadElement: Thread) {
