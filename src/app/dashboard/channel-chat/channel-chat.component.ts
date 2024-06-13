@@ -97,7 +97,7 @@ export class ChannelChatComponent {
 
   // isUserScrolledBottom: boolean = true;
   shouldScrollToBottom: boolean = true;
-  addListenerForScroll: boolean = true
+  addListenerForScroll: boolean = true;
 
   private userSub: Subscription = new Subscription();
   private channelSub: Subscription = new Subscription();
@@ -119,7 +119,7 @@ export class ChannelChatComponent {
     this.routeSub = this.route.params.subscribe(params => {
       this.channelId = params['id'];
       this.dataService.currentChannelId = this.channelId;
-      this.dataService.getThreadsList();
+      this.dataService.getThreadsList(); 
       this.reloadAll();
       this.groupedChannelThreads$ = this.dataService.groupedChannelThreads.asObservable();
     });

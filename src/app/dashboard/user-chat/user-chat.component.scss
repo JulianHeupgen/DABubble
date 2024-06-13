@@ -1,5 +1,23 @@
 @import '../../../mixin.scss';
 
+.date-container {
+    @include flex-align-justify();
+    margin: 15px 0;
+
+    .date-line {
+        height: 1px;
+        flex: 1 1 0;
+        background-color: #b5b7f1;
+    }
+
+    .date {
+        padding: 6px 16px;
+        border-radius: 30px;
+        border: 1px solid #b5b7f1;
+        @include font-size-weight-color();
+    }
+}
+
 .userChat-wrapper {
     height: 100%;
     margin: 20px 25px 20px 30px;

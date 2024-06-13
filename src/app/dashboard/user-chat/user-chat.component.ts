@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
@@ -70,7 +70,8 @@ export class UserChatComponent {
     private formBuilder: FormBuilder,
     private emojiService: EmojiCommunicationService,
     public threadService: ThreadService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private cdRef: ChangeDetectorRef
   ) {
     this.emojiSubscription = this.emojiService.emojiEvent$.subscribe(
       (event) => {
@@ -91,8 +92,12 @@ export class UserChatComponent {
   currentUserChatThreads!: Thread[];
   emptyUserChat: boolean = false;
 
+  shouldScrollToBottom: boolean = true;
+  addListenerForScroll: boolean = true;
+
   private userSub: Subscription = new Subscription();
   private userChatsSub: Subscription = new Subscription();
+  private routeSub!: Subscription;
 
 
   pingUserControl = new FormControl("");
@@ -100,11 +105,40 @@ export class UserChatComponent {
 
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.routeSub = this.route.params.subscribe(params => {
       this.currentUserChatId = params['id'];
       this.currentUserChat = undefined;
       this.reloadAll();
     });
+  }
+
+
+  ngAfterViewChecked() {
+    if (this.shouldScrollToBottom && this.threadContainer) {
+      this.scrollToBottom();
+      if (this.addListenerForScroll) {
+        this.threadContainer.nativeElement.addEventListener('scroll', this.handleScroll.bind(this));
+        this.addListenerForScroll = false;
+      }
+    }
+    this.cdRef.detectChanges();
+  }
+
+  scrollToBottom() {
+    if (this.threadContainer) {
+      try {
+        this.threadContainer.nativeElement.scrollTop = this.threadContainer.nativeElement.scrollHeight;
+      } catch (err) {
+        console.error("Could not scroll to bottom:", err);
+      }
+    }
+  }
+
+  handleScroll() {
+    const threshold = 1;
+    const position = this.threadContainer.nativeElement.scrollTop + this.threadContainer.nativeElement.offsetHeight;
+    const height = this.threadContainer.nativeElement.scrollHeight;
+    this.shouldScrollToBottom = position > height - threshold;
   }
 
 
@@ -287,6 +321,11 @@ export class UserChatComponent {
   ngOnDestroy() {
     this.userSub.unsubscribe();
     this.userChatsSub.unsubscribe();
+    this.threadContainer.nativeElement.removeEventListener('scroll', this.handleScroll.bind(this));
+    this.emojiSubscription.unsubscribe();
+    if (this.routeSub) {
+      this.routeSub.unsubscribe();
+    }
   }
 
 }

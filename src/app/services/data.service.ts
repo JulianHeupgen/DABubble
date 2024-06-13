@@ -255,8 +255,7 @@ export class DataService {
       threads: data.threads
     }
   }
-
-
+ 
 
   async addChannel(channel: Channel): Promise<string> {
     try {
