@@ -4,7 +4,7 @@
 
     <div class="who-reacted">
       <ng-container *ngIf="reactions.reaction.includes('png')">
-        <img src="../../../../assets/img/{{ reactions.reaction }}" alt="">
+        <img src="assets/img/{{ reactions.reaction }}" alt="">
       </ng-container>
       <ng-container *ngIf="!reactions.reaction.includes('png')">
         <span class="emoji">{{ reactions.reaction }}</span>
@@ -25,7 +25,7 @@
 
 
     <ng-container *ngIf="reactions.reaction.includes('png')">
-      <img src="../../../../assets/img/{{ reactions.reaction }}" alt="">
+      <img src="assets/img/{{ reactions.reaction }}" alt="">
     </ng-container>
     <ng-container *ngIf="!reactions.reaction.includes('png')">
       <span class="emoji">{{ reactions.reaction }}</span>
