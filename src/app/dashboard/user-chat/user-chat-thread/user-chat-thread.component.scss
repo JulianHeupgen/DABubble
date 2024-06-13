@@ -194,11 +194,16 @@
 
             .not-hover-icon {
                 display: none;
+
             }
 
             .hover-icon {
                 display: flex;
                 border: none;
+
+                &:hover {
+                    cursor: pointer;
+                }
             }
         }
     }
@@ -220,19 +225,29 @@
 }
 
 ::ng-deep .edit-message-btn {
-    .mat-mdc-menu-item-text {
-        cursor: pointer;
-        font-family: 'Nunito', sans-serif !important;
-        padding: 10px 20px !important;
-        border-radius: 100px !important;
-        @include font-size-weight-color($fs: 24px !important, $fw: 600 !important);
+    .mat-mdc-menu-content {
+        padding: 15px !important;
+        display: flex;
+        flex-direction: column;
 
-        &:hover {
-            @include font-size-weight-color($fs: 24px !important, $fw: 700 !important, $cl: #535AF1);
-            background-color: #ECEEFE;
-        }
+        button {
+            cursor: pointer;
+            border: none;
+            padding: 10px 10px !important;
+            margin-top: 7px !important;
+            font-family: 'Nunito', sans-serif !important;
+            border-radius: 100px !important;
+            @include font-size-weight-color($fs: 24px !important, $fw: 600 !important);
+            background-color: #ffffff;
+
+            &:hover {
+                @include font-size-weight-color($fs: 24px !important, $cl: #535AF1);
+                background-color: #ECEEFE;
+            }
+        } 
     }
 }
+
 
 .set-reaaction-menu-hover {
     display: flex;
