@@ -32,7 +32,7 @@ export class ChannelThreadComponent {
   @ViewChild("editMessageBox") editMessageBox!: ElementRef;
   threadUser!: User
   isCurrentUser: boolean = false;
-  setReactionMenuHover: boolean = false;
+  // setReactionMenuHover: boolean = false;
   editMessage: boolean = false;
   imgFile: string = '';
   isImgFileEdited: boolean = false;
@@ -83,7 +83,7 @@ export class ChannelThreadComponent {
   }
 
   editThreadMessage() {
-    this.setReactionMenuHover = false;
+    // this.setReactionMenuHover = false;
     this.editMessage = true;
   }
 

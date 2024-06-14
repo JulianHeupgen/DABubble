@@ -231,10 +231,10 @@
         padding: 10px 20px !important;
         margin-top: 7px !important;
         border-radius: 100px !important;
-        @include font-size-weight-color($fs: 24px !important, $fw: 600 !important);
+        @include font-size-weight-color($fs: 20px !important, $fw: 600 !important);
 
         &:hover {
-            @include font-size-weight-color($fs: 24px !important, $cl: #535AF1);
+            @include font-size-weight-color($fs: 20px !important, $cl: #535AF1);
             background-color: #ECEEFE;
         }
     }
@@ -292,6 +292,8 @@
         }
     }
 }
+
+
 
 @media (max-width: 550px) {
     .channel-chat-message {

@@ -1,4 +1,3 @@
-
 @import '@ctrl/ngx-emoji-mart/picker';
 
 /* You can add global styles to this file, and also import other style files */
@@ -30,8 +29,10 @@ app-password-reset {
 //   font-family: Roboto, "Helvetica Neue", sans-serif;
 // }
 
-app-channel-chat, app-user-chat {
+app-channel-chat,
+app-user-chat {
   width: 100%;
+  max-width: 1800px;
   height: calc(100vh - 180px);
 }
 
@@ -110,4 +111,12 @@ mat-dialog-container {
 /* Don´t delete */
 .project-font {
   font-family: 'Nunito', sans-serif !important;
+}
+
+@media (max-width: 650px) {
+
+  app-channel-chat,
+  app-user-chat {
+    height: calc(100vh - 110px);
+  }
 }

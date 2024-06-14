@@ -22,6 +22,7 @@
     height: 100%;
     margin: 20px 25px 20px 30px;
     border-radius: 30px;
+    justify-content: space-between;
 }
 
 .mat-mdc-card-header {
@@ -126,7 +127,7 @@ mat-card-header {
 
 
 .chat-history {
-    height: 75%;
+    height: 90%;
     overflow-y: auto;
 }
 
@@ -229,43 +230,6 @@ mat-card-header {
     position: relative;
 }
 
-// .input-file-container {
-//     position: relative;
-//     display: inline-block;
-//     margin: 0 8px;
-
-
-//     input[type="file"] {
-//         cursor: pointer;
-//         position: absolute;
-//         width: 100%;
-//         height: 100%;
-//         opacity: 0;
-//         margin-top: -46px;
-
-//         &:hover+::before {
-//             background-color: #444df2;
-//         }
-//     }
-
-//     &::before {
-//         content: 'Datei auswählen';
-//         display: block;
-//         padding: 10px;
-//         background-color: rgba(236, 238, 239, 0.5);
-//         color: #686868;
-//         border: 1px dotted #686868;
-//         border-radius: 5px;
-//         text-align: center;
-//         z-index: 1;
-//     }
-
-//     input[type="file"]:focus+::before {
-//         outline: 2px solid #007bff;
-//         /* Optional: Highlight when focused */
-//     }
-// }
-
 /* Fix Emoji Background */
 ::ng-deep .mat-mdc-menu-item {
     &:not(:disabled) {
@@ -279,13 +243,6 @@ mat-card-header {
     .participants-container {
         display: none !important;
     }
-    // .participants-img {
-    //     display: none;
-    // }
-
-    // .participant-counter {
-    //     display: none;
-    // }
 
     .addUser-btn {
         display: none;
@@ -293,6 +250,12 @@ mat-card-header {
 
     .showUser-btn {
         display: block !important;
+    }
+
+    .text-box {    
+        textarea {
+            height: 110px;
+        }
     }
 }
 
@@ -313,5 +276,11 @@ mat-card-header {
         height: 100%;
         margin: 20px 5px 20px 5px;
         border-radius: 30px;
+    }
+}
+
+@media (max-width: 400px) {
+    .text-box {
+        padding: 0 15px 30px 15px;
     }
 }

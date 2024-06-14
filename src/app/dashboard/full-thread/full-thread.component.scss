@@ -36,7 +36,10 @@
 
 .channel-history {
     height: calc(100% - 96px);
-    padding-bottom: 35px;
+    // padding-bottom: 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .separation-line {

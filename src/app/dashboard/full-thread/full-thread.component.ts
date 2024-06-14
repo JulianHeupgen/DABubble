@@ -54,7 +54,7 @@ export class FullThreadComponent {
   imgFile: File | undefined = undefined;
 
   imgFileLink: string = '';
-  setReactionMenuHover: boolean = false;
+  // setReactionMenuHover: boolean = false;
   isImgFileEdited: boolean = false;
   shouldScrollToBottom: boolean = true;
   addListenerForScroll: boolean = true
@@ -224,7 +224,7 @@ export class FullThreadComponent {
   }
 
   editThreadMessage(messageObj: Message) {
-    this.setReactionMenuHover = false;
+    // this.setReactionMenuHover = false;
     messageObj.editMode = true;
   }
 
