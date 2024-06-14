@@ -1,5 +1,8 @@
 <div class="header">
-  <img class="logo" src="./assets/img/dabubble_header_logo.png">
+  <img class="logo" src="./assets/img/dabubble_header_logo.png" *ngIf="dataService.opened">
+  <img src="./assets/img/devspace_responsive.png" *ngIf="!dataService.opened">
+
+  
 
   <app-search/>
 

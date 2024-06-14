@@ -1,7 +1,7 @@
-@if (opened) {
-<div class="main-container" [@fadeInOut]="opened ? 'open' : 'closed'">
+@if (dataService.opened) {
+<div class="main-container" [@fadeInOut]="dataService.opened ? 'open' : 'closed'">
     <mat-drawer-container class="sidenav-container" autosize>
-        <mat-drawer #drawer class="sidenav" mode="side" [opened]="opened">
+        <mat-drawer #drawer class="sidenav" mode="side" [opened]="dataService.opened">
             <app-search></app-search>
             <div class="inner-container">
                 <div class="headline-container">
@@ -85,9 +85,9 @@
     </mat-drawer-container>
 </div>
 }
-@if (opened) {
+@if (dataService.opened) {
 <img class="img-as-button" src="./assets/img/sidemenu_close_normal.png" (click)="toggleSidenav('sidenav')">
 }
-@if (!opened) {
+@if (!dataService.opened) {
 <img class="img-as-button-open" src="./assets/img/sidemenu_open_normal.png" (click)="toggleSidenav('sidenav')">
 }

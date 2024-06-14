@@ -27,6 +27,9 @@ export class DataService {
   allThreads: Thread[] = [];
   allUserChats: UserChat[] = [];
 
+  opened: boolean = true;
+  showChannels: boolean = true;
+  showDirectMessages: boolean = true;
   groupedThreads: any = [];
   firstLoad: boolean = false;
   currentChannelId!: string;

@@ -15,6 +15,7 @@ import { HeaderProfileService } from '../../services/header-profile.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { SearchComponent } from '../search/search.component';
 import {ChannelChatComponent} from "../channel-chat/channel-chat.component";
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-header',
@@ -68,7 +69,8 @@ export class HeaderComponent {
   constructor(
     private auth: AuthService,
     private router: Router,
-    private profileService: HeaderProfileService
+    private profileService: HeaderProfileService,
+    public dataService: DataService
   ) {
     this.subProfileView();
     this.subProfileEdit();

@@ -49,7 +49,7 @@ import { SearchComponent } from '../search/search.component';
 
 export class SidenavComponent {
 
-  opened: boolean = true;
+  // opened: boolean = true;
   showChannels: boolean = true;
   showDirectMessages: boolean = true;
   online: boolean = true;
@@ -66,7 +66,7 @@ export class SidenavComponent {
   private channelSub = new Subscription();
 
 
-  constructor(private dataService: DataService, private authService: AuthService, public dialog: MatDialog) {
+  constructor(public dataService: DataService, private authService: AuthService, public dialog: MatDialog) {
     this.dataSubscriptions();
   }
 
@@ -279,7 +279,7 @@ export class SidenavComponent {
    */
   toggleSidenav(value: string) {
     if (value === 'sidenav') {
-      this.opened = !this.opened;
+      this.dataService.opened = !this.dataService.opened;
     }
     if (value === 'channels') {
       this.showChannels = !this.showChannels;
