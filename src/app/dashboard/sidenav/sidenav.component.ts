@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddChannelComponent } from '../../dialog/add-channel/add-channel.component';
 import { SearchComponent } from '../search/search.component';
+import { SidenavService } from '../../services/sidenav.service';
 
 
 @Component({
@@ -50,8 +51,8 @@ import { SearchComponent } from '../search/search.component';
 export class SidenavComponent {
 
   // opened: boolean = true;
-  showChannels: boolean = true;
-  showDirectMessages: boolean = true;
+  // showChannels: boolean = true;
+  // showDirectMessages: boolean = true;
   online: boolean = true;
   users: any;
   channels: any;
@@ -66,7 +67,7 @@ export class SidenavComponent {
   private channelSub = new Subscription();
 
 
-  constructor(public dataService: DataService, private authService: AuthService, public dialog: MatDialog) {
+  constructor(public dataService: DataService, private authService: AuthService, public dialog: MatDialog, public sidenavService: SidenavService) {
     this.dataSubscriptions();
   }
 
@@ -274,20 +275,20 @@ export class SidenavComponent {
   }
 
 
-  /**
-   * Toggle variable for sidenav to open or close.
-   */
-  toggleSidenav(value: string) {
-    if (value === 'sidenav') {
-      this.dataService.opened = !this.dataService.opened;
-    }
-    if (value === 'channels') {
-      this.showChannels = !this.showChannels;
-    }
-    if (value === 'private') {
-      this.showDirectMessages = !this.showDirectMessages;
-    }
-  }
+  // /**
+  //  * Toggle variable for sidenav to open or close.
+  //  */
+  // toggleSidenav(value: string) {
+  //   if (value === 'sidenav') {
+  //     this.dataService.opened = !this.dataService.opened;
+  //   }
+  //   if (value === 'channels') {
+  //     this.dataService.showChannels = !this.dataService.showChannels;
+  //   }
+  //   if (value === 'private') {
+  //     this.dataService.showDirectMessages = !this.dataService.showDirectMessages;
+  //   }
+  // }
 
 
   /**

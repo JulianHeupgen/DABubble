@@ -1,7 +1,7 @@
-@if (dataService.opened) {
-<div class="main-container" [@fadeInOut]="dataService.opened ? 'open' : 'closed'">
+@if (sidenavService.opened) {
+<div class="main-container" [@fadeInOut]="sidenavService.opened ? 'open' : 'closed'">
     <mat-drawer-container class="sidenav-container" autosize>
-        <mat-drawer #drawer class="sidenav" mode="side" [opened]="dataService.opened">
+        <mat-drawer #drawer class="sidenav" mode="side" [opened]="sidenavService.opened">
             <app-search></app-search>
             <div class="inner-container">
                 <div class="headline-container">
@@ -11,9 +11,9 @@
                 </div>
                 <div class="private-message-container">
                     <div class="private-message-headline-container">
-                        <div class="dF" (click)="toggleSidenav('channels')">
+                        <div class="dF" (click)="sidenavService.toggleSidenav('channels')">
                             <img class="img-arrow-channels" src="./assets/img/arrow_drop_down.png"
-                                [ngStyle]="{'transform': showChannels ? 'rotate(0deg)' : 'rotate(270deg)'}">
+                                [ngStyle]="{'transform': sidenavService.showChannels ? 'rotate(0deg)' : 'rotate(270deg)'}">
                             <div class="headline-subcontainer-channels">
                                 <img class="img-logo" src="./assets/img/workspaces.png">
                                 <h2 class="private-headline project-font">Channels</h2>
@@ -21,13 +21,13 @@
                         </div>
                         <img class="add-icon" src="./assets/img/add_channel.png" (click)="openDialog()">
                     </div>
-                    @if (showChannels) {
+                    @if (sidenavService.showChannels) {
                     <div class="channels-container">
                         @for (user of selectedUser; track $index) {
                         <div class="channel-subcontainer">
                             @for (channel of channelTitles; track $index) {
                             <div class="channel" [routerLink]="['/dashboard/channel', channel.channelId]"
-                                [routerLinkActive]="['active-channel']" (click)="toggleSidenav('sidenav')">
+                                [routerLinkActive]="['active-channel']" (click)="sidenavService.toggleSidenav('sidenav')">
                                 <img class="tag-img" src="./assets/img/tag.png">
                                 <p>{{ channel.title }}</p>
                             </div>
@@ -36,7 +36,7 @@
                         }
                     </div>
                     }
-                    @if (showChannels) {
+                    @if (sidenavService.showChannels) {
                     <div class="add-channel-container">
                         <div class="add-channel-subcontainer" (click)="openDialog()">
                             <img src="./assets/img/add_circle.png">
@@ -46,21 +46,21 @@
                     }
                 </div>
                 <div class="private-message-container">
-                    <div class="private-message-headline-container" (click)="toggleSidenav('private')">
+                    <div class="private-message-headline-container" (click)="sidenavService.toggleSidenav('private')">
                         <img class="img-arrow" src="./assets/img/arrow_drop_down.png"
-                            [ngStyle]="{'transform': showDirectMessages ? 'rotate(0deg)' : 'rotate(270deg)'}">
+                            [ngStyle]="{'transform': sidenavService.showDirectMessages ? 'rotate(0deg)' : 'rotate(270deg)'}">
                         <div class="headline-subcontainer">
                             <img class="img-logo" src="./assets/img/private_message_logo.png">
                             <h2 class="private-headline project-font">Direktnachrichten</h2>
                         </div>
                     </div>
-                    @if (showDirectMessages) {
+                    @if (sidenavService.showDirectMessages) {
                     <div class="direct-message-user-container">
                         @for (user of selectedUser; track $index) {
                         <div class="user-subcontainer">
                             @for (chat of directMessageTitle; track $index) {
                             <div class="user-container" [routerLink]="['/dashboard/chat', chat.id]"
-                                [routerLinkActive]="['active-user']" (click)="toggleSidenav('sidenav')">
+                                [routerLinkActive]="['active-user']" (click)="sidenavService.toggleSidenav('sidenav')">
                                 <div class="profile-img-container" [routerLink]="['/dashboard/chat', chat.id]">
                                     <img class="profile-img" src="{{ chat.imageUrl }}" referrerpolicy="no-referrer">
                                     @if (chat.onlineStatus === 'online') {
@@ -85,9 +85,9 @@
     </mat-drawer-container>
 </div>
 }
-@if (dataService.opened) {
-<img class="img-as-button" src="./assets/img/sidemenu_close_normal.png" (click)="toggleSidenav('sidenav')">
+@if (sidenavService.opened) {
+<img class="img-as-button" src="./assets/img/sidemenu_close_normal.png" (click)="sidenavService.toggleSidenav('sidenav')">
 }
-@if (!dataService.opened) {
-<img class="img-as-button-open" src="./assets/img/sidemenu_open_normal.png" (click)="toggleSidenav('sidenav')">
+@if (!sidenavService.opened) {
+<img class="img-as-button-open" src="./assets/img/sidemenu_open_normal.png" (click)="sidenavService.toggleSidenav('sidenav')">
 }
