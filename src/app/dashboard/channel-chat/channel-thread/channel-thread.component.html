@@ -62,11 +62,11 @@
 
     <div class="reaction-and-answercount">
 
-      <span *ngIf="thread.messages.length > 1 && thread.messages.length < 3">
+      <span *ngIf="thread.messages.length > 1 && thread.messages.length < 3"  (click)="openThread(this.thread)">
         {{ thread.messages.length - 1 }} Antwort
       </span>
 
-      <span *ngIf="thread.messages.length >= 3">
+      <span *ngIf="thread.messages.length >= 3"  (click)="openThread(this.thread)">
         {{ thread.messages.length - 1 }} Antworten
       </span>
 

@@ -215,6 +215,7 @@
 
     span {
         text-wrap: nowrap;
+        cursor: pointer;
         @include font-size-weight-color($cl: #535AF1)
     }
 }
