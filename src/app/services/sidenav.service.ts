@@ -5,14 +5,19 @@ import { DataService } from './data.service';
   providedIn: 'root'
 })
 export class SidenavService {
-
+  windowWidth: number = window.innerWidth;
   opened: boolean = true;
   showChannels: boolean = true;
   showDirectMessages: boolean = true;
+  screenIsSmall: boolean = false;
 
-  constructor(private dataService: DataService) { }
 
-    /**
+  constructor(private dataService: DataService) {
+    this.updateScreenSize();
+   }
+
+
+   /**
    * Toggle variable for sidenav to open or close.
    */
     toggleSidenav(value: string) {
@@ -29,10 +34,13 @@ export class SidenavService {
 
 
     toggleSidenavIfScreenIsSmall(value: string) {
-      const screenWidth = window.innerWidth;
-      const maxScreenWidth = 650;
-      if (screenWidth <= maxScreenWidth) {
+      if (this.windowWidth <= 650) {
         this.toggleSidenav(value);
       }
+    }
+
+
+    updateScreenSize() {
+      this.screenIsSmall = window.innerWidth <= 650;
     }
 }

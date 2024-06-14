@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule, MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav';
 import { DataService } from '../../services/data.service';
@@ -69,6 +69,13 @@ export class SidenavComponent {
 
   constructor(public dataService: DataService, private authService: AuthService, public dialog: MatDialog, public sidenavService: SidenavService) {
     this.dataSubscriptions();
+  }
+
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+   this.sidenavService.windowWidth = window.innerWidth;
+   this.sidenavService.updateScreenSize();
   }
 
 
