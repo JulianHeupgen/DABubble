@@ -1,6 +1,6 @@
 <div class="header">
   <img class="logo" src="./assets/img/dabubble_header_logo.png" *ngIf="sidenavService.opened">
-  <img src="./assets/img/devspace_responsive.png" *ngIf="!sidenavService.opened">
+  <img class="devspace-button" src="./assets/img/devspace_responsive.png" *ngIf="!sidenavService.opened" (click)="sidenavService.toggleSidenav('sidenav')">
 
   
 

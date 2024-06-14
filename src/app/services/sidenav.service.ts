@@ -26,4 +26,13 @@ export class SidenavService {
         this.showDirectMessages = !this.showDirectMessages;
       }
     }
+
+
+    toggleSidenavIfScreenIsSmall(value: string) {
+      const screenWidth = window.innerWidth;
+      const maxScreenWidth = 650;
+      if (screenWidth <= maxScreenWidth) {
+        this.toggleSidenav(value);
+      }
+    }
 }

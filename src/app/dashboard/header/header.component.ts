@@ -14,8 +14,6 @@ import { ProfileViewComponent } from '../../menus/profile-view/profile-view.comp
 import { HeaderProfileService } from '../../services/header-profile.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { SearchComponent } from '../search/search.component';
-import {ChannelChatComponent} from "../channel-chat/channel-chat.component";
-import { DataService } from '../../services/data.service';
 import { SidenavService } from '../../services/sidenav.service';
 
 @Component({
@@ -71,7 +69,6 @@ export class HeaderComponent {
     private auth: AuthService,
     private router: Router,
     private profileService: HeaderProfileService,
-    public dataService: DataService,
     public sidenavService: SidenavService
   ) {
     this.subProfileView();
