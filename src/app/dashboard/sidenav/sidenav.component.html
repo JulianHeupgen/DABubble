@@ -27,7 +27,7 @@
                         <div class="channel-subcontainer">
                             @for (channel of channelTitles; track $index) {
                             <div class="channel" [routerLink]="['/dashboard/channel', channel.channelId]"
-                                [routerLinkActive]="['active-channel']">
+                                [routerLinkActive]="['active-channel']" (click)="toggleSidenav('sidenav')">
                                 <img class="tag-img" src="./assets/img/tag.png">
                                 <p>{{ channel.title }}</p>
                             </div>
@@ -60,7 +60,7 @@
                         <div class="user-subcontainer">
                             @for (chat of directMessageTitle; track $index) {
                             <div class="user-container" [routerLink]="['/dashboard/chat', chat.id]"
-                                [routerLinkActive]="['active-user']">
+                                [routerLinkActive]="['active-user']" (click)="toggleSidenav('sidenav')">
                                 <div class="profile-img-container" [routerLink]="['/dashboard/chat', chat.id]">
                                     <img class="profile-img" src="{{ chat.imageUrl }}" referrerpolicy="no-referrer">
                                     @if (chat.onlineStatus === 'online') {
