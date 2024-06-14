@@ -1,5 +1,10 @@
 <div class="header">
   <img class="logo" src="./assets/img/dabubble_header_logo.png">
+  <div *ngIf="!dataService.opened">
+    <img src="./assets/img/devspace_logo.png">
+    <span>Devspace</span>
+  </div>
+  
 
   <app-search/>
 
