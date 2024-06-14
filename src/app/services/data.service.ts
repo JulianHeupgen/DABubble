@@ -258,7 +258,20 @@ export class DataService {
       threads: data.threads
     }
   }
- 
+
+
+  getUserChat(userChatId: string) {
+    console.log(userChatId);
+    return new Observable(observer => {
+      const unsubscribe = onSnapshot(doc(this.firestore, 'directMessages', userChatId), userChat => {
+
+        let userChatObject = new UserChat(this.setUserChatObject(userChat.id, userChat.data()));
+        console.log(userChatObject);
+        observer.next(userChatObject);
+      })
+    })
+  }
+
 
   async addChannel(channel: Channel): Promise<string> {
     try {
@@ -307,14 +320,14 @@ export class DataService {
 
   async updateUserChatsOfUser(user: User, userChatId: string) {
     let docRef = this.getUserDocRef(user.id);
-    const newUserChat = { 
+    const newUserChat = {
       userChatId: userChatId
-      };
+    };
     await updateDoc(docRef, {
-      userChats: arrayUnion(newUserChat)  
+      userChats: arrayUnion(newUserChat)
     });
   }
- 
+
 
   async updateChannel(channel: Channel) {
     let docRef = this.getChannelDocRef(channel.channelId);
@@ -400,16 +413,16 @@ export class DataService {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           let currentThreads = docSnap.data()['threads'];
-            currentThreads.splice(index, 1);
-            await updateDoc(docRef, { threads: currentThreads });
-          } else {
-            console.log("No such document!");
-          }
-        } catch (err) {
-          console.error("Error deleting thread: ", err);
+          currentThreads.splice(index, 1);
+          await updateDoc(docRef, { threads: currentThreads });
+        } else {
+          console.log("No such document!");
         }
+      } catch (err) {
+        console.error("Error deleting thread: ", err);
       }
     }
+  }
 
 
   openThread(threadElement: Thread) {

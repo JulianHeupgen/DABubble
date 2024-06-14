@@ -95,13 +95,12 @@ export class UserChatComponent {
   shouldScrollToBottom: boolean = true;
   addListenerForScroll: boolean = true;
 
+  firstLoad: boolean = false;
+
   private userSub: Subscription = new Subscription();
   private userChatsSub: Subscription = new Subscription();
+  private userChatSub: Subscription = new Subscription();
   private routeSub!: Subscription;
-
-
-  pingUserControl = new FormControl("");
-  filteredUsers!: Observable<any[]>;
 
 
   ngOnInit() {
@@ -148,11 +147,12 @@ export class UserChatComponent {
     await this.checkUserAuthId();
     this.getRecipient();
     this.getUserChat();
+    this.getUserChatSub();
   }
 
 
   dataSubscriptions() {
-    if(this.userSub) {
+    if (this.userSub) {
       this.userSub.unsubscribe();
     }
     this.userSub = this.dataService.getUsersList().subscribe((users: any) => {
@@ -160,12 +160,33 @@ export class UserChatComponent {
     });
 
 
-    if(this.userChatsSub) {
+    if (this.userChatsSub) {
       this.userChatsSub.unsubscribe();
     }
     this.userChatsSub = this.dataService.getUserChatsList().subscribe((userChats: any) => {
       this.userChats = userChats;
+      console.log(this.userChats);
+      if (this.firstLoad) {
+        // this.getUserChat();
+      }
     })
+
+  }
+
+  getUserChatSub() {
+    if (this.currentUserChat?.userChatId) {
+      
+      if (this.userChatSub) {
+        this.userChatSub.unsubscribe();
+      }
+      this.userChatSub = this.dataService.getUserChat(this.currentUserChat.userChatId).subscribe((userChat: any) => {
+        this.currentUserChat = userChat;
+        this.currentUserChatThreads =  userChat.threads;
+        console.log(this.currentUserChat);
+        console.log(this.currentUserChat?.userChatId);
+        console.log(this.currentUserChatThreads);
+      })
+    }
   }
 
 
@@ -221,48 +242,50 @@ export class UserChatComponent {
       }
     }
 
-    if(this.currentUser.id == this.recipient.id) {
+    if (this.currentUser.id == this.recipient.id) {
       for (let i = 0; i < userChatsOfCurrentUser.length; i++) {
-        if (userChatsOfCurrentUser[i].participants[0] == userChatsOfCurrentUser[i].participants[1]) {  
-          this.currentUserChat = new UserChat(userChatsOfCurrentUser[i]);  
+        if (userChatsOfCurrentUser[i].participants[0] == userChatsOfCurrentUser[i].participants[1]) {
+          this.currentUserChat = new UserChat(userChatsOfCurrentUser[i]);
           break;
         }
       }
     } else {
       for (let i = 0; i < userChatsOfCurrentUser.length; i++) {
-        if (userChatsOfCurrentUser[i].participants.includes(this.recipient.id)) {  
-          this.currentUserChat = new UserChat(userChatsOfCurrentUser[i]);  
+        if (userChatsOfCurrentUser[i].participants.includes(this.recipient.id)) {
+          this.currentUserChat = new UserChat(userChatsOfCurrentUser[i]);
           break;
         }
       }
     }
 
-    if(this.currentUserChat){
+    if (this.currentUserChat) {
       this.getThreadsFromCurrentUserChat();
     } else {
-       this.currentUserChatThreads = [];
-       this.emptyUserChat = true;
+      this.currentUserChatThreads = [];
+      this.emptyUserChat = true;
     }
+
+    this.firstLoad = true;
   }
 
 
   getThreadsFromCurrentUserChat() {
     this.currentUserChatThreads = [];
-    
-    if(this.currentUserChat) {
-      if(this.currentUserChat.threads.length > 0) {
+
+    if (this.currentUserChat) {
+      if (this.currentUserChat.threads.length > 0) {
         for (let i = 0; i < this.currentUserChat.threads.length; i++) {
           let thread = this.currentUserChat.threads[i];
           this.currentUserChatThreads.push(thread);
         }
         this.emptyUserChat = false;
-      } else { 
+      } else {
         this.emptyUserChat = true;
       }
     }
   }
-  
-  
+
+
   sortMessagesByTimestamp() {
     this.userChats.sort((a: any, b: any) => a.timestamp - b.timestamp);
   }
@@ -279,15 +302,6 @@ export class UserChatComponent {
   }
 
 
-  addUserToMessage(user: any) {
-    if (this.threadMessageBox && user) {
-      this.threadMessageBox.nativeElement.value += "@" + user.name + " ";
-      this.pingUserControl.setValue("");
-      this.menuTrigger.closeMenu();
-    }
-  }
-
-
   removeChatInput() {
     this.channelThreadMessage.reset();
     this.addImgToMessageComponent.removeImage();
@@ -295,11 +309,11 @@ export class UserChatComponent {
 
 
   async sendMessage() {
-    if(this.threadMessageBox.nativeElement.value.length > 0) {
+    if (this.threadMessageBox.nativeElement.value.length > 0) {
       this.emptyUserChat = false;
 
       let userChat = await this.currentUser.sendDirectMessage(
-        this.recipient,                                   
+        this.recipient,
         this.threadMessageBox.nativeElement.value,
         this.currentUserChat,
         this.addImgToMessageComponent.imgFile,
