@@ -10,6 +10,8 @@ import { ThreadService } from '../../../services/thread.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { User } from '../../../models/user.class';
 import { deleteObject, getStorage, ref } from '@angular/fire/storage';
+import { ViewProfileComponent } from '../../../dialog/view-profile/view-profile.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-channel-thread',
@@ -41,7 +43,8 @@ export class ChannelThreadComponent {
     public channelChat: ChannelChatComponent,
     public dashboard: DashboardComponent,
     public dataService: DataService,
-    public threadService: ThreadService
+    public threadService: ThreadService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -91,6 +94,12 @@ export class ChannelThreadComponent {
     this.editMessage = false;
     this.isImgFileEdited = false;
   }
+
+  showProfile(participant: any) {
+    this.dialog.open(ViewProfileComponent, {
+      data: participant
+   });
+ }
 
   async saveEditMessage(messageElement: Thread) {
     messageElement.messages[0].content = this.editMessageBox.nativeElement.value
