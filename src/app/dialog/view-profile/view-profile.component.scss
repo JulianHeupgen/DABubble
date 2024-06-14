@@ -84,6 +84,9 @@
         a {
             text-decoration: none;
             @include font-size-weight-color($fs: 21px, $fw: 600, $cl: rgb(76, 107, 241));
+            &:focus-visible {
+                outline: unset;
+            }
         }
     }
 
