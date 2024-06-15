@@ -7,7 +7,7 @@ import { StorageService } from '../../services/storage.service';
 import { DataService } from '../../services/data.service';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.class';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
@@ -20,7 +20,7 @@ import { UserChat } from '../../models/user-chat';
 import { Thread } from '../../models/thread.class';
 import { ChannelThreadComponent } from '../channel-chat/channel-thread/channel-thread.component';
 import { ChannelChatComponent } from '../channel-chat/channel-chat.component';
-import { Subscription, Observable, firstValueFrom } from 'rxjs';
+import { Subscription, firstValueFrom } from 'rxjs';
 import { ThreadService } from '../../services/thread.service';
 import { UserChatThreadComponent } from './user-chat-thread/user-chat-thread.component';
 
@@ -173,20 +173,6 @@ export class UserChatComponent {
   }
 
 
-  getUserChatSub() {
-    if (this.currentUserChat?.userChatId) {
-      
-      if (this.userChatSub) {
-        this.userChatSub.unsubscribe();
-      }
-      this.userChatSub = this.dataService.getUserChat(this.currentUserChat.userChatId).subscribe((userChat: any) => {
-        this.currentUserChat = userChat;
-        this.currentUserChatThreads =  userChat.threads;
-      })
-    }
-  }
-
-
   async loadUsers() {
     this.users = await firstValueFrom(this.dataService.getUsersList());
     this.userChats = await firstValueFrom(this.dataService.getUserChatsList());
@@ -277,6 +263,20 @@ export class UserChatComponent {
       } else {
         this.emptyUserChat = true;
       }
+    }
+  }
+
+
+  getUserChatSub() {
+    if (this.currentUserChat?.userChatId) {
+      
+      if (this.userChatSub) {
+        this.userChatSub.unsubscribe();
+      }
+      this.userChatSub = this.dataService.getUserChat(this.currentUserChat.userChatId).subscribe((userChat: any) => {
+        this.currentUserChat = userChat;
+        this.currentUserChatThreads =  userChat.threads;
+      })
     }
   }
 
