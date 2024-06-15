@@ -214,9 +214,15 @@
     @include flex-align-justify($jc: space-between);
 
     span {
+        padding: 5px 10px;
         text-wrap: nowrap;
         cursor: pointer;
-        @include font-size-weight-color($cl: #535AF1)
+        @include font-size-weight-color($cl: #535AF1);
+        &:hover {
+            font-weight:700;
+            background-color: #FFFFFF;
+            border-radius: 30px;
+        }
     }
 }
 
