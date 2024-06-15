@@ -330,6 +330,7 @@ export class UserChatComponent {
   ngOnDestroy() {
     this.userSub.unsubscribe();
     this.userChatsSub.unsubscribe();
+    this.userChatSub.unsubscribe();
     this.threadContainer.nativeElement.removeEventListener('scroll', this.handleScroll.bind(this));
     this.emojiSubscription.unsubscribe();
     if (this.routeSub) {
