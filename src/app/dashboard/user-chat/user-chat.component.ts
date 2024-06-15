@@ -95,7 +95,7 @@ export class UserChatComponent {
   shouldScrollToBottom: boolean = true;
   addListenerForScroll: boolean = true;
 
-  firstLoad: boolean = false;
+  //firstLoad: boolean = false;
 
   private userSub: Subscription = new Subscription();
   private userChatsSub: Subscription = new Subscription();
@@ -165,13 +165,13 @@ export class UserChatComponent {
     }
     this.userChatsSub = this.dataService.getUserChatsList().subscribe((userChats: any) => {
       this.userChats = userChats;
-      console.log(this.userChats);
-      if (this.firstLoad) {
-        // this.getUserChat();
-      }
+  
+      // if (this.firstLoad) {
+      //   // this.getUserChat();
+      // }
     })
-
   }
+
 
   getUserChatSub() {
     if (this.currentUserChat?.userChatId) {
@@ -182,9 +182,6 @@ export class UserChatComponent {
       this.userChatSub = this.dataService.getUserChat(this.currentUserChat.userChatId).subscribe((userChat: any) => {
         this.currentUserChat = userChat;
         this.currentUserChatThreads =  userChat.threads;
-        console.log(this.currentUserChat);
-        console.log(this.currentUserChat?.userChatId);
-        console.log(this.currentUserChatThreads);
       })
     }
   }
@@ -264,8 +261,6 @@ export class UserChatComponent {
       this.currentUserChatThreads = [];
       this.emptyUserChat = true;
     }
-
-    this.firstLoad = true;
   }
 
 

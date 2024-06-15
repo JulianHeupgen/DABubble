@@ -61,7 +61,6 @@ export class DataService {
   }
 
 
-
   getChannelsList() {
     return new Observable(observer => {
       const unsubscribe = onSnapshot(this.getChannelCollection(),
@@ -92,7 +91,6 @@ export class DataService {
     this.allThreads = [];
     this.firstLoad = true;
 
-    // Entferne den alten Listener, falls vorhanden
     if (this.threadUnsubscribe) {
       this.threadUnsubscribe();
       this.threadUnsubscribe = null;
@@ -147,7 +145,7 @@ export class DataService {
   }
 
   addThreadToGroup(thread: Thread) {
-    const date = new Date(thread.timestamp).toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    const date = new Date(thread.timestamp).toISOString().split('T')[0]; 
     if (!this.groupedThreads[date]) {
       this.groupedThreads[date] = [];
     }
@@ -174,9 +172,6 @@ export class DataService {
       const threadIndex = group.findIndex((t: Thread) => t.threadId === thread.threadId);
       if (threadIndex !== -1) {
         group.splice(threadIndex, 1);
-        // if (group.length === 0 && this.groupedThreads[date] != this.groupedThreads[today]) {
-        //   delete this.groupedThreads[date];
-        // }
       }
     }
   }
@@ -230,9 +225,7 @@ export class DataService {
       const [year, month, day] = date.split('-');
       return `${day}.${month}.${year}`;
     }
-
   }
-
 
   getUserChatsList() {
     return new Observable(observer => {
@@ -258,12 +251,9 @@ export class DataService {
 
 
   getUserChat(userChatId: string) {
-    console.log(userChatId);
     return new Observable(observer => {
       const unsubscribe = onSnapshot(doc(this.firestore, 'directMessages', userChatId), userChat => {
-
         let userChatObject = new UserChat(this.setUserChatObject(userChat.id, userChat.data()));
-        console.log(userChatObject);
         observer.next(userChatObject);
       })
     })
