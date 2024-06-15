@@ -20,7 +20,7 @@ import { UserChat } from '../../models/user-chat';
 import { Thread } from '../../models/thread.class';
 import { ChannelThreadComponent } from '../channel-chat/channel-thread/channel-thread.component';
 import { ChannelChatComponent } from '../channel-chat/channel-chat.component';
-import { Subscription, firstValueFrom } from 'rxjs';
+import { Observable, Subscription, firstValueFrom, of } from 'rxjs';
 import { ThreadService } from '../../services/thread.service';
 import { UserChatThreadComponent } from './user-chat-thread/user-chat-thread.component';
 
@@ -95,6 +95,9 @@ export class UserChatComponent {
   shouldScrollToBottom: boolean = true;
   addListenerForScroll: boolean = true;
 
+  groupedcurrentUserChatThreads: any = [];
+  groupedcurrentUserChatThreads$!: Observable<{ [key: string]: { thread: Thread, index: number }[] }>;
+
   //firstLoad: boolean = false;
 
   private userSub: Subscription = new Subscription();
@@ -148,6 +151,10 @@ export class UserChatComponent {
     this.getRecipient();
     this.getUserChat();
     this.getUserChatSub();
+    this.groupedcurrentUserChatThreads$ = new Observable((observer) => {
+      observer.next(this.groupedcurrentUserChatThreads);
+      observer.complete();
+    });
   }
 
 
@@ -165,7 +172,7 @@ export class UserChatComponent {
     }
     this.userChatsSub = this.dataService.getUserChatsList().subscribe((userChats: any) => {
       this.userChats = userChats;
-  
+
       // if (this.firstLoad) {
       //   // this.getUserChat();
       // }
@@ -252,6 +259,7 @@ export class UserChatComponent {
 
   getThreadsFromCurrentUserChat() {
     this.currentUserChatThreads = [];
+    this.groupedcurrentUserChatThreads = [];
 
     if (this.currentUserChat) {
       if (this.currentUserChat.threads.length > 0) {
@@ -259,6 +267,10 @@ export class UserChatComponent {
           let thread = this.currentUserChat.threads[i];
           this.currentUserChatThreads.push(thread);
         }
+        this.groupedcurrentUserChatThreads = this.dataService.groupThreadsByDate(this.currentUserChatThreads);
+        this.groupedcurrentUserChatThreads$ = this.groupedcurrentUserChatThreads;
+        console.log('grouped Threads:', this.groupedcurrentUserChatThreads);
+
         this.emptyUserChat = false;
       } else {
         this.emptyUserChat = true;
@@ -269,16 +281,18 @@ export class UserChatComponent {
 
   getUserChatSub() {
     if (this.currentUserChat?.userChatId) {
-      
+
       if (this.userChatSub) {
         this.userChatSub.unsubscribe();
       }
       this.userChatSub = this.dataService.getUserChat(this.currentUserChat.userChatId).subscribe((userChat: any) => {
-        this.currentUserChat = userChat;
-        this.currentUserChatThreads =  userChat.threads;
+        console.log(userChat);
+        // this.groupedcurrentUserChatThreads = this.dataService.groupThreadsByDate(userChat);
+        this.groupedcurrentUserChatThreads$ = of(this.dataService.groupThreadsByDate(userChat));        
       })
     }
   }
+
 
 
   sortMessagesByTimestamp() {
@@ -336,6 +350,11 @@ export class UserChatComponent {
     if (this.routeSub) {
       this.routeSub.unsubscribe();
     }
+  }
+
+
+  trackByTimestamp(index: number, item: any): number {
+    return item.timestamp;
   }
 
 }

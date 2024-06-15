@@ -30,7 +30,7 @@ export class DataService {
   groupedThreads: any = [];
   firstLoad: boolean = false;
   currentChannelId!: string;
-  groupedChannelThreads: BehaviorSubject<{ [key: string]: Thread[] }> = new BehaviorSubject({});
+  groupedChannelThreads: BehaviorSubject<{ [key: string]: { thread: Thread, index: number }[] }> = new BehaviorSubject({});
   private threadUnsubscribe: Unsubscribe | null = null;
 
   getUsersList() {
@@ -124,7 +124,8 @@ export class DataService {
     this.allThreads.push(newThread);
 
     if (!this.firstLoad) {
-      this.addThreadToGroup(newThread);
+      const index = this.allThreads.length - 1;
+      this.addThreadToGroup(newThread, index);
     }
   }
 
@@ -144,12 +145,12 @@ export class DataService {
     }
   }
 
-  addThreadToGroup(thread: Thread) {
+  addThreadToGroup(thread: Thread, index: number) {
     const date = new Date(thread.timestamp).toISOString().split('T')[0]; 
     if (!this.groupedThreads[date]) {
       this.groupedThreads[date] = [];
     }
-    this.groupedThreads[date].push(thread);
+    this.groupedThreads[date].push({ thread, index });
   }
 
   updateThreadInGroup(thread: Thread) {
@@ -158,7 +159,7 @@ export class DataService {
     if (group) {
       const threadIndex = group.findIndex((t: Thread) => t.threadId === thread.threadId);
       if (threadIndex !== -1) {
-        group[threadIndex] = thread;
+        group[threadIndex].thread = thread;
       }
     }
   }
@@ -166,10 +167,9 @@ export class DataService {
   removeThreadFromGroup(thread: Thread) {
     const date = new Date(thread.timestamp).toISOString().split('T')[0];
     const group = this.groupedThreads[date];
-    const today = new Date().toISOString().split('T')[0];
-
+  
     if (group) {
-      const threadIndex = group.findIndex((t: Thread) => t.threadId === thread.threadId);
+      const threadIndex = group.findIndex((t: { thread: Thread, index: number }) => t.thread.threadId === thread.threadId);
       if (threadIndex !== -1) {
         group.splice(threadIndex, 1);
       }
@@ -193,23 +193,23 @@ export class DataService {
     this.allThreads.sort((a, b) => a.timestamp - b.timestamp);
   }
 
-  groupThreadsByDate(threads: Thread[]): { [key: string]: Thread[] } {
+  groupThreadsByDate(threads: Thread[]): { [key: string]: { thread: Thread, index: number }[] } {
     // Reduzieren der Threads, um sie nach Datum zu gruppieren
-    const groupedThreads = threads.reduce((groups, thread) => {
+    const groupedThreads = threads.reduce((groups, thread, index) => {
       const date = new Date(thread.timestamp).toISOString().split('T')[0]; // Format: YYYY-MM-DD
       if (!groups[date]) {
         groups[date] = [];
       }
-      groups[date].push(thread);
+      groups[date].push({ thread, index });
       return groups;
-    }, {} as { [key: string]: Thread[] });
-
+    }, {} as { [key: string]: { thread: Thread, index: number }[] });
+  
     // Hinzufügen einer leeren Gruppe für das heutige Datum, falls nicht vorhanden
     const today = new Date().toISOString().split('T')[0];
     if (!groupedThreads[today]) {
       groupedThreads[today] = [];
     }
-
+  
     return groupedThreads;
   }
 
@@ -254,7 +254,10 @@ export class DataService {
     return new Observable(observer => {
       const unsubscribe = onSnapshot(doc(this.firestore, 'directMessages', userChatId), userChat => {
         let userChatObject = new UserChat(this.setUserChatObject(userChat.id, userChat.data()));
-        observer.next(userChatObject);
+        console.log('User Object:',userChatObject);
+        // debugger;
+        // let groupedThreads = this.groupThreadsByDate(userChatObject.threads)
+        observer.next(userChatObject.threads);
       })
     })
   }

@@ -62,7 +62,7 @@ export class ChannelChatComponent {
 
   emojiSubscription: Subscription;
 
-  groupedChannelThreads$!: Observable<{ [key: string]: Thread[] }>;
+  groupedChannelThreads$!: Observable<{ [key: string]: { thread: Thread, index: number }[] }>;
 
   constructor(
     public dataService: DataService,
