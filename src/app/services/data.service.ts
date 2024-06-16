@@ -87,7 +87,7 @@ export class DataService {
   }
 
 
-  getChannelParticipants(channelId: string) {
+  getParticipantImages(channelId: string) {
     return new Observable(observer => {
       const unsubscribe = onSnapshot(doc(this.firestore, 'channels', channelId), async (channelSnapshot) => {
           if (channelSnapshot.exists()) {
@@ -115,7 +115,7 @@ export class DataService {
   }
 
 
-  getParticipantsInfos(channelId: string) {
+  getParticipantInfos(channelId: string) {
     return new Observable(observer => {
       const unsubscribe = onSnapshot(doc(this.firestore, 'channels', channelId), async (channelSnapshot) => {
           if (channelSnapshot.exists()) {

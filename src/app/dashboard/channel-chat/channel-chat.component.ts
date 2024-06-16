@@ -234,7 +234,7 @@ export class ChannelChatComponent {
     if (this.channelParticipantsSub) {
       this.channelParticipantsSub.unsubscribe();
     }
-    this.channelParticipantsSub = this.dataService.getChannelParticipants(this.channelId).subscribe((participantsImages: any) => {
+    this.channelParticipantsSub = this.dataService.getParticipantImages(this.channelId).subscribe((participantsImages: any) => {
       this.participantsImages = participantsImages;
       this.channelParticipantsCounter = participantsImages.length;
     });

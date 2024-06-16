@@ -68,7 +68,7 @@ export class ChannelParticipantsComponent {
     if (this.channelParticipantsSub) {
       this.channelParticipantsSub.unsubscribe();
     }
-    this.channelParticipantsSub = this.dataService.getParticipantsInfos(this.currentChannel.channelId).subscribe((channelParticipants: any) => {
+    this.channelParticipantsSub = this.dataService.getParticipantInfos(this.currentChannel.channelId).subscribe((channelParticipants: any) => {
       this.channelParticipants = channelParticipants;
     })
   }
