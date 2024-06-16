@@ -15,7 +15,10 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [EmojiMartComponent, MatMenuTrigger, MatMenu, MessageReactionComponent, CommonModule],
   templateUrl: './user-chat-thread.component.html',
-  styleUrl: './user-chat-thread.component.scss'
+  styleUrls: [
+    './user-chat-thread.component.scss',
+    '../../channel-chat/channel-thread/channel-thread.component.scss'
+  ]
 })
 export class UserChatThreadComponent {
 

@@ -226,3 +226,53 @@ mat-card-header {
         }
     }
 }
+
+@media (max-width: 650px) {
+    .participants-container {
+        display: none !important;
+    }
+
+    .border-line {
+        height: 25px;
+    }
+
+    .addUser-btn {
+        display: none;
+    }
+
+    .showUser-btn {
+        display: block !important;
+    }
+
+    .text-box {    
+        textarea {
+            height: 110px;
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    mat-card-header {
+        text-wrap: nowrap;
+
+        .channel-infos {
+            .header-left-container {
+                .title {
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+
+    .userChat-wrapper {
+        height: 100%;
+        margin: 20px 5px 20px 5px;
+        border-radius: 30px;
+    }
+}
+
+@media (max-width: 400px) {
+    .text-box {
+        padding: 0 15px 30px 15px;
+    }
+}
