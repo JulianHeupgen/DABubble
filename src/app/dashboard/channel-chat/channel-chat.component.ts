@@ -66,7 +66,6 @@ export class ChannelChatComponent {
   constructor(
     public dataService: DataService,
     private route: ActivatedRoute,
-    private router: Router,
     public storage: StorageService,
     private auth: AuthService,
     private formBuilder: FormBuilder,
