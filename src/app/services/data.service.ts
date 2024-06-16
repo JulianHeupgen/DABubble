@@ -125,20 +125,19 @@ export class DataService {
               const participantsData = [];
 
               for (const userId of channelParticipants) {
-                      const userDoc = await getDoc(doc(this.firestore, 'users', userId));
-                      if (userDoc.exists()) {
-                          const user = this.setUserObject(userDoc.id, userDoc.data());
-                          
-                          if (user) {
-                            participantsData.push(user);
-                          }} 
-                        }
-              observer.next(participantsData);
-            } 
+                const userDoc = await getDoc(doc(this.firestore, 'users', userId));
+                if (userDoc.exists()) {
+                  const user = this.setUserObject(userDoc.id, userDoc.data());
+                  if (user) {
+                    participantsData.push(user);
+                  }} 
+                }
+                observer.next(participantsData);
+              } 
+            });
+            return () => unsubscribe();
           });
-          return () => unsubscribe();
-        });
-      }
+        }
 
 
   getThreadsList() {
