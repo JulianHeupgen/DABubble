@@ -86,6 +86,61 @@ export class DataService {
     }
   }
 
+
+  getChannelParticipants(channelId: string) {
+    return new Observable(observer => {
+      const unsubscribe = onSnapshot(doc(this.firestore, 'channels', channelId), async (channelSnapshot) => {
+          if (channelSnapshot.exists()) {
+              const channelData = channelSnapshot.data();
+              const channelParticipants = channelData['participants'];
+
+              const participantsImages = [];
+
+              for (const userId of channelParticipants) {
+                      const userDoc = await getDoc(doc(this.firestore, 'users', userId));
+                      if (userDoc.exists()) {
+                          const userData = userDoc.data();
+                          
+                          if (userData && userData['imageUrl']) {
+                            participantsImages.push({
+                              participantImage: userData['imageUrl']
+                          });
+                        }}
+              }
+              observer.next(participantsImages);
+          } 
+      });
+      return () => unsubscribe();
+    });
+  }
+
+
+  getParticipantsInfos(channelId: string) {
+    return new Observable(observer => {
+      const unsubscribe = onSnapshot(doc(this.firestore, 'channels', channelId), async (channelSnapshot) => {
+          if (channelSnapshot.exists()) {
+              const channelData = channelSnapshot.data();
+              const channelParticipants = channelData['participants'];
+
+              const participantsData = [];
+
+              for (const userId of channelParticipants) {
+                      const userDoc = await getDoc(doc(this.firestore, 'users', userId));
+                      if (userDoc.exists()) {
+                          const user = this.setUserObject(userDoc.id, userDoc.data());
+                          
+                          if (user) {
+                            participantsData.push(user);
+                          }} 
+                        }
+              observer.next(participantsData);
+            } 
+          });
+          return () => unsubscribe();
+        });
+      }
+
+
   getThreadsList() {
     this.groupedThreads = [];
     this.allThreads = [];

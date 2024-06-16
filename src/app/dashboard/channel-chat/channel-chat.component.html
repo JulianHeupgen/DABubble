@@ -8,9 +8,11 @@
       </div>
       <div class="header-right-container">
         <div class="participants-container" [matMenuTriggerFor]="channelParticipantsMenu">
-          <ng-container *ngFor="let participant of channelParticipants">
-            <img class="participants-img" src="{{participant.participantImage}}" referrerpolicy="no-referrer">
-          </ng-container>
+          <div>
+            @for(participant of participantsImages; track participant.participantImage) {
+              <img class="participants-img" src="{{participant.participantImage}}" referrerpolicy="no-referrer">
+            }
+          </div>
           <div class="participant-counter">{{channelParticipantsCounter}}</div>
         </div>
         <img class="addUser-btn" (click)="openAddUsersDialog()" src="assets/img/add_user.png">

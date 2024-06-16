@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewProfileComponent } from '../../../dialog/view-profile/view-profile.component';
 import { AddUsersComponent } from '../../../dialog/add-users/add-users.component';
+import { DataService } from '../../../services/data.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -15,19 +17,21 @@ import { AddUsersComponent } from '../../../dialog/add-users/add-users.component
 })
 export class ChannelParticipantsComponent {
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, public dataService: DataService) {}
 
   @Input() currentChannel!: Channel;
   @Input() users!: any;
   @Input() currentUser!: any;
   
-
   channelParticipants!: any[];
+
+  private channelParticipantsSub!: Subscription;
   
 
   ngOnInit() {
     this.spliceCurrentUser();
     this.getChannelParticipants();
+    this.getParticipantInfosSub();
   }
 
 
@@ -57,6 +61,15 @@ export class ChannelParticipantsComponent {
         }
         return false;
       });
+    })
+  }
+
+  getParticipantInfosSub() {
+    if (this.channelParticipantsSub) {
+      this.channelParticipantsSub.unsubscribe();
+    }
+    this.channelParticipantsSub = this.dataService.getParticipantsInfos(this.currentChannel.channelId).subscribe((channelParticipants: any) => {
+      this.channelParticipants = channelParticipants;
     })
   }
 

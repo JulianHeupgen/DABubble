@@ -61,7 +61,6 @@ export class ChannelChatComponent {
   @ViewChild(AddImgToMessageComponent) addImgToMessageComponent!: AddImgToMessageComponent;
 
   emojiSubscription: Subscription;
-
   groupedChannelThreads$!: Observable<{ [key: string]: { thread: Thread, index: number }[] }>;
 
   constructor(
@@ -89,7 +88,7 @@ export class ChannelChatComponent {
   channels: any;
   channelId: string = "";
   currentChannel!: Channel;
-  channelParticipants: any[] = [];
+  participantsImages: any[] = [];
   channelParticipantsCounter: number = 0;
   threads: any;
   channelThreads!: Thread[];
@@ -102,6 +101,7 @@ export class ChannelChatComponent {
   private userSub: Subscription = new Subscription();
   private channelSub: Subscription = new Subscription();
   private routeSub!: Subscription;
+  private channelParticipantsSub!: Subscription;
   //-------------------//
 
   pingUserControl = new FormControl("");
@@ -131,6 +131,7 @@ export class ChannelChatComponent {
     await this.loadUsers();
     await this.checkUserAuthId();
     this.getChannelInfos();
+    this.getParticipantsSub();
     this.filteredUsers = this.pingUserControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterUsers(value || ''))
@@ -170,11 +171,6 @@ export class ChannelChatComponent {
     return this.users.filter((user: any) =>
       user.name.toLowerCase().startsWith(filterValue)
     );
-  }
-
-  resetParticipantsData() {
-    this.channelParticipants = [];
-    this.channelParticipantsCounter = 0;
   }
 
 
@@ -230,9 +226,19 @@ export class ChannelChatComponent {
 
 
   getChannelInfos() {
-    this.resetParticipantsData();
     this.getCurrentChannel();
     this.showChannelParticipants(this.channelId);
+  }
+
+
+  getParticipantsSub() {
+    if (this.channelParticipantsSub) {
+      this.channelParticipantsSub.unsubscribe();
+    }
+    this.channelParticipantsSub = this.dataService.getChannelParticipants(this.channelId).subscribe((participantsImages: any) => {
+      this.participantsImages = participantsImages;
+      this.channelParticipantsCounter = participantsImages.length;
+    });
   }
 
 
@@ -256,15 +262,13 @@ export class ChannelChatComponent {
   showChannelParticipants(channelId: string) {
     this.users.forEach((user: any) => {
       if (user.channels && user.channels.includes(channelId)) {
-        this.channelParticipants.push({
+        this.participantsImages.push({
           participantImage: user.imageUrl,
         });
         this.channelParticipantsCounter++;
       }
     });
   }
-
-
 
 
   addEmoji(emoji: string) {
@@ -288,6 +292,7 @@ export class ChannelChatComponent {
     if (this.routeSub) {
       this.routeSub.unsubscribe();
     }
+    this.channelParticipantsSub.unsubscribe();
   }
 
   removeChatInput() {
