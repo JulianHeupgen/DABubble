@@ -60,7 +60,7 @@ export class UserChatThreadComponent {
       if (user.id == messageOwnerId) {
         this.threadOwner = user;
       }
-    })
+    })    
   }
 
   formattedDatestamp(): any {

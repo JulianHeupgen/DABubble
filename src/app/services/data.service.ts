@@ -169,7 +169,7 @@ export class DataService {
         this.groupedThreads = this.groupThreadsByDate(this.allThreads);
         this.firstLoad = false;
       }
-      this.groupedChannelThreads.next(this.groupedThreads);
+      this.groupedChannelThreads.next(this.groupedThreads);      
     });
   }
 
@@ -466,11 +466,6 @@ export class DataService {
         console.error("Error deleting thread: ", err);
       }
     }
-  }
-
-
-  openThread(threadElement: Thread) {
-    console.log('threadElement', threadElement);
   }
 
   ngOnDestroy() {

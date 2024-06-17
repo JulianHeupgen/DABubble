@@ -106,6 +106,7 @@ export class MessageReactionComponent {
     } else {
       this.threadService.copyUserChatThreadForFirebase(this.thread, this.userChatId, this.userChatIndex)
     }
+    this.processEmojiReactions();
   }
 
   isUserInReaction(chatReaction: any) {
