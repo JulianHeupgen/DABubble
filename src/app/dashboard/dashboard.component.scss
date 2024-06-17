@@ -1,11 +1,23 @@
 .dashboard {
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .sidenav-and-router {
     display: flex;
     justify-content: center;
     padding: 0 24px 24px 24px;
+    position: relative;
+    width: 100%;
+    max-width: 1920px;
+}
+
+app-header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 app-full-thread {
