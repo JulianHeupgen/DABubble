@@ -81,3 +81,17 @@ h1 {
   font-weight: 700;
   color: #444DF2;
 }
+
+@media (max-width: 450px) {
+  mat-card {
+    width: 90%;
+    max-height: 60%;
+
+    mat-card-content {
+      p {
+        overflow: auto;
+        padding-right: 8px;
+      }
+    }
+  }
+}

@@ -89,3 +89,24 @@ h1 {
   font-weight: 700;
   color: #444DF2;
 }
+
+@media (max-width: 450px) {
+  mat-card {
+    width: 90%;
+    max-height: 60%;
+
+    mat-card-content {
+      padding-top: 32px;
+      .imprint-content {
+        overflow: auto;
+        padding-right: 8px;
+
+        h1 {
+          font-size: 32px;
+          line-height: 32px;
+          margin-top: 16px;
+        }
+      }
+    }
+  }
+}

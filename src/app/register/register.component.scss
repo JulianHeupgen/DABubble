@@ -263,8 +263,13 @@ a {
       display: none;
     }
   }
+}
 
+@media (max-width: 450px) {
+  .input-field-container {
+    input {
+      font-size: 15px !important;
+    }
 
-
-
+  }
 }

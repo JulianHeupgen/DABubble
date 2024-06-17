@@ -3,16 +3,20 @@
   <mat-card>
     <mat-card-content>
       <img (click)="goBack()" class="back-arrow" src="./../../assets/img/go-back.png">
-      DaBubble, a learning platform and Slack clone for programming, collects
-      and uses personal data solely for functionality and educational purposes.
-      User data is managed and stored securely via Angular and Firebase, adhering
-      to industry standards. Developed by frontend development students,
-      DaBubble is committed to protecting user privacy and improving the
-      educational experience.
+      <p>
+        DaBubble, eine Lernplattform und ein Slack-Klon für die Programmierung,
+        sammelt und verwendet personenbezogene Daten ausschließlich für
+        Funktions- und Bildungszwecke. Die Benutzerdaten werden sicher
+        über Angular und Firebase verwaltet und gespeichert, unter
+        Einhaltung von Industriestandards. DaBubble wurde von Studenten
+        der Frontend-Entwicklung entwickelt und setzt sich für den Schutz
+        der Privatsphäre der Nutzer und die Verbesserung der Bildungserfahrung ein.
+      </p>
     </mat-card-content>
   </mat-card>
 
   <div class="footer-links">
+    <a [routerLink]="['/dashboard']">Home</a>
     <a [routerLink]="['/imprint']">Impressum</a>
     <a [routerLink]="['/privacy']">Datenschutz</a>
   </div>
