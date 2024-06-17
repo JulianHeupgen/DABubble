@@ -63,6 +63,7 @@
   .p-name-edit {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     gap: 16px;
 
@@ -295,3 +296,16 @@
   border-radius: 30px !important;
 }
 
+@media (max-width: 450px) {
+  .profile-edit {
+    min-width: unset;
+
+    .buttons {
+      flex-wrap: wrap-reverse;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

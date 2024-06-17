@@ -164,6 +164,13 @@
   }
 }
 
+@media (max-width: 450px) {
+  .profile-details-box {
+    width: 100%;
+    min-width: unset !important;
+  }
+}
+
 @media (max-width: 960px) {
   .arrow-down {
     display: none;

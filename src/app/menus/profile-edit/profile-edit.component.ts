@@ -98,11 +98,11 @@ export class ProfileEditComponent {
     const newName = this.isDifferent(this.editUserForm.get('name')?.value, this.user.name);
     const newEmail = this.isDifferent(this.editUserForm.get('email')?.value, this.user.email);
     try {
-      if (newEmail) {
-        this.changeEmail(newEmail);
-      }
       if (newName) {
         await this.changeFullname(newName);
+      }
+      if (newEmail) {
+        await this.changeEmail(newEmail);
       }
     } catch (error) {
       console.error('Error updating the user. ', error);
@@ -150,13 +150,13 @@ export class ProfileEditComponent {
         }
         await this.auth.updateAuthUserEmail(newEmail);
         await this.auth.updateFirebaseUser({email: newEmail});
-        this.snackbar.showSnackBar('E-Mail changed successful. ', 'Ok');
+        this.snackbar.showSnackBar('E-Mail geändert.');
         console.log('User Email updated with success.');
       } else {
         console.log('Form data not provided');
       }
     } catch (error) {
-      this.snackbar.showSnackBar('An error happened. Please retry ', 'Ok');
+      this.snackbar.showSnackBar('Ein Fehler ist aufgetreten. Bitte versuchen sie es noch ein mal.');
       console.error('Error during updating email process: ', error);
     }
   }
@@ -195,10 +195,10 @@ export class ProfileEditComponent {
     }
     try {
       await this.auth.updateFirebaseUser({name: fullname});
-      this.snackbar.showSnackBar('Name changed successful. ', 'Ok');
-      console.log('Name successfull changed.');
+      this.snackbar.showSnackBar('Name geändert.');
+      console.log('Name changed successful.');
     } catch (error) {
-      this.snackbar.showSnackBar('An error happened. Please retry ', 'Ok');
+      this.snackbar.showSnackBar('Ein fehler ist aufgetreten. Bitte wiederholen sie es noch ein mal.');
       console.error('Error while updating the name.', error);
     }
   }

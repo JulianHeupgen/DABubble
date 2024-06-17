@@ -1,7 +1,6 @@
 @import '../../mixin.scss';
 
 :host {
-  width: 90%;
   display: flex;
   justify-content: center;
 }
@@ -276,10 +275,9 @@ form {
 }
 
 @media (max-width: 450px) {
-
   mat-card {
     padding: 0 !important;
-    max-height: 80vh;
+    //max-height: 80vh;
     min-height: unset;
 
     mat-card-content {
