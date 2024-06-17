@@ -36,7 +36,7 @@
 
         <!-- Show selected users as chips -->
         @if (selectedUsersIds.length > 0) {
-        <div>
+        <div class="chips-container">
             <input style="display: none;" [matChipInputFor]="chipGrid" [matChipInputAddOnBlur]="true" />
             <mat-chip-grid #chipGrid>
                 @for (userId of selectedUsersIds; track $index) {

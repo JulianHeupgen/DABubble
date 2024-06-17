@@ -193,6 +193,7 @@ export class ChannelMembersComponent {
     if (!this.selectedUsersIds.includes(userId)) {
       this.selectedUsers.push(userName);
       this.selectedUsersIds.push(userId);
+      this.userControl.reset();
     }
     this.userControl.reset();
   }

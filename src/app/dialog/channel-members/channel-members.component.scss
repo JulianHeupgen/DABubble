@@ -185,3 +185,46 @@ input {
   height: 34px;
   border-radius: 50%;
 }
+
+@media (max-width: 650px) {
+  ::ng-deep .cdk-overlay-pane.mat-mdc-dialog-panel {
+    max-width: none;
+    height: 90%;
+    min-height: 460px;
+    width: 100%;
+  }
+
+  .add-channel-card {
+    height: 100%;
+    min-height: 460px;
+    max-width: none;
+    border-radius: 0;
+    padding: 40px 20px;
+  }
+
+  ::ng-deep .mat-mdc-dialog-container {
+    --mdc-dialog-container-shape: 30px 30px 0 0 !important;
+  }
+
+  ::ng-deep .cdk-global-overlay-wrapper {
+    align-items: flex-end !important;
+  }
+
+  .checkbox-inputs {
+
+    p {
+      font-size: 16px;
+    }
+  }
+
+  .input-section {
+    input {
+      font-size: 16px;
+      height: 50px;
+    }
+  }
+
+  .chips-container {
+    scale: 0.7;
+  }
+}

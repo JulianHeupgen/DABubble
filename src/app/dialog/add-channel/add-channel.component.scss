@@ -123,3 +123,37 @@ input {
 ::ng-deep .mat-mdc-dialog-container {
     --mdc-dialog-container-shape: 30px;
 }
+
+@media (max-width: 650px) {
+    ::ng-deep .mat-mdc-dialog-surface {
+        overflow-y: unset;
+    }
+
+    ::ng-deep .cdk-overlay-pane.mat-mdc-dialog-panel {
+        max-width: none;
+        height: 100vh;
+    }
+
+    .add-channel-card {
+        max-height: none;
+        max-width: none;
+        height: 100vh;
+        padding: 40px 20px;
+        justify-content: unset;
+        border-radius: 0;
+    }
+
+    span {
+        font-size: 16px !important;
+    }
+
+    ::ng-deep .mat-mdc-dialog-container {
+        --mdc-dialog-container-shape: 0px !important;
+    }
+
+    .input-section {
+        input {
+            font-size: 16px;
+        }
+    }
+}
