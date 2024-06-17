@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { DataService } from '../../services/data.service';
@@ -35,13 +35,44 @@ export class SearchComponent {
   filteredChannels!: Observable<Channel[]>;
   channels: Channel[] = [];
   currentUser!: User;
+  placeholder: string = 'Code learning durchsuchen';
 
 
   constructor(
     public dataService: DataService,
     public dialog: MatDialog,
     private auth: AuthService
-  ) { }
+  ) {
+    this.updatePlaceholder(window.innerWidth);
+  }
+
+
+  /**
+  * Updates the placeholder text based on the given width.
+  * This method sets the `placeholder` property to a different string
+  * depending on whether the provided width is less than 651 pixels.
+  * It helps in making the placeholder text responsive to the screen size.
+  *
+  * @param {number} width - The current width of the screen.
+  */
+  updatePlaceholder(width: number) {
+    this.placeholder = width < 651 ? 'Gehe zu...' : 'Code learning durchsuchen';
+  }
+
+
+  /**
+  * Handles the window resize event to update UI components.
+  * This method is triggered whenever the window is resized. It updates
+  * the placeholder text based on the new window width by calling the
+  * `updatePlaceholder` method. This ensures that the placeholder text
+  * is responsive to the current screen size.
+  *
+  * @param {Event} event - The resize event object.
+  */
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.updatePlaceholder(innerWidth);
+  }
 
 
   /**

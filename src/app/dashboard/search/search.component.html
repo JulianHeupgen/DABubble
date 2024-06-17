@@ -1,8 +1,6 @@
 <form class="search-bar">
-  <input type="text" #searchInput placeholder="Code learning durchsuchen" [formControl]="control"
-    [matAutocomplete]="auto" class="desktop-input" [class.mat-autocomplete-panel-open]="isPanelOpen" />
-  <input type="text" #searchInput placeholder="Gehe zu..." [formControl]="control"
-    [matAutocomplete]="auto" class="responsive-input" [class.mat-autocomplete-panel-open]="isPanelOpen" />
+  <input type="text" #searchInput placeholder="{{ placeholder }}" [formControl]="control"
+    [matAutocomplete]="auto" [class.mat-autocomplete-panel-open]="isPanelOpen" />
   <mat-autocomplete #auto="matAutocomplete" (opened)="isPanelOpen = true" (closed)="isPanelOpen = false">
     <h2 class="project-font">User</h2>
     @for (searchObjects of filteredUsers | async; track $index) {
