@@ -3,12 +3,20 @@
   <mat-card>
     <mat-card-content>
       <div class="register-header">
-        <img routerLink="/login" class="back-arrow" src="./../../assets/img/go-back.png">
-        <h1>
-          Konto erstellen
-        </h1>
-        <span>Mit deinem Namen und deiner E-Mail Adresse hast du dein neues DABubble Konto.</span>
+        <div class="headline-with-arrow">
+          <div class="headline-side-space">
+            <img routerLink="/login" class="back-arrow" src="./../../assets/img/go-back.png">
+          </div>
+          <div class="headline">
+            <h1>
+              Konto erstellen
+            </h1>
+          </div>
+          <div class="headline-side-space"></div>
+        </div>
       </div>
+      <span>Mit deinem Namen und deiner E-Mail Adresse hast du dein neues DABubble Konto.</span>
+
 
       <form [formGroup]="registerForm" (ngSubmit)="onNextStep()">
 
@@ -20,7 +28,8 @@
             </div>
           </div>
           <div class="error-container">
-            <p class="input-feedback" *ngIf="registerForm.get('name')?.errors && registerForm.get('name')?.dirty">Bitte schreiben sie einen Namen. Vorname Nachname</p>
+            <p class="input-feedback" *ngIf="registerForm.get('name')?.errors && registerForm.get('name')?.dirty">Bitte
+              schreiben sie einen Namen. Vorname Nachname</p>
           </div>
         </div>
 
@@ -32,7 +41,8 @@
             </div>
           </div>
           <div class="error-container">
-            <p class="input-feedback" *ngIf="registerForm.get('email')?.errors && registerForm.get('email')?.dirty">*Diese E-Mail Adresse ist leider ungültig.</p>
+            <p class="input-feedback" *ngIf="registerForm.get('email')?.errors && registerForm.get('email')?.dirty">
+              *Diese E-Mail Adresse ist leider ungültig.</p>
           </div>
         </div>
 
@@ -44,11 +54,14 @@
             </div>
           </div>
           <div class="error-container">
-            <p class="input-feedback" *ngIf="registerForm.get('password')?.errors && registerForm.get('password')?.dirty">Bitte geben sie ein Passwort mit mind. 6 Zeichen ein.</p>
+            <p class="input-feedback"
+               *ngIf="registerForm.get('password')?.errors && registerForm.get('password')?.dirty">Bitte geben sie ein
+              Passwort mit mind. 6 Zeichen ein.</p>
           </div>
         </div>
 
-        <mat-checkbox formControlName="privacy" color="primary" class="privacy-check"><span>Ich stimme der </span><a [routerLink]="['/privacy']">Datenschutzerklärung</a><span> zu.</span></mat-checkbox>
+        <mat-checkbox formControlName="privacy" color="primary" class="privacy-check"><span>Ich stimme der </span><a
+          [routerLink]="['/privacy']">Datenschutzerklärung</a><span> zu.</span></mat-checkbox>
 
         <button type="submit" class="next-btn" [disabled]="!registerForm.valid">Weiter</button>
 

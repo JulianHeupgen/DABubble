@@ -21,7 +21,7 @@
 }
 
 mat-card {
-  width: 40%;
+  width: 90%;
   max-width: 606px;
   max-height: 769px;
   min-height: 70vh;
@@ -34,36 +34,51 @@ mat-card {
     gap: 48px;
     flex-direction: column;
 
-
-    .back-arrow {
-      height: 40px;
-      width: 40px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 99;
-      border-radius: 50%;
-
-      &:hover {
-        background-color: #797df36e;
-        cursor: pointer;
-      }
-    }
-
     .register-header {
       gap: 48px;
       display: flex;
       flex-direction: column;
       position: relative;
+
+      .headline-with-arrow {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+
+        .back-arrow {
+          height: 40px;
+          width: 40px;
+          z-index: 99;
+          border-radius: 50%;
+
+          &:hover {
+            background-color: #797df36e;
+            cursor: pointer;
+          }
+        }
+
+        .headline {
+          @include flex-align-justify();
+          flex: 1;
+
+          h1 {
+            margin-bottom: 0 !important;
+          }
+        }
+
+        .headline-side-space {
+          width: 10%;
+          @include flex-align-justify();
+        }
+      }
     }
 
     h1 {
       font-family: Nunito, sans-serif;
       font-size: 46px;
-      line-height: normal;
+      line-height: 46px;
       font-weight: 700;
       color: #444DF2;
-      padding: 0 48px;
       text-align: center;
     }
 
@@ -128,6 +143,7 @@ mat-card {
     .next-btn {
       align-self: end;
       padding: 12px 25px;
+      margin-top: 16px;
       border-radius: 25px;
       font-size: 18px;
       font-weight: 700;
@@ -171,8 +187,7 @@ form {
 
 .error-container {
   display: flex;
-  height: 20px;
-  margin-top: 4px;
+  margin: 6px 0 6px 22px;
 }
 
 .privacy-check span {
@@ -201,4 +216,55 @@ a {
   bottom: 24px;
   margin-left: auto;
   margin-right: auto;
+}
+
+@media (max-width: 450px) {
+
+  .register-container {
+    gap: 24px;
+
+    .logo {
+      position: unset;
+      max-width: 40%;
+      height: unset;
+    }
+
+    mat-card {
+      padding: 0 !important;
+      max-height: 80vh;
+      min-height: unset;
+
+      mat-card-content {
+        gap: 12px;
+
+        .register-header {
+          gap: 12px !important;
+
+          h1 {
+            font-size: 32px;
+            line-height: 32px;
+          }
+        }
+
+        span {
+          font-size: 17px;
+          line-height: 20px;
+        }
+
+        form {
+          overflow: auto;
+          justify-content: unset;
+          padding: 12px;
+        }
+      }
+    }
+
+    .footer-links {
+      display: none;
+    }
+  }
+
+
+
+
 }
