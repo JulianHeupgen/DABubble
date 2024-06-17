@@ -33,7 +33,7 @@
     h1 {
         margin: 0;
         font-size: 24px;
-    font-weight: 700;
+        font-weight: 700;
     }
 }
 
@@ -195,20 +195,7 @@
     width: 0;
 }
 
-.img-as-button {
-    height: 270px;
-    position: absolute;
-    left: 40px;
-    bottom: 0;
-    transform: translateY(-50%);
-    z-index: 10;
-    cursor: pointer;
-
-    &:hover {
-        content: url('./../../../assets/img/sidemenu_close_hover.png');
-    }
-}
-
+.img-as-button,
 .img-as-button-open {
     height: 270px;
     position: absolute;
@@ -217,10 +204,14 @@
     transform: translateY(-50%);
     z-index: 10;
     cursor: pointer;
+}
 
-    &:hover {
-        content: url('./../../../assets/img/sidemenu_open_hover.png');
-    }
+.img-as-button:hover {
+    content: url('./../../../assets/img/sidemenu_close_hover.png');
+}
+
+.img-as-button-open:hover {
+    content: url('./../../../assets/img/sidemenu_open_hover.png');
 }
 
 .profile-img-container {
@@ -298,6 +289,16 @@ app-search {
     border-radius: 42px;
     margin-bottom: 32px;
     display: none;
+}
+
+@media (max-width: 1050px) {
+
+    .img-as-button,
+    .img-as-button-open {
+        left: 18px;
+        width: 40px;
+        height: 230px;
+    }
 }
 
 @media (max-width: 650px) {
