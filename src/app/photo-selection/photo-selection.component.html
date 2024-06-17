@@ -1,47 +1,55 @@
 <mat-card>
-    <mat-card-content>
-      <div class="photoupload-header">
-        <img *ngIf="showClose" class="close-icon" (click)="closeDialog($event)" src="./../../assets/img/close.png">
-        <img *ngIf="showBackArrow" routerLink="/register" class="back-arrow" src="./../../assets/img/go-back.png">
-        <h1 class="card-headline">
-          Wähle deinen Avatar
-        </h1>
+  <mat-card-content>
+    <div class="photoupload-header">
+      <div class="headline-with-arrow">
+        <div class="headline-side-space">
+          <img *ngIf="showBackArrow" routerLink="/register" class="back-arrow" src="./../../assets/img/go-back.png">
+        </div>
+        <div class="headline">
+          <h1>
+            Wähle deinen Avatar
+          </h1>
+        </div>
+        <div class="headline-side-space">
+          <img *ngIf="showClose" class="close-icon" (click)="closeDialog($event)" src="./../../assets/img/close.png">
+        </div>
+      </div>
+    </div>
+
+    <div class="upload-content">
+
+      <div class="user-data">
+        <img [src]="imgSrcUrl">
+        <h1 *ngIf="fullName" class="name">{{ fullName }}</h1>
       </div>
 
-      <div class="upload-content">
-
-        <div class="user-data">
-          <img [src]="imgSrcUrl">
-          <h1 class="name">{{ fullName }}</h1>
-        </div>
-
+      <div class="avatar-select-area">
         <span>Aus der Liste wählen</span>
         <ul class="avatar-list">
           <li class="avatar" *ngFor="let avatar of defaultAvatars">
             <img [src]="avatar" (click)="onSelectedAvatar(avatar)">
           </li>
         </ul>
-
-        <div class="personal-upload">
-          <span>Eigenes Bild verwenden</span>
-          <label class="upload-btn">
-            <input type="file" #fileInput class="file-input" (change)="onSelectedFile($event)">
-            <button class="file-upload-btn" (click)="fileInput.click()">Datei hochladen</button>
-          </label>
-
-          <div class="file-upload" style="display: none;">
-            {{ imgSrcUrl || "No file uploaded yet." }}
-          </div>
-        </div>
-        <div class="error-container">
-          <span class="upload-error" *ngIf="uploadErr">Bild muss kleiner als 500kb sein. Das Bild hat {{ filesize }} kb.</span>
-        </div>
-
-        <button class="next-btn" (click)="handleNext()" type="submit"
-          [disabled]="!imageSelected">{{buttonText}}</button>
-
       </div>
 
-    </mat-card-content>
+      <div class="personal-upload">
+        <span>Eigenes Bild verwenden</span>
+        <label class="upload-btn">
+          <input type="file" #fileInput class="file-input" (change)="onSelectedFile($event)">
+          <button class="file-upload-btn" (click)="fileInput.click()">Datei hochladen</button>
+        </label>
+      </div>
+      <div class="error-container">
+        <span class="upload-error" *ngIf="uploadErr">Bild muss kleiner als 500kb sein. Das Bild hat {{ filesize }}
+          kb.</span>
+      </div>
 
-  </mat-card>
+      <button class="next-btn" (click)="handleNext()" type="submit"
+              [disabled]="!imageSelected">{{ buttonText }}
+      </button>
+
+    </div>
+
+  </mat-card-content>
+
+</mat-card>

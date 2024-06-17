@@ -35,3 +35,24 @@
   }
 }
 
+@media (max-width: 450px) {
+
+  .photo-upload-container {
+    gap: 24px;
+
+    .logo {
+      position: unset;
+      max-width: 40%;
+      height: unset;
+    }
+
+    .footer-links {
+      display: none;
+    }
+  }
+
+
+
+
+}
+

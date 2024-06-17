@@ -1,8 +1,16 @@
+@import '../../mixin.scss';
+
+:host {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+}
+
 mat-card {
   width: 100%;
   max-width: 606px;
-  height: 80vh;
   max-height: 769px;
+  min-height: 70vh;
   border-radius: 30px;
   padding: 32px;
 
@@ -12,47 +20,56 @@ mat-card {
     gap: 8px;
     flex-direction: column;
 
-
-    .back-arrow {
-      height: 40px;
-      width: 40px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 99;
-      border-radius: 50%;
-
-      &:hover {
-        background-color: #797df36e;
-        cursor: pointer;
-      }
-    }
-
     .photoupload-header {
       gap: 48px;
       display: flex;
       flex-direction: column;
       position: relative;
-    }
 
-    .close-icon {
-      position: absolute;
-      top: 0;
-      right: 0;
+      .headline-with-arrow {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
 
-      &:hover {
-        cursor: pointer;
+        .back-arrow {
+          height: 40px;
+          width: 40px;
+          z-index: 99;
+          border-radius: 50%;
+
+          &:hover {
+            background-color: #797df36e;
+            cursor: pointer;
+          }
+        }
+
+        .headline {
+          @include flex-align-justify();
+          flex: 1;
+
+          h1 {
+            margin-bottom: 0 !important;
+            font-size: 37px;
+            font-family: 'Nunito', sans-serif;
+            line-height: 46px;
+            font-weight: 700;
+            color: #444DF2;
+            text-align: center;
+          }
+        }
+
+        .headline-side-space {
+          width: 10%;
+          @include flex-align-justify();
+        }
       }
-    }
 
-    .card-headline {
-      font-family: Nunito, sans-serif;
-      font-size: 46px;
-      line-height: normal;
-      font-weight: 700;
-      color: #444DF2;
-      padding: 0 48px;
-      text-align: center;
+      .close-icon {
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
 
     .input-container {
@@ -160,6 +177,7 @@ form {
   line-height: normal;
   font-weight: 700;
   color: #444DF2;
+  white-space: nowrap;
 
 
   &:hover {
@@ -215,31 +233,38 @@ form {
     }
   }
 
-  .avatar-list {
+  .avatar-select-area {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    gap: 6px;
-    list-style-type: none;
-    overflow: auto;
-    margin-block-start: 0;
-    margin-block-end: 0;
-    padding-inline-start: 0;
+    margin: 16px 0;
+    padding: 8px 0;
 
-    .avatar {
-      &:hover {
-        cursor: pointer;
+    .avatar-list {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      list-style-type: none;
+      margin-block-start: 0;
+      margin-block-end: 0;
+      padding-inline-start: 0;
+      overflow: auto;
+
+      .avatar {
+        &:hover {
+          cursor: pointer;
+        }
       }
-    }
 
-    li>img {
-      width: 60px;
+      li > img {
+        width: 60px;
+      }
     }
   }
 
   .personal-upload {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 24px;
   }
 }
@@ -248,4 +273,39 @@ form {
   position: absolute;
   bottom: 75px;
   left: 75px;
+}
+
+@media (max-width: 450px) {
+
+  mat-card {
+    padding: 0 !important;
+    max-height: 80vh;
+    min-height: unset;
+
+    mat-card-content {
+      gap: 12px;
+
+      .photoupload-header {
+        gap: 12px !important;
+
+        .headline-with-arrow {
+          .headline {
+            h1 {
+              font-size: 32px;
+              line-height: 32px;
+            }
+          }
+        }
+
+      }
+
+      .upload-content {
+        .user-data {
+          gap: 0;
+        }
+      }
+    }
+  }
+
+
 }
