@@ -88,7 +88,6 @@ export class ChannelChatComponent {
   channelId: string = "";
   currentChannel!: Channel;
   participantsImages: any[] = [];
-  channelParticipantsCounter: number = 0;
   threads: any;
   channelThreads!: Thread[];
   imgFile: File | undefined = undefined;
@@ -236,7 +235,6 @@ export class ChannelChatComponent {
     }
     this.channelParticipantsSub = this.dataService.getParticipantImages(this.channelId).subscribe((participantsImages: any) => {
       this.participantsImages = participantsImages;
-      this.channelParticipantsCounter = participantsImages.length;
     });
   }
 
@@ -264,7 +262,6 @@ export class ChannelChatComponent {
         this.participantsImages.push({
           participantImage: user.imageUrl,
         });
-        this.channelParticipantsCounter++;
       }
     });
   }

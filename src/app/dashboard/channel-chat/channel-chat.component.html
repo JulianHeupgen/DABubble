@@ -13,7 +13,7 @@
               <img class="participants-img" src="{{participant.participantImage}}" referrerpolicy="no-referrer">
             }
           </div>
-          <div class="participant-counter">{{channelParticipantsCounter}}</div>
+          <div class="participant-counter">{{ participantsImages.length }}</div>
         </div>
         <img class="addUser-btn" (click)="openAddUsersDialog()" src="assets/img/add_user.png">
         <img class="showUser-btn" src="assets/img/add_user.png" [matMenuTriggerFor]="channelParticipantsMenu">
