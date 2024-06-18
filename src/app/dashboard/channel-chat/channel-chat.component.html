@@ -9,7 +9,7 @@
       <div class="header-right-container">
         <div class="participants-container" [matMenuTriggerFor]="channelParticipantsMenu">
           <div>
-            @for(participant of participantsImages; track participant.participantImage) {
+            @for(participant of participantsImages; track participant.userId) {
               <img class="participants-img" src="{{participant.participantImage}}" referrerpolicy="no-referrer">
             }
           </div>

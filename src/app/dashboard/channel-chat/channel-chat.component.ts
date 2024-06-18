@@ -260,7 +260,8 @@ export class ChannelChatComponent {
     this.users.forEach((user: any) => {
       if (user.channels && user.channels.includes(channelId)) {
         this.participantsImages.push({
-          participantImage: user.imageUrl,
+          userId: user.id,
+          participantImage: user.imageUrl
         });
       }
     });

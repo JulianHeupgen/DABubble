@@ -103,6 +103,7 @@ export class DataService {
                           
                           if (userData && userData['imageUrl']) {
                             participantsImages.push({
+                              userId: userDoc.id,
                               participantImage: userData['imageUrl']
                           });
                         }}
