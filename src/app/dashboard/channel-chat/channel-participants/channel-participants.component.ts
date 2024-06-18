@@ -69,8 +69,12 @@ export class ChannelParticipantsComponent {
       this.channelParticipantsSub.unsubscribe();
     }
     this.channelParticipantsSub = this.dataService.getParticipantInfos(this.currentChannel.channelId).subscribe((channelParticipants: any) => {
-      this.channelParticipants = channelParticipants;
+      this.channelParticipants = this.spliceCurrentUserFromParticipants(channelParticipants, this.currentUser.id);
     })
+  }
+
+  spliceCurrentUserFromParticipants(array: any, currentUserId: string) {
+    return array.filter((participant: any) => participant.id !== currentUserId);
   }
 
 
