@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { Channel } from '../../models/channel.class';
 import { AuthService } from '../../services/auth.service';
 import { Observable, map, startWith, switchMap } from 'rxjs';
+import { SidenavService } from '../../services/sidenav.service';
 
 @Component({
   selector: 'app-search',
@@ -41,7 +42,8 @@ export class SearchComponent {
   constructor(
     public dataService: DataService,
     public dialog: MatDialog,
-    private auth: AuthService
+    private auth: AuthService,
+    private sidenavService: SidenavService
   ) {
     this.updatePlaceholder(window.innerWidth);
   }
@@ -204,5 +206,10 @@ export class SearchComponent {
     this.isPanelOpen = false;
     this.searchInput.nativeElement.blur();
     this.autocompleteTrigger.closePanel();
+  }
+
+
+  closeSidenav() {
+    this.sidenavService.toggleSidenavIfScreenIsSmall('sidenav');
   }
 }
