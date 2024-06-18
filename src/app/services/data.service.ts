@@ -108,7 +108,6 @@ export class DataService {
                           });
                         }}
               }
-              console.log(participantsImages);
               observer.next(participantsImages);
           } 
       });

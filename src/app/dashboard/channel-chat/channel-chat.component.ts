@@ -264,9 +264,7 @@ export class ChannelChatComponent {
           userId: user.id,
           participantImage: user.imageUrl
         });
-      }
-    });
-    console.log(this.participantsImages);
+      }});
   }
 
 
