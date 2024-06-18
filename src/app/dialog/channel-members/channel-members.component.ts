@@ -51,7 +51,7 @@ export class ChannelMembersComponent {
     private dialogRef: MatDialogRef<ChannelMembersComponent>,
     public dialog: MatDialog,
     public dataService: DataService,
-    @Inject(MAT_DIALOG_DATA) public data: { channelId: string }
+    @Inject(MAT_DIALOG_DATA) public data: { channelId: string, createdBy: string }
   ) {
     this.allUsers = this.dataService.allUsers;
     this.filteredUsers = this.userControl.valueChanges.pipe(
@@ -106,6 +106,9 @@ export class ChannelMembersComponent {
   addChannelToSpecificUsers() {
     const batch = writeBatch(this.firestore);
     const channelDocRef = doc(this.firestore, `channels/${this.data.channelId}`);
+    if (!this.selectedUsersIds.includes(this.data.createdBy)) {
+      this.selectedUsersIds.push(this.data.createdBy);
+    }
     this.selectedUsersIds.forEach(userId => {
       const userDocRef = doc(this.firestore, `users/${userId}`);
       batch.update(userDocRef, { channels: arrayUnion(this.data.channelId) });
@@ -193,7 +196,6 @@ export class ChannelMembersComponent {
     if (!this.selectedUsersIds.includes(userId)) {
       this.selectedUsers.push(userName);
       this.selectedUsersIds.push(userId);
-      this.userControl.reset();
     }
     this.userControl.reset();
   }

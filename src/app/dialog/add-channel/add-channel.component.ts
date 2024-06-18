@@ -158,7 +158,10 @@ export class AddChannelComponent {
     if (this.createdChannelId) {
       setTimeout(() => {
         this.dialog.open(ChannelMembersComponent, {
-          data: { channelId: this.createdChannelId }
+          data: { 
+            channelId: this.createdChannelId,
+            createdBy: this.currentUser.id
+          }
         });
       }, 500);
     }
