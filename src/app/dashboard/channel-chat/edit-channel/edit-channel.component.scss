@@ -214,3 +214,110 @@
     }
 }
 
+
+
+
+@media(max-width: 1360px) {
+    .editChannel-container {
+        width: 600px;
+    }
+}
+
+@media(max-width: 860px) {
+    .editChannel-container {
+        width: 450px;
+    } 
+}
+
+@media(max-width: 580px) {
+    .editChannel-container {
+        width: 340px;
+
+    .title-and-closeButton {
+        h2 {
+            @include font-size-weight-color($fs: 22px, $fw: 500);
+        }
+    }
+}
+
+.editChannelName,
+.editChannelDescription {
+
+.editChannelName-header,
+.editChannelDescription-header {
+        div {
+            @include font-size-weight-color($fs: 16px, $fw: 700); 
+        }
+
+        .edit-button {
+            @include font-size-weight-color($fs: 16px, $fw: 600, $cl: #444DF2);
+        }
+    }
+
+    .editChannelName-title {
+        @include font-size-weight-color($fs: 16px, $fw: 600);
+    }
+}
+.editChannelName-title {
+    @include font-size-weight-color($fs: 16px, $fw: 600);
+}
+
+.editChannelName2 {
+    input {
+        font-size: 16px;
+    }
+}
+
+.editChannelDescription2 {
+    input {
+        font-size: 16px; 
+    }
+
+    .channelCreationInfos {
+        .createdBy {
+            @include font-size-weight-color($fs: 16px, $fw: 700);  
+        }
+        .name {
+            @include font-size-weight-color($fs: 21px, $fw: 600, $cl: #444DF2);
+        }
+    }
+}
+}
+
+@media(max-width: 390px) {
+    .editChannel-container {
+        width: 285px;
+        padding: 15px;
+    }
+
+    .editChannelName,
+    .editChannelDescription {
+   
+        .editChannelName-header,
+        .editChannelDescription-header {
+            .edit-button {
+                &:hover {
+                    @include font-size-weight-color($fs: 16px, $fw: 700, $cl: #535AF1);  
+                }
+            }
+        }
+    }
+
+    .editChannelDescription2 {
+        .editChannelDescription-header2 {
+            div {
+                @include font-size-weight-color($fs: 16px, $fw: 700); 
+            }
+    
+            .save-button {
+                @include font-size-weight-color($fs: 16px, $fw: 600, $cl: #444DF2);
+            }
+        }
+
+        input {
+            font-size: 12px; 
+        }
+    }
+
+}
+
