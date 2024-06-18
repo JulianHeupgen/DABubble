@@ -62,6 +62,6 @@ export class SidenavService {
   * based on the screen size for responsive design purposes.
   */
   updateScreenSize() {
-    this.screenIsSmall = window.innerWidth <= 650;
+    this.screenIsSmall = window.innerWidth <= 1050;
   }
 }
