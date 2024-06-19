@@ -47,7 +47,10 @@ export class LoginComponent {
     private router: Router,
   ) { }
 
-
+/**
+ * login with email and password via firebase authentication
+ * @param {Event} event 
+ */
   async logIn(event: Event) {
     let email = this.loginData.value.email || '';
     let password = this.loginData.value.password || '';
@@ -62,6 +65,9 @@ export class LoginComponent {
     }
   }
 
+  /**
+   * login for guest
+   */
   async guestLogin() {
     this.authService.signIn('max@mustermann.com', '123456')
       .then(() => {
