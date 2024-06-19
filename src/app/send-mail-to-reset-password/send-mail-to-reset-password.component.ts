@@ -42,6 +42,11 @@ export class SendMailToResetPasswordComponent {
   logInFalse: boolean = false;
   bannerState = '';
 
+  /**
+   * creates an instance of SendMailToResetPasswordComponent
+   * @param formBuilder - the form builder service
+   * @param router - the router service
+   */
   constructor(
     private formBuilder: FormBuilder,
     private router: Router
@@ -51,6 +56,11 @@ export class SendMailToResetPasswordComponent {
     email: ['', [Validators.required, Validators.email]],
   })
 
+  /**
+   * send an email for password reset
+   * show banner for success
+   * navigate back to login
+   */
   async sendEmailResetPassword(): Promise<void> {
     if (this.emailData.valid) {
       const auth = getAuth();
@@ -66,11 +76,11 @@ export class SendMailToResetPasswordComponent {
             }, 1000);
           }, 500);
         })
-        .catch ((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-    });
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+        });
+    }
   }
-}
 }
