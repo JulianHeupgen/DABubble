@@ -42,6 +42,12 @@ export class PasswordResetComponent {
   passwordData!: FormGroup;
   bannerState = '';
 
+  /**
+   * create an instance of PasswordResetComponent
+   * @param formBuilder - the form builder service
+   * @param router - the router service
+   * @param activatedRoute - receive information about the current route
+   */
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -55,13 +61,20 @@ export class PasswordResetComponent {
       validators: this.passwordMatchValidator
     });
   }
-
+  /**
+   * checks if passwords match
+   * @param {FormGroup} group 
+   */
   passwordMatchValidator(group: FormGroup) {
     const password = group.get('password')!.value;
     const passwordRepeat = group.get('passwordRepeat')!.value;
     return password === passwordRepeat ? null : { mismatch: true };
   }
 
+  /**
+   * reset password and show banner
+   * navigate back to login
+   */
   async resetPassword() {
     if (this.passwordData.valid) {
       const newPassword = this.passwordData.value.password;

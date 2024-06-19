@@ -47,10 +47,10 @@ export class LoginComponent {
     private router: Router,
   ) { }
 
-/**
- * login with email and password via firebase authentication
- * @param {Event} event 
- */
+  /**
+   * login with email and password via firebase authentication
+   * @param {Event} event 
+   */
   async logIn(event: Event) {
     let email = this.loginData.value.email || '';
     let password = this.loginData.value.password || '';
