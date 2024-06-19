@@ -1,5 +1,5 @@
-import {CommonModule} from '@angular/common';
-import {Component, HostListener} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, HostListener } from '@angular/core';
 import {
   trigger,
   state,
@@ -7,7 +7,7 @@ import {
   animate,
   transition
 } from '@angular/animations';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logo',
@@ -20,49 +20,37 @@ import {Router} from '@angular/router';
   animations: [
     // trigger for the icon
     trigger('fade', [
-      state('void', style({opacity: 0})),
+      state('void', style({ opacity: 0 })),
       transition('void => *', [
         animate(2000)
       ])
     ]),
 
-    //trigger for the text slidein
+    // trigger for the text slide-in
     trigger('slideIn', [
-      state('void',
-        style({marginLeft: '{{marginLeft}}'}),
-        {params: {marginLeft: '-470px'}}),
+      state('void', style({ marginLeft: '{{marginLeft}}' }), { params: { marginLeft: '-470px' } }),
       transition('void => *', [
-        animate(400, style({marginLeft: '0'}))
+        animate(400, style({ marginLeft: '0' }))
       ])
     ]),
 
     trigger('grow', [
-      state('void',
-        style({width: '0px'})),
-      state('*',
-        style(
-          {width: '{{textLogoWidth}}'}),
-        {params: {textLogoWidth: '470px'}}),
+      state('void', style({ width: '0px' })),
+      state('*', style({ width: '{{textLogoWidth}}' }), { params: { textLogoWidth: '470px' } }),
       transition('void => *', [animate(400)])
     ]),
 
     trigger('resizeAndMove', [
-      state('start',
-        style(
-          {top: '50%', left: '50%', transform: 'translate(-50%, -50%) scale(1)'})),
-      state('end',
-        style({
-          top: '32px', left: '32px',
-          transform: 'scale({{scaleFactor}})',
-          transformOrigin: 'top left'
-        }),
-        {params: {scaleFactor: '.3'}}),
+      state('start', style({ top: '50%', left: '50%', transform: 'translate(-50%, -50%) scale(1)' })),
+      state('end', style({
+        top: '32px', left: '32px',
+        transform: 'scale({{scaleFactor}})',
+        transformOrigin: 'top left'
+      }), { params: { scaleFactor: '.3' } }),
       transition('* => end', animate('1s ease-in-out'))
     ])
-
   ]
 })
-
 export class LogoComponent {
 
   logoTextUrl: string = './../../../assets/img/logo-text-white.png';
@@ -77,13 +65,12 @@ export class LogoComponent {
   marginLeft: string = '-470px';
   scaleFactor: string = '.354'; // Default scale factor
 
-  constructor(private route: Router) {
-  }
+  constructor(private route: Router) { }
 
   ngOnInit(): void {
     this.calculateDynamicValues();
     setTimeout(() => {
-      //change to true when animating
+      // Change to true when animating
       this.startGrowing = true;
     }, 800);
   }
@@ -93,9 +80,12 @@ export class LogoComponent {
     this.calculateDynamicValues();
   }
 
+  /**
+   * Calculates dynamic values for logo dimensions based on the window width.
+   */
   calculateDynamicValues() {
     const totalWindowWidth = window.innerWidth;
-    const ratio = 2.513; //ratio of the logo elements
+    const ratio = 2.513; // Ratio of the logo elements
 
     if (totalWindowWidth > 1200) {
       this.textLogoWidth = `470px`;
@@ -120,19 +110,28 @@ export class LogoComponent {
     this.textLogoWidth = `${adjustedTextWidth}px`;
     this.iconLogoWidth = `${adjustedIconWidth}px`;
     this.marginLeft = `-${adjustedTextWidth}px`;
-
   }
 
+  /**
+   * Handler for the completion of the grow animation.
+   */
   growDone() {
     setTimeout(() => {
       this.textVisible = true;
     }, 600);
   }
 
+  /**
+   * Handler for the completion of the slide animation.
+   */
   slideDone() {
     this.containerState = 'end';
   }
 
+  /**
+   * Handler for the completion of the resize and move animation.
+   * Navigates to the dashboard and updates the logo text URL.
+   */
   async resizeAndMoveDone() {
     if (this.containerState === 'end') {
       this.defaultBackground = true;
@@ -140,5 +139,4 @@ export class LogoComponent {
       await this.route.navigateByUrl('dashboard');
     }
   }
-
 }

@@ -12,16 +12,28 @@ export class HeaderProfileService {
   private profileEditState = new BehaviorSubject<boolean>(false);
   profileEditState$ = this.profileEditState.asObservable();
 
+  /**
+   * Switches the profile state to menu.
+   * Sets both `profileViewState` and `profileEditState` to false.
+   */
   switchToMenu() {
     this.profileViewState.next(false);
     this.profileEditState.next(false);
   }
 
+  /**
+   * Switches the profile state to view.
+   * Sets `profileViewState` to true and `profileEditState` to false.
+   */
   switchToView() {
     this.profileViewState.next(true);
     this.profileEditState.next(false);
   }
 
+  /**
+   * Switches the profile state to edit.
+   * Sets `profileEditState` to true and `profileViewState` to false.
+   */
   switchToEdit() {
     this.profileEditState.next(true);
     this.profileViewState.next(false);

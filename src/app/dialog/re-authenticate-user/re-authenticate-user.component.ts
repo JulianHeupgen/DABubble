@@ -28,6 +28,9 @@ export class ReAuthenticateUserComponent {
     });
   }
 
+  /**
+   * Closes the dialog and returns the form value if the form is valid.
+   */
   reAuthenticateUser() {
     if (this.reAuthForm.valid) {
       this.dialogRef.close(this.reAuthForm.value);

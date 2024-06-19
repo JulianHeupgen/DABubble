@@ -20,3 +20,10 @@ export const authGuard: CanActivateFn = (route, state) => {
   )
 
 };
+
+/**
+ * Guard function to protect routes from unauthenticated access.
+ * @param route - The activated route snapshot.
+ * @param state - The router state snapshot.
+ * @returns An observable that resolves to true if the user is authenticated, or redirects to the login page if not.
+ */

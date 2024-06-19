@@ -1,18 +1,18 @@
-import {Component} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {AuthService} from '../../services/auth.service';
-import {Router} from '@angular/router';
-import {User} from '../../models/user.class';
-import {Subscription, firstValueFrom} from 'rxjs';
-import {CommonModule} from '@angular/common';
-import {HeaderProfileService} from '../../services/header-profile.service';
-import {ReAuthenticateUserComponent} from '../../dialog/re-authenticate-user/re-authenticate-user.component';
-import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
-import {SnackBarService} from '../../services/snack-bar.service';
-import {PhotoSelectionComponent} from "../../photo-selection/photo-selection.component";
-import {UserRegistrationService} from "../../services/user-registration.service";
-import {StorageService} from "../../services/storage.service";
-import {MatIcon} from "@angular/material/icon";
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { User } from '../../models/user.class';
+import { Subscription, firstValueFrom } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { HeaderProfileService } from '../../services/header-profile.service';
+import { ReAuthenticateUserComponent } from '../../dialog/re-authenticate-user/re-authenticate-user.component';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { SnackBarService } from '../../services/snack-bar.service';
+import { PhotoSelectionComponent } from "../../photo-selection/photo-selection.component";
+import { UserRegistrationService } from "../../services/user-registration.service";
+import { StorageService } from "../../services/storage.service";
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
   selector: 'app-profile-edit',
@@ -48,6 +48,9 @@ export class ProfileEditComponent {
     this.getUser();
   }
 
+  /**
+   * Opens a dialog for image selection and updates the selected image.
+   */
   openImageUploaderDialog() {
     const dialogRef = this.dialog.open(PhotoSelectionComponent, {
       data: {
@@ -63,6 +66,9 @@ export class ProfileEditComponent {
     this.dialogRef = dialogRef;
   }
 
+  /**
+   * Handles the selected image and updates the user's profile picture.
+   */
   async onSelectedImage() {
     try {
       let storageUrl: string = '';
@@ -74,14 +80,12 @@ export class ProfileEditComponent {
         console.error('Invalid image URL');
         return;
       }
-      // Get the actual image
       const user: any = await this.auth.getUserDoc();
       const oldImageUrl = user.imageUrl;
-      // Set new image with storageUrl, then delete old image from storage
       try {
-        await this.auth.updateFirebaseUser({imageUrl: storageUrl});
+        await this.auth.updateFirebaseUser({ imageUrl: storageUrl });
         this.storage.deleteFile(oldImageUrl);
-        this.snackbar.showSnackBar('Photo changed successful. ', 'Ok');
+        this.snackbar.showSnackBar('Photo changed successfully.', 'Ok');
         this.dialogRef?.close();
       } catch {
         console.error('Error while updating image');
@@ -92,7 +96,7 @@ export class ProfileEditComponent {
   }
 
   /**
-   * Performs action on form submit
+   * Saves the changes to the user profile.
    */
   async save() {
     const newName = this.isDifferent(this.editUserForm.get('name')?.value, this.user.name);
@@ -110,19 +114,29 @@ export class ProfileEditComponent {
   }
 
   /**
-   * Checks for differences between two values
-   * @param newVal
-   * @param actualVal
-   * @returns boolean if values are different
+   * Checks for differences between two values.
+   * @param newVal - The new value.
+   * @param actualVal - The actual value.
+   * @returns A string if values are different, otherwise null.
    */
   isDifferent(newVal: string, actualVal: any): string | null {
     return newVal !== actualVal ? newVal : null;
   }
 
+  /**
+   * Checks if two values are different.
+   * @param newVal - The new value.
+   * @param actualVal - The actual value.
+   * @returns A boolean indicating if the values are different.
+   */
   isDifferentBool(newVal: string, actualVal: any): boolean {
     return newVal !== actualVal;
   }
 
+  /**
+   * Checks if the form has new values.
+   * @returns A boolean indicating if there are new form values.
+   */
   hasNewFormValue() {
     const emailCtrl = this.editUserForm.get('email')?.value;
     const nameCtrl = this.editUserForm.get('name')?.value;
@@ -134,11 +148,8 @@ export class ProfileEditComponent {
   }
 
   /**
-   * Take this function to update users email address
-   * Step 1. reAuthenticateUser(email: string, password: string)
-   * Step 2. updateEmailAddress(newmail: string)
-   *         this updates email on firestore and auth - rollback when needed
-   * @returns
+   * Updates the user's email address.
+   * @param newEmail - The new email address.
    */
   async changeEmail(newEmail: string) {
     try {
@@ -146,12 +157,12 @@ export class ProfileEditComponent {
       if (formData) {
         await this.reAuthenticate(formData.email, formData.password);
         if (!newEmail) {
-          return
+          return;
         }
         await this.auth.updateAuthUserEmail(newEmail);
-        await this.auth.updateFirebaseUser({email: newEmail});
+        await this.auth.updateFirebaseUser({ email: newEmail });
         this.snackbar.showSnackBar('E-Mail geändert.');
-        console.log('User Email updated with success.');
+        console.log('User Email updated successfully.');
       } else {
         console.log('Form data not provided');
       }
@@ -162,69 +173,80 @@ export class ProfileEditComponent {
   }
 
   /**
-   * Open the login modal which is used for the reauthentification
-   * @returns Login Form value as Promise
+   * Opens the login modal for re-authentication.
+   * @param source - The source of the request.
+   * @returns The form value as a promise.
    */
   openLoginModal(source: string): Promise<any> {
-    const dialogRef = this.dialog.open(ReAuthenticateUserComponent, {data: {from: source}});
+    const dialogRef = this.dialog.open(ReAuthenticateUserComponent, { data: { from: source } });
     return firstValueFrom(dialogRef.afterClosed());
   }
 
   /**
-   * Reauthenticates the user by email and password
-   * Is needed for sensible firebase actions like updating email, password or delete whole user
-   * @param email
-   * @param password
+   * Re-authenticates the user by email and password.
+   * @param email - The user's email.
+   * @param password - The user's password.
    */
   async reAuthenticate(email: string, password: string) {
     try {
       await this.auth.reAuthenticateUser(email, password);
-      console.log('User reauthenticated with success');
+      console.log('User reauthenticated successfully');
     } catch (error) {
-      throw new Error('Couldnt authenticate the user.');
+      throw new Error('Couldn\'t authenticate the user.');
     }
   }
 
   /**
-   * Take this function to update users fullname on firestore
-   * @returns A log or an error log. In hope for just a log.
+   * Updates the user's full name.
+   * @param fullname - The new full name.
    */
   async changeFullname(fullname: string) {
     if (!fullname) {
-      return
+      return;
     }
     try {
-      await this.auth.updateFirebaseUser({name: fullname});
+      await this.auth.updateFirebaseUser({ name: fullname });
       this.snackbar.showSnackBar('Name geändert.');
-      console.log('Name changed successful.');
+      console.log('Name changed successfully.');
     } catch (error) {
-      this.snackbar.showSnackBar('Ein fehler ist aufgetreten. Bitte wiederholen sie es noch ein mal.');
+      this.snackbar.showSnackBar('Ein Fehler ist aufgetreten. Bitte versuchen sie es noch ein mal.');
       console.error('Error while updating the name.', error);
     }
   }
 
   /**
-   * Subscribes to User data and patches the form values with new user data
+   * Subscribes to user data and patches the form values with new user data.
    */
   getUser() {
     this.userSub = this.auth.getUser().subscribe(user => {
       if (user) {
         this.user = user;
-        this.updateFormValues()
+        this.updateFormValues();
       }
-    })
+    });
   }
 
+  /**
+   * Closes the edit mode and switches to menu view.
+   * @param event - The event triggering the close action.
+   */
   closeEdit(event: Event) {
     event.stopPropagation();
     this.profileService.switchToMenu();
   }
 
+  /**
+   * Closes the edit mode and switches to view mode.
+   * @param event - The event triggering the close action.
+   */
   closeToView(event: Event) {
     event.stopPropagation();
     this.profileService.switchToView();
   }
 
+  /**
+   * Updates the form values with the user's current data.
+   */
   updateFormValues() {
     this.editUserForm.patchValue({
       email: this.user.email,
@@ -232,10 +254,12 @@ export class ProfileEditComponent {
     });
   }
 
+  /**
+   * Unsubscribes from user data updates when the component is destroyed.
+   */
   ngOnDestroy(): void {
     if (this.userSub) {
       this.userSub.unsubscribe();
     }
   }
-
 }

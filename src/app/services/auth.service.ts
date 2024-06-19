@@ -37,6 +37,8 @@ import {DataService} from './data.service';
 })
 export class AuthService {
 
+  AUTHUSER = getAuth();
+
   constructor(
     private auth: Auth,
     private firestore: Firestore,
@@ -45,18 +47,15 @@ export class AuthService {
   ) {
   }
 
-  AUTHUSER = getAuth();
-
   /* TEST SPACE */
 
   /* END TEST SPACE */
 
-
   /**
    * This function performs a signup using email and password.
-   * @param email
-   * @param password
-   * @returns User Object to store data in firestore DB.
+   * @param email - The email address of the user.
+   * @param password - The password for the user.
+   * @returns A Promise that resolves with the user credentials.
    */
   async signUp(email: string, password: string) {
     try {
@@ -66,6 +65,12 @@ export class AuthService {
     }
   }
 
+  /**
+   * This function performs a sign-in using email and password.
+   * @param email - The email address of the user.
+   * @param password - The password for the user.
+   * @returns A Promise that resolves with the user credentials.
+   */
   async signIn(email: string, password: string) {
     try {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
@@ -76,6 +81,9 @@ export class AuthService {
     }
   }
 
+  /**
+   * This function performs a sign-in using Google authentication.
+   */
   signInWidthGoogle() {
     const googleProvider = new GoogleAuthProvider();
     const googleAuth = getAuth();
@@ -85,7 +93,7 @@ export class AuthService {
         const userQuery = query(this.dataService.getUserCollection(), where('authUserId', '==', userCredential.user.uid));
         getDocs(userQuery).then(querySnapshot => {
           if (!querySnapshot.empty) {
-            //we do nothing if the user exists
+            // we do nothing if the user exists
           } else {
             const userData = this.setGoogleUserData(userCredential.user);
             const newUser = new User(userData);
@@ -105,6 +113,11 @@ export class AuthService {
       });
   }
 
+  /**
+   * This function sets user data for a Google authenticated user.
+   * @param userData - The user data from Google authentication.
+   * @returns An object with the user's data.
+   */
   setGoogleUserData(userData: any) {
     return {
       id: '',
@@ -118,24 +131,9 @@ export class AuthService {
     }
   }
 
-  // async setUserToFirestore(userData: any, name: string) {
-  //   // let user = new User(
-  //   //   name,
-  //   //   userData.email,
-  //   //   'offline',
-  //   //   userData.uid,
-  //   // )
-  //   const docRef = await addDoc(collection(this.firestore, "users"), {
-  //     'name': name,
-  // 'email': userData.email,
-  //     'onlineStatus': 'offline',
-  //     'channels': [],
-  //     'uid': userData.uid,
-  //   });
-  // }
-
   /**
-   * Logout the actual logged-in user
+   * Logout the currently logged-in user.
+   * @returns A Promise that resolves to true if logout was successful, false otherwise.
    */
   async logout(): Promise<boolean> {
     try {
@@ -148,8 +146,8 @@ export class AuthService {
   }
 
   /**
-   * Get the docId from the actual logged User by the auth id
-   * @returns firestore docId
+   * Get the document ID of the currently authenticated user.
+   * @returns A Promise that resolves with the document ID, or undefined if no user is authenticated.
    */
   async getDocIdFromAuthenticatedUser(): Promise<string | undefined> {
     try {
@@ -159,15 +157,15 @@ export class AuthService {
       }
       return undefined;
     } catch (error) {
-      console.error('Couldn t provide the doc Id. ', error);
+      console.error('Could not provide the doc Id. ', error);
       throw error;
     }
   }
 
   /**
-   * This function can be used to update Firestore User Object.
-   * The function extracts the logged authId.
-   * @param updateData Update Object consisting key:value - Existing keys will be overwritten!
+   * Update the Firestore user object with the provided data.
+   * @param updateData - An object containing the data to update.
+   * @returns A Promise that resolves when the update is complete.
    */
   async updateFirebaseUser(updateData: { [key: string]: any }): Promise<void> {
     const docId = await this.getDocIdFromAuthenticatedUser();
@@ -183,6 +181,11 @@ export class AuthService {
     }
   }
 
+  /**
+   * Update the email address of the currently authenticated user.
+   * @param newMail - The new email address.
+   * @returns A Promise that resolves when the update is complete.
+   */
   async updateAuthUserEmail(newMail: string): Promise<void> {
     if (!this.AUTHUSER.currentUser) {
       return Promise.reject('No user!');
@@ -198,8 +201,8 @@ export class AuthService {
   }
 
   /**
-   * Add a stream of data of all users in firestore
-   * @returns List of all Users in firestore (not filtered)
+   * Add a stream of data for all users in Firestore.
+   * @returns An Observable that emits a list of all users.
    */
   getUsersList(): Observable<User[]> {
     return new Observable((subscriber) => {
@@ -213,24 +216,28 @@ export class AuthService {
         subscriber.next(arr);
       });
 
-      //Return a teardown logic function that will be called when
-      //the Observable is unsubscribed
+      // Return a teardown logic function that will be called when
+      // the Observable is unsubscribed
       subscriber.add(() => {
         unsubscribe();
       })
     });
   }
 
+  /**
+   * Get the document data of the currently authenticated user.
+   * @returns A Promise that resolves with the user document data.
+   */
   async getUserDoc() {
     const docId = await this.getDocIdFromAuthenticatedUser();
     const docRef = doc(this.firestore, "users", docId as string);
-    const docSnap =  await getDoc(docRef);
+    const docSnap = await getDoc(docRef);
     return docSnap.data();
   }
 
   /**
-   * This function adds a stream of the firestore user data which is actually logged in
-   * @returns User data
+   * Add a stream of the Firestore user data for the currently logged-in user.
+   * @returns An Observable that emits the user data.
    */
   getUser(): Observable<any> {
     return new Observable(subscriber => {
@@ -275,8 +282,8 @@ export class AuthService {
   }
 
   /**
-   * Checks if user is authenticated - Guard function
-   * @returns Boolean if User is authenticated
+   * Checks if the user is authenticated.
+   * @returns An Observable that emits true if the user is authenticated, false otherwise.
    */
   isAuthenticated(): Observable<boolean> {
     return new Observable((subscriber) => {
@@ -293,10 +300,10 @@ export class AuthService {
   }
 
   /**
-   * This reAuthenticates the user - for sensitive actions needed
-   * @param email Email to log in
-   * @param password Password to log in
-   * @returns Boolean - true when successful
+   * Re-authenticate the user for sensitive actions.
+   * @param email - The user's email address.
+   * @param password - The user's password.
+   * @returns A Promise that resolves when re-authentication is complete.
    */
   async reAuthenticateUser(email: string, password: string) {
     const user = this.auth.currentUser;
@@ -316,8 +323,8 @@ export class AuthService {
 
   /**
    * Deletes the current user from Firebase Authentication.
-   * Attention: Make sure to re-authenticate the user with reAuthenticateUser() before calling this function.
-   * @returns Boolean - true on success
+   * Ensure to re-authenticate the user with reAuthenticateUser() before calling this function.
+   * @returns A Promise that resolves to true if the user was successfully deleted, false otherwise.
    */
   async removeAuthUser() {
     const user = this.auth.currentUser;
@@ -336,7 +343,8 @@ export class AuthService {
   }
 
   /**
-   * This function deletes the user document
+   * Deletes the Firestore document of the currently authenticated user.
+   * @returns A Promise that resolves when the Firestore user document is deleted.
    */
   async removeFirestoreUser() {
     const user = this.auth.currentUser;
@@ -344,7 +352,7 @@ export class AuthService {
       throw new Error('No UID found for current user.');
     }
 
-    const uid = user.uid; //this gets the auth id from the current logged user
+    const uid = user.uid; // this gets the auth id from the current logged user
     const docId = await this.getDocIdFromAuthUserId(uid);
     if (!docId) {
       throw new Error('User docId not found by Auth ID.')
@@ -360,56 +368,9 @@ export class AuthService {
   }
 
   /**
-   * This is the main function to call when changing users full name.
-   * @param name this is the new Full Name to update the User to
-   */
-  /*async updateName(name: string) {
-    const currentUser = this.auth.currentUser;
-    if (!currentUser) {
-      throw new Error('Current user does not exist.');
-    }
-
-    const authId = currentUser.uid;
-    const docId = await this.getDocIdFromAuthUserId(authId);
-    if (!docId) {
-      throw new Error('User docId not found by Auth ID.');
-    }
-
-    try {
-      const userRef = doc(this.firestore, 'users', docId);
-      await updateDoc(userRef, {'name': name});
-    } catch (error) {
-      console.error('Error updating user name to firestore. ', error);
-      throw new Error('Failed to update Full Name.');
-    }
-  }*/
-
-  /**
-   * Updates email of the current user from Firebase Authentication and Firestore
-   * Make sure to re-authenticate the user with reAuthenticateUser() before calling this function.
-   * @returns newMail - true on success
-   */
- /* async updateEmailAddress(newMail: string): Promise<boolean> {
-    const user = this.auth.currentUser;
-    if (!user) {
-      console.error('No user found.');
-      return false;
-    }
-    const oldEmail = user.email as string;
-    try {
-      await this.updateEmailAllRefs(user, newMail);
-      return true;
-    } catch (error) {
-      console.log('Error updating email, rolling back');
-      await this.rollbackUser(user, oldEmail);
-      throw new Error('Error while updating the email of the current user - rolled back.');
-    }
-  }*/
-
-  /**
-   * Rollback function to set the old email if any resetting fails
-   * @param currentUser
-   * @param oldEmail
+   * Rolls back the user's email to the old email if any error occurs during the update.
+   * @param currentUser - The current authenticated user.
+   * @param oldEmail - The old email address.
    */
   async rollbackUser(currentUser: any, oldEmail: string) {
     try {
@@ -422,23 +383,22 @@ export class AuthService {
   }
 
   /**
-   * Bundled functions to update users email on auth and firestore
-   * @param currentUser
-   * @param newMail
+   * Bundled function to update the user's email in Firebase Authentication and Firestore.
+   * @param currentUser - The current authenticated user.
+   * @param newMail - The new email address.
    */
   async updateEmailAllRefs(currentUser: any, newMail: string) {
     try {
-      await updateEmail(currentUser, newMail); //updates email in auth
-      await this.updateEmailUsingUID(newMail); //updates email in firestore db
+      await updateEmail(currentUser, newMail); // updates email in auth
+      await this.updateEmailUsingUID(newMail); // updates email in firestore db
     } catch (error) {
       throw error;
     }
   }
 
   /**
-   *
-   * Gets the docId and calls the set method with the docid and the email
-   * @param email Email to set in firestore
+   * Updates the user's email in Firestore.
+   * @param email - The new email address.
    */
   async updateEmailUsingUID(email: string) {
     const user = this.auth.currentUser;
@@ -446,7 +406,7 @@ export class AuthService {
       throw new Error('No UID found for current user.');
     }
 
-    const uid = user.uid; //this gets the auth id from the current logged user
+    const uid = user.uid; // this gets the auth id from the current logged user
     const docId = await this.getDocIdFromAuthUserId(uid);
     if (!docId) {
       throw new Error('User not found by Auth ID.')
@@ -461,9 +421,9 @@ export class AuthService {
   }
 
   /**
-   * Sets the users email in Firestore
-   * @param docId
-   * @param email
+   * Sets the user's email in Firestore.
+   * @param docId - The Firestore document ID.
+   * @param email - The new email address.
    */
   async setFirestoreUserEmail(docId: string, email: string) {
     const userRef = doc(this.firestore, 'users', docId);
@@ -476,9 +436,9 @@ export class AuthService {
   }
 
   /**
-   * Searches the users collection for a given uid
-   * @param uid The Authid of the user to search for
-   * @returns docId of the User doc with the given UID
+   * Searches the users collection for a given UID.
+   * @param uid - The Auth ID of the user to search for.
+   * @returns A Promise that resolves with the document ID of the user.
    */
   async getDocIdFromAuthUserId(uid: string): Promise<string> {
     const usersRef = collection(this.firestore, "users");
@@ -496,8 +456,8 @@ export class AuthService {
   }
 
   /**
-   * This function returns the logged-in Users UID by Firebase Auth Object
-   * @returns Logged in User UID or undefined if no User is authenticated
+   * Returns the UID of the currently authenticated user.
+   * @returns A Promise that resolves with the user's UID or rejects if no user is authenticated.
    */
   getUserAuthId() {
     return new Promise<string>((resolve, reject) => {
@@ -515,6 +475,10 @@ export class AuthService {
     })
   }
 
+  /**
+   * Creates a new user document in Firestore.
+   * @param user - The user object to create in Firestore.
+   */
   async createFirebaseUser(user: User) {
     const strUser = this.stringifyUser(user);
     try {
@@ -525,6 +489,11 @@ export class AuthService {
     }
   }
 
+  /**
+   * Converts a User object to a plain JavaScript object.
+   * @param user - The user object to convert.
+   * @returns A plain JavaScript object representing the user.
+   */
   stringifyUser(user: User) {
     return {
       "id": user.id,

@@ -1,3 +1,6 @@
+/**
+ * An array of default avatar URLs used for the Photo Selection process.
+ */
 export const defaultAvatars: string[] = [
   'https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_1.png?alt=media&token=76a558f3-7364-4591-8b0d-9084a608438d',
   'https://firebasestorage.googleapis.com/v0/b/da-bubble-4a31a.appspot.com/o/avatar_2.png?alt=media&token=c11604f5-49f6-4faf-b7c7-5e1795c67e12',

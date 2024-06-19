@@ -69,7 +69,7 @@ export class LoginComponent {
         this.router.navigate(['/dashboard/']);
       })
       .catch(error => {
-        console.error('Could not sign up. Signing up with anonymous login. ');
+        console.warn('Could not sign up with the Guest User. Signing up with anonymous login. ');
         this.anonymousUserLogin();
       })
   }

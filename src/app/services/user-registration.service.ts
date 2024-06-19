@@ -1,9 +1,8 @@
-import {Injectable} from '@angular/core';
-import {StorageService} from "./storage.service";
-import {AuthService} from "./auth.service";
-import {User} from "../models/user.class";
-import {Router} from "@angular/router";
-import {doc} from "@angular/fire/firestore";
+import { Injectable } from '@angular/core';
+import { StorageService } from "./storage.service";
+import { AuthService } from "./auth.service";
+import { User } from "../models/user.class";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -16,25 +15,38 @@ export class UserRegistrationService {
     private storageService: StorageService,
     private authService: AuthService,
     private router: Router
-  ) {
-  }
+  ) { }
 
-  // Needed to save the object without restrictions on the model
+  /**
+   * Saves user data for the registration process.
+   * @param data - The user data to be saved.
+   */
   saveUserData(data: any) {
     this._userData = data;
   }
 
-  // Get user date for next step on registration process
+  /**
+   * Gets the full name of the user from the saved data.
+   * @returns The full name of the user.
+   */
   getUserFullName(): any {
     if (this._userData) {
       return this._userData.fullname;
     }
   }
 
+  /**
+   * Clears the saved user data.
+   */
   clearUserData(): void {
     this._userData = {};
   }
 
+  /**
+   * Uploads a file to Firebase Storage.
+   * @param file - The file to be uploaded.
+   * @returns A Promise that resolves with the file URL or an empty string if upload fails.
+   */
   async uploadFile(file: File) {
     if (file && file instanceof File) {
       try {
@@ -46,33 +58,48 @@ export class UserRegistrationService {
     return '';
   }
 
+  /**
+   * Updates the user data object with a new key-value pair.
+   * @param key - The key to be updated.
+   * @param data - The data to be updated.
+   */
   updateUserObject(key: string, data: string | string[]) {
-    this._userData = {...this._userData, [key]: data};
+    this._userData = { ...this._userData, [key]: data };
   }
 
+  /**
+   * Signs up the user and creates a user document in Firestore.
+   */
   signUpAndCreateUser() {
     // first we sign up the user
     this.authService.signUp(this._userData.email, this._userData.password)
       .then(user => {
-        //update the firebase user model with the auth id and store it
+        // update the firebase user model with the auth id and store it
         this.updateUserObject('authUserId', user.user.uid);
         this.removePasswordFromUserObject();
         return this.saveFirebaseUser();
       })
       .then(() => {
-        console.log('User created with success.')
+        console.log('User created with success.');
       })
       .catch(error => {
-        console.error('An error occurred while sign in up the user. Error: ', error);
-      })
+        console.error('An error occurred while signing up the user. Error: ', error);
+      });
   }
 
+  /**
+   * Removes the password from the user data object.
+   */
   removePasswordFromUserObject() {
     if (this._userData.password) {
       delete this._userData.password;
     }
   }
 
+  /**
+   * Saves the user data to Firestore and navigates to the dashboard.
+   * @returns A Promise that resolves when the user data is saved.
+   */
   async saveFirebaseUser() {
     const user = new User(this._userData);
     // Connect firebase and set Doc User HERE
@@ -82,9 +109,14 @@ export class UserRegistrationService {
       })
       .catch((error) => {
         console.error('Error saving user to firebase. ', error);
-      })
+      });
   }
 
+  /**
+   * Saves a user object to Firestore.
+   * @param user - The user object to be saved.
+   * @returns A Promise that resolves when the user object is saved.
+   */
   async saveUserToFirebase(user: User) {
     try {
       await this.authService.createFirebaseUser(user);
