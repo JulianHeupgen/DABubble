@@ -39,14 +39,23 @@ export class ChannelThreadComponent {
   imgFile: string = '';
   isImgFileEdited: boolean = false;
 
+  /**
+   * creates an instance of ChannelThreadComponent
+   * @param channelChat - the ChannelChatComponent(parant)
+   * @param dataService - the data service
+   * @param threadService - the thread service
+   * @param dialog - for dialogs of material design
+   */
   constructor(
     public channelChat: ChannelChatComponent,
-    public dashboard: DashboardComponent,
     public dataService: DataService,
     public threadService: ThreadService,
     public dialog: MatDialog,
   ) { }
 
+  /**
+   * checks if message author is the current user
+   */
   ngOnInit() {
     let currentUserId = this.channelChat.currentUser.id;
     let messageOwnerId = this.thread.messages[0].senderId
@@ -58,6 +67,10 @@ export class ChannelThreadComponent {
     this.findThreadUser(messageOwnerId);
   }
 
+  /**
+   * receive user of thread author
+   * @param {string} messageOwnerId 
+   */
   findThreadUser(messageOwnerId: string) {
     this.dataService.allUsers.forEach(user => {
       if (user.id == messageOwnerId) {
@@ -66,14 +79,26 @@ export class ChannelThreadComponent {
     })
   }
 
+  /**
+   * translate unix timstamp to date
+   * @returns - date
+   */
   formattedDatestamp(): any {
     return this.thread.getFormattedDatestamp();
   }
 
+  /**
+   * translate unix timstamp to time
+   * @returns - time
+   */
   formattedTimeStamp(): any {
     return this.thread.getFormattedTimeStamp();
   }
 
+  /**
+   * send data of thread to full thread component
+   * @param {Thread} thread 
+   */
   async openThread(thread: Thread) {
     try {
       await this.threadService.openFullThread(true);
@@ -85,22 +110,37 @@ export class ChannelThreadComponent {
     }
   }
 
+  /**
+   * set message edit true
+   */
   editThreadMessage() {
-    // this.setReactionMenuHover = false;
     this.editMessage = true;
   }
 
+  /**
+   * set message edit false
+   * set img edit false
+   */
   cancelEditMessage() {
     this.editMessage = false;
     this.isImgFileEdited = false;
   }
 
+  /**
+   * show profile of user in thread
+   * @param participant 
+   */
   showProfile(participant: any) {
     this.dialog.open(ViewProfileComponent, {
       data: participant
    });
  }
 
+ /**
+  * save edit message
+  * if img deleted, delete img from firebase storage
+  * @param {Thread} messageElement 
+  */
   async saveEditMessage(messageElement: Thread) {
     messageElement.messages[0].content = this.editMessageBox.nativeElement.value
     if(this.isImgFileEdited) {
@@ -116,7 +156,12 @@ export class ChannelThreadComponent {
     this.editMessage = false;
   }
 
-  deleteImg(obj: any) {
+  /**
+   * delete img of message
+   * set img edit boolean true
+   * @param {Thread} obj 
+   */
+  deleteImg(obj: Thread) {
     this.imgFile = obj.messages[0].imgFileURL;
     this.isImgFileEdited = true;
     obj.messages[0].imgFileURL = '';
