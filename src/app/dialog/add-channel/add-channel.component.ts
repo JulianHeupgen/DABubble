@@ -158,7 +158,7 @@ export class AddChannelComponent {
     if (this.createdChannelId) {
       setTimeout(() => {
         this.dialog.open(ChannelMembersComponent, {
-          data: { 
+          data: {
             channelId: this.createdChannelId,
             createdBy: this.currentUser.id
           }
@@ -168,6 +168,15 @@ export class AddChannelComponent {
   }
 
 
+  /**
+  * Checks if a channel with the given name already exists.
+  * This method searches through all channels available in the `dataService`
+  * to determine if there is a channel with a title that matches the provided
+  * channel name. It returns true if a match is found, otherwise false.
+  *
+  * @param {string} channelName - The name of the channel to check for existence.
+  * @returns {boolean} - True if a channel with the given name exists, otherwise false.
+  */
   checkChannelNameExists(channelName: string): boolean {
     return this.dataService.allChannels.some(channel => channel.title === channelName);
   }

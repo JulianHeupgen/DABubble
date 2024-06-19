@@ -4,11 +4,12 @@
         <mat-drawer #drawer class="sidenav" mode="side" [opened]="sidenavService.opened">
             <app-search></app-search>
             <div class="inner-container">
+                <!-- Headline with logo section -->
                 <div class="headline-container">
                     <img src="./assets/img/devspace_logo.png">
                     <h1 class="project-font">Devspace</h1>
-                    <!-- <img class="edit-square-img" src="./assets/img/edit_square.png"> -->
                 </div>
+                <!-- Show user channels section -->
                 <div class="private-message-container">
                     <div class="private-message-headline-container">
                         <div class="dF" (click)="sidenavService.toggleSidenav('channels')">
@@ -45,6 +46,7 @@
                     </div>
                     }
                 </div>
+                <!-- Show user direct messages section -->
                 <div class="private-message-container">
                     <div class="private-message-headline-container" (click)="sidenavService.toggleSidenav('private')">
                         <img class="img-arrow" src="./assets/img/arrow_drop_down.png"
@@ -85,6 +87,7 @@
     </mat-drawer-container>
 </div>
 }
+<!-- Images for buttons to open or close the sidenav -->
 @if (sidenavService.opened) {
 <img class="img-as-button" src="./assets/img/sidemenu_close_normal.png" (click)="sidenavService.toggleSidenav('sidenav')">
 }

@@ -209,6 +209,13 @@ export class SearchComponent {
   }
 
 
+  /**
+  * Closes the sidenav if the screen width is small.
+  * This method calls the `toggleSidenavIfScreenIsSmall` method from the
+  * `sidenavService` to close the sidenav if the current screen width is
+  * 650 pixels or less. This ensures that the sidenav is only toggled
+  * when appropriate for smaller screens.
+  */
   closeSidenav() {
     this.sidenavService.toggleSidenavIfScreenIsSmall('sidenav');
   }
