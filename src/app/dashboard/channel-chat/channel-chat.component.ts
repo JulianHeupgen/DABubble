@@ -92,7 +92,7 @@ export class ChannelChatComponent {
   channelThreads!: Thread[];
   imgFile: File | undefined = undefined;
 
-  // isUserScrolledBottom: boolean = true;
+
   shouldScrollToBottom: boolean = true;
   addListenerForScroll: boolean = true;
 
@@ -113,6 +113,10 @@ export class ChannelChatComponent {
 
   //------------------//
 
+  /**
+   * Initializes the component by subscribing to route params,
+   * loading necessary data, and setting up observables.
+   */
   async ngOnInit() {
     this.routeSub = this.route.params.subscribe(params => {
       this.channelId = params['id'];
@@ -124,6 +128,9 @@ export class ChannelChatComponent {
   }
 
 
+  /**
+   * Reloads all necessary data when called.
+   */
   async reloadAll() {
     this.dataSubscriptions();
     await this.loadUsers();
@@ -136,6 +143,10 @@ export class ChannelChatComponent {
     );
   }
 
+
+  /**
+   * After the view has been checked, ensures scrolling to the bottom if necessary.
+  */
   ngAfterViewChecked() {
     if (this.shouldScrollToBottom && this.threadContainer) {
       this.scrollToBottom();
@@ -147,6 +158,10 @@ export class ChannelChatComponent {
     this.cdRef.detectChanges();
   }
 
+
+  /**
+   * Scrolls the thread container to the bottom.
+   */
   scrollToBottom() {
     if (this.threadContainer) {
       try {
@@ -157,6 +172,10 @@ export class ChannelChatComponent {
     }
   }
 
+
+  /**
+   * Handles scrolling behavior to determine if the user should be scrolled to the bottom of the thread.
+   */
   handleScroll() {
     const threshold = 1;
     const position = this.threadContainer.nativeElement.scrollTop + this.threadContainer.nativeElement.offsetHeight;
@@ -164,6 +183,13 @@ export class ChannelChatComponent {
     this.shouldScrollToBottom = position > height - threshold;
   }
 
+  
+  /**
+   * Filters users based on a search value.
+   *
+   * @param {string} value - The search value to filter users.
+   * @returns {any[]} - The filtered list of users.
+   */
   private _filterUsers(value: string): any[] {
     const filterValue = value.toLowerCase();
     return this.users.filter((user: any) =>
@@ -172,6 +198,9 @@ export class ChannelChatComponent {
   }
 
 
+   /**
+   * Subscribes to data services for users and channels, updating local data when changes occur.
+   */
   dataSubscriptions() {
     if (this.userSub) {
       this.userSub.unsubscribe();
@@ -189,12 +218,18 @@ export class ChannelChatComponent {
   }
 
 
+  /**
+   * Loads users asynchronously and assigns them to the `users` property.
+   */
   async loadUsers() {
     this.users = await firstValueFrom(this.dataService.getUsersList());
     this.channels = await firstValueFrom(this.dataService.getChannelsList());
   }
 
 
+  /**
+   * Checks the current user's authentication ID and finds the corresponding user data.
+   */
   async checkUserAuthId() {
     try {
 
@@ -212,7 +247,9 @@ export class ChannelChatComponent {
   }
 
 
-
+  /**
+   * Finds the current user object from the loaded users list.
+   */
   async findCurrentUser() {
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].authUserId === this.userAuthId) {
@@ -223,12 +260,18 @@ export class ChannelChatComponent {
   }
 
 
+  /**
+   * Retrieves and sets information about the current channel.
+   */
   getChannelInfos() {
     this.getCurrentChannel();
     this.showChannelParticipants(this.channelId);
   }
 
 
+  /**
+   * Subscribes to participant images for the current channel.
+   */
   getParticipantsSub() {
     if (this.channelParticipantsSub) {
       this.channelParticipantsSub.unsubscribe();
@@ -239,6 +282,9 @@ export class ChannelChatComponent {
   }
 
 
+  /**
+   * Retrieves the current channel object based on the channel ID.
+   */
   getCurrentChannel() {
     for (let i = 0; i < this.channels.length; i++) {
       if (this.channels[i].channelId === this.channelId) {
@@ -249,6 +295,9 @@ export class ChannelChatComponent {
   }
 
 
+  /**
+   * Retrieves the channel ID from the route URL parameters.
+   */
   getChannelIdFromURL() {
     this.route.params.subscribe(params => {
       this.channelId = params['id'];
@@ -256,6 +305,11 @@ export class ChannelChatComponent {
   }
 
 
+  /**
+   * Displays participant images for the current channel.
+   *
+   * @param {string} channelId - The ID of the current channel.
+   */
   showChannelParticipants(channelId: string) {
     this.participantsImages = [];
     this.users.forEach((user: any) => {
@@ -268,11 +322,22 @@ export class ChannelChatComponent {
   }
 
 
+  /**
+   * Adds an emoji to the message input box.
+   *
+   * @param {string} emoji - The emoji to add.
+   */
   addEmoji(emoji: string) {
     let textAreaElement = this.threadMessageBox.nativeElement;
     textAreaElement.value += emoji;
   }
 
+
+  /**
+   * Adds a user's name to the message input box for pinging.
+   *
+   * @param {any} user - The user to ping.
+   */
   addUserToMessage(user: any) {
     if (this.threadMessageBox && user) {
       this.threadMessageBox.nativeElement.value += "@" + user.name + " ";
@@ -281,6 +346,10 @@ export class ChannelChatComponent {
     }
   }
 
+
+  /**
+   * Cleans up subscriptions and event listeners when the component is destroyed.
+   */
   ngOnDestroy() {
     this.userSub.unsubscribe();
     this.channelSub.unsubscribe();
@@ -292,11 +361,19 @@ export class ChannelChatComponent {
     this.channelParticipantsSub.unsubscribe();
   }
 
+  
+   /**
+   * Resets the message input form and removes any attached images.
+   */
   removeChatInput() {
     this.channelThreadMessage.reset();
     this.addImgToMessageComponent.removeImage();
   }
 
+
+  /**
+   * Sends a message in the channel chat, including text and optionally an image.
+   */
   async sendMessage() {
     if (this.threadMessageBox.nativeElement.value.length > 0) {
       let newThread = await this.currentUser.sendChannelMessage(
@@ -312,13 +389,17 @@ export class ChannelChatComponent {
     }
   }
 
+
+  /**
+   * Opens a dialog to add users to the current channel.
+   */
   openAddUsersDialog() {
     this.dialog.open(AddUsersComponent, {
       data: {
         channelId: this.channelId,
         currentChannel: this.currentChannel
       }
-    }
-    );
+    });
   }
 }
+
