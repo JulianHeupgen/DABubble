@@ -27,6 +27,17 @@ export class MessageReactionComponent {
 
   emojiSubscription: Subscription;
 
+
+  /**
+ * Constructs an instance of the component.
+ * Initializes with instances of EmojiCommunicationService, DataService, and ThreadService.
+ * Subscribes to emoji events from EmojiCommunicationService to react to message reactions.
+ * Reacts to thread messages based on the received emoji event, if the sender matches 'MessageReactionComponent' and the message timestamp matches.
+ *
+ * @param {EmojiCommunicationService} emojiService - The service for emoji communication.
+ * @param {DataService} dataService - The service for data operations.
+ * @param {ThreadService} threadService - The service for thread operations.
+ */
   constructor(
     private emojiService: EmojiCommunicationService,
     private dataService: DataService,
@@ -39,6 +50,12 @@ export class MessageReactionComponent {
     });
   }
 
+
+  /**
+ * Initializes the component.
+ * Subscribes to `currentMessages$` from `threadService` to listen for updates related to emoji reactions.
+ * Processes emoji reactions for all users.
+ */
   ngOnInit() {
     this.usersForReaction = [];
     this.threadService.currentMessages$.subscribe(event => {
@@ -52,6 +69,12 @@ export class MessageReactionComponent {
     this.processEmojiReactions();
   }
 
+
+  /**
+ * Processes emoji reactions for all users.
+ * Iterates through all users and retrieves their emoji reactions.
+ * Updates the thread message emoji reactions after processing.
+ */
   processEmojiReactions() {
     this.dataService.allUsers.forEach(user => {
       this.getEmojiReactions(user);
@@ -59,12 +82,26 @@ export class MessageReactionComponent {
     this.updateThreadMessageReactions();
   }
 
+
+  /**
+ * Retrieves emoji reactions for a specific user.
+ * Searches for the user in each emoji reaction and updates `usersDetail` if found.
+ *
+ * @param {User} user - The user to retrieve emoji reactions for.
+ */
   getEmojiReactions(user: User) {
     this.threadMessage.emojiReactions.forEach((emojiReaction: any) => {
       this.searchUserInReactions(user, emojiReaction);
     });
   }
 
+
+  /**
+ * Searches for a user in an emoji reaction and updates `usersDetail` if found.
+ *
+ * @param {User} user - The user to search for in the emoji reaction.
+ * @param {any} emojiReaction - The emoji reaction object to search within.
+ */
   searchUserInReactions(user: User, emojiReaction: any) {
     emojiReaction.users.forEach((reactionUserId: any) => {
       if (reactionUserId === user.id || reactionUserId.id === user.id) {
@@ -76,6 +113,11 @@ export class MessageReactionComponent {
     });
   }
 
+
+  /**
+ * Updates the thread message emoji reactions by transferring data from `usersDetail` to `users`.
+ * Removes `usersDetail` after updating.
+ */
   updateThreadMessageReactions() {
     this.threadMessage.emojiReactions = this.threadMessage.emojiReactions.map((reaction: any) => {
       reaction.users = reaction.usersDetail || reaction.users;
@@ -84,6 +126,15 @@ export class MessageReactionComponent {
     });
   }
 
+
+  /**
+ * Reacts to a thread message with an emoji reaction.
+ * Manages adding, updating, or removing emoji reactions based on user actions.
+ * Copies the thread to Firebase after processing reactions.
+ *
+ * @param {any} threadMessage - The thread message to react to.
+ * @param {string} userReaction - The emoji reaction from the user.
+ */
   reactToThread(threadMessage: any, userReaction: string) {
     let chatReactions = threadMessage.emojiReactions;
     let reactionExists = false;
@@ -109,10 +160,26 @@ export class MessageReactionComponent {
     this.processEmojiReactions();
   }
 
+
+  /**
+ * Checks if the current user is already in an emoji reaction.
+ *
+ * @param {any} chatReaction - The emoji reaction to check.
+ * @returns {number} - The index of the user in the reaction array, or -1 if not found.
+ */
   isUserInReaction(chatReaction: any) {
     return chatReaction.users.findIndex((u: any) => u.id === this.currentUser.id);
   }
 
+
+  /**
+ * Handles the case where the current user reacts again with the same emoji.
+ * Decreases the reaction count and removes the user from the reaction.
+ * Removes the entire reaction if the count reaches zero.
+ *
+ * @param {any} chatReactions - The list of emoji reactions.
+ * @param {any} chatReaction - The specific emoji reaction to handle.
+ */
   userReactionagain(chatReactions: any, chatReaction: any) {
     let userIndex = chatReaction.users.findIndex((u: any) => u.id === this.currentUser.id);
     chatReaction.count--;
@@ -123,11 +190,24 @@ export class MessageReactionComponent {
     }
   }
 
+
+  /**
+ * Increases the reaction count and adds the current user to the emoji reaction.
+ *
+ * @param {any} chatReaction - The emoji reaction to update.
+ */
   raiseReactionCount(chatReaction: any) {
     chatReaction.count++;
     chatReaction.users.push(this.currentUser.id);
   }
 
+  
+  /**
+ * Adds a new emoji reaction to the thread message for the current user.
+ *
+ * @param {any} threadMessage - The thread message to add the reaction to.
+ * @param {string} userReaction - The emoji reaction from the user.
+ */
   getNewReactionToMessage(threadMessage: any, userReaction: string) {
     let threadReaction = {
       reaction: userReaction,
@@ -137,7 +217,13 @@ export class MessageReactionComponent {
     threadMessage.emojiReactions.push(threadReaction);
   }
 
+
+  /**
+ * Cleans up resources when the component is destroyed.
+ * Unsubscribes from `emojiSubscription` to prevent memory leaks.
+ */
   ngOnDestroy() {
     this.emojiSubscription.unsubscribe();
   }
 }
+
