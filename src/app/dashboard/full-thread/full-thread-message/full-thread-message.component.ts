@@ -48,6 +48,12 @@ export class FullThreadMessageComponent {
     private firebase: Firestore
   ) { }
 
+
+  /**
+ * Initializes the component.
+ * Subscribes to `currentThread$` from `threadService` to listen for updates related to the current thread.
+ * Calls `listenForThreadChanges()` to start listening for changes in the thread.
+ */
   ngOnInit() {
     this.threadService.currentThread$.subscribe(event => {
       if (event.thread) {
@@ -59,6 +65,12 @@ export class FullThreadMessageComponent {
       this.listenForThreadChanges();
   }
 
+
+  /**
+ * Listens for changes in the current thread.
+ * Updates `thread` and retrieves changes from Firestore.
+ * Loads thread messages and reactions for the thread.
+ */
   listenForThreadChanges() {
     this.groupedMessages = {};
     this.threadUnsubscribe = onSnapshot(doc(this.firebase, "threads", this.thread.threadId), (doc) => {
@@ -78,6 +90,12 @@ export class FullThreadMessageComponent {
     });
   }
 
+
+  /**
+ * Loads messages from the current thread.
+ * Maps sender IDs to user objects and populates `threadMessages`.
+ * Groups messages by date using `groupThreadsByDate()`.
+ */
   loadThreadMessages() {
     this.threadMessages = [];
     const userMap = new Map<string, User>();
@@ -95,9 +113,16 @@ export class FullThreadMessageComponent {
     this.groupedMessages = this.groupThreadsByDate();
   }
 
+
+  /**
+ * Groups thread messages by date.
+ * Uses the message timestamp to group messages into date categories.
+ *
+ * @returns {Object} - An object where keys are date strings (YYYY-MM-DD) and values are arrays of `Thread` objects.
+ */
   groupThreadsByDate(): { [key: string]: Thread[] } {
     return this.threadMessages.reduce((groups, thread) => {
-      const date = new Date(thread.timestamp).toISOString().split('T')[0]; // Format: YYYY-MM-DD
+      const date = new Date(thread.timestamp).toISOString().split('T')[0]; 
       if (!groups[date]) {
         groups[date] = [];
       }
@@ -106,16 +131,30 @@ export class FullThreadMessageComponent {
     }, {} as { [key: string]: Thread[] });
   }
 
+
+  /**
+ * Formats a timestamp into a date string (YYYY-MM-DD).
+ *
+ * @param {number} timestamp - The timestamp to format.
+ * @returns {string} - The formatted date string (YYYY-MM-DD).
+ */
   getFormattedDatestamp(timestamp: number): any {
     const date = new Date(timestamp);
     const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Monate sind 0-basiert
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
     const day = date.getDate().toString().padStart(2, '0');
 
     const formattedDate = `${year}-${month}-${day}`;
     return formattedDate;
   }
 
+
+  /**
+ * Formats a timestamp into a time string (HH:mm Uhr).
+ *
+ * @param {number} timestamp - The timestamp to format.
+ * @returns {string} - The formatted time string (HH:mm Uhr).
+ */
   getFormattedTimeStamp(timestamp: number) {
     const date = new Date(timestamp);
     const hours = date.getHours().toString().padStart(2, '0');
@@ -125,11 +164,25 @@ export class FullThreadMessageComponent {
     return formattedTime;
   }
 
+
+  /**
+ * Prepares a message object for editing.
+ *
+ * @param {Message} messageObj - The message object to edit.
+ */
   editThreadMessageReply(messageObj: Message) {    
     messageObj.hoverReactionbar = true;
     messageObj.editMode = true;
   }
 
+
+  /**
+ * Deletes a message from the thread.
+ * Removes the message from `threadObj.messages` and updates Firebase.
+ *
+ * @param {any} threadObj - The thread object containing the messages.
+ * @param {Message} messageObj - The message object to delete.
+ */
   deleteThreadMessageReply(threadObj: any, messageObj: Message) {
     messageObj.hoverReactionbar = true;
     const index = threadObj.messages.findIndex((msg: Message) => msg.timestamp === messageObj.timestamp);
@@ -139,11 +192,25 @@ export class FullThreadMessageComponent {
     this.threadService.copyThreadForFirebase(threadObj)
   }
 
+
+  /**
+ * Cancels the editing of a message.
+ *
+ * @param {Message} messageObj - The message object to cancel editing for.
+ */
   cancelEditMessage(messageObj: Message) {
     messageObj.editMode = false;
     this.isImgFileEdited = false;
   }
 
+
+  /**
+ * Saves the edited content of a message.
+ * Updates `messageObj.content` with the new value and saves changes to Firebase.
+ *
+ * @param {Thread} threadObj - The thread object containing the message.
+ * @param {Message} messageObj - The message object to save changes for.
+ */
   async saveEditMessage(threadObj: Thread, messageObj: Message) {
     messageObj.content = this.editMessageReply.nativeElement.value;
     
@@ -158,17 +225,36 @@ export class FullThreadMessageComponent {
     messageObj.editMode = false;
   }
 
+
+  /**
+ * Deletes an image from the message.
+ * Sets `isImgFileEdited` to true and clears `obj.imgFileURL`.
+ *
+ * @param {any} obj - The object containing the image file URL to delete.
+ */
   deleteImg(obj: any) {
     this.imgFile = obj.imgFileURL;  
     this.isImgFileEdited = true;
     obj.imgFileURL = '';
   }
 
+
+  /**
+ * Sets the hover state for the reaction bar of a message.
+ *
+ * @param {Message} messageObj - The message object to set hover state for.
+ */
   setHoverReactionbar(messageObj: Message) {
     messageObj.hoverReactionbar = true;
   }
 
+
+  /**
+ * Cleans up resources when the component is destroyed.
+ * Unsubscribes from `threadUnsubscribe` to stop listening for thread changes.
+ */
   ngOnDestroy() {
     this.threadUnsubscribe();
   }
 }
+
