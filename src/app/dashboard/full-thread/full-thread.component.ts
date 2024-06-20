@@ -54,7 +54,6 @@ export class FullThreadComponent {
   imgFile: File | undefined = undefined;
 
   imgFileLink: string = '';
-  // setReactionMenuHover: boolean = false;
   isImgFileEdited: boolean = false;
   shouldScrollToBottom: boolean = true;
   addListenerForScroll: boolean = true
@@ -69,6 +68,16 @@ export class FullThreadComponent {
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
   @ViewChild("fullThreadContainer") fullThreadContainer!: ElementRef;
 
+
+  /**
+ * Constructor for the FullThreadComponent.
+ * Initializes necessary services and subscriptions.
+ *
+ * @param {ThreadService} threadService - The service for thread-specific operations.
+ * @param {FormBuilder} formBuilder - The form builder for creating forms.
+ * @param {DataService} dataService - The service for data operations.
+ * @param {EmojiCommunicationService} emojiService - The service for emoji communication.
+ */
   constructor(
     public threadService: ThreadService,
     private formBuilder: FormBuilder,
@@ -90,10 +99,21 @@ export class FullThreadComponent {
     });
   }
 
+
+  /**
+ * FormGroup for the message in FullThreadComponent.
+ * Contains the form control for the thread message.
+ */
   fullThreadMessage: FormGroup = this.formBuilder.group({
     threadMessage: "",
   });
 
+
+  /**
+ * Called when the component is initialized.
+ * Subscribes to currentThread$ from threadService to monitor changes in the current thread.
+ * Filters and subscribes to changes in the user autocomplete.
+ */
   ngOnInit(): void {
     this.threadService.currentThread$.subscribe(event => {
       if (event.thread) {
@@ -106,9 +126,13 @@ export class FullThreadComponent {
         map(value => this._filterUsers(value || ''))
       );
     });
-
   }
 
+
+  /**
+ * Called after every check of the component's view.
+ * Checks if the component should scroll to the bottom and performs the scroll if needed.
+ */
   ngAfterViewChecked() {
     if (this.shouldScrollToBottom && this.fullThreadContainer) {
       this.scrollToBottom();
@@ -119,6 +143,11 @@ export class FullThreadComponent {
     }
   }
 
+
+  /**
+ * Scrolls the FullThreadContainer to the bottom.
+ * Called when `shouldScrollToBottom` is true.
+ */
   scrollToBottom() {
     if (this.fullThreadContainer) {
       try {
@@ -129,6 +158,11 @@ export class FullThreadComponent {
     }
   }
 
+
+  /**
+ * Handles the scroll event of the FullThreadContainer.
+ * Checks if scrolled to the bottom of the thread and sets `shouldScrollToBottom` accordingly.
+ */
   handleScroll() {
     const threshold = 1;
     const position = this.fullThreadContainer.nativeElement.scrollTop + this.fullThreadContainer.nativeElement.offsetHeight;
@@ -136,6 +170,12 @@ export class FullThreadComponent {
     this.shouldScrollToBottom = position > height - threshold;
   }
 
+
+  /**
+ * Updates thread-related data based on the received event.
+ *
+ * @param {any} event - The received event containing thread data.
+ */
   sortNewDataFromThreadService(event: any) {
     this.thread = event.thread;
     this.threadOwner = event.threadOwner;
@@ -143,6 +183,11 @@ export class FullThreadComponent {
     this.currentChannel = event.currentChannel;
   }
 
+
+  /**
+ * Checks if the current user is the owner of the thread.
+ * Updates `isCurrentUser` accordingly.
+ */
   checkCurrentUser() {
     if (this.thread) {
       let messageOwnerId = this.thread?.messages[0].senderId;
@@ -155,6 +200,11 @@ export class FullThreadComponent {
     }
   }
 
+
+  /**
+ * Retrieves the users who have sent messages in the current thread.
+ * Updates the `users` array based on the sent messages.
+ */
   getUsersOfThread() {
     this.users = []
     const userMap = new Map<string, User>();
@@ -168,10 +218,23 @@ export class FullThreadComponent {
     this.users = Array.from(userMap.values());
   }
 
+  
+  /**
+ * Closes the current thread.
+ * Sets the thread to not open using `threadService`.
+ */
   closeThread() {
     this.threadService.openFullThread(false);
   }
 
+
+  /**
+ * Filters the user list based on the entered value.
+ * Compares the entered value with user names and returns the filtered list.
+ *
+ * @param {string} value - The value to filter the user list with.
+ * @returns {any[]} - The filtered list of users.
+ */
   private _filterUsers(value: string): any[] {
     const filterValue = value.toLowerCase();
     return this.users.filter((user: any) =>
@@ -179,15 +242,26 @@ export class FullThreadComponent {
     );
   }
 
+  
+  /**
+ * Adds a user to the message.
+ * Sets the user's name in the text area and closes the user menu.
+ *
+ * @param {User} user - The user to add to the message.
+ */
   addUserToMessage(user: User) {
     if (this.fullThreadMessage && user) {
       this.fullThreadMessageBox.nativeElement.value += "@" + user.name + " ";
       this.pingUserControlFullThread.setValue("");
       this.menuTrigger.closeMenu();
     }
-
   }
 
+  
+  /**
+ * Sends the entered message in the current thread.
+ * Optionally adds an image to the message and updates thread data in Firebase.
+ */
   async sendMessage() {
     if (this.thread) {
       if (this.fullThreadMessageBox.nativeElement.value.length > 0) {
@@ -204,6 +278,13 @@ export class FullThreadComponent {
     }
   }
 
+  
+  /**
+ * Converts the messages of the thread to a string representation.
+ *
+ * @param {Thread} thread - The thread whose messages are to be converted.
+ * @returns {Thread} - The thread with converted messages.
+ */
   jsonToString(thread: Thread) {
     let stringedMessages: string[] = []
     thread.messages.forEach(message => {
@@ -213,32 +294,71 @@ export class FullThreadComponent {
     return thread
   }
 
+
+  /**
+ * Adds an emoji to the message.
+ *
+ * @param {string} emoji - The emoji to add.
+ */
   addEmoji(emoji: string) {
     let textAreaElement = this.fullThreadMessageBox.nativeElement;
     textAreaElement.value += emoji;
   }
 
+
+  /**
+ * Clears the input content.
+ * Resets the form and removes the image from the message.
+ */
   removeChatInput() {
     this.fullThreadMessage.reset();
     this.addImgToMessageComponent.removeImage();
   }
 
+
+  /**
+ * Enables editing mode for a message.
+ *
+ * @param {Message} messageObj - The message to edit.
+ */
   editThreadMessage(messageObj: Message) {
     // this.setReactionMenuHover = false;
     messageObj.editMode = true;
   }
 
+  
+  /**
+ * Cancels editing mode for a message.
+ *
+ * @param {Message} messageObj - The message whose editing is to be canceled.
+ */
   cancelEditMessage(messageObj: Message) {
     messageObj.editMode = false;
     this.isImgFileEdited = false;
   }
 
+
+  /**
+ * Deletes the image URL from the first message in the provided object.
+ * Sets `imgFileLink` to the deleted image URL and marks `isImgFileEdited` as true.
+ *
+ * @param {any} obj - The object containing messages with an image URL.
+ */
   deleteImg(obj: any) {
     this.imgFileLink = obj.messages[0].imgFileURL;
     this.isImgFileEdited = true;
     obj.messages[0].imgFileURL = '';
   }
 
+
+  /**
+ * Saves the edited message content and optionally deletes associated image.
+ * Updates message content and clears image URL if `isImgFileEdited` is true.
+ * Copies updated message to Firebase through `threadService`.
+ * Disables editing mode for the message.
+ *
+ * @param {Thread} messageElement - The thread containing the message to be edited.
+ */
   async saveEditMessage(messageElement: Thread) {
     messageElement.messages[0].content = this.editFullThreadMessageBox.nativeElement.value
     if (this.isImgFileEdited) {
@@ -249,3 +369,4 @@ export class FullThreadComponent {
     messageElement.messages[0].editMode = false;
   }
 }
+
