@@ -35,6 +35,11 @@ export class ChannelParticipantsComponent {
   }
 
 
+  /**
+ * Responds to changes in the input properties of the component.
+ *
+ * @param {SimpleChanges} changes - An object that holds the current and previous values of the component's input properties.
+ */
   ngOnChanges(changes: SimpleChanges) {
     if (changes['currentChannel']) {
       this.spliceCurrentUser();
@@ -43,6 +48,9 @@ export class ChannelParticipantsComponent {
   }
 
 
+  /**
+ * Removes the current user from the participants list of the current channel.
+ */
   spliceCurrentUser() {
     let index = this.currentChannel.participants.indexOf(this.currentUser.id);
     if (index != -1) {
@@ -51,6 +59,11 @@ export class ChannelParticipantsComponent {
   }
   
 
+  /**
+ * Retrieves and sets the list of participants for the current channel.
+ * It iterates over the participants in the current channel and adds the corresponding user objects
+ * to the `channelParticipants` array.
+ */
   getChannelParticipants() {
     this.channelParticipants = [];
     this.currentChannel.participants.forEach((participant) => {
@@ -64,6 +77,12 @@ export class ChannelParticipantsComponent {
     })
   }
 
+
+  /**
+ * Subscribes to participant information updates for the current channel.
+ * If there is an existing subscription, it will unsubscribe before creating a new one.
+ * The retrieved participant information is then processed to remove the current user.
+ */
   getParticipantInfosSub() {
     if (this.channelParticipantsSub) {
       this.channelParticipantsSub.unsubscribe();
@@ -73,11 +92,24 @@ export class ChannelParticipantsComponent {
     })
   }
 
+
+  /**
+ * Removes the current user from the provided array of participants.
+ *
+ * @param {any[]} array - The array of participants.
+ * @param {string} currentUserId - The ID of the current user to be removed from the participants array.
+ * @returns {any[]} A new array with the current user removed.
+ */
   spliceCurrentUserFromParticipants(array: any, currentUserId: string) {
     return array.filter((participant: any) => participant.id !== currentUserId);
   }
 
 
+  /**
+ * Opens a dialog to display the profile of the given participant.
+ *
+ * @param {any} participant - The participant whose profile is to be displayed.
+ */
   showProfile(participant: any) {
      this.dialog.open(ViewProfileComponent, {
        data: participant
@@ -85,11 +117,16 @@ export class ChannelParticipantsComponent {
   }
 
 
+  /**
+ * Opens a dialog to add users to the current channel.
+ * The dialog is provided with the current channel's ID and the current channel object as data.
+ */
   openAddUsersDialog() {
     this.dialog.open(AddUsersComponent, {
       data: { 
         channelId: this.currentChannel.channelId,
-        currentChannel: this.currentChannel }
+        currentChannel: this.currentChannel 
+      }
     });
   }
 
