@@ -11,15 +11,27 @@ import { SidenavService } from '../../services/sidenav.service';
   styleUrl: './view-profile.component.scss'
 })
 export class ViewProfileComponent {
+  /**
+   * Constructor that injects the dialog data, MatDialog service, and SidenavService.
+   * 
+   * @param {any} data - Data passed to the dialog.
+   * @param {MatDialog} dialog - Service for managing dialogs.
+   * @param {SidenavService} sidenavService - Service for managing the sidenav state.
+   */
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialog: MatDialog, 
+    private sidenavService: SidenavService
+  ) {}
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog, private sidenavService: SidenavService) { }
 
-
+  /**
+   * Closes the profile dialog and toggles the sidenav if the screen width is less than 650 pixels.
+   */
   closeProfile() {
     this.dialog.closeAll();
     if (window.innerWidth < 650) {
       this.sidenavService.toggleSidenavIfScreenIsSmall('sidenav');
     }
   }
-
 }
