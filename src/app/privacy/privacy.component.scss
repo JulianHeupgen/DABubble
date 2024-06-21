@@ -15,8 +15,8 @@
 }
 
 mat-card {
-  width: 40%;
-  max-width: 606px;
+  max-width: 70%;
+  max-height: 75%;
   border-radius: 30px;
   padding: 18px 32px;
 
@@ -26,6 +26,7 @@ mat-card {
     display: flex;
     flex-direction: column;
     position: relative;
+    overflow-y: auto;
   }
 }
 
@@ -39,7 +40,7 @@ mat-card {
   border-radius: 50%;
 
   &:hover {
-    background-color: #797df36e;
+    background-color: $purpleHover;
     cursor: pointer;
   }
 }
@@ -54,7 +55,7 @@ mat-card {
 }
 
 a {
-  color: #797EF3;
+  color: $purple;
   font-size: 18px;
   line-height: normal;
   font-family: Nunito, sans-serif;
@@ -62,36 +63,80 @@ a {
 
   &:hover {
     cursor: pointer;
+    color: $purpleHover;
   }
 }
 
-/* Fonts */
-
-* {
+h1,
+h2,
+h3,
+p,
+span,
+ul,
+li {
   font-family: Nunito, sans-serif;
   font-size: 20px;
   line-height: normal;
   font-weight: 400;
-  color: #000;
+  color: $black;
 }
 
 h1 {
   font-size: 46px;
   line-height: normal;
   font-weight: 700;
-  color: #444DF2;
+  color: $purple;
+}
+
+h2 {
+  font-size: 32px;
+  line-height: normal;
+  font-weight: 700;
+  color: $purple;
+}
+
+h3 {
+  font-size: 24px;
+  line-height: normal;
+  font-weight: 700;
+  color: $purple;
+}
+
+@media (max-width: 1100px) {
+  mat-card {
+    width: unset;
+    max-width: 80%;
+    padding: 8px;
+  }
+
+  .mat-card-conten-container {
+    scrollbar-width: none;
+  }
+
+  h1 {
+    font-size: clamp(20px, 6vw, 42px);
+  }
+
+  h2 {
+    font-size: clamp(18px, 4vw, 28px);
+  }
+
+  h3 {
+    font-size: clamp(20px, 3vw, 22px);
+  }
+
+  p,
+  em,
+  a,
+  ul,
+  li {
+    font-size: clamp(14px, 2vw, 16px);
+  }
 }
 
 @media (max-width: 450px) {
   mat-card {
     width: 90%;
     max-height: 60%;
-
-    mat-card-content {
-      p {
-        overflow: auto;
-        padding-right: 8px;
-      }
-    }
   }
 }

@@ -3,6 +3,7 @@ import { StorageService } from "./storage.service";
 import { AuthService } from "./auth.service";
 import { User } from "../models/user.class";
 import { Router } from "@angular/router";
+import {SnackBarService} from "./snack-bar.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class UserRegistrationService {
   constructor(
     private storageService: StorageService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snack: SnackBarService
   ) { }
 
   /**
@@ -71,7 +73,7 @@ export class UserRegistrationService {
    * Signs up the user and creates a user document in Firestore.
    */
   signUpAndCreateUser() {
-    // first we sign up the user
+    // first we sign up the user with the Firebase Auth
     this.authService.signUp(this._userData.email, this._userData.password)
       .then(user => {
         // update the firebase user model with the auth id and store it
@@ -84,6 +86,11 @@ export class UserRegistrationService {
       })
       .catch(error => {
         console.error('An error occurred while signing up the user. Error: ', error);
+        if (error.code === 'auth/email-already-in-use') {
+          this._userData = {};
+          this.snack.showSnackBar('Email already in use.')
+          setTimeout(() =>this.router.navigate(['/register']).then(), 1500);
+        }
       });
   }
 
@@ -119,7 +126,9 @@ export class UserRegistrationService {
    */
   async saveUserToFirebase(user: User) {
     try {
-      await this.authService.createFirebaseUser(user);
+      const userRef = await this.authService.createFirebaseUser(user);
+      const userId = userRef.id;
+      await this.authService.updateFirebaseUser({'userChats': [{userChatId: userId}]});
     } catch (error) {
       console.error('Error after saving user to firebase: ', error);
     }

@@ -15,8 +15,9 @@
 }
 
 mat-card {
-  width: 40%;
-  max-width: 606px;
+  width: 60%;
+  max-width: 70%;
+  max-height: 75%;
   border-radius: 30px;
   padding: 18px 32px;
 
@@ -26,13 +27,11 @@ mat-card {
     display: flex;
     flex-direction: column;
     position: relative;
+    overflow-y: auto;
 
     ul {
       list-style-type: none;
       padding: 8px 0 8px 16px;
-      li {
-
-      }
     }
   }
 }
@@ -47,7 +46,7 @@ mat-card {
   border-radius: 50%;
 
   &:hover {
-    background-color: #797df36e;
+    background-color: $purpleHover;
     cursor: pointer;
   }
 }
@@ -62,7 +61,7 @@ mat-card {
 }
 
 a {
-  color: #797EF3;
+  color: $purple;
   font-size: 18px;
   line-height: normal;
   font-family: Nunito, sans-serif;
@@ -70,43 +69,82 @@ a {
 
   &:hover {
     cursor: pointer;
+    color: $purpleHover;
   }
 }
 
-/* Fonts */
-
-h1, p, span {
+h1, h2, h3, p, span {
   font-family: Nunito, sans-serif;
   font-size: 20px;
   line-height: normal;
   font-weight: 400;
-  color: #000;
+  color: $black;
 }
 
 h1 {
   font-size: 46px;
   line-height: normal;
   font-weight: 700;
-  color: #444DF2;
+  color: $purple;
+}
+
+h2 {
+  font-size: 32px;
+  line-height: normal;
+  font-weight: 700;
+  color: $purple;
+}
+
+h3 {
+  font-size: 24px;
+  line-height: normal;
+  font-weight: 700;
+  color: $purple;
+}
+
+@media (max-width: 1100px) {
+  mat-card {
+    width: unset;
+    max-width: 75%;
+  }
+
+  mat-card-content {
+    scrollbar-width: none;
+  }
+
+  h1 {
+    font-size: clamp(32px, 6vw, 42px);
+  }
+
+  h2 {
+    font-size: clamp(22px, 4vw, 28px);
+  }
+
+  h3 {
+    font-size: clamp(20px, 3vw, 22px);
+  }
+
+  p, em, a {
+    font-size: clamp(14px, 2vw, 16px);
+  }
+
+  .imprint-content {
+    scrollbar-width: none;
+  }
 }
 
 @media (max-width: 450px) {
   mat-card {
     width: 90%;
-    max-height: 60%;
+    max-height: 70%;
+    padding: 8px;
 
     mat-card-content {
       padding-top: 32px;
       .imprint-content {
         overflow: auto;
         padding-right: 8px;
-
-        h1 {
-          font-size: 32px;
-          line-height: 32px;
-          margin-top: 16px;
         }
-      }
     }
   }
 }
