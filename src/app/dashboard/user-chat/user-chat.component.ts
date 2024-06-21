@@ -28,26 +28,9 @@ import { UserChatThreadComponent } from './user-chat-thread/user-chat-thread.com
 @Component({
   selector: 'app-user-chat',
   standalone: true,
-  imports: [MatCard,
-    MatCardHeader,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatList,
-    MatListModule,
-    CommonModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatMenuModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    EmojiMartComponent,
-    AddImgToMessageComponent,
-    ChannelThreadComponent,
-    ChannelChatComponent,
-    UserChatThreadComponent
-  ],
+  imports: [MatCard, MatCardHeader, MatCardContent, MatFormField, MatLabel, MatList, MatListModule, CommonModule, ReactiveFormsModule, MatDialogModule,
+    MatMenuModule, MatFormFieldModule, MatInputModule, MatAutocompleteModule, EmojiMartComponent, AddImgToMessageComponent, ChannelThreadComponent,
+    ChannelChatComponent, UserChatThreadComponent],
   templateUrl: './user-chat.component.html',
   styleUrl: './user-chat.component.scss',
 })
@@ -91,10 +74,8 @@ export class UserChatComponent {
   imgFile: File | undefined = undefined;
   currentUserChatThreads!: Thread[];
   emptyUserChat: boolean = false;
-
   shouldScrollToBottom: boolean = true;
   addListenerForScroll: boolean = true;
-
   groupedcurrentUserChatThreads: any = [];
   groupedcurrentUserChatThreads$!: Observable<{ [key: string]: { thread: Thread, index: number }[] }>;
 
@@ -103,7 +84,10 @@ export class UserChatComponent {
   private userChatSub: Subscription = new Subscription();
   private routeSub!: Subscription;
 
-
+  /**
+ * Initializes the component and subscribes to route parameters.
+ * Sets the current user chat ID and reloads all necessary data.
+ */
   ngOnInit() {
     this.routeSub = this.route.params.subscribe(params => {
       this.currentUserChatId = params['id'];
@@ -113,6 +97,10 @@ export class UserChatComponent {
   }
 
 
+  /**
+ * Checks if the view should scroll to the bottom and attaches a scroll event listener if necessary.
+ * Detects changes using ChangeDetectorRef.
+ */
   ngAfterViewChecked() {
     if (this.shouldScrollToBottom && this.threadContainer) {
       this.scrollToBottom();
@@ -124,6 +112,9 @@ export class UserChatComponent {
     this.cdRef.detectChanges();
   }
 
+  /**
+ * Scrolls the thread container to the bottom.
+ */
   scrollToBottom() {
     if (this.threadContainer) {
       try {
@@ -134,6 +125,9 @@ export class UserChatComponent {
     }
   }
 
+  /**
+ * Handles the scroll event and determines if the view should scroll to the bottom.
+ */
   handleScroll() {
     const threshold = 1;
     const position = this.threadContainer.nativeElement.scrollTop + this.threadContainer.nativeElement.offsetHeight;
@@ -141,7 +135,10 @@ export class UserChatComponent {
     this.shouldScrollToBottom = position > height - threshold;
   }
 
-
+  /**
+ * Reloads all necessary data by setting up subscriptions and loading users.
+ * Checks user authentication and retrieves the recipient and user chat details.
+ */
   async reloadAll() {
     this.dataSubscriptions();
     await this.loadUsers();
@@ -155,7 +152,10 @@ export class UserChatComponent {
     });
   }
 
-
+  /**
+ * Sets up subscriptions for user and user chat data.
+ * Unsubscribes from existing subscriptions if they exist.
+ */
   dataSubscriptions() {
     if (this.userSub) {
       this.userSub.unsubscribe();
@@ -173,13 +173,18 @@ export class UserChatComponent {
     })
   }
 
-
+  /**
+ * Loads the list of users and user chats using the DataService.
+ */
   async loadUsers() {
     this.users = await firstValueFrom(this.dataService.getUsersList());
     this.userChats = await firstValueFrom(this.dataService.getUserChatsList());
   }
 
-
+  /**
+ * Checks the user's authentication ID and sets the current user based on the retrieved ID.
+ * Logs an error if the user ID cannot be retrieved.
+ */
   async checkUserAuthId() {
     try {
       await this.auth.getUserAuthId()
@@ -195,7 +200,9 @@ export class UserChatComponent {
     }
   }
 
-
+  /**
+ * Finds and sets the current user based on the authenticated user ID.
+ */
   findCurrentUser() {
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].authUserId === this.userAuthId) {
@@ -205,7 +212,10 @@ export class UserChatComponent {
     }
   }
 
-
+  /**
+ * Retrieves and sets the recipient user based on the current user chat ID.
+ * Logs an error if the recipient cannot be found.
+ */
   getRecipient() {
     const recipientData = this.users.find((user: any) => user.id === this.currentUserChatId);
 
@@ -216,15 +226,18 @@ export class UserChatComponent {
     }
   }
 
-
+  /**
+ * Retrieves and sets the current user chat based on the current user and recipient.
+ * In the if-statement, we need to check if the currentUser is chatting with themselves, 
+ * meaning if currentUser.id is equal to recipient.id; in this case, currentUser.id 
+ * appears twice within the participants. However, if the currentUser is chatting 
+ * with someone else, we need to get the UserChat that contains the recipient.id.
+ * After that we have to check if the user chat was found and process the threads accordingly.
+ */
   getUserChat() {
     let userChatsOfCurrentUser: any[] = [];
 
-    for (let i = 0; i < this.userChats.length; i++) {
-      if (this.userChats[i].participants.includes(this.currentUser.id)) {
-        userChatsOfCurrentUser.push(this.userChats[i]);
-      }
-    }
+    this.findUserChatsWithCurrentUser(userChatsOfCurrentUser);
 
     if (this.currentUser.id == this.recipient.id) {
       for (let i = 0; i < userChatsOfCurrentUser.length; i++) {
@@ -241,7 +254,27 @@ export class UserChatComponent {
         }
       }
     }
+    this.checkIfUserChatWasFound();
+  }
 
+  /**
+ * Finds user chats that include the current user and adds them to the provided array.
+ *
+ * @param {any[]} userChatsOfCurrentUser - Array to store the user chats involving the current user.
+ */
+  findUserChatsWithCurrentUser(userChatsOfCurrentUser: any) {
+    for (let i = 0; i < this.userChats.length; i++) {
+      if (this.userChats[i].participants.includes(this.currentUser.id)) {
+        userChatsOfCurrentUser.push(this.userChats[i]);
+      }
+    }
+  }
+
+  /**
+ * Checks if the current user chat was found and processes its threads accordingly.
+ * If no user chat was found, marks the chat as empty.
+ */
+  checkIfUserChatWasFound() {
     if (this.currentUserChat) {
       this.getThreadsFromCurrentUserChat();
     } else {
@@ -250,7 +283,10 @@ export class UserChatComponent {
     }
   }
 
-
+  /**
+ * Retrieves and processes the threads from the current user chat.
+ * Groups the threads by date and updates the observable for grouped threads.
+ */
   getThreadsFromCurrentUserChat() {
     this.currentUserChatThreads = [];
     this.groupedcurrentUserChatThreads = [];
@@ -270,7 +306,10 @@ export class UserChatComponent {
     }
   }
 
-
+  /**
+ * Subscribes to updates for the current user chat if its ID is available.
+ * Groups the threads by date and updates the observable for grouped threads.
+ */
   getUserChatSub() {
     if (this.currentUserChat?.userChatId) {
       if (this.userChatSub) {
@@ -282,29 +321,43 @@ export class UserChatComponent {
     }
   }
 
-
+  /**
+ * Sorts user chats by their timestamp in ascending order.
+ */
   sortMessagesByTimestamp() {
     this.userChats.sort((a: any, b: any) => a.timestamp - b.timestamp);
   }
 
-
+  /**
+ * Form group for the channel thread message.
+ */
   channelThreadMessage: FormGroup = this.formBuilder.group({
     channelMessage: "",
   });
 
-
+  /**
+ * Adds an emoji to the thread message input.
+ *
+ * @param {string} emoji - The emoji to be added.
+ */
   addEmoji(emoji: string) {
     let textAreaElement = this.threadMessageBox.nativeElement;
     textAreaElement.value += emoji;
   }
 
-
+/**
+ * Resets the chat input form and removes any attached images.
+ */
   removeChatInput() {
     this.channelThreadMessage.reset();
     this.addImgToMessageComponent.removeImage();
   }
 
-
+  /**
+ * Sends a direct message to the recipient.
+ * If the message box is not empty, it sets the emptyUserChat flag to false and sends the message.
+ * Updates the user chat if it exists, otherwise adds a new user chat and updates user chats of both the current user and the recipient.
+ */
   async sendMessage() {
     if (this.threadMessageBox.nativeElement.value.length > 0) {
       this.emptyUserChat = false;
@@ -326,7 +379,9 @@ export class UserChatComponent {
     } 
   }
 
-
+  /**
+ * Cleans up by unsubscribing from all subscriptions and removing event listeners when the component is destroyed.
+ */
   ngOnDestroy() {
     this.userSub.unsubscribe();
     this.userChatsSub.unsubscribe();
@@ -338,10 +393,13 @@ export class UserChatComponent {
     }
   }
 
-
-  trackByTimestamp(index: number, item: any): number {
+  /**
+ * Custom trackBy function for tracking items by their timestamp.
+ *
+ * @param {any} item - The item to track.
+ * @returns {number} The timestamp of the item.
+ */
+  trackByTimestamp(item: any): number {
     return item.timestamp;
   }
-
 }
-
