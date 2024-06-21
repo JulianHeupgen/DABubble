@@ -19,15 +19,14 @@ export class DashboardComponent {
 
   openThread: boolean = false;
 
-  constructor( 
-    public threadService: ThreadService,
-
-  ) {
+   /**
+   * Constructor that subscribes to the openCurrentThread$ observable from the thread service.
+   * 
+   * @param {ThreadService} threadService - The service for managing thread operations.
+   */
+  constructor(public threadService: ThreadService) {
     this.threadService.openCurrentThread$.subscribe(openThreadBoolean => {
         this.openThread = openThreadBoolean;      
     });
    }
-
-
-
 }
