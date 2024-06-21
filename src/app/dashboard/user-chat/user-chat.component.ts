@@ -98,8 +98,6 @@ export class UserChatComponent {
   groupedcurrentUserChatThreads: any = [];
   groupedcurrentUserChatThreads$!: Observable<{ [key: string]: { thread: Thread, index: number }[] }>;
 
-  //firstLoad: boolean = false;
-
   private userSub: Subscription = new Subscription();
   private userChatsSub: Subscription = new Subscription();
   private userChatSub: Subscription = new Subscription();
@@ -172,10 +170,6 @@ export class UserChatComponent {
     }
     this.userChatsSub = this.dataService.getUserChatsList().subscribe((userChats: any) => {
       this.userChats = userChats;
-
-      // if (this.firstLoad) {
-      //   // this.getUserChat();
-      // }
     })
   }
 
@@ -269,8 +263,6 @@ export class UserChatComponent {
         }
         this.groupedcurrentUserChatThreads = this.dataService.groupThreadsByDate(this.currentUserChatThreads);
         this.groupedcurrentUserChatThreads$ = this.groupedcurrentUserChatThreads;
-        console.log('grouped Threads:', this.groupedcurrentUserChatThreads);
-
         this.emptyUserChat = false;
       } else {
         this.emptyUserChat = true;
@@ -281,18 +273,14 @@ export class UserChatComponent {
 
   getUserChatSub() {
     if (this.currentUserChat?.userChatId) {
-
       if (this.userChatSub) {
         this.userChatSub.unsubscribe();
       }
       this.userChatSub = this.dataService.getUserChat(this.currentUserChat.userChatId).subscribe((userChat: any) => {
-        console.log(userChat);
-        // this.groupedcurrentUserChatThreads = this.dataService.groupThreadsByDate(userChat);
         this.groupedcurrentUserChatThreads$ = of(this.dataService.groupThreadsByDate(userChat));        
       })
     }
   }
-
 
 
   sortMessagesByTimestamp() {
@@ -335,9 +323,7 @@ export class UserChatComponent {
         await this.dataService.updateUserChatsOfUser(this.currentUser, this.recipient.id);
         await this.dataService.updateUserChatsOfUser(this.recipient, this.currentUser.id);
       }
-    } else {
-      console.log("Keine Nachricht eingegeben!");
-    }
+    } 
   }
 
 

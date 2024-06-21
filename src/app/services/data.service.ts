@@ -309,9 +309,6 @@ export class DataService {
     return new Observable(observer => {
       const unsubscribe = onSnapshot(doc(this.firestore, 'directMessages', userChatId), userChat => {
         let userChatObject = new UserChat(this.setUserChatObject(userChat.id, userChat.data()));
-        console.log('User Object:',userChatObject);
-        // debugger;
-        // let groupedThreads = this.groupThreadsByDate(userChatObject.threads)
         observer.next(userChatObject.threads);
       })
     })
