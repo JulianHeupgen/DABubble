@@ -413,24 +413,9 @@ export class AuthService {
     }
 
     try {
-      await this.setFirestoreUserEmail(docId, email);
+      await this.updateFirebaseUser({'email': email});
     } catch (error) {
       console.error('Could not update email on the firestore user.', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Sets the user's email in Firestore.
-   * @param docId - The Firestore document ID.
-   * @param email - The new email address.
-   */
-  async setFirestoreUserEmail(docId: string, email: string) {
-    const userRef = doc(this.firestore, 'users', docId);
-    try {
-      await updateDoc(userRef, {'email': email});
-    } catch (error) {
-      console.error('Error updating user email to this firestore. ', error);
       throw error;
     }
   }
@@ -482,7 +467,7 @@ export class AuthService {
   async createFirebaseUser(user: User) {
     const strUser = this.stringifyUser(user);
     try {
-      await addDoc(collection(this.firestore, 'users'), strUser);
+      return await addDoc(collection(this.firestore, 'users'), strUser);
     } catch (error) {
       console.error('Error uploading user to firebase: ', error);
       throw error;
