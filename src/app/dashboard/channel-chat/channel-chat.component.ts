@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatList, MatListModule } from '@angular/material/list';
@@ -183,7 +183,6 @@ export class ChannelChatComponent {
     this.shouldScrollToBottom = position > height - threshold;
   }
 
-  
   /**
    * Filters users based on a search value.
    *
@@ -246,7 +245,6 @@ export class ChannelChatComponent {
     }
   }
 
-
   /**
    * Finds the current user object from the loaded users list.
    */
@@ -259,7 +257,6 @@ export class ChannelChatComponent {
     }
   }
 
-
   /**
    * Retrieves and sets information about the current channel.
    */
@@ -267,7 +264,6 @@ export class ChannelChatComponent {
     this.getCurrentChannel();
     this.showChannelParticipants(this.channelId);
   }
-
 
   /**
    * Subscribes to participant images for the current channel.
@@ -293,7 +289,6 @@ export class ChannelChatComponent {
       }
     }
   }
-
 
   /**
    * Retrieves the channel ID from the route URL parameters.
@@ -321,7 +316,6 @@ export class ChannelChatComponent {
       }});
   }
 
-
   /**
    * Adds an emoji to the message input box.
    *
@@ -345,7 +339,6 @@ export class ChannelChatComponent {
       this.menuTrigger.closeMenu();
     }
   }
-
 
   /**
    * Cleans up subscriptions and event listeners when the component is destroyed.
@@ -402,4 +395,3 @@ export class ChannelChatComponent {
     });
   }
 }
-

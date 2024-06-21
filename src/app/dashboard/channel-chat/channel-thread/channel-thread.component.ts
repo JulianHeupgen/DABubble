@@ -167,4 +167,3 @@ export class ChannelThreadComponent {
     obj.messages[0].imgFileURL = '';
   }
 }
-
