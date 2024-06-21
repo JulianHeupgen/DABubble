@@ -33,7 +33,6 @@ export class ProfileEditComponent {
 
   constructor(
     private auth: AuthService,
-    private router: Router,
     private formBuilder: FormBuilder,
     private profileService: HeaderProfileService,
     public dialog: MatDialog,

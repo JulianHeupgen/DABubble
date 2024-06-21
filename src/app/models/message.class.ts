@@ -1,5 +1,8 @@
 import { User } from './user.class';
 
+/**
+ * Represents a single message in a thread
+ */
 export class Message {
   senderId: string;
   senderName: string;
@@ -11,6 +14,13 @@ export class Message {
   editMode: boolean;
   hoverReactionbar: boolean;
 
+ /**
+   * Constructs a new Message instance.
+   * 
+   * @param {Partial<User>} sender - The sender of the message.
+   * @param {string} content - The content of the message.
+   * @param {string} [imgFileUrl] - The URL of an image file associated with the message.
+   */
   constructor(sender: Partial<User>, content: string, imgFileUrl?: string) {
     this.senderId = sender.id || '';
     this.senderName = sender.name || '';
@@ -23,6 +33,12 @@ export class Message {
     this.hoverReactionbar = false
   }
 
+
+   /**
+   * Converts the Message instance to a JSON object.
+   * 
+   * @returns {Object} The JSON representation of the message.
+   */
   toJSON(): {} {
     return {
       senderId: this.senderId,
@@ -37,11 +53,18 @@ export class Message {
     };
   }
 
+
+   /**
+   * Creates a Message instance from a JSON object.
+   * 
+   * @param {any} json - The JSON object to create the message from.
+   * @returns {Message} The created Message instance.
+   */
   static fromJSON(json: any): Message {       
-    const message = new Message(
-      { id: json.senderId,
-        name: json.senderName
-      },
+    const message = new Message({ 
+      id: json.senderId,
+      name: json.senderName
+    },
       json.content,
       json.imgFileURL
     );
