@@ -91,23 +91,16 @@ export class DataService {
     return new Observable(observer => {
       const unsubscribe = onSnapshot(doc(this.firestore, 'channels', channelId), async (channelSnapshot) => {
           if (channelSnapshot.exists()) {
-              const channelData = channelSnapshot.data();
-              const channelParticipants = channelData['participants'];
 
-              const participantsImages = [];
+              const participantsImages: any = [];
 
-              for (const userId of channelParticipants) {
-                      const userDoc = await getDoc(doc(this.firestore, 'users', userId));
-                      if (userDoc.exists()) {
-                          const userData = userDoc.data();
-                          
-                          if (userData && userData['imageUrl']) {
-                            participantsImages.push({
-                              userId: userDoc.id,
-                              participantImage: userData['imageUrl']
-                          });
-                        }}
-              }
+              this.allUsers.forEach((user: any) => {
+                if (user.channels && user.channels.includes(channelId)) {
+                  participantsImages.push({
+                    userId: user.id,
+                    participantImage: user.imageUrl
+                  });
+                }});
               observer.next(participantsImages);
           } 
       });

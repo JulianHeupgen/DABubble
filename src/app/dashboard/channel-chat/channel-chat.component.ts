@@ -262,7 +262,7 @@ export class ChannelChatComponent {
    */
   getChannelInfos() {
     this.getCurrentChannel();
-    this.showChannelParticipants(this.channelId);
+    // this.showChannelParticipants(this.channelId);
   }
 
   /**
