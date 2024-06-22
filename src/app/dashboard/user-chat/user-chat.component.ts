@@ -316,6 +316,8 @@ export class UserChatComponent {
         this.userChatSub.unsubscribe();
       }
       this.userChatSub = this.dataService.getUserChat(this.currentUserChat.userChatId).subscribe((userChat: any) => {
+        console.log('get data');
+        
         this.groupedcurrentUserChatThreads$ = of(this.dataService.groupThreadsByDate(userChat));        
       })
     }
@@ -375,6 +377,7 @@ export class UserChatComponent {
         await this.dataService.addUserChat(userChat.currentUserChat);
         await this.dataService.updateUserChatsOfUser(this.currentUser, this.recipient.id);
         await this.dataService.updateUserChatsOfUser(this.recipient, this.currentUser.id);
+        this.reloadAll();
       }
     } 
   }
