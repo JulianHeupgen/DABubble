@@ -135,7 +135,7 @@ export class ChannelChatComponent {
     this.dataSubscriptions();
     await this.loadUsers();
     await this.checkUserAuthId();
-    this.getChannelInfos();
+    this.getCurrentChannel();
     this.getParticipantsSub();
     this.filteredUsers = this.pingUserControl.valueChanges.pipe(
       startWith(''),
@@ -257,13 +257,7 @@ export class ChannelChatComponent {
     }
   }
 
-  /**
-   * Retrieves and sets information about the current channel.
-   */
-  getChannelInfos() {
-    this.getCurrentChannel();
-    // this.showChannelParticipants(this.channelId);
-  }
+
 
   /**
    * Subscribes to participant images for the current channel.
@@ -297,23 +291,6 @@ export class ChannelChatComponent {
     this.route.params.subscribe(params => {
       this.channelId = params['id'];
     });
-  }
-
-
-  /**
-   * Displays participant images for the current channel.
-   *
-   * @param {string} channelId - The ID of the current channel.
-   */
-  showChannelParticipants(channelId: string) {
-    this.participantsImages = [];
-    this.users.forEach((user: any) => {
-      if (user.channels && user.channels.includes(channelId)) {
-        this.participantsImages.push({
-          userId: user.id,
-          participantImage: user.imageUrl
-        });
-      }});
   }
 
   /**
