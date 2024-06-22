@@ -279,6 +279,7 @@ export class UserChatComponent {
       this.getThreadsFromCurrentUserChat();
     } else {
       this.currentUserChatThreads = [];
+      this.groupedcurrentUserChatThreads = [];
       this.emptyUserChat = true;
     }
   }
@@ -316,9 +317,7 @@ export class UserChatComponent {
         this.userChatSub.unsubscribe();
       }
       this.userChatSub = this.dataService.getUserChat(this.currentUserChat.userChatId).subscribe((userChat: any) => {
-        console.log('get data');
-        
-        this.groupedcurrentUserChatThreads$ = of(this.dataService.groupThreadsByDate(userChat));        
+        this.groupedcurrentUserChatThreads$ = of(this.dataService.groupThreadsByDate(userChat));
       })
     }
   }
@@ -347,9 +346,9 @@ export class UserChatComponent {
     textAreaElement.value += emoji;
   }
 
-/**
- * Resets the chat input form and removes any attached images.
- */
+  /**
+   * Resets the chat input form and removes any attached images.
+   */
   removeChatInput() {
     this.channelThreadMessage.reset();
     this.addImgToMessageComponent.removeImage();
@@ -379,7 +378,7 @@ export class UserChatComponent {
         await this.dataService.updateUserChatsOfUser(this.recipient, this.currentUser.id);
         this.reloadAll();
       }
-    } 
+    }
   }
 
   /**
