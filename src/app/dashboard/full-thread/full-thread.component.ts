@@ -264,7 +264,7 @@ export class FullThreadComponent {
  */
   async sendMessage() {
     if (this.thread) {
-      if (this.fullThreadMessageBox.nativeElement.value.length > 0) {
+      if (this.fullThreadMessageBox.nativeElement.value.length > 0 || this.addImgToMessageComponent.imgFile) {
         await this.currentUser.sendChannelMessage(
           this.currentChannel,
           this.fullThreadMessageBox.nativeElement.value,

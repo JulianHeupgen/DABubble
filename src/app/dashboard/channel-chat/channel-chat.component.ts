@@ -345,7 +345,7 @@ export class ChannelChatComponent {
    * Sends a message in the channel chat, including text and optionally an image.
    */
   async sendMessage() {
-    if (this.threadMessageBox.nativeElement.value.length > 0) {
+    if (this.threadMessageBox.nativeElement.value.length > 0 || this.addImgToMessageComponent.imgFile) {
       let newThread = await this.currentUser.sendChannelMessage(
         this.currentChannel,
         this.threadMessageBox.nativeElement.value,

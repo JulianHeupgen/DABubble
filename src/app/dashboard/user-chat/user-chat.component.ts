@@ -360,7 +360,7 @@ export class UserChatComponent {
  * Updates the user chat if it exists, otherwise adds a new user chat and updates user chats of both the current user and the recipient.
  */
   async sendMessage() {
-    if (this.threadMessageBox.nativeElement.value.length > 0) {
+    if (this.threadMessageBox.nativeElement.value.length > 0 || this.addImgToMessageComponent.imgFile) {
       this.emptyUserChat = false;
 
       let userChat = await this.currentUser.sendDirectMessage(
