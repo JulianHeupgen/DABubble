@@ -198,7 +198,7 @@ export class MessageReactionComponent {
  */
   raiseReactionCount(chatReaction: any) {
     chatReaction.count++;
-    chatReaction.users.push(this.currentUser.id);
+    chatReaction.users.push(this.currentUser);
   }
 
   
@@ -211,7 +211,7 @@ export class MessageReactionComponent {
   getNewReactionToMessage(threadMessage: any, userReaction: string) {
     let threadReaction = {
       reaction: userReaction,
-      users: [this.currentUser.id],
+      users: [this.currentUser],
       count: 1
     };
     threadMessage.emojiReactions.push(threadReaction);
