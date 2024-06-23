@@ -381,6 +381,7 @@ export class UserChatComponent {
     }
   }
 
+
   /**
  * Cleans up by unsubscribing from all subscriptions and removing event listeners when the component is destroyed.
  */
