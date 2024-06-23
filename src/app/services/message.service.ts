@@ -48,30 +48,6 @@ export class MessageService {
     this.threadChangesSource.next({ thread, update });
   }
 
-
-
-  copyMessageForFirebase(originMessage: Message) {
-    let messageCopy = new Message(
-      { id: originMessage.senderId,
-        name: originMessage.senderName
-      },
-      originMessage.content,
-      originMessage.imgFileURL
-    );
-    messageCopy.timestamp = originMessage.timestamp;
-    messageCopy.replies = originMessage.replies.map((reply: any) => Message.fromJSON(reply));
-    messageCopy.emojiReactions = originMessage.emojiReactions;
-    messageCopy.editMode = originMessage.editMode;
-    messageCopy.hoverReactionbar = originMessage.hoverReactionbar;
-
-    this.dataService.updateMessage(messageCopy).then(() => {
-      console.log('Message successfully updated in Firebase');
-    }).catch((err: any) => {
-      console.error('Update failed', err);
-    });
-  }
-
-
   deletFileOfMessage(imgFileLink: string) {
     const storage = getStorage();
     const desertRef = ref(storage, imgFileLink);
