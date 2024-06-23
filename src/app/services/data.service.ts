@@ -116,7 +116,7 @@ export class DataService {
               const channelData = channelSnapshot.data();
               const channelParticipants = channelData['participants'];
 
-              const participantsData = [];
+              const participantsData: any = [];
 
               for (const userId of channelParticipants) {
                 const userDoc = await getDoc(doc(this.firestore, 'users', userId));
