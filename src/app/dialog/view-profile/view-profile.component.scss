@@ -123,3 +123,56 @@
     content: url('./../../../assets/img/offline.png');
 }
 
+
+
+
+@media(max-width: 850px) {
+    .participant-profile {
+        padding: 40px;
+        width: 380px;
+        height: 615px;
+    }
+}
+
+
+@media(max-width: 500px) {
+    .participant-profile {
+        padding: 20px; 
+        width: 340px;
+    }
+}
+
+
+@media(max-width: 440px) {
+    .participant-profile {
+        width: 310px;
+
+        .participant-name {
+            @include font-size-weight-color($fs: 26px, $fw: 700); 
+        }
+
+        .email-adress {
+            a {
+                @include font-size-weight-color($fs: 19px, $fw: 600, $cl: rgb(76, 107, 241));
+            }
+        }
+    }
+}
+
+@media(max-width: 400px) {
+    .participant-profile {
+        padding: 12px;
+        width: 250px;
+
+        .participant-name {
+            @include font-size-weight-color($fs: 23px, $fw: 700); 
+        }
+
+        .email-adress {
+            a {
+                @include font-size-weight-color($fs: 17px, $fw: 600, $cl: rgb(76, 107, 241));
+            }
+        }
+    }
+}
+
