@@ -77,7 +77,8 @@ export class AuthService {
       await this.updateFirebaseUser({onlineStatus: 'online'})
       return userCredential;
     } catch (error) {
-      throw error;
+      // throw error;
+      return false
     }
   }
 
