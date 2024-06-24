@@ -356,7 +356,7 @@ export class UserChatComponent {
 
   /**
  * Sends a direct message to the recipient.
- * If the message box is not empty, it sets the emptyUserChat flag to false and sends the message.
+ * If the message box or img box is not empty, it sets the emptyUserChat flag to false and sends the message.
  * Updates the user chat if it exists, otherwise adds a new user chat and updates user chats of both the current user and the recipient.
  */
   async sendMessage() {

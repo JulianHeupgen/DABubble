@@ -20,6 +20,13 @@ export class AddImgToMessageComponent {
 
   constructor( ) { }
 
+    /**
+   * Handles the file input event, reads the selected image file, 
+   * and displays it in the `showImgRef` element. If an image is already 
+   * displayed, it removes the old image before displaying the new one.
+   * 
+   * @param {Event} event - The file input change event.
+   */
   handleFileInput(event: any) {
     const file: File = event.target.files[0];
     const reader: FileReader = new FileReader();
@@ -38,6 +45,10 @@ export class AddImgToMessageComponent {
     }
   }
 
+    /**
+   * Removes the currently displayed image from the `showImgRef` element 
+   * and clears the file input value. It also resets the `imgFile` property.
+   */
   removeImage() {
     this.showImgRef.innerHTML = '';
     this.fileInput.nativeElement.value = '';

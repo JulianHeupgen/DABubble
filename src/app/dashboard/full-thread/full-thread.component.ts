@@ -259,7 +259,7 @@ export class FullThreadComponent {
 
   
   /**
- * Sends the entered message in the current thread.
+ * Sends the entered message or img in the current thread.
  * Optionally adds an image to the message and updates thread data in Firebase.
  */
   async sendMessage() {
