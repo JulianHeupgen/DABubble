@@ -367,11 +367,7 @@ export class SidenavComponent {
   * potential performance issues.
   */
   ngOnDestroy() {
-    if (this.userSub) {
-      this.userSub.unsubscribe();
-    }
-    if (this.channelSub) {
-      this.channelSub.unsubscribe();
-    }
+  this.userSub?.unsubscribe();
+  this.channelSub?.unsubscribe();
   }
 }
