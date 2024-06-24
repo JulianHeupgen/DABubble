@@ -30,7 +30,7 @@
                             <div class="channel" [routerLink]="['/dashboard/channel', channel.channelId]"
                                 [routerLinkActive]="['active-channel']" (click)="sidenavService.toggleSidenavIfScreenIsSmall('sidenav')">
                                 <img class="tag-img" src="./assets/img/tag.png">
-                                <p>{{ channel.title }}</p>
+                                <p>{{ truncateTitleName(channel.title, 18) }}</p>
                             </div>
                             }
                         </div>

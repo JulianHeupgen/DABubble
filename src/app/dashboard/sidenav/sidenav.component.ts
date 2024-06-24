@@ -344,6 +344,11 @@ export class SidenavComponent {
   }
 
 
+  truncateTitleName(title: string, limit: number): string {
+    return title.length > limit ? title.substring(0, limit) + '...' : title;
+  }
+
+
   /**
   * Cleans up subscriptions to prevent memory leaks.
   * This method is called when the component is destroyed. It unsubscribes
