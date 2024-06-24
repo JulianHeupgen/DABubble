@@ -344,6 +344,16 @@ export class SidenavComponent {
   }
 
 
+  /**
+  * Truncates the given title if it exceeds the specified character limit.
+  * This method checks the length of the provided title and, if it exceeds
+  * the specified limit, truncates it to the limit and appends an ellipsis ('...').
+  * If the title is within the limit, it is returned unchanged.
+  *
+  * @param {string} title - The title to be truncated.
+  * @param {number} limit - The maximum number of characters allowed for the title.
+  * @returns {string} - The truncated title if it exceeds the limit, otherwise the original title.
+  */
   truncateTitleName(title: string, limit: number): string {
     return title.length > limit ? title.substring(0, limit) + '...' : title;
   }
