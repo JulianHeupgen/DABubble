@@ -33,6 +33,12 @@ export class DataService {
   groupedChannelThreads: BehaviorSubject<{ [key: string]: { thread: Thread, index: number }[] }> = new BehaviorSubject({});
   private threadUnsubscribe: Unsubscribe | null = null;
 
+  /**
+   * Fetches the list of users from the Firestore database and updates the allUsers array.
+   * Returns an observable that emits the updated list of users.
+   * 
+   * @returns {Observable<User[]>} - An observable emitting the list of users.
+   */
   getUsersList() {
     return new Observable(observer => {
       const unsubscribe = onSnapshot(this.getUserCollection(), list => {
@@ -43,10 +49,22 @@ export class DataService {
     });
   }
 
+  /**
+   * Returns the Firestore collection reference for users.
+   * 
+   * @returns {CollectionReference} - Firestore collection reference for users.
+   */
   getUserCollection() {
     return collection(this.firestore, 'users');
   }
 
+  /**
+   * Creates a user object from the provided data.
+   * 
+   * @param {string} id - The user ID.
+   * @param {any} data - The user data.
+   * @returns {User} - The user object.
+   */
   setUserObject(id: string, data: any): any {
     return {
       id: id,
@@ -60,7 +78,12 @@ export class DataService {
     }
   }
 
-
+  /**
+   * Fetches the list of channels from the Firestore database and updates the allChannels array.
+   * Returns an observable that emits the updated list of channels.
+   * 
+   * @returns {Observable<Channel[]>} - An observable emitting the list of channels.
+   */
   getChannelsList() {
     return new Observable(observer => {
       const unsubscribe = onSnapshot(this.getChannelCollection(),
@@ -72,10 +95,22 @@ export class DataService {
     })
   }
 
+  /**
+   * Returns the Firestore collection reference for channels.
+   * 
+   * @returns {CollectionReference} - Firestore collection reference for channels.
+   */
   getChannelCollection() {
     return collection(this.firestore, 'channels');
   }
 
+  /**
+   * Creates a channel object from the provided data.
+   * 
+   * @param {string} id - The channel ID.
+   * @param {any} data - The channel data.
+   * @returns {Channel} - The channel object.
+   */
   setChannelObject(id: string, data: any): any {
     return {
       channelId: id,
@@ -86,54 +121,71 @@ export class DataService {
     }
   }
 
-
+  /**
+   * Fetches the images of participants in a given channel.
+   * Returns an observable that emits an array of objects containing user IDs and their image URLs.
+   * 
+   * @param {string} channelId - The ID of the channel.
+   * @returns {Observable<{userId: string, participantImage: string}[]>} - An observable emitting an array of participant images.
+   */
   getParticipantImages(channelId: string) {
     return new Observable(observer => {
       const unsubscribe = onSnapshot(doc(this.firestore, 'channels', channelId), async (channelSnapshot) => {
-          if (channelSnapshot.exists()) {
+        if (channelSnapshot.exists()) {
 
-              const participantsImages: any = [];
+          const participantsImages: any = [];
 
-              this.allUsers.forEach((user: any) => {
-                if (user.channels && user.channels.includes(channelId)) {
-                  participantsImages.push({
-                    userId: user.id,
-                    participantImage: user.imageUrl
-                  });
-                }});
-              observer.next(participantsImages);
-          } 
+          this.allUsers.forEach((user: any) => {
+            if (user.channels && user.channels.includes(channelId)) {
+              participantsImages.push({
+                userId: user.id,
+                participantImage: user.imageUrl
+              });
+            }
+          });
+          observer.next(participantsImages);
+        }
       });
       return () => unsubscribe();
     });
   }
 
-
+  /**
+   * Fetches the information of participants in a given channel.
+   * Returns an observable that emits an array of user objects.
+   * 
+   * @param {string} channelId - The ID of the channel.
+   * @returns {Observable<User[]>} - An observable emitting an array of participant information.
+   */
   getParticipantInfos(channelId: string) {
     return new Observable(observer => {
       const unsubscribe = onSnapshot(doc(this.firestore, 'channels', channelId), async (channelSnapshot) => {
-          if (channelSnapshot.exists()) {
-              const channelData = channelSnapshot.data();
-              const channelParticipants = channelData['participants'];
+        if (channelSnapshot.exists()) {
+          const channelData = channelSnapshot.data();
+          const channelParticipants = channelData['participants'];
 
-              const participantsData: any = [];
+          const participantsData: any = [];
 
-              for (const userId of channelParticipants) {
-                const userDoc = await getDoc(doc(this.firestore, 'users', userId));
-                if (userDoc.exists()) {
-                  const user = this.setUserObject(userDoc.id, userDoc.data());
-                  if (user) {
-                    participantsData.push(user);
-                  }} 
-                }
-                observer.next(participantsData);
-              } 
-            });
-            return () => unsubscribe();
-          });
+          for (const userId of channelParticipants) {
+            const userDoc = await getDoc(doc(this.firestore, 'users', userId));
+            if (userDoc.exists()) {
+              const user = this.setUserObject(userDoc.id, userDoc.data());
+              if (user) {
+                participantsData.push(user);
+              }
+            }
+          }
+          observer.next(participantsData);
         }
+      });
+      return () => unsubscribe();
+    });
+  }
 
-
+  /**
+   * Fetches the list of threads for the current channel and updates the internal state.
+   * Listens for real-time updates from Firestore and handles added, modified, and removed threads.
+   */
   getThreadsList() {
     this.groupedThreads = [];
     this.allThreads = [];
@@ -163,10 +215,15 @@ export class DataService {
         this.groupedThreads = this.groupThreadsByDate(this.allThreads);
         this.firstLoad = false;
       }
-      this.groupedChannelThreads.next(this.groupedThreads);      
+      this.groupedChannelThreads.next(this.groupedThreads);
     });
   }
 
+  /**
+   * Adds a new thread to the list of all threads and updates the grouped threads if not the first load.
+   * 
+   * @param {any} threadData - The data of the thread to be added.
+   */
   addThreads(threadData: any) {
     const newThread = new Thread(threadData);
     this.allThreads.push(newThread);
@@ -177,6 +234,12 @@ export class DataService {
     }
   }
 
+  /**
+   * Modifies an existing thread in the list of all threads and updates the grouped threads.
+   * 
+   * @param {any} threadData - The data of the thread to be modified.
+   * @param {any} change - The Firestore document change object.
+   */
   modifyThreads(threadData: any, change: any) {
     const modifiedThreadIndex = this.allThreads.findIndex(thread => thread.threadId === change.doc.id);
     if (modifiedThreadIndex !== -1) {
@@ -185,6 +248,11 @@ export class DataService {
     }
   }
 
+  /**
+   * Removes a thread from the list of all threads and updates the grouped threads.
+   * 
+   * @param {any} change - The Firestore document change object.
+   */
   removeThreads(change: any) {
     const removedThreadIndex = this.allThreads.findIndex(thread => thread.threadId === change.doc.id);
     if (removedThreadIndex !== -1) {
@@ -193,14 +261,25 @@ export class DataService {
     }
   }
 
+  /**
+   * Adds a thread to the grouped threads by date.
+   * 
+   * @param {Thread} thread - The thread to be added to the group.
+   * @param {number} index - The index of the thread in the allThreads array.
+   */
   addThreadToGroup(thread: Thread, index: number) {
-    const date = new Date(thread.timestamp).toISOString().split('T')[0]; 
+    const date = new Date(thread.timestamp).toISOString().split('T')[0];
     if (!this.groupedThreads[date]) {
       this.groupedThreads[date] = [];
     }
     this.groupedThreads[date].push({ thread, index });
   }
 
+  /**
+   * Updates a thread in the grouped threads by date.
+   * 
+   * @param {Thread} thread - The thread to be updated in the group.
+   */
   updateThreadInGroup(thread: Thread) {
     const date = new Date(thread.timestamp).toISOString().split('T')[0];
     const group = this.groupedThreads[date];
@@ -212,10 +291,15 @@ export class DataService {
     }
   }
 
+  /**
+   * Removes a thread from the grouped threads by date.
+   * 
+   * @param {Thread} thread - The thread to be removed from the group.
+   */
   removeThreadFromGroup(thread: Thread) {
     const date = new Date(thread.timestamp).toISOString().split('T')[0];
     const group = this.groupedThreads[date];
-  
+
     if (group) {
       const threadIndex = group.findIndex((t: { thread: Thread, index: number }) => t.thread.threadId === thread.threadId);
       if (threadIndex !== -1) {
@@ -224,10 +308,22 @@ export class DataService {
     }
   }
 
+  /**
+   * Returns the Firestore collection reference for threads.
+   * 
+   * @returns {CollectionReference} - Firestore collection reference for threads.
+   */
   getThreadCollection() {
     return collection(this.firestore, 'threads');
   }
 
+  /**
+   * Creates a thread object from the provided data.
+   * 
+   * @param {string} id - The thread ID.
+   * @param {any} data - The thread data.
+   * @returns {any} - The thread object.
+   */
   setThreadObject(id: string, data: any): any {
     return {
       threadId: id,
@@ -237,12 +333,20 @@ export class DataService {
     }
   }
 
+  /**
+   * Sorts the list of all threads by the timestamp of their first message.
+   */
   sortThreadByFirstMessageTimestamp() {
     this.allThreads.sort((a, b) => a.timestamp - b.timestamp);
   }
 
+  /**
+   * Groups threads by their date.
+   * 
+   * @param {Thread[]} threads - The array of threads to be grouped.
+   * @returns {{ [key: string]: { thread: Thread, index: number }[] }} - An object where keys are dates (YYYY-MM-DD) and values are arrays of thread objects with their indices.
+   */
   groupThreadsByDate(threads: Thread[]): { [key: string]: { thread: Thread, index: number }[] } {
-    // Reduzieren der Threads, um sie nach Datum zu gruppieren
     const groupedThreads = threads.reduce((groups, thread, index) => {
       const date = new Date(thread.timestamp).toISOString().split('T')[0]; // Format: YYYY-MM-DD
       if (!groups[date]) {
@@ -251,16 +355,20 @@ export class DataService {
       groups[date].push({ thread, index });
       return groups;
     }, {} as { [key: string]: { thread: Thread, index: number }[] });
-  
-    // Hinzufügen einer leeren Gruppe für das heutige Datum, falls nicht vorhanden
     const today = new Date().toISOString().split('T')[0];
     if (!groupedThreads[today]) {
       groupedThreads[today] = [];
     }
-  
+
     return groupedThreads;
   }
 
+  /**
+   * Formats a date string for display.
+   * 
+   * @param {string} date - The date string in YYYY-MM-DD format.
+   * @returns {string} - The formatted date string for display.
+   */
   formatDateForDisplay(date: string): string {
     const today = new Date().toISOString().split('T')[0];
     const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
@@ -275,7 +383,13 @@ export class DataService {
     }
   }
 
-  getUserChatsList() {
+  /**
+   * Fetches the list of user chats and updates the internal state.
+   * Returns an observable that emits the list of user chats.
+   * 
+   * @returns {Observable<UserChat[]>} - An observable emitting the list of user chats.
+   */
+  getUserChatsList(): Observable<UserChat[]> {
     return new Observable(observer => {
       const unsubscribe = onSnapshot(this.getUserChatsCollection(), list => {
         this.allUserChats = [];
@@ -285,10 +399,22 @@ export class DataService {
     });
   }
 
+  /**
+   * Returns the Firestore collection reference for user chats.
+   * 
+   * @returns {CollectionReference} - Firestore collection reference for user chats.
+   */
   getUserChatsCollection() {
     return collection(this.firestore, 'directMessages');
   }
 
+  /**
+   * Creates a user chat object from the provided data.
+   * 
+   * @param {string} id - The user chat ID.
+   * @param {any} data - The user chat data.
+   * @returns {any} - The user chat object.
+   */
   setUserChatObject(id: string, data: any): any {
     return {
       userChatId: id,
@@ -297,7 +423,13 @@ export class DataService {
     }
   }
 
-
+  /**
+   * Fetches a specific user chat by ID and returns its threads.
+   * Returns an observable that emits the threads of the user chat.
+   * 
+   * @param {string} userChatId - The ID of the user chat to fetch.
+   * @returns {Observable<any[]>} - An observable emitting the threads of the user chat.
+   */
   getUserChat(userChatId: string) {
     return new Observable(observer => {
       const unsubscribe = onSnapshot(doc(this.firestore, 'directMessages', userChatId), userChat => {
@@ -307,7 +439,13 @@ export class DataService {
     })
   }
 
-
+  /**
+   * Adds a new channel to the Firestore collection and returns the document ID.
+   * 
+   * @param {Channel} channel - The channel object to be added.
+   * @returns {Promise<string>} - A promise that resolves to the document ID of the added channel.
+   * @throws {Error} - Throws an error if there is an issue adding the channel.
+   */
   async addChannel(channel: Channel): Promise<string> {
     try {
       const docRef = await addDoc(this.getChannelCollection(), channel.toJSON());
@@ -318,6 +456,13 @@ export class DataService {
     }
   }
 
+  /**
+   * Adds a new thread to the Firestore collection.
+   * Logs the document ID on successful addition or logs an error if the addition fails.
+   * 
+   * @param {Thread} thread - The thread object to be added.
+   * @returns {Promise<void>} - A promise that resolves when the thread is added.
+   */
   async addThread(thread: Thread) {
     await addDoc(this.getThreadCollection(), thread.toJSON()).catch((err) => {
       console.error(err)
@@ -326,6 +471,14 @@ export class DataService {
     });
   }
 
+  /**
+   * Adds a new user chat to the Firestore collection.
+   * Converts threads to string format before adding.
+   * Logs the document ID on successful addition or logs an error if the addition fails.
+   * 
+   * @param {UserChat} userChat - The user chat object to be added.
+   * @returns {Promise<void>} - A promise that resolves when the user chat is added.
+   */
   async addUserChat(userChat: UserChat) {
     let userChatCopy = new UserChat(userChat.toJSON());
     let threadsAsString = userChatCopy.threads.map(thread => JSON.stringify(thread));

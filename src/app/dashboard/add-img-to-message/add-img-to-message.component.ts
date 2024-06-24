@@ -1,5 +1,4 @@
-import { Component, ElementRef, Input, ViewChild, input } from '@angular/core';
-import { ChannelChatComponent } from '../channel-chat/channel-chat.component';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
