@@ -344,7 +344,8 @@ export class DataService {
    * Groups threads by their date.
    * 
    * @param {Thread[]} threads - The array of threads to be grouped.
-   * @returns {{ [key: string]: { thread: Thread, index: number }[] }} - An object where keys are dates (YYYY-MM-DD) and values are arrays of thread objects with their indices.
+   * @returns {{ [key: string]: { thread: Thread, index: number }[] }} - An object where keys are dates (YYYY-MM-DD) and 
+   * values are arrays of thread objects with their indices.
    */
   groupThreadsByDate(threads: Thread[]): { [key: string]: { thread: Thread, index: number }[] } {
     const groupedThreads = threads.reduce((groups, thread, index) => {
@@ -494,6 +495,12 @@ export class DataService {
     });
   }
 
+  /**
+   * Updates a user document in Firestore.
+   *
+   * @param {User} user - The user object to update.
+   * @returns {Promise<void>} - A promise that resolves when the update is complete.
+   */
   async updateUser(user: User) {
     let docRef = this.getUserDocRef(user.id);
     await updateDoc(docRef, user.toJSON()).catch((err) => {
@@ -501,11 +508,23 @@ export class DataService {
     });
   }
 
+   /**
+   * Retrieves a reference to a user document in Firestore.
+   *
+   * @param {string} userId - The ID of the user.
+   * @returns {DocumentReference} - The document reference.
+   */
   getUserDocRef(userId: string) {
     return doc(collection(this.firestore, 'users'), userId);
   }
 
-
+/**
+   * Updates the userChats field of a user document in Firestore.
+   *
+   * @param {User} user - The user object.
+   * @param {string} userChatId - The ID of the user chat to add.
+   * @returns {Promise<void>} - A promise that resolves when the update is complete.
+   */
   async updateUserChatsOfUser(user: User, userChatId: string) {
     let docRef = this.getUserDocRef(user.id);
     const newUserChat = {
@@ -516,7 +535,12 @@ export class DataService {
     });
   }
 
-
+  /**
+   * Updates a channel document in Firestore.
+   *
+   * @param {Channel} channel - The channel object to update.
+   * @returns {Promise<void>} - A promise that resolves when the update is complete.
+   */
   async updateChannel(channel: Channel) {
     let docRef = this.getChannelDocRef(channel.channelId);
     await updateDoc(docRef, channel.toJSON()).catch((err) => {
@@ -524,11 +548,22 @@ export class DataService {
     });
   }
 
+  /**
+   * Retrieves a reference to a channel document in Firestore.
+   *
+   * @param {string} channelId - The ID of the channel.
+   * @returns {DocumentReference} - The document reference.
+   */
   getChannelDocRef(channelId: string) {
     return doc(collection(this.firestore, 'channels'), channelId);
   }
 
-
+  /**
+   * Updates a thread document in Firestore.
+   *
+   * @param {Thread} thread - The thread object to update.
+   * @returns {Promise<void>} - A promise that resolves when the update is complete.
+   */
   async updateThread(thread: Thread) {
     let docRef = this.getThreadDocRef(thread.threadId);
     await updateDoc(docRef, thread.toJSON()).catch((err) => {
@@ -536,11 +571,22 @@ export class DataService {
     });
   }
 
+  /**
+   * Retrieves a reference to a thread document in Firestore.
+   *
+   * @param {string} threadId - The ID of the thread.
+   * @returns {DocumentReference} - The document reference.
+   */
   getThreadDocRef(threadId: string) {
     return doc(collection(this.firestore, 'threads'), threadId);
   }
 
-
+   /**
+   * Updates a user chat document in Firestore.
+   *
+   * @param {UserChat} userChat - The user chat object to update.
+   * @returns {Promise<void>} - A promise that resolves when the update is complete.
+   */
   async updateUserChat(userChat: UserChat) {
     let userChatCopy = new UserChat(userChat.toJSON());
     let threadsAsString = userChatCopy.threads.map(thread => JSON.stringify(thread));
@@ -556,12 +602,24 @@ export class DataService {
     });
   }
 
-
+   /**
+   * Retrieves a reference to a user chat document in Firestore.
+   *
+   * @param {string} userChatId - The ID of the user chat.
+   * @returns {DocumentReference} - The document reference.
+   */
   getUserChatDocRef(userChatId: string) {
     return doc(collection(this.firestore, 'directMessages'), userChatId)
   }
 
-
+  /**
+   * Updates a specific thread in a user chat document in Firestore.
+   *
+   * @param {Thread} thread - The thread object to update.
+   * @param {string | undefined} userChatId - The ID of the user chat.
+   * @param {number | undefined} index - The index of the thread in the user chat.
+   * @returns {Promise<void>} - A promise that resolves when the update is complete.
+   */
   async updateUserChatThread(thread: Thread, userChatId: string | undefined, index: number | undefined) {
     if (userChatId !== undefined && index !== undefined) {
       try {
@@ -580,20 +638,37 @@ export class DataService {
     }
   }
 
-
+  /**
+   * Deletes a user chat document from Firestore.
+   *
+   * @param {string} userChatId - The ID of the user chat to delete.
+   * @returns {Promise<void>} - A promise that resolves when the deletion is complete.
+   */
   async deleteUserChat(userChatId: string) {
     await deleteDoc(this.getUserChatDocRef(userChatId)).catch((err) => {
       console.error(err)
     });
   }
 
+  /**
+   * Deletes a thread document from Firestore.
+   *
+   * @param {string} threadId - The ID of the thread to delete.
+   * @returns {Promise<void>} - A promise that resolves when the deletion is complete.
+   */
   async deleteThread(threadId: string) {
     await deleteDoc(this.getThreadDocRef(threadId)).catch((err) => {
       console.error(err)
     })
   }
 
-
+  /**
+   * Deletes a specific thread in a user chat document in Firestore.
+   *
+   * @param {string | undefined} userChatId - The ID of the user chat.
+   * @param {number | undefined} index - The index of the thread in the user chat.
+   * @returns {Promise<void>} - A promise that resolves when the deletion is complete.
+   */
   async deleteUserChatThread(userChatId: string | undefined, index: number | undefined) {
     if (userChatId !== undefined && index !== undefined) {
       try {
@@ -612,6 +687,9 @@ export class DataService {
     }
   }
 
+  /**
+   * Unsubscribes from the thread observable when the service is destroyed.
+   */
   ngOnDestroy() {
     if (this.threadUnsubscribe) {
       this.threadUnsubscribe();
