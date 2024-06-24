@@ -40,7 +40,8 @@
       <h3 (click)="showProfile(threadUser)">{{ threadUser.name }}</h3>
     </div>
     <div class="message" *ngIf="!editMessage">
-      <img *ngIf="thread.messages[0].imgFileURL.length > 1" src="{{ thread.messages[0].imgFileURL }}" alt="">
+      <img *ngIf="thread.messages[0].imgFileURL.length > 1 && !thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')" src="{{ thread.messages[0].imgFileURL }}" alt="">
+      <a *ngIf="thread.messages[0].imgFileURL.length > 1 && thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')" href="{{ thread.messages[0].imgFileURL }}"target="blank" download="">Open PDF</a>
       <span [class.other-users-message]="!isCurrentUser">
         {{ thread.messages[0].content }}
       </span>
