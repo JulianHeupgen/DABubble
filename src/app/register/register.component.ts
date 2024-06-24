@@ -49,7 +49,7 @@ export class RegisterComponent {
     private route: Router
   ) {
     this.registerForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+ [a-zA-Z]+$')]],
+      name: ['', [Validators.required, Validators.pattern('^[a-zA-ZäöüÄÖÜß]+ [a-zA-ZäöüÄÖÜß]+$')]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       privacy: ['', Validators.requiredTrue],

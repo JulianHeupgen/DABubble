@@ -154,6 +154,10 @@
         height: 33px;
         cursor: pointer;
     }
+
+    >p {
+        text-wrap: nowrap;
+    }
 }
 
 .tag-img {
