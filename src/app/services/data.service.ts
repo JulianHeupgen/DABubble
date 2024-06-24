@@ -284,7 +284,7 @@ export class DataService {
     const date = new Date(thread.timestamp).toISOString().split('T')[0];
     const group = this.groupedThreads[date];
     if (group) {
-      const threadIndex = group.findIndex((t: Thread) => t.threadId === thread.threadId);
+      const threadIndex = group.findIndex((t: any) => t.thread.threadId === thread.threadId);
       if (threadIndex !== -1) {
         group[threadIndex].thread = thread;
       }
