@@ -1,0 +1,1758 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>dabubble documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">dabubble documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ChannelThreadComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-channel-thread</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                                <code><a href="../components/MessageReactionComponent.html" target="_self" >MessageReactionComponent</a></code>
+                                <code><a href="../components/EmojiMartComponent.html" target="_self" >EmojiMartComponent</a></code>
+                            <code>MatMenuModule</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./channel-thread.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./channel-thread.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#channelChat" >channelChat</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#dataService" >dataService</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#dialog" >dialog</a>
+                            </li>
+                            <li>
+                                <a href="#editMessage" >editMessage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#editMessageBox" >editMessageBox</a>
+                            </li>
+                            <li>
+                                <a href="#imgFile" >imgFile</a>
+                            </li>
+                            <li>
+                                <a href="#isCurrentUser" >isCurrentUser</a>
+                            </li>
+                            <li>
+                                <a href="#isImgFileEdited" >isImgFileEdited</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#messageReaction" >messageReaction</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#threadService" >threadService</a>
+                            </li>
+                            <li>
+                                <a href="#threadUser" >threadUser</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#cancelEditMessage" >cancelEditMessage</a>
+                            </li>
+                            <li>
+                                <a href="#deleteImg" >deleteImg</a>
+                            </li>
+                            <li>
+                                <a href="#editThreadMessage" >editThreadMessage</a>
+                            </li>
+                            <li>
+                                <a href="#findThreadUser" >findThreadUser</a>
+                            </li>
+                            <li>
+                                <a href="#formattedDatestamp" >formattedDatestamp</a>
+                            </li>
+                            <li>
+                                <a href="#formattedTimeStamp" >formattedTimeStamp</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#openThread" >openThread</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#saveEditMessage" >saveEditMessage</a>
+                            </li>
+                            <li>
+                                <a href="#showProfile" >showProfile</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#thread" >thread</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(channelChat: <a href="../components/ChannelChatComponent.html" target="_self">ChannelChatComponent</a>, dataService: <a href="../injectables/DataService.html" target="_self">DataService</a>, threadService: <a href="../injectables/ThreadService.html" target="_self">ThreadService</a>, dialog: MatDialog)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:40</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>creates an instance of ChannelThreadComponent</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>channelChat</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../components/ChannelChatComponent.html" target="_self" >ChannelChatComponent</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>the ChannelChatComponent(parant)</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>dataService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DataService.html" target="_self" >DataService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>the data service</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>threadService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ThreadService.html" target="_self" >ThreadService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>the thread service</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>for dialogs of material design</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="thread"></a>
+                        <b>thread</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Thread.html" target="_self" >Thread</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:31</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cancelEditMessage"></a>
+                    <span class="name">
+                        <span ><b>cancelEditMessage</b></span>
+                        <a href="#cancelEditMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cancelEditMessage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="124"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:124</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>set message edit false
+set img edit false</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteImg"></a>
+                    <span class="name">
+                        <span ><b>deleteImg</b></span>
+                        <a href="#deleteImg"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteImg(obj: <a href="../classes/Thread.html" target="_self">Thread</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="164"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:164</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>delete img of message
+set img edit boolean true</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>obj</td>
+                                            <td>
+                                                            <code><a href="../classes/Thread.html" target="_self" >Thread</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editThreadMessage"></a>
+                    <span class="name">
+                        <span ><b>editThreadMessage</b></span>
+                        <a href="#editThreadMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editThreadMessage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="116"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:116</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>set message edit true</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findThreadUser"></a>
+                    <span class="name">
+                        <span ><b>findThreadUser</b></span>
+                        <a href="#findThreadUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>findThreadUser(messageOwnerId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="74"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:74</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>receive user of thread author</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>messageOwnerId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formattedDatestamp"></a>
+                    <span class="name">
+                        <span ><b>formattedDatestamp</b></span>
+                        <a href="#formattedDatestamp"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formattedDatestamp()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="86"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:86</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>translate unix timstamp to date</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>date</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formattedTimeStamp"></a>
+                    <span class="name">
+                        <span ><b>formattedTimeStamp</b></span>
+                        <a href="#formattedTimeStamp"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formattedTimeStamp()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="94"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:94</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>translate unix timstamp to time</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>time</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="59"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>checks if message author is the current user</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openThread"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>openThread</b></span>
+                        <a href="#openThread"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>openThread(thread: <a href="../classes/Thread.html" target="_self">Thread</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="102"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:102</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>send data of thread to full thread component</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>thread</td>
+                                            <td>
+                                                            <code><a href="../classes/Thread.html" target="_self" >Thread</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveEditMessage"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>saveEditMessage</b></span>
+                        <a href="#saveEditMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>saveEditMessage(messageElement: <a href="../classes/Thread.html" target="_self">Thread</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="144"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:144</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>save edit message
+if img deleted, delete img from firebase storage</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>messageElement</td>
+                                            <td>
+                                                            <code><a href="../classes/Thread.html" target="_self" >Thread</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showProfile"></a>
+                    <span class="name">
+                        <span ><b>showProfile</b></span>
+                        <a href="#showProfile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>showProfile(participant: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="133"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:133</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>show profile of user in thread</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>participant</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="channelChat"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>channelChat</b></span>
+                        <a href="#channelChat"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/ChannelChatComponent.html" target="_self" >ChannelChatComponent</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:50</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description">- the ChannelChatComponent(parant)</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dataService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>dataService</b></span>
+                        <a href="#dataService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/DataService.html" target="_self" >DataService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:51</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description">- the data service</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dialog"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>dialog</b></span>
+                        <a href="#dialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>MatDialog</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:53</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description">- for dialogs of material design</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editMessage"></a>
+                    <span class="name">
+                        <span ><b>editMessage</b></span>
+                        <a href="#editMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editMessageBox"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>editMessageBox</b></span>
+                        <a href="#editMessageBox"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ElementRef</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;editMessageBox&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="imgFile"></a>
+                    <span class="name">
+                        <span ><b>imgFile</b></span>
+                        <a href="#imgFile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isCurrentUser"></a>
+                    <span class="name">
+                        <span ><b>isCurrentUser</b></span>
+                        <a href="#isCurrentUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isImgFileEdited"></a>
+                    <span class="name">
+                        <span ><b>isImgFileEdited</b></span>
+                        <a href="#isImgFileEdited"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="messageReaction"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>messageReaction</b></span>
+                        <a href="#messageReaction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/MessageReactionComponent.html" target="_self" >MessageReactionComponent</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(MessageReactionComponent)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="threadService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>threadService</b></span>
+                        <a href="#threadService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/ThreadService.html" target="_self" >ThreadService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:52</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description">- the thread service</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="threadUser"></a>
+                    <span class="name">
+                        <span ><b>threadUser</b></span>
+                        <a href="#threadUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/User.html" target="_self" >User</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/dashboard/channel-chat/channel-thread/channel-thread.component.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, ElementRef, Input, ViewChild } from &#x27;@angular/core&#x27;;
+import { Thread } from &#x27;../../../models/thread.class&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { EmojiMartComponent } from &#x27;../../emoji-mart/emoji-mart.component&#x27;;
+import { ChannelChatComponent } from &#x27;../channel-chat.component&#x27;;
+import { MessageReactionComponent } from &#x27;../message-reaction/message-reaction.component&#x27;;
+import { DashboardComponent } from &#x27;../../dashboard.component&#x27;;
+import { DataService } from &#x27;../../../services/data.service&#x27;;
+import { ThreadService } from &#x27;../../../services/thread.service&#x27;;
+import { MatMenuModule } from &#x27;@angular/material/menu&#x27;;
+import { User } from &#x27;../../../models/user.class&#x27;;
+import { deleteObject, getStorage, ref } from &#x27;@angular/fire/storage&#x27;;
+import { ViewProfileComponent } from &#x27;../../../dialog/view-profile/view-profile.component&#x27;;
+import { MatDialog } from &#x27;@angular/material/dialog&#x27;;
+
+@Component({
+  selector: &#x27;app-channel-thread&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MessageReactionComponent,
+    EmojiMartComponent,
+    MatMenuModule,
+  ],
+  templateUrl: &#x27;./channel-thread.component.html&#x27;,
+  styleUrl: &#x27;./channel-thread.component.scss&#x27;,
+})
+
+export class ChannelThreadComponent {
+
+  @Input() thread!: Thread;
+
+  @ViewChild(MessageReactionComponent) messageReaction!: MessageReactionComponent;
+  @ViewChild(&quot;editMessageBox&quot;) editMessageBox!: ElementRef;
+  threadUser!: User
+  isCurrentUser: boolean &#x3D; false;
+  // setReactionMenuHover: boolean &#x3D; false;
+  editMessage: boolean &#x3D; false;
+  imgFile: string &#x3D; &#x27;&#x27;;
+  isImgFileEdited: boolean &#x3D; false;
+
+  /**
+   * creates an instance of ChannelThreadComponent
+   * @param channelChat - the ChannelChatComponent(parant)
+   * @param dataService - the data service
+   * @param threadService - the thread service
+   * @param dialog - for dialogs of material design
+   */
+  constructor(
+    public channelChat: ChannelChatComponent,
+    public dataService: DataService,
+    public threadService: ThreadService,
+    public dialog: MatDialog,
+  ) { }
+
+  /**
+   * checks if message author is the current user
+   */
+  ngOnInit() {
+    let currentUserId &#x3D; this.channelChat.currentUser.id;
+    let messageOwnerId &#x3D; this.thread.messages[0].senderId
+    if (currentUserId &#x3D;&#x3D; messageOwnerId) {
+      this.isCurrentUser &#x3D; true;
+    } else {
+      this.isCurrentUser &#x3D; false;
+    }
+    this.findThreadUser(messageOwnerId);
+  }
+
+  /**
+   * receive user of thread author
+   * @param {string} messageOwnerId 
+   */
+  findThreadUser(messageOwnerId: string) {
+    this.dataService.allUsers.forEach(user &#x3D;&gt; {
+      if (user.id &#x3D;&#x3D; messageOwnerId) {
+        this.threadUser &#x3D; user;
+      }
+    })
+  }
+
+  /**
+   * translate unix timstamp to date
+   * @returns - date
+   */
+  formattedDatestamp(): any {
+    return this.thread.getFormattedDatestamp();
+  }
+
+  /**
+   * translate unix timstamp to time
+   * @returns - time
+   */
+  formattedTimeStamp(): any {
+    return this.thread.getFormattedTimeStamp();
+  }
+
+  /**
+   * send data of thread to full thread component
+   * @param {Thread} thread 
+   */
+  async openThread(thread: Thread) {
+    try {
+      await this.threadService.openFullThread(true);
+      setTimeout(() &#x3D;&gt; {
+        this.threadService.changeThread(thread, this.threadUser, this.channelChat.currentChannel, this.channelChat.currentUser);
+      }, 0);
+    } catch (error) {
+      console.error(&#x27;Error opening thread:&#x27;, error);
+    }
+  }
+
+  /**
+   * set message edit true
+   */
+  editThreadMessage() {
+    this.editMessage &#x3D; true;
+  }
+
+  /**
+   * set message edit false
+   * set img edit false
+   */
+  cancelEditMessage() {
+    this.editMessage &#x3D; false;
+    this.isImgFileEdited &#x3D; false;
+  }
+
+  /**
+   * show profile of user in thread
+   * @param participant 
+   */
+  showProfile(participant: any) {
+    this.dialog.open(ViewProfileComponent, {
+      data: participant
+   });
+ }
+
+ /**
+  * save edit message
+  * if img deleted, delete img from firebase storage
+  * @param {Thread} messageElement 
+  */
+  async saveEditMessage(messageElement: Thread) {
+    messageElement.messages[0].content &#x3D; this.editMessageBox.nativeElement.value
+    if(this.isImgFileEdited) {
+    const storage &#x3D; getStorage();
+    const desertRef &#x3D; ref(storage, this.imgFile);
+    deleteObject(desertRef).then(() &#x3D;&gt; {
+      messageElement.messages[0].imgFileURL &#x3D; &#x27;&#x27;;
+    }).catch((error) &#x3D;&gt; {
+      // Uh-oh, an error occurred!
+    });
+    }
+    this.threadService.copyThreadForFirebase(messageElement)
+    this.editMessage &#x3D; false;
+  }
+
+  /**
+   * delete img of message
+   * set img edit boolean true
+   * @param {Thread} obj 
+   */
+  deleteImg(obj: Thread) {
+    this.imgFile &#x3D; obj.messages[0].imgFileURL;
+    this.isImgFileEdited &#x3D; true;
+    obj.messages[0].imgFileURL &#x3D; &#x27;&#x27;;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">@defer (on idle; prefetch on idle) {
+
+&lt;div class&#x3D;&quot;channel-chat-message&quot; [class.other-users-channel-chat-message]&#x3D;&quot;!isCurrentUser&quot;&gt;
+
+  &lt;div class&#x3D;&quot;reaction-menu&quot;&gt;
+
+    &lt;div class&#x3D;&quot;icon&quot; (click)&#x3D;&quot;messageReaction.reactToThread(thread.messages[0], &#x27;check-mark.png&#x27;)&quot;&gt;
+      &lt;img src&#x3D;&quot;../../../../assets/img/check-mark.png&quot; alt&#x3D;&quot;&quot;&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;icon&quot; (click)&#x3D;&quot;messageReaction.reactToThread(thread.messages[0], &#x27;hands-up.png&#x27;)&quot;&gt;
+      &lt;img src&#x3D;&quot;../../../../assets/img/hands-up.png&quot; alt&#x3D;&quot;&quot;&gt;
+    &lt;/div&gt;
+
+    &lt;app-emoji-mart [emojiImg]&#x3D;&quot;&#x27;emoji-reaction.png&#x27;&quot; [emojiImgHover]&#x3D;&quot;&#x27;emoji-reaction-hover.png&#x27;&quot;
+      [assigningComponent]&#x3D;&quot;&#x27;MessageReactionComponent&#x27;&quot; [threadId]&#x3D;&quot;thread.threadId&quot; [message]&#x3D;&quot;thread.messages[0]&quot;&gt;
+    &lt;/app-emoji-mart&gt;
+
+    &lt;div class&#x3D;&quot;icon&quot;&gt;
+      &lt;img class&#x3D;&quot;not-hover-icon&quot; src&#x3D;&quot;../../../../assets/img/comment.png&quot; alt&#x3D;&quot;&quot;&gt;
+      &lt;img class&#x3D;&quot;hover-icon&quot; src&#x3D;&quot;../../../../assets/img/comment-hover.png&quot; alt&#x3D;&quot;&quot; (click)&#x3D;&quot;openThread(this.thread)&quot;&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;icon&quot; *ngIf&#x3D;&quot;isCurrentUser&quot;&gt;
+      &lt;img class&#x3D;&quot;not-hover-icon&quot; src&#x3D;&quot;../../../../assets/img/dots.png&quot; alt&#x3D;&quot;&quot;&gt;
+      &lt;button class&#x3D;&quot;hover-icon&quot; mat-button [matMenuTriggerFor]&#x3D;&quot;editMessage&quot;&gt;
+        &lt;img src&#x3D;&quot;../../../../assets/img/dots-hover.png&quot; alt&#x3D;&quot;&quot;&gt;
+      &lt;/button&gt;
+      &lt;mat-menu class&#x3D;&quot;edit-message-btn&quot; #editMessage&#x3D;&quot;matMenu&quot;&gt;
+        &lt;button mat-menu-item (click)&#x3D;&quot;editThreadMessage()&quot;&gt;Nachricht bearbeiten&lt;/button&gt;
+        &lt;button class&#x3D;&quot;delete-btn&quot; mat-menu-item (click)&#x3D;&quot;dataService.deleteThread(this.thread.threadId)&quot;&gt;Nachricht löschen&lt;/button&gt;
+      &lt;/mat-menu&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;channel-chat-content&quot;&gt;
+    &lt;div class&#x3D;&quot;channel-chat-time-sender&quot;&gt;
+      &lt;span&gt;{{ formattedTimeStamp() }}&lt;/span&gt;
+      &lt;h3 (click)&#x3D;&quot;showProfile(threadUser)&quot;&gt;{{ threadUser.name }}&lt;/h3&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;message&quot; *ngIf&#x3D;&quot;!editMessage&quot;&gt;
+      &lt;img *ngIf&#x3D;&quot;thread.messages[0].imgFileURL.length &gt; 1 &amp;&amp; !thread.messages[0].imgFileURL.toLowerCase().includes(&#x27;.pdf&#x27;)&quot; src&#x3D;&quot;{{ thread.messages[0].imgFileURL }}&quot; alt&#x3D;&quot;&quot;&gt;
+      &lt;a *ngIf&#x3D;&quot;thread.messages[0].imgFileURL.length &gt; 1 &amp;&amp; thread.messages[0].imgFileURL.toLowerCase().includes(&#x27;.pdf&#x27;)&quot; href&#x3D;&quot;{{ thread.messages[0].imgFileURL }}&quot;target&#x3D;&quot;blank&quot; download&#x3D;&quot;&quot;&gt;Open PDF&lt;/a&gt;
+      &lt;span [class.other-users-message]&#x3D;&quot;!isCurrentUser&quot;&gt;
+        {{ thread.messages[0].content }}
+      &lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;message-textarea&quot; *ngIf&#x3D;&quot;editMessage&quot;&gt;
+      &lt;div class&#x3D;&quot;message-textarea-content&quot;&gt;
+        &lt;div class&#x3D;&quot;img-container&quot; *ngIf&#x3D;&quot;thread.messages[0].imgFileURL.length &gt; 1&quot;&gt;
+          &lt;img class&#x3D;&quot;delete-icon&quot; src&#x3D;&quot;../../../../assets/img/close.png&quot; alt&#x3D;&quot;&quot; (click)&#x3D;&quot;deleteImg(this.thread)&quot;&gt;
+          &lt;img class&#x3D;&quot;message-img&quot; src&#x3D;&quot;{{ thread.messages[0].imgFileURL }}&quot; alt&#x3D;&quot;&quot;&gt;
+        &lt;/div&gt;
+          &lt;textarea #editMessageBox&gt;{{ thread.messages[0].content }}&lt;/textarea&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;edit-message-btns&quot;&gt;
+        &lt;span (click)&#x3D;&quot;cancelEditMessage()&quot;&gt;Abbrechen&lt;/span&gt;
+        &lt;span (click)&#x3D;&quot;saveEditMessage(this.thread)&quot;&gt;Speichern&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;reaction-and-answercount&quot;&gt;
+
+      &lt;span *ngIf&#x3D;&quot;thread.messages.length &gt; 1 &amp;&amp; thread.messages.length &lt; 3&quot;  (click)&#x3D;&quot;openThread(this.thread)&quot;&gt;
+        {{ thread.messages.length - 1 }} Antwort
+      &lt;/span&gt;
+
+      &lt;span *ngIf&#x3D;&quot;thread.messages.length &gt;&#x3D; 3&quot;  (click)&#x3D;&quot;openThread(this.thread)&quot;&gt;
+        {{ thread.messages.length - 1 }} Antworten
+      &lt;/span&gt;
+
+      &lt;div class&#x3D;&quot;reaction-bar&quot;&gt;
+        &lt;app-message-reaction [threadMessage]&#x3D;&quot;thread.messages[0]&quot; [thread]&#x3D;&quot;thread&quot;
+          [currentUser]&#x3D;&quot;channelChat.currentUser&quot;&gt;&lt;/app-message-reaction&gt;
+        &lt;app-emoji-mart [emojiImg]&#x3D;&quot;&#x27;emoji-reaction.png&#x27;&quot; [emojiImgHover]&#x3D;&quot;&#x27;emoji-reaction-hover.png&#x27;&quot;
+          [assigningComponent]&#x3D;&quot;&#x27;MessageReactionComponent&#x27;&quot; [threadId]&#x3D;&quot;thread.threadId&quot;
+          *ngIf&#x3D;&quot;thread.messages[0].emojiReactions.length &gt; 0&quot;&gt;
+        &lt;/app-emoji-mart&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;channel-chat-sender-img&quot;&gt;
+    &lt;img src&#x3D;&quot;{{ threadUser.imageUrl }}&quot; alt&#x3D;&quot;&quot;&gt;
+  &lt;/div&gt;
+
+&lt;/div&gt;
+}</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div>@defer (on idle; prefetch on idle) {<div class="channel-chat-message" [class.other-users-channel-chat-message]="!isCurrentUser">  <div class="reaction-menu">    <div class="icon" (click)="messageReaction.reactToThread(thread.messages[0], \'check-mark.png\')">      <img src="../../../../assets/img/check-mark.png" alt="">    </div>    <div class="icon" (click)="messageReaction.reactToThread(thread.messages[0], \'hands-up.png\')">      <img src="../../../../assets/img/hands-up.png" alt="">    </div>    <app-emoji-mart [emojiImg]="\'emoji-reaction.png\'" [emojiImgHover]="\'emoji-reaction-hover.png\'"      [assigningComponent]="\'MessageReactionComponent\'" [threadId]="thread.threadId" [message]="thread.messages[0]">    </app-emoji-mart>    <div class="icon">      <img class="not-hover-icon" src="../../../../assets/img/comment.png" alt="">      <img class="hover-icon" src="../../../../assets/img/comment-hover.png" alt="" (click)="openThread(this.thread)">    </div>    <div class="icon" *ngIf="isCurrentUser">      <img class="not-hover-icon" src="../../../../assets/img/dots.png" alt="">      <button class="hover-icon" mat-button [matMenuTriggerFor]="editMessage">        <img src="../../../../assets/img/dots-hover.png" alt="">      </button>      <mat-menu class="edit-message-btn" #editMessage="matMenu">        <button mat-menu-item (click)="editThreadMessage()">Nachricht bearbeiten</button>        <button class="delete-btn" mat-menu-item (click)="dataService.deleteThread(this.thread.threadId)">Nachricht löschen</button>      </mat-menu>    </div>  </div>  <div class="channel-chat-content">    <div class="channel-chat-time-sender">      <span>{{ formattedTimeStamp() }}</span>      <h3 (click)="showProfile(threadUser)">{{ threadUser.name }}</h3>    </div>    <div class="message" *ngIf="!editMessage">      <img *ngIf="thread.messages[0].imgFileURL.length > 1 && !thread.messages[0].imgFileURL.toLowerCase().includes(\'.pdf\')" src="{{ thread.messages[0].imgFileURL }}" alt="">      <a *ngIf="thread.messages[0].imgFileURL.length > 1 && thread.messages[0].imgFileURL.toLowerCase().includes(\'.pdf\')" href="{{ thread.messages[0].imgFileURL }}"target="blank" download="">Open PDF</a>      <span [class.other-users-message]="!isCurrentUser">        {{ thread.messages[0].content }}      </span>    </div>    <div class="message-textarea" *ngIf="editMessage">      <div class="message-textarea-content">        <div class="img-container" *ngIf="thread.messages[0].imgFileURL.length > 1">          <img class="delete-icon" src="../../../../assets/img/close.png" alt="" (click)="deleteImg(this.thread)">          <img class="message-img" src="{{ thread.messages[0].imgFileURL }}" alt="">        </div>          <textarea #editMessageBox>{{ thread.messages[0].content }}</textarea>      </div>      <div class="edit-message-btns">        <span (click)="cancelEditMessage()">Abbrechen</span>        <span (click)="saveEditMessage(this.thread)">Speichern</span>      </div>    </div>    <div class="reaction-and-answercount">      <span *ngIf="thread.messages.length > 1 && thread.messages.length < 3"  (click)="openThread(this.thread)">        {{ thread.messages.length - 1 }} Antwort      </span>      <span *ngIf="thread.messages.length >= 3"  (click)="openThread(this.thread)">        {{ thread.messages.length - 1 }} Antworten      </span>      <div class="reaction-bar">        <app-message-reaction [threadMessage]="thread.messages[0]" [thread]="thread"          [currentUser]="channelChat.currentUser"></app-message-reaction>        <app-emoji-mart [emojiImg]="\'emoji-reaction.png\'" [emojiImgHover]="\'emoji-reaction-hover.png\'"          [assigningComponent]="\'MessageReactionComponent\'" [threadId]="thread.threadId"          *ngIf="thread.messages[0].emojiReactions.length > 0">        </app-emoji-mart>      </div>    </div>  </div>  <div class="channel-chat-sender-img">    <img src="{{ threadUser.imageUrl }}" alt="">  </div></div>}</div>'
+    var COMPONENTS = [{'name': 'AddChannelComponent', 'selector': 'app-add-channel'},{'name': 'AddImgToMessageComponent', 'selector': 'app-add-img-to-message'},{'name': 'AddUsersComponent', 'selector': 'app-channel-members'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChannelChatComponent', 'selector': 'app-channel-chat'},{'name': 'ChannelMembersComponent', 'selector': 'app-channel-members'},{'name': 'ChannelParticipantsComponent', 'selector': 'app-channel-participants'},{'name': 'ChannelThreadComponent', 'selector': 'app-channel-thread'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'EditChannelComponent', 'selector': 'app-edit-channel'},{'name': 'EmojiMartComponent', 'selector': 'app-emoji-mart'},{'name': 'FullThreadComponent', 'selector': 'app-full-thread'},{'name': 'FullThreadMessageComponent', 'selector': 'app-full-thread-message'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'ImprintComponent', 'selector': 'app-imprint'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LogoComponent', 'selector': 'app-logo'},{'name': 'MessageReactionComponent', 'selector': 'app-message-reaction'},{'name': 'PageNotFoundComponent', 'selector': 'app-page-not-found'},{'name': 'PasswordResetComponent', 'selector': 'app-password-reset'},{'name': 'PhotoSelectionComponent', 'selector': 'app-photo-selection'},{'name': 'PrivacyComponent', 'selector': 'app-privacy'},{'name': 'ProfileEditComponent', 'selector': 'app-profile-edit'},{'name': 'ProfileViewComponent', 'selector': 'app-profile-view'},{'name': 'ReAuthenticateUserComponent', 'selector': 'app-re-authenticate-user'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterNextComponent', 'selector': 'app-register-next'},{'name': 'SearchComponent', 'selector': 'app-search'},{'name': 'SendMailToResetPasswordComponent', 'selector': 'app-send-mail-to-reset-password'},{'name': 'SidenavComponent', 'selector': 'app-sidenav'},{'name': 'TestComponent', 'selector': 'app-test'},{'name': 'UserChatComponent', 'selector': 'app-user-chat'},{'name': 'UserChatThreadComponent', 'selector': 'app-user-chat-thread'},{'name': 'ViewProfileComponent', 'selector': 'app-view-profile'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ChannelThreadComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ChannelThreadComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

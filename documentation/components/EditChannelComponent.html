@@ -1,0 +1,1816 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>dabubble documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">dabubble documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  EditChannelComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-edit-channel</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>MatFormField</code>
+                            <code>MatLabel</code>
+                            <code>FormsModule</code>
+                            <code>MatInputModule</code>
+                            <code>CommonModule</code>
+                            <code>RouterLink</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./edit-channel.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./edit-channel.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#channelCreator" >channelCreator</a>
+                            </li>
+                            <li>
+                                <a href="#channelCreatorIsCurrentUser" >channelCreatorIsCurrentUser</a>
+                            </li>
+                            <li>
+                                <a href="#currentChannelIsDevTeamChannel" >currentChannelIsDevTeamChannel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#dataService" >dataService</a>
+                            </li>
+                            <li>
+                                <a href="#editChannelDescription_Activated" >editChannelDescription_Activated</a>
+                            </li>
+                            <li>
+                                <a href="#editChannelName_Activated" >editChannelName_Activated</a>
+                            </li>
+                            <li>
+                                <a href="#showDescriptionError" >showDescriptionError</a>
+                            </li>
+                            <li>
+                                <a href="#showNameError" >showNameError</a>
+                            </li>
+                            <li>
+                                <a href="#temporaryChannelDescription" >temporaryChannelDescription</a>
+                            </li>
+                            <li>
+                                <a href="#temporaryChannelName" >temporaryChannelName</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#checkIfDevTeamChannel" >checkIfDevTeamChannel</a>
+                            </li>
+                            <li>
+                                <a href="#closeMenu" >closeMenu</a>
+                            </li>
+                            <li>
+                                <a href="#compareChannelCreatorWithCurrentUser" >compareChannelCreatorWithCurrentUser</a>
+                            </li>
+                            <li>
+                                <a href="#editChannelDescription" >editChannelDescription</a>
+                            </li>
+                            <li>
+                                <a href="#editChannelName" >editChannelName</a>
+                            </li>
+                            <li>
+                                <a href="#getChannelCreator" >getChannelCreator</a>
+                            </li>
+                            <li>
+                                <a href="#leaveChannel" >leaveChannel</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnChanges" >ngOnChanges</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#saveDescriptionChanges" >saveDescriptionChanges</a>
+                            </li>
+                            <li>
+                                <a href="#saveNameChanges" >saveNameChanges</a>
+                            </li>
+                            <li>
+                                <a href="#validateChannelDescription" >validateChannelDescription</a>
+                            </li>
+                            <li>
+                                <a href="#validateChannelName" >validateChannelName</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#channelId" >channelId</a>
+                            </li>
+                            <li>
+                                <a href="#currentChannel" >currentChannel</a>
+                            </li>
+                            <li>
+                                <a href="#currentUser" >currentUser</a>
+                            </li>
+                            <li>
+                                <a href="#matMenuTrigger" >matMenuTrigger</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(dataService: <a href="../injectables/DataService.html" target="_self">DataService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:20</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dataService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DataService.html" target="_self" >DataService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="channelId"></a>
+                        <b>channelId</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:26</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentChannel"></a>
+                        <b>currentChannel</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Channel.html" target="_self" >Channel</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:24</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentUser"></a>
+                        <b>currentUser</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/User.html" target="_self" >User</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:25</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="matMenuTrigger"></a>
+                        <b>matMenuTrigger</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>MatMenuTrigger</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:27</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkIfDevTeamChannel"></a>
+                    <span class="name">
+                        <span ><b>checkIfDevTeamChannel</b></span>
+                        <a href="#checkIfDevTeamChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkIfDevTeamChannel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="88"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:88</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Checks if the current channel is the Devteam channel by comparing its channelId with a specific ID.
+Sets the boolean flag <code>currentChannelIsDevTeamChannel</code> accordingly.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeMenu"></a>
+                    <span class="name">
+                        <span ><b>closeMenu</b></span>
+                        <a href="#closeMenu"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeMenu()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="97"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:97</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Closes any open menu and resets edit flags for channel name and description.
+Uses <code>matMenuTrigger</code> to close the menu.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="compareChannelCreatorWithCurrentUser"></a>
+                    <span class="name">
+                        <span ><b>compareChannelCreatorWithCurrentUser</b></span>
+                        <a href="#compareChannelCreatorWithCurrentUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>compareChannelCreatorWithCurrentUser()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="77"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:77</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Compares the creator of the current channel with the current user to determine if they are the same.
+Sets the boolean flag <code>channelCreatorIsCurrentUser</code> accordingly.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editChannelDescription"></a>
+                    <span class="name">
+                        <span ><b>editChannelDescription</b></span>
+                        <a href="#editChannelDescription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editChannelDescription()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="117"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:117</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Toggles the activation state of editing the channel description.
+Sets <code>editChannelDescription_Activated</code> to its opposite value.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editChannelName"></a>
+                    <span class="name">
+                        <span ><b>editChannelName</b></span>
+                        <a href="#editChannelName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editChannelName()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="108"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:108</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Toggles the activation state of editing the channel name.
+Sets <code>editChannelName_Activated</code> to its opposite value.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getChannelCreator"></a>
+                    <span class="name">
+                        <span ><b>getChannelCreator</b></span>
+                        <a href="#getChannelCreator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getChannelCreator()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="66"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retrieves the name of the creator of the current channel.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>The name of the channel creator, or &#39;Unbekannter Ersteller&#39; if the creator is not found.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="leaveChannel"></a>
+                    <span class="name">
+                        <span ><b>leaveChannel</b></span>
+                        <a href="#leaveChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>leaveChannel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="198"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:198</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Allows the current user to leave the current channel.
+Removes the current user from the channel&#39;s participants list.
+Updates both the user&#39;s and channel&#39;s data in the data service.
+Closes any open menu using <code>matMenuTrigger</code>.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnChanges"></a>
+                    <span class="name">
+                        <span ><b>ngOnChanges</b></span>
+                        <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnChanges(changes: SimpleChanges)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="52"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Responds to changes in the input properties of the component.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>changes</td>
+                                            <td>
+                                                        <code>SimpleChanges</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>An object that holds the current and previous values of the component&#39;s input properties.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="40"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveDescriptionChanges"></a>
+                    <span class="name">
+                        <span ><b>saveDescriptionChanges</b></span>
+                        <a href="#saveDescriptionChanges"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>saveDescriptionChanges()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="181"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:181</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Saves changes made to the channel description if the new description is valid (at least 6 characters long).
+Updates <code>currentChannel.description</code> with <code>temporaryChannelDescription</code>.
+Calls <code>dataService.updateChannel</code> to update the channel with the new description.
+Deactivates editing mode for the channel description (<code>editChannelDescription_Activated</code> set to false) upon successful save.
+Sets <code>showDescriptionError</code> to true if the length of <code>temporaryChannelDescription</code> is less than 6 characters.</p>
+<p>Preconditions:</p>
+<ul>
+<li>Assumes <code>temporaryChannelDescription</code> has been previously set via <code>validateChannelDescription</code> or similar method.</li>
+</ul>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveNameChanges"></a>
+                    <span class="name">
+                        <span ><b>saveNameChanges</b></span>
+                        <a href="#saveNameChanges"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>saveNameChanges()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="146"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:146</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Saves changes made to the channel name if the new name is valid (at least 3 characters long).
+Updates <code>currentChannel.title</code> with <code>temporaryChannelName</code>.
+Calls <code>dataService.updateChannel</code> to update the channel with the new name.
+Deactivates editing mode for the channel name (<code>editChannelName_Activated</code> set to false) upon successful save.
+Sets <code>showNameError</code> to true if the length of <code>temporaryChannelName</code> is less than 3 characters.</p>
+<p>Preconditions:</p>
+<ul>
+<li>Assumes <code>temporaryChannelName</code> has been previously set via <code>validateChannelName</code> or similar method.</li>
+</ul>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validateChannelDescription"></a>
+                    <span class="name">
+                        <span ><b>validateChannelDescription</b></span>
+                        <a href="#validateChannelDescription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>validateChannelDescription(event: Event)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="164"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:164</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Validates the channel description based on the input event.
+Sets <code>temporaryChannelDescription</code> to the current input value from the event target.
+Sets <code>showDescriptionError</code> to true if the length of <code>temporaryChannelDescription</code> is less than 6 characters, otherwise false.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>Event</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The input event containing the target element.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validateChannelName"></a>
+                    <span class="name">
+                        <span ><b>validateChannelName</b></span>
+                        <a href="#validateChannelName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>validateChannelName(event: Event)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="129"
+                                    class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:129</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Validates the channel name based on the input event.
+Sets <code>temporaryChannelName</code> to the current input value from the event target.
+Sets <code>showNameError</code> to true if the length of <code>temporaryChannelName</code> is less than 3 characters, otherwise false.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>Event</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The input event containing the target element.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="channelCreator"></a>
+                    <span class="name">
+                        <span ><b>channelCreator</b></span>
+                        <a href="#channelCreator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="channelCreatorIsCurrentUser"></a>
+                    <span class="name">
+                        <span ><b>channelCreatorIsCurrentUser</b></span>
+                        <a href="#channelCreatorIsCurrentUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentChannelIsDevTeamChannel"></a>
+                    <span class="name">
+                        <span ><b>currentChannelIsDevTeamChannel</b></span>
+                        <a href="#currentChannelIsDevTeamChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dataService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>dataService</b></span>
+                        <a href="#dataService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/DataService.html" target="_self" >DataService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editChannelDescription_Activated"></a>
+                    <span class="name">
+                        <span ><b>editChannelDescription_Activated</b></span>
+                        <a href="#editChannelDescription_Activated"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editChannelName_Activated"></a>
+                    <span class="name">
+                        <span ><b>editChannelName_Activated</b></span>
+                        <a href="#editChannelName_Activated"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showDescriptionError"></a>
+                    <span class="name">
+                        <span ><b>showDescriptionError</b></span>
+                        <a href="#showDescriptionError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showNameError"></a>
+                    <span class="name">
+                        <span ><b>showNameError</b></span>
+                        <a href="#showNameError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="temporaryChannelDescription"></a>
+                    <span class="name">
+                        <span ><b>temporaryChannelDescription</b></span>
+                        <a href="#temporaryChannelDescription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="temporaryChannelName"></a>
+                    <span class="name">
+                        <span ><b>temporaryChannelName</b></span>
+                        <a href="#temporaryChannelName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/dashboard/channel-chat/edit-channel/edit-channel.component.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Input, SimpleChanges } from &#x27;@angular/core&#x27;;
+import { Channel } from &#x27;../../../models/channel.class&#x27;;
+import { MatFormField, MatLabel } from &#x27;@angular/material/form-field&#x27;;
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+import { MatInputModule } from &#x27;@angular/material/input&#x27;;
+import { User } from &#x27;../../../models/user.class&#x27;;
+import { DataService } from &#x27;../../../services/data.service&#x27;;
+import { MatMenuTrigger } from &#x27;@angular/material/menu&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { RouterLink } from &#x27;@angular/router&#x27;;
+
+
+@Component({
+  selector: &#x27;app-edit-channel&#x27;,
+  standalone: true,
+  imports: [MatFormField, MatLabel, FormsModule, MatInputModule, CommonModule, RouterLink],
+  templateUrl: &#x27;./edit-channel.component.html&#x27;,
+  styleUrl: &#x27;./edit-channel.component.scss&#x27;
+})
+export class EditChannelComponent {
+
+  constructor(public dataService: DataService) {}
+
+  @Input() currentChannel!: Channel;
+  @Input() currentUser!: User; 
+  @Input() channelId!: string;
+  @Input() matMenuTrigger!: MatMenuTrigger;
+
+  editChannelName_Activated: boolean &#x3D; false;
+  editChannelDescription_Activated: boolean &#x3D; false;
+  showNameError: boolean &#x3D; false;
+  showDescriptionError: boolean &#x3D; false;
+  temporaryChannelName: string &#x3D; &#x27;&#x27;;
+  temporaryChannelDescription: string &#x3D; &#x27;&#x27;;
+  channelCreator!: string;
+  channelCreatorIsCurrentUser: boolean &#x3D; false;
+  currentChannelIsDevTeamChannel: boolean &#x3D; false;
+
+
+  ngOnInit() {
+    this.channelCreator &#x3D; this.getChannelCreator();
+    this.compareChannelCreatorWithCurrentUser();
+    this.checkIfDevTeamChannel();
+  }
+
+
+  /**
+ * Responds to changes in the input properties of the component.
+ *
+ * @param {SimpleChanges} changes - An object that holds the current and previous values of the component&#x27;s input properties.
+ */
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes[&#x27;currentChannel&#x27;]) {
+      this.channelCreator &#x3D; this.getChannelCreator();
+      this.compareChannelCreatorWithCurrentUser();
+      this.checkIfDevTeamChannel();
+    }
+  }
+
+
+  /**
+ * Retrieves the name of the creator of the current channel.
+ *
+ * @returns {string} The name of the channel creator, or &#x27;Unbekannter Ersteller&#x27; if the creator is not found.
+ */
+   getChannelCreator(): string {
+    const creatorId &#x3D; this.currentChannel.createdBy;
+    const creator &#x3D; this.dataService.allUsers.find(user &#x3D;&gt; user.id &#x3D;&#x3D;&#x3D; creatorId);
+    return creator ? creator.name : &#x27;Unbekannter Ersteller&#x27;;
+  }
+
+
+  /**
+ * Compares the creator of the current channel with the current user to determine if they are the same.
+ * Sets the boolean flag &#x60;channelCreatorIsCurrentUser&#x60; accordingly.
+ */
+  compareChannelCreatorWithCurrentUser() {
+    const creatorId &#x3D; this.currentChannel.createdBy;
+    const currentUserId &#x3D; this.currentUser.id;
+    this.channelCreatorIsCurrentUser &#x3D; creatorId &#x3D;&#x3D;&#x3D; currentUserId;
+  }
+
+
+  /**
+ * Checks if the current channel is the Devteam channel by comparing its channelId with a specific ID.
+ * Sets the boolean flag &#x60;currentChannelIsDevTeamChannel&#x60; accordingly.
+ */
+  checkIfDevTeamChannel() {
+    this.currentChannelIsDevTeamChannel &#x3D; this.currentChannel.channelId &#x3D;&#x3D;&#x3D; &#x27;Yk2dgejx9yy7iHLij1Qj&#x27;;
+  }
+
+
+  /**
+ * Closes any open menu and resets edit flags for channel name and description.
+ * Uses &#x60;matMenuTrigger&#x60; to close the menu.
+ */
+  closeMenu() {
+    this.editChannelName_Activated &#x3D; false;
+    this.editChannelDescription_Activated &#x3D; false;
+    this.matMenuTrigger.closeMenu();
+  }
+
+
+  /**
+ * Toggles the activation state of editing the channel name.
+ * Sets &#x60;editChannelName_Activated&#x60; to its opposite value.
+ */
+  editChannelName() {
+    this.editChannelName_Activated &#x3D; !this.editChannelName_Activated;
+  }
+
+
+  /**
+ * Toggles the activation state of editing the channel description.
+ * Sets &#x60;editChannelDescription_Activated&#x60; to its opposite value.
+ */
+  editChannelDescription() {
+    this.editChannelDescription_Activated &#x3D; !this.editChannelDescription_Activated;
+  }
+
+
+  /**
+ * Validates the channel name based on the input event.
+ * Sets &#x60;temporaryChannelName&#x60; to the current input value from the event target.
+ * Sets &#x60;showNameError&#x60; to true if the length of &#x60;temporaryChannelName&#x60; is less than 3 characters, otherwise false.
+ *
+ * @param {Event} event - The input event containing the target element.
+ */
+  validateChannelName(event: Event) {
+    const input &#x3D; event.target as HTMLInputElement;
+    this.temporaryChannelName &#x3D; input.value;
+    this.showNameError &#x3D; this.temporaryChannelName.length &lt; 3;
+  }
+
+
+  /**
+ * Saves changes made to the channel name if the new name is valid (at least 3 characters long).
+ * Updates &#x60;currentChannel.title&#x60; with &#x60;temporaryChannelName&#x60;.
+ * Calls &#x60;dataService.updateChannel&#x60; to update the channel with the new name.
+ * Deactivates editing mode for the channel name (&#x60;editChannelName_Activated&#x60; set to false) upon successful save.
+ * Sets &#x60;showNameError&#x60; to true if the length of &#x60;temporaryChannelName&#x60; is less than 3 characters.
+ * 
+ * Preconditions:
+ * - Assumes &#x60;temporaryChannelName&#x60; has been previously set via &#x60;validateChannelName&#x60; or similar method.
+ */
+  saveNameChanges(){
+    if (this.temporaryChannelName.length &gt;&#x3D; 3) {
+      this.currentChannel.title &#x3D; this.temporaryChannelName;
+      this.dataService.updateChannel(this.currentChannel);
+      this.editChannelName_Activated &#x3D; !this.editChannelName_Activated;
+    } else {
+      this.showNameError &#x3D; true;
+    }
+  }
+
+
+  /**
+ * Validates the channel description based on the input event.
+ * Sets &#x60;temporaryChannelDescription&#x60; to the current input value from the event target.
+ * Sets &#x60;showDescriptionError&#x60; to true if the length of &#x60;temporaryChannelDescription&#x60; is less than 6 characters, otherwise false.
+ *
+ * @param {Event} event - The input event containing the target element.
+ */
+  validateChannelDescription(event: Event) {
+    const input &#x3D; event.target as HTMLInputElement;
+    this.temporaryChannelDescription &#x3D; input.value;
+    this.showDescriptionError &#x3D; this.temporaryChannelDescription.length &lt; 6;
+  }
+
+
+  /**
+ * Saves changes made to the channel description if the new description is valid (at least 6 characters long).
+ * Updates &#x60;currentChannel.description&#x60; with &#x60;temporaryChannelDescription&#x60;.
+ * Calls &#x60;dataService.updateChannel&#x60; to update the channel with the new description.
+ * Deactivates editing mode for the channel description (&#x60;editChannelDescription_Activated&#x60; set to false) upon successful save.
+ * Sets &#x60;showDescriptionError&#x60; to true if the length of &#x60;temporaryChannelDescription&#x60; is less than 6 characters.
+ * 
+ * Preconditions:
+ * - Assumes &#x60;temporaryChannelDescription&#x60; has been previously set via &#x60;validateChannelDescription&#x60; or similar method.
+ */
+  saveDescriptionChanges(){
+    if (this.temporaryChannelDescription.length &gt;&#x3D; 6) {
+      this.currentChannel.description &#x3D; this.temporaryChannelDescription;
+      this.dataService.updateChannel(this.currentChannel);
+      this.editChannelDescription_Activated &#x3D; !this.editChannelDescription_Activated;
+    } else {
+      this.showDescriptionError &#x3D; true;
+    }
+  }
+
+
+  /**
+ * Allows the current user to leave the current channel.
+ * Removes the current user from the channel&#x27;s participants list.
+ * Updates both the user&#x27;s and channel&#x27;s data in the data service.
+ * Closes any open menu using &#x60;matMenuTrigger&#x60;.
+ */
+  leaveChannel() {
+    this.currentUser.leaveChannel(this.channelId, this.currentChannel);
+    this.dataService.updateUser(this.currentUser);
+    this.dataService.updateChannel(this.currentChannel);
+    this.matMenuTrigger.closeMenu();
+  }
+}
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;editChannel-container&quot;&gt;
+  &lt;div class&#x3D;&quot;title-and-closeButton&quot;&gt;
+    &lt;h2&gt;# {{ currentChannel.title }} &lt;/h2&gt;
+    &lt;div (click)&#x3D;&quot;closeMenu()&quot;&gt;
+      &lt;img src&#x3D;&quot;assets/img/close.png&quot;&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Channel Name --&gt;
+  &lt;div class&#x3D;&quot;editChannelName&quot; *ngIf&#x3D;&quot;!editChannelName_Activated&quot;&gt;
+    &lt;div class&#x3D;&quot;editChannelName-header&quot;&gt;
+      &lt;div&gt;Channel-Name&lt;/div&gt;
+      &lt;button (click)&#x3D;&quot;editChannelName()&quot; class&#x3D;&quot;edit-button&quot; *ngIf&#x3D;&quot;channelCreatorIsCurrentUser&quot;&gt;Bearbeiten&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;editChannelName-title&quot;&gt; # {{ currentChannel.title }} &lt;/div&gt;
+  &lt;/div&gt; 
+
+  &lt;!-- Channel Name Edit --&gt;
+  &lt;div class&#x3D;&quot;editChannelName2&quot; *ngIf&#x3D;&quot;editChannelName_Activated&quot;&gt;
+    &lt;div class&#x3D;&quot;editChannelName-header2&quot;&gt;
+      &lt;div&gt;Channel-Name&lt;/div&gt;
+      &lt;button (click)&#x3D;&quot;saveNameChanges()&quot; class&#x3D;&quot;save-button&quot;&gt;Speichern&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;input type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;# {{ currentChannel.title }}&quot; (input)&#x3D;&quot;validateChannelName($event)&quot;&gt;
+    &lt;span *ngIf&#x3D;&quot;showNameError&quot; class&#x3D;&quot;error-message&quot;&gt;Bitte gib einen vollständigen Channel-Name an&lt;/span&gt;
+  &lt;/div&gt; 
+
+  &lt;!-- Channel Description --&gt;
+  &lt;div class&#x3D;&quot;editChannelDescription&quot; *ngIf&#x3D;&quot;!editChannelDescription_Activated&quot;&gt;
+    &lt;div class&#x3D;&quot;editChannelDescription-header&quot;&gt;
+      &lt;div&gt;Beschreibung&lt;/div&gt;
+      &lt;button (click)&#x3D;&quot;editChannelDescription()&quot; class&#x3D;&quot;edit-button&quot; *ngIf&#x3D;&quot;channelCreatorIsCurrentUser&quot;&gt;Bearbeiten&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;editChannelDescription-description&quot;&gt; {{ currentChannel.description }} &lt;/div&gt;
+    &lt;div class&#x3D;&quot;lineX&quot;&gt;&lt;/div&gt;
+    &lt;div class&#x3D;&quot;channelCreationInfos&quot;&gt;
+      &lt;span class&#x3D;&quot;createdBy&quot;&gt;Erstellt von&lt;/span&gt;
+      &lt;span class&#x3D;&quot;name&quot;&gt;{{ channelCreator }}&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt; 
+
+  &lt;!-- Channel Description Edit --&gt;
+  &lt;div class&#x3D;&quot;editChannelDescription2&quot; *ngIf&#x3D;&quot;editChannelDescription_Activated&quot;&gt;
+    &lt;div class&#x3D;&quot;editChannelDescription-header2&quot;&gt;
+      &lt;div&gt;Beschreibung&lt;/div&gt;
+      &lt;button (click)&#x3D;&quot;saveDescriptionChanges()&quot; class&#x3D;&quot;save-button&quot;&gt;Speichern&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;input type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Teile Infos zu diesem Channel&quot; (input)&#x3D;&quot;validateChannelDescription($event)&quot;&gt;
+    &lt;span *ngIf&#x3D;&quot;showDescriptionError&quot; class&#x3D;&quot;error-message&quot;&gt;Bitte teile Infos zu diesem Channel&lt;/span&gt;
+    &lt;div class&#x3D;&quot;lineX&quot;&gt;&lt;/div&gt;
+    &lt;div class&#x3D;&quot;channelCreationInfos&quot;&gt;
+      &lt;span class&#x3D;&quot;createdBy&quot;&gt;Erstellt von&lt;/span&gt;
+      &lt;span class&#x3D;&quot;name&quot;&gt;{{ channelCreator }}&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Leave Channel Button --&gt;
+  &lt;div class&#x3D;&quot;leaveButton-container&quot; *ngIf&#x3D;&quot;!currentChannelIsDevTeamChannel&quot;&gt;
+    &lt;button class&#x3D;&quot;leaveChannel-button&quot; (click)&#x3D;&quot;leaveChannel()&quot; 
+     [routerLink]&#x3D;&quot;[&#x27;/dashboard/channel&#x27;, &#x27;Yk2dgejx9yy7iHLij1Qj&#x27; ]&quot;&gt;Channel verlassen&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="editChannel-container">  <div class="title-and-closeButton">    <h2># {{ currentChannel.title }} </h2>    <div (click)="closeMenu()">      <img src="assets/img/close.png">    </div>  </div>  <!-- Channel Name -->  <div class="editChannelName" *ngIf="!editChannelName_Activated">    <div class="editChannelName-header">      <div>Channel-Name</div>      <button (click)="editChannelName()" class="edit-button" *ngIf="channelCreatorIsCurrentUser">Bearbeiten</button>    </div>    <div class="editChannelName-title"> # {{ currentChannel.title }} </div>  </div>   <!-- Channel Name Edit -->  <div class="editChannelName2" *ngIf="editChannelName_Activated">    <div class="editChannelName-header2">      <div>Channel-Name</div>      <button (click)="saveNameChanges()" class="save-button">Speichern</button>    </div>    <input type="text" placeholder="# {{ currentChannel.title }}" (input)="validateChannelName($event)">    <span *ngIf="showNameError" class="error-message">Bitte gib einen vollständigen Channel-Name an</span>  </div>   <!-- Channel Description -->  <div class="editChannelDescription" *ngIf="!editChannelDescription_Activated">    <div class="editChannelDescription-header">      <div>Beschreibung</div>      <button (click)="editChannelDescription()" class="edit-button" *ngIf="channelCreatorIsCurrentUser">Bearbeiten</button>    </div>    <div class="editChannelDescription-description"> {{ currentChannel.description }} </div>    <div class="lineX"></div>    <div class="channelCreationInfos">      <span class="createdBy">Erstellt von</span>      <span class="name">{{ channelCreator }}</span>    </div>  </div>   <!-- Channel Description Edit -->  <div class="editChannelDescription2" *ngIf="editChannelDescription_Activated">    <div class="editChannelDescription-header2">      <div>Beschreibung</div>      <button (click)="saveDescriptionChanges()" class="save-button">Speichern</button>    </div>    <input type="text" placeholder="Teile Infos zu diesem Channel" (input)="validateChannelDescription($event)">    <span *ngIf="showDescriptionError" class="error-message">Bitte teile Infos zu diesem Channel</span>    <div class="lineX"></div>    <div class="channelCreationInfos">      <span class="createdBy">Erstellt von</span>      <span class="name">{{ channelCreator }}</span>    </div>  </div>  <!-- Leave Channel Button -->  <div class="leaveButton-container" *ngIf="!currentChannelIsDevTeamChannel">    <button class="leaveChannel-button" (click)="leaveChannel()"      [routerLink]="[\'/dashboard/channel\', \'Yk2dgejx9yy7iHLij1Qj\' ]">Channel verlassen</button>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AddChannelComponent', 'selector': 'app-add-channel'},{'name': 'AddImgToMessageComponent', 'selector': 'app-add-img-to-message'},{'name': 'AddUsersComponent', 'selector': 'app-channel-members'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChannelChatComponent', 'selector': 'app-channel-chat'},{'name': 'ChannelMembersComponent', 'selector': 'app-channel-members'},{'name': 'ChannelParticipantsComponent', 'selector': 'app-channel-participants'},{'name': 'ChannelThreadComponent', 'selector': 'app-channel-thread'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'EditChannelComponent', 'selector': 'app-edit-channel'},{'name': 'EmojiMartComponent', 'selector': 'app-emoji-mart'},{'name': 'FullThreadComponent', 'selector': 'app-full-thread'},{'name': 'FullThreadMessageComponent', 'selector': 'app-full-thread-message'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'ImprintComponent', 'selector': 'app-imprint'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LogoComponent', 'selector': 'app-logo'},{'name': 'MessageReactionComponent', 'selector': 'app-message-reaction'},{'name': 'PageNotFoundComponent', 'selector': 'app-page-not-found'},{'name': 'PasswordResetComponent', 'selector': 'app-password-reset'},{'name': 'PhotoSelectionComponent', 'selector': 'app-photo-selection'},{'name': 'PrivacyComponent', 'selector': 'app-privacy'},{'name': 'ProfileEditComponent', 'selector': 'app-profile-edit'},{'name': 'ProfileViewComponent', 'selector': 'app-profile-view'},{'name': 'ReAuthenticateUserComponent', 'selector': 'app-re-authenticate-user'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterNextComponent', 'selector': 'app-register-next'},{'name': 'SearchComponent', 'selector': 'app-search'},{'name': 'SendMailToResetPasswordComponent', 'selector': 'app-send-mail-to-reset-password'},{'name': 'SidenavComponent', 'selector': 'app-sidenav'},{'name': 'TestComponent', 'selector': 'app-test'},{'name': 'UserChatComponent', 'selector': 'app-user-chat'},{'name': 'UserChatThreadComponent', 'selector': 'app-user-chat-thread'},{'name': 'ViewProfileComponent', 'selector': 'app-view-profile'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'EditChannelComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'EditChannelComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

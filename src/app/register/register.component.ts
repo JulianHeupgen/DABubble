@@ -64,7 +64,7 @@ export class RegisterComponent {
     const { privacy, ...userData } = this.registerForm.value;
     this.userRegService.saveUserData(userData);
     this.registerForm.reset();
-    this.route.navigate(['/register/next']).then(() => console.log('Moved to Step 2'));
+    this.route.navigate(['/register/next']).then();
   }
 
 }

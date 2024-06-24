@@ -1,0 +1,2480 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>dabubble documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">dabubble documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  SidenavComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/dashboard/sidenav/sidenav.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-sidenav</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>MatSidenavModule</code>
+                            <code>CommonModule</code>
+                            <code>MatButtonModule</code>
+                            <code>MatDrawer</code>
+                            <code>MatDrawerContainer</code>
+                            <code>MatDrawerContent</code>
+                            <code>RouterModule</code>
+                            <code>MatDialogModule</code>
+                                <code><a href="../components/SearchComponent.html" target="_self" >SearchComponent</a></code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./sidenav.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./sidenav.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#allChannels" >allChannels</a>
+                            </li>
+                            <li>
+                                <a href="#channels" >channels</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#channelSub" >channelSub</a>
+                            </li>
+                            <li>
+                                <a href="#channelTitles" >channelTitles</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#dialog" >dialog</a>
+                            </li>
+                            <li>
+                                <a href="#directMessageTitle" >directMessageTitle</a>
+                            </li>
+                            <li>
+                                <a href="#online" >online</a>
+                            </li>
+                            <li>
+                                <a href="#selectedUser" >selectedUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#sidenavService" >sidenavService</a>
+                            </li>
+                            <li>
+                                <a href="#userId" >userId</a>
+                            </li>
+                            <li>
+                                <a href="#users" >users</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#userSub" >userSub</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#addDirectMessage" >addDirectMessage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#buildDisplayName" >buildDisplayName</a>
+                            </li>
+                            <li>
+                                <a href="#checkDataForChannelNames" >checkDataForChannelNames</a>
+                            </li>
+                            <li>
+                                <a href="#dataSubscriptions" >dataSubscriptions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#findUserById" >findUserById</a>
+                            </li>
+                            <li>
+                                <a href="#getUserDirectMessages" >getUserDirectMessages</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#isUniqueDirectMessage" >isUniqueDirectMessage</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#onResize" >onResize</a>
+                            </li>
+                            <li>
+                                <a href="#openDialog" >openDialog</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#processUser" >processUser</a>
+                            </li>
+                            <li>
+                                <a href="#refreshChannels" >refreshChannels</a>
+                            </li>
+                            <li>
+                                <a href="#setUserData" >setUserData</a>
+                            </li>
+                            <li>
+                                <a href="#sortDirectMessageUsers" >sortDirectMessageUsers</a>
+                            </li>
+                            <li>
+                                <a href="#truncateTitleName" >truncateTitleName</a>
+                            </li>
+                            <li>
+                                <a href="#updateChannelTitles" >updateChannelTitles</a>
+                            </li>
+                            <li>
+                                <a href="#updateDirectMessages" >updateDirectMessages</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>HostListeners</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#window:resize" >window:resize</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(dataService: <a href="../injectables/DataService.html" target="_self">DataService</a>, authService: <a href="../injectables/AuthService.html" target="_self">AuthService</a>, dialog: MatDialog, sidenavService: <a href="../injectables/SidenavService.html" target="_self">SidenavService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:64</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dataService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DataService.html" target="_self" >DataService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>sidenavService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SidenavService.html" target="_self" >SidenavService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+    <section data-compodoc="block-methods">
+    <h3>HostListeners</h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="window:resize"></a>
+                    <span class="name">
+                        <span ><b>window:resize</b></span>
+                        <a href="#window:resize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <i>Arguments : </i><code>'$event' </code>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>window:resize()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="81"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:81</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handles the window resize event to dynamically adjust UI components.
+This method is triggered whenever the window is resized. It updates the
+<code>windowWidth</code> property of the <code>sidenavService</code> with the current window width
+and calls <code>updateScreenSize</code> to adjust UI components based on the new window size.
+This ensures that the application&#39;s UI responsiveness is maintained across different
+screen sizes.</p>
+</div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addDirectMessage"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>addDirectMessage</b></span>
+                        <a href="#addDirectMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addDirectMessage(user: <a href="../classes/User.html" target="_self">User</a>, displayName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="307"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:307</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Adds processed direct message data to the <code>directMessageTitle</code> array for rendering.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../classes/User.html" target="_self" >User</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user object containing details for the direct message.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>displayName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user&#39;s formatted display name.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buildDisplayName"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>buildDisplayName</b></span>
+                        <a href="#buildDisplayName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>buildDisplayName(user: <a href="../classes/User.html" target="_self">User</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="276"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:276</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Builds and returns a display name for the provided user.
+This method takes a user object and constructs a display name.
+If the user&#39;s ID matches the ID of the first selected user, it appends &quot;(Du)&quot; to the name
+to indicate that the user is the current user. This helps in distinguishing the current user
+in the UI.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../classes/User.html" target="_self" >User</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user object for which to build the display name.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>The constructed display name for the user.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkDataForChannelNames"></a>
+                    <span class="name">
+                        <span ><b>checkDataForChannelNames</b></span>
+                        <a href="#checkDataForChannelNames"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkDataForChannelNames()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="140"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:140</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Checks if user and channel data are both available and updates UI components accordingly.
+This method verifies the presence of both user and channel data loaded into the component.
+If both data sets are present, it triggers updates to channel titles and refreshes the display
+of direct messages. This ensures that the UI components related to channels and messages
+reflect the current and complete data.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dataSubscriptions"></a>
+                    <span class="name">
+                        <span ><b>dataSubscriptions</b></span>
+                        <a href="#dataSubscriptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>dataSubscriptions()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="96"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:96</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Subscribes to user and channel data streams from the DataService.
+This method initializes and manages data subscriptions that populate the component&#39;s
+user and channel data. Upon receiving new users, it updates direct messages and channel
+information. It also attempts to fetch and set user-specific data based on an authenticated
+user ID from the AuthService. Errors in fetching the user ID are logged.
+Additionally, this method subscribes to the channel list updates, ensuring the component
+remains updated with the latest channel data.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findUserById"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>findUserById</b></span>
+                        <a href="#findUserById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findUserById(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="261"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:261</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Finds and returns a user object based on the provided user ID.
+This method searches through the list of users to find a user with a matching ID.
+If a match is found, the corresponding user object is returned. If no match is found,
+the method returns undefined.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The ID of the user to be found.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >User | undefined</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>The user object if found, otherwise undefined.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUserDirectMessages"></a>
+                    <span class="name">
+                        <span ><b>getUserDirectMessages</b></span>
+                        <a href="#getUserDirectMessages"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUserDirectMessages()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="219"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:219</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retrieves and processes direct messages for the selected users.
+This method clears the existing list of direct message titles and checks if there are any selected users.
+If no users are selected, it logs a message and exits. For each selected user, it processes their direct
+messages by extracting relevant data and then sorts the direct message list to ensure proper display order.
+This method is crucial for maintaining an up-to-date and orderly display of direct messages in the UI.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isUniqueDirectMessage"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>isUniqueDirectMessage</b></span>
+                        <a href="#isUniqueDirectMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isUniqueDirectMessage(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="295"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:295</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Checks if a user is already included in the direct message list.
+This method determines if a user with the given user ID is unique
+in the context of the current direct message titles. It returns true
+if the user ID is not found in the direct message list, indicating
+that the user is unique and should be added. Otherwise, it returns false.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The ID of the user to check for uniqueness.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>True if the user is unique (not in the direct message list), otherwise false.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="369"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:369</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Cleans up subscriptions to prevent memory leaks.
+This method is called when the component is destroyed. It unsubscribes
+from the <code>userSub</code> and <code>channelSub</code> subscriptions to ensure that there are
+no active subscriptions left, which helps in preventing memory leaks and
+potential performance issues.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onResize"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>onResize</b></span>
+                        <a href="#onResize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onResize()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@HostListener(&#x27;window:resize&#x27;, [&#x27;$event&#x27;])<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="81"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:81</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handles the window resize event to dynamically adjust UI components.
+This method is triggered whenever the window is resized. It updates the
+<code>windowWidth</code> property of the <code>sidenavService</code> with the current window width
+and calls <code>updateScreenSize</code> to adjust UI components based on the new window size.
+This ensures that the application&#39;s UI responsiveness is maintained across different
+screen sizes.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openDialog"></a>
+                    <span class="name">
+                        <span ><b>openDialog</b></span>
+                        <a href="#openDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openDialog()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="342"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:342</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens a dialog to add a new channel.
+This method uses the Angular Material Dialog service to open a dialog
+component, specifically the <code>AddChannelComponent</code>. This allows users to
+interact with a form or interface for adding a new channel to the application.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="processUser"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>processUser</b></span>
+                        <a href="#processUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>processUser(selected: <a href="../classes/User.html" target="_self">User</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="239"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:239</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Processes the chat information of a selected user to extract and prepare direct message details.
+This method iterates through each chat associated with the selected user. For each chat, it finds the
+corresponding chat partner using their ID. If the chat partner is found and not already listed in the direct
+messages, their details are added to the direct message list with a display name formatted for the UI.
+This method ensures that the direct messages are accurately represented with up-to-date information.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>selected</td>
+                                            <td>
+                                                            <code><a href="../classes/User.html" target="_self" >User</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user object containing chat information to be processed.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refreshChannels"></a>
+                    <span class="name">
+                        <span ><b>refreshChannels</b></span>
+                        <a href="#refreshChannels"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>refreshChannels()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="178"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:178</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Refreshes the list of channels by fetching the latest data from the DataService.
+This method subscribes to the channel data from the DataService, updating the local
+channel list with the new data as it becomes available. Following the data update,
+it triggers methods to update channel titles and verify the consistency of channel
+names with user data, ensuring that the UI reflects the most current information.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setUserData"></a>
+                    <span class="name">
+                        <span ><b>setUserData</b></span>
+                        <a href="#setUserData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setUserData(uid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="156"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:156</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sets the data for a specified user based on the provided authentication ID.
+This method searches the loaded user data for a user with a matching authentication ID.
+If the user is found, they are set as the currently selected user. If the user data
+is not yet loaded or no matching user is found, appropriate error messages are logged.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>uid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The authentication ID used to identify the user.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sortDirectMessageUsers"></a>
+                    <span class="name">
+                        <span ><b>sortDirectMessageUsers</b></span>
+                        <a href="#sortDirectMessageUsers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>sortDirectMessageUsers()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="327"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:327</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Adds a user&#39;s direct message details to the direct message list.
+This method takes a user object and a display name, and pushes an object
+containing the user&#39;s direct message information (ID, image URL, name, and online status)
+onto the <code>directMessageTitle</code> array. This helps in maintaining a list of direct messages
+for display in the UI.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="truncateTitleName"></a>
+                    <span class="name">
+                        <span ><b>truncateTitleName</b></span>
+                        <a href="#truncateTitleName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>truncateTitleName(title: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, limit: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="357"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:357</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Truncates the given title if it exceeds the specified character limit.
+This method checks the length of the provided title and, if it exceeds
+the specified limit, truncates it to the limit and appends an ellipsis (&#39;...&#39;).
+If the title is within the limit, it is returned unchanged.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>title</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The title to be truncated.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>limit</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The maximum number of characters allowed for the title.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>The truncated title if it exceeds the limit, otherwise the original title.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateChannelTitles"></a>
+                    <span class="name">
+                        <span ><b>updateChannelTitles</b></span>
+                        <a href="#updateChannelTitles"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateChannelTitles()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="194"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:194</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Updates the list of channel titles for display based on the channels associated with the selected user.
+This method iterates over each selected user and their associated channel IDs, searching for matching
+channels in the local channel data. If a match is found, the channel&#39;s details are added to the
+channelTitles array for display purposes. This ensures that the displayed channel titles are accurate
+and up-to-date with the user&#39;s channel subscriptions.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateDirectMessages"></a>
+                    <span class="name">
+                        <span ><b>updateDirectMessages</b></span>
+                        <a href="#updateDirectMessages"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateDirectMessages()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="126"
+                                    class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:126</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Updates the display of direct messages based on the currently selected user.
+This method checks if there is at least one selected user and, if so, triggers
+a method to retrieve and update direct messages for that user. It ensures that
+the direct messages section is refreshed appropriately when user selection changes
+or relevant user data is updated.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="allChannels"></a>
+                    <span class="name">
+                        <span ><b>allChannels</b></span>
+                        <a href="#allChannels"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Channel.html" target="_self" >Partial&lt;Channel&gt;[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="channels"></a>
+                    <span class="name">
+                        <span ><b>channels</b></span>
+                        <a href="#channels"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="channelSub"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>channelSub</b></span>
+                        <a href="#channelSub"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Subscription()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:64</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="channelTitles"></a>
+                    <span class="name">
+                        <span ><b>channelTitles</b></span>
+                        <a href="#channelTitles"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dialog"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>dialog</b></span>
+                        <a href="#dialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>MatDialog</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:67</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="directMessageTitle"></a>
+                    <span class="name">
+                        <span ><b>directMessageTitle</b></span>
+                        <a href="#directMessageTitle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:60</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="online"></a>
+                    <span class="name">
+                        <span ><b>online</b></span>
+                        <a href="#online"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:53</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedUser"></a>
+                    <span class="name">
+                        <span ><b>selectedUser</b></span>
+                        <a href="#selectedUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/User.html" target="_self" >User[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sidenavService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>sidenavService</b></span>
+                        <a href="#sidenavService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/SidenavService.html" target="_self" >SidenavService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:67</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userId"></a>
+                    <span class="name">
+                        <span ><b>userId</b></span>
+                        <a href="#userId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="users"></a>
+                    <span class="name">
+                        <span ><b>users</b></span>
+                        <a href="#users"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userSub"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>userSub</b></span>
+                        <a href="#userSub"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Subscription()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/dashboard/sidenav/sidenav.component.ts:63</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { animate, state, style, transition, trigger } from &#x27;@angular/animations&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { Component, HostListener } from &#x27;@angular/core&#x27;;
+import { MatButtonModule } from &#x27;@angular/material/button&#x27;;
+import { MatSidenavModule, MatDrawer, MatDrawerContainer, MatDrawerContent } from &#x27;@angular/material/sidenav&#x27;;
+import { DataService } from &#x27;../../services/data.service&#x27;;
+import { User } from &#x27;../../models/user.class&#x27;;
+import { RouterModule } from &#x27;@angular/router&#x27;;
+import { AuthService } from &#x27;../../services/auth.service&#x27;;
+import { Channel } from &#x27;../../models/channel.class&#x27;;
+import { Subscription } from &#x27;rxjs&#x27;;
+import { MatDialog, MatDialogModule } from &#x27;@angular/material/dialog&#x27;;
+import { AddChannelComponent } from &#x27;../../dialog/add-channel/add-channel.component&#x27;;
+import { SearchComponent } from &#x27;../search/search.component&#x27;;
+import { SidenavService } from &#x27;../../services/sidenav.service&#x27;;
+
+
+@Component({
+  selector: &#x27;app-sidenav&#x27;,
+  standalone: true,
+  imports: [
+    MatSidenavModule,
+    CommonModule,
+    MatButtonModule,
+    MatDrawer,
+    MatDrawerContainer,
+    MatDrawerContent,
+    RouterModule,
+    MatDialogModule,
+    SearchComponent
+  ],
+  templateUrl: &#x27;./sidenav.component.html&#x27;,
+  styleUrl: &#x27;./sidenav.component.scss&#x27;,
+  animations: [
+    trigger(&#x27;fadeInOut&#x27;, [
+      state(&#x27;void&#x27;, style({
+        opacity: 0,
+        transform: &#x27;translateX(-100%)&#x27;
+      })),
+      state(&#x27;*&#x27;, style({
+        opacity: 1,
+        transform: &#x27;translateX(0)&#x27;
+      })),
+      transition(&#x27;:enter&#x27;, [animate(&#x27;300ms ease-in&#x27;)]),
+      transition(&#x27;:leave&#x27;, [animate(&#x27;300ms ease-out&#x27;)])
+    ])
+  ]
+})
+
+
+export class SidenavComponent {
+
+  online: boolean &#x3D; true;
+  users: any;
+  channels: any;
+  userId: string &#x3D; &#x27;&#x27;;
+  selectedUser: User[] &#x3D; [];
+  allChannels: Partial&lt;Channel&gt;[] &#x3D; [];
+  channelTitles: { channelId: string, title: string }[] &#x3D; [];
+  directMessageTitle: { imageUrl: string, onlineStatus: string, name: string, id: string }[] &#x3D; [];
+
+
+  private userSub &#x3D; new Subscription();
+  private channelSub &#x3D; new Subscription();
+
+
+  constructor(private dataService: DataService, private authService: AuthService, public dialog: MatDialog, public sidenavService: SidenavService) {
+    this.dataSubscriptions();
+  }
+
+
+  /**
+  * Handles the window resize event to dynamically adjust UI components.
+  * This method is triggered whenever the window is resized. It updates the
+  * &#x60;windowWidth&#x60; property of the &#x60;sidenavService&#x60; with the current window width
+  * and calls &#x60;updateScreenSize&#x60; to adjust UI components based on the new window size.
+  * This ensures that the application&#x27;s UI responsiveness is maintained across different
+  * screen sizes.
+  */
+  @HostListener(&#x27;window:resize&#x27;, [&#x27;$event&#x27;])
+  onResize() {
+    this.sidenavService.windowWidth &#x3D; window.innerWidth;
+    this.sidenavService.updateScreenSize();
+  }
+
+
+  /**
+  * Subscribes to user and channel data streams from the DataService.
+  * This method initializes and manages data subscriptions that populate the component&#x27;s
+  * user and channel data. Upon receiving new users, it updates direct messages and channel
+  * information. It also attempts to fetch and set user-specific data based on an authenticated
+  * user ID from the AuthService. Errors in fetching the user ID are logged.
+  * Additionally, this method subscribes to the channel list updates, ensuring the component
+  * remains updated with the latest channel data.
+  */
+  dataSubscriptions() {
+    this.userSub &#x3D; this.dataService.getUsersList().subscribe(users &#x3D;&gt; {
+      this.users &#x3D; users;
+      this.updateDirectMessages();
+      this.refreshChannels();
+      this.authService.getUserAuthId().then(uid &#x3D;&gt; {
+        if (uid) {
+          this.setUserData(uid);
+        } else {
+          console.log(&#x27;Keine UID verfügbar&#x27;);
+        }
+      }).catch(error &#x3D;&gt; {
+        console.error(&#x27;Fehler beim Laden der UID:&#x27;, error);
+      });
+    });
+    this.channelSub &#x3D; this.dataService.getChannelsList().subscribe(channels &#x3D;&gt; {
+      this.channels &#x3D; channels;
+      this.refreshChannels();
+      this.checkDataForChannelNames();
+    });
+  }
+
+
+  /**
+  * Updates the display of direct messages based on the currently selected user.
+  * This method checks if there is at least one selected user and, if so, triggers
+  * a method to retrieve and update direct messages for that user. It ensures that
+  * the direct messages section is refreshed appropriately when user selection changes
+  * or relevant user data is updated.
+  */
+  updateDirectMessages() {
+    if (this.selectedUser &amp;&amp; this.selectedUser.length &gt; 0) {
+      this.getUserDirectMessages();
+    }
+  }
+
+
+  /**
+  * Checks if user and channel data are both available and updates UI components accordingly.
+  * This method verifies the presence of both user and channel data loaded into the component.
+  * If both data sets are present, it triggers updates to channel titles and refreshes the display
+  * of direct messages. This ensures that the UI components related to channels and messages
+  * reflect the current and complete data.
+  */
+  checkDataForChannelNames() {
+    if (this.users &amp;&amp; this.channels) {
+      this.updateChannelTitles();
+      this.getUserDirectMessages();
+    }
+  }
+
+
+  /**
+  * Sets the data for a specified user based on the provided authentication ID.
+  * This method searches the loaded user data for a user with a matching authentication ID.
+  * If the user is found, they are set as the currently selected user. If the user data
+  * is not yet loaded or no matching user is found, appropriate error messages are logged.
+  *
+  * @param {string} uid - The authentication ID used to identify the user.
+  */
+  setUserData(uid: string) {
+    if (!this.users) {
+      console.error(&#x27;Benutzerdaten sind noch nicht geladen.&#x27;);
+      return;
+    }
+    const user &#x3D; this.users.find((user: User) &#x3D;&gt; user.authUserId &#x3D;&#x3D;&#x3D; uid);
+    if (user) {
+      this.selectedUser &#x3D; [];
+      this.selectedUser.push(user);
+    } else {
+      console.log(&#x27;Kein User gefunden&#x27;, uid);
+    }
+  }
+
+
+  /**
+  * Refreshes the list of channels by fetching the latest data from the DataService.
+  * This method subscribes to the channel data from the DataService, updating the local
+  * channel list with the new data as it becomes available. Following the data update,
+  * it triggers methods to update channel titles and verify the consistency of channel
+  * names with user data, ensuring that the UI reflects the most current information.
+  */
+  refreshChannels() {
+    this.dataService.getChannelsList().subscribe(channels &#x3D;&gt; {
+      this.channels &#x3D; channels;
+      this.updateChannelTitles();
+      this.checkDataForChannelNames();
+    });
+  }
+
+
+  /**
+  * Updates the list of channel titles for display based on the channels associated with the selected user.
+  * This method iterates over each selected user and their associated channel IDs, searching for matching
+  * channels in the local channel data. If a match is found, the channel&#x27;s details are added to the
+  * channelTitles array for display purposes. This ensures that the displayed channel titles are accurate
+  * and up-to-date with the user&#x27;s channel subscriptions.
+  */
+  updateChannelTitles() {
+    this.channelTitles &#x3D; [];
+    this.selectedUser.forEach(user &#x3D;&gt; {
+      if (user.channels &amp;&amp; Array.isArray(user.channels)) {
+        user.channels.forEach(userChannelId &#x3D;&gt; {
+          const matchedChannel &#x3D; this.channels.find((channel: Channel) &#x3D;&gt; channel.channelId &#x3D;&#x3D;&#x3D; userChannelId);
+          if (matchedChannel) { // &amp;&amp; matchedChannel.channelId &amp;&amp; matchedChannel.title) {
+            this.channelTitles.push({
+              channelId: matchedChannel.channelId,
+              title: matchedChannel.title
+            });
+          }
+        });
+      }
+    });
+  }
+
+
+  /**
+  * Retrieves and processes direct messages for the selected users.
+  * This method clears the existing list of direct message titles and checks if there are any selected users.
+  * If no users are selected, it logs a message and exits. For each selected user, it processes their direct
+  * messages by extracting relevant data and then sorts the direct message list to ensure proper display order.
+  * This method is crucial for maintaining an up-to-date and orderly display of direct messages in the UI.
+  */
+  getUserDirectMessages(): void {
+    this.directMessageTitle &#x3D; [];
+    if (!this.selectedUser || this.selectedUser.length &#x3D;&#x3D;&#x3D; 0) {
+      console.log(&#x27;Keine ausgewählten Benutzer vorhanden.&#x27;);
+      return;
+    }
+    this.selectedUser.forEach(user &#x3D;&gt; this.processUser(user));
+    this.sortDirectMessageUsers();
+  }
+
+
+  /**
+  * Processes the chat information of a selected user to extract and prepare direct message details.
+  * This method iterates through each chat associated with the selected user. For each chat, it finds the
+  * corresponding chat partner using their ID. If the chat partner is found and not already listed in the direct
+  * messages, their details are added to the direct message list with a display name formatted for the UI.
+  * This method ensures that the direct messages are accurately represented with up-to-date information.
+  *
+  * @param {User} selected - The user object containing chat information to be processed.
+  */
+  private processUser(selected: User): void {
+    if (!selected.userChats || !Array.isArray(selected.userChats)) return;
+    selected.userChats.forEach(chat &#x3D;&gt; {
+      const matchedUser &#x3D; this.findUserById(chat.userChatId);
+      if (!matchedUser) return;
+      const displayName &#x3D; this.buildDisplayName(matchedUser);
+      if (this.isUniqueDirectMessage(matchedUser.id)) {
+        this.addDirectMessage(matchedUser, displayName);
+      }
+    });
+  }
+
+
+  /**
+  * Finds and returns a user object based on the provided user ID.
+  * This method searches through the list of users to find a user with a matching ID.
+  * If a match is found, the corresponding user object is returned. If no match is found,
+  * the method returns undefined.
+  *
+  * @param {string} userId - The ID of the user to be found.
+  * @returns {User | undefined} - The user object if found, otherwise undefined.
+  */
+  private findUserById(userId: string): User | undefined {
+    return this.users.find((user: User) &#x3D;&gt; user.id &#x3D;&#x3D;&#x3D; userId);
+  }
+
+
+  /**
+  * Builds and returns a display name for the provided user.
+  * This method takes a user object and constructs a display name.
+  * If the user&#x27;s ID matches the ID of the first selected user, it appends &quot;(Du)&quot; to the name
+  * to indicate that the user is the current user. This helps in distinguishing the current user
+  * in the UI.
+  *
+  * @param {User} user - The user object for which to build the display name.
+  * @returns {string} - The constructed display name for the user.
+  */
+  private buildDisplayName(user: User): string {
+    let displayName &#x3D; user.name;
+    if (user.id &#x3D;&#x3D;&#x3D; this.selectedUser[0].id) {
+      displayName +&#x3D; &quot; (Du)&quot;;
+    }
+    return displayName;
+  }
+
+
+  /**
+  * Checks if a user is already included in the direct message list.
+  * This method determines if a user with the given user ID is unique
+  * in the context of the current direct message titles. It returns true
+  * if the user ID is not found in the direct message list, indicating
+  * that the user is unique and should be added. Otherwise, it returns false.
+  *
+  * @param {string} userId - The ID of the user to check for uniqueness.
+  * @returns {boolean} - True if the user is unique (not in the direct message list), otherwise false.
+  */
+  private isUniqueDirectMessage(userId: string): boolean {
+    return !this.directMessageTitle.some(dm &#x3D;&gt; dm.id &#x3D;&#x3D;&#x3D; userId);
+  }
+
+
+  /**
+   * Adds processed direct message data to the &#x60;directMessageTitle&#x60; array for rendering.
+   * 
+   * @param user - The user object containing details for the direct message.
+   * @param displayName - The user&#x27;s formatted display name.
+   * @param chatId - The ID of the chat associated with the direct message.
+   */
+  private addDirectMessage(user: User, displayName: string): void {
+    this.directMessageTitle.push({
+      id: user.id,
+      imageUrl: user.imageUrl,
+      name: displayName,
+      onlineStatus: user.onlineStatus
+    });
+  }
+
+
+  /**
+  * Adds a user&#x27;s direct message details to the direct message list.
+  * This method takes a user object and a display name, and pushes an object
+  * containing the user&#x27;s direct message information (ID, image URL, name, and online status)
+  * onto the &#x60;directMessageTitle&#x60; array. This helps in maintaining a list of direct messages
+  * for display in the UI.
+  *
+  * @param {User} user - The user object containing the direct message details.
+  * @param {string} displayName - The display name to be used for the user.
+  */
+  sortDirectMessageUsers() {
+    this.directMessageTitle.sort((a, b) &#x3D;&gt; {
+      if (a.id &#x3D;&#x3D;&#x3D; this.selectedUser[0].id) return -1;
+      if (b.id &#x3D;&#x3D;&#x3D; this.selectedUser[0].id) return 1;
+      return 0;
+    });
+  }
+
+
+  /**
+  * Opens a dialog to add a new channel.
+  * This method uses the Angular Material Dialog service to open a dialog
+  * component, specifically the &#x60;AddChannelComponent&#x60;. This allows users to
+  * interact with a form or interface for adding a new channel to the application.
+  */
+  openDialog() {
+    this.dialog.open(AddChannelComponent);
+  }
+
+
+  /**
+  * Truncates the given title if it exceeds the specified character limit.
+  * This method checks the length of the provided title and, if it exceeds
+  * the specified limit, truncates it to the limit and appends an ellipsis (&#x27;...&#x27;).
+  * If the title is within the limit, it is returned unchanged.
+  *
+  * @param {string} title - The title to be truncated.
+  * @param {number} limit - The maximum number of characters allowed for the title.
+  * @returns {string} - The truncated title if it exceeds the limit, otherwise the original title.
+  */
+  truncateTitleName(title: string, limit: number): string {
+    return title.length &gt; limit ? title.substring(0, limit) + &#x27;...&#x27; : title;
+  }
+
+
+  /**
+  * Cleans up subscriptions to prevent memory leaks.
+  * This method is called when the component is destroyed. It unsubscribes
+  * from the &#x60;userSub&#x60; and &#x60;channelSub&#x60; subscriptions to ensure that there are
+  * no active subscriptions left, which helps in preventing memory leaks and
+  * potential performance issues.
+  */
+  ngOnDestroy() {
+  this.userSub?.unsubscribe();
+  this.channelSub?.unsubscribe();
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">@if (sidenavService.opened) {
+&lt;div class&#x3D;&quot;main-container&quot; [@fadeInOut]&#x3D;&quot;sidenavService.opened ? &#x27;open&#x27; : &#x27;closed&#x27;&quot;&gt;
+    &lt;mat-drawer-container class&#x3D;&quot;sidenav-container&quot; autosize&gt;
+        &lt;mat-drawer #drawer class&#x3D;&quot;sidenav&quot; mode&#x3D;&quot;side&quot; [opened]&#x3D;&quot;sidenavService.opened&quot;&gt;
+            &lt;app-search&gt;&lt;/app-search&gt;
+            &lt;div class&#x3D;&quot;inner-container&quot;&gt;
+                &lt;!-- Headline with logo section --&gt;
+                &lt;div class&#x3D;&quot;headline-container&quot;&gt;
+                    &lt;img src&#x3D;&quot;./assets/img/devspace_logo.png&quot;&gt;
+                    &lt;h1 class&#x3D;&quot;project-font&quot;&gt;Devspace&lt;/h1&gt;
+                &lt;/div&gt;
+                &lt;!-- Show user channels section --&gt;
+                &lt;div class&#x3D;&quot;private-message-container&quot;&gt;
+                    &lt;div class&#x3D;&quot;private-message-headline-container&quot;&gt;
+                        &lt;div class&#x3D;&quot;dF&quot; (click)&#x3D;&quot;sidenavService.toggleSidenav(&#x27;channels&#x27;)&quot;&gt;
+                            &lt;img class&#x3D;&quot;img-arrow-channels&quot; src&#x3D;&quot;./assets/img/arrow_drop_down.png&quot;
+                                [ngStyle]&#x3D;&quot;{&#x27;transform&#x27;: sidenavService.showChannels ? &#x27;rotate(0deg)&#x27; : &#x27;rotate(270deg)&#x27;}&quot;&gt;
+                            &lt;div class&#x3D;&quot;headline-subcontainer-channels&quot;&gt;
+                                &lt;img class&#x3D;&quot;img-logo&quot; src&#x3D;&quot;./assets/img/workspaces.png&quot;&gt;
+                                &lt;h2 class&#x3D;&quot;private-headline project-font&quot;&gt;Channels&lt;/h2&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;img class&#x3D;&quot;add-icon&quot; src&#x3D;&quot;./assets/img/add_channel.png&quot; (click)&#x3D;&quot;openDialog()&quot;&gt;
+                    &lt;/div&gt;
+                    @if (sidenavService.showChannels) {
+                    &lt;div class&#x3D;&quot;channels-container&quot;&gt;
+                        @for (user of selectedUser; track $index) {
+                        &lt;div class&#x3D;&quot;channel-subcontainer&quot;&gt;
+                            @for (channel of channelTitles; track $index) {
+                            &lt;div class&#x3D;&quot;channel&quot; [routerLink]&#x3D;&quot;[&#x27;/dashboard/channel&#x27;, channel.channelId]&quot;
+                                [routerLinkActive]&#x3D;&quot;[&#x27;active-channel&#x27;]&quot; (click)&#x3D;&quot;sidenavService.toggleSidenavIfScreenIsSmall(&#x27;sidenav&#x27;)&quot;&gt;
+                                &lt;img class&#x3D;&quot;tag-img&quot; src&#x3D;&quot;./assets/img/tag.png&quot;&gt;
+                                &lt;p&gt;{{ truncateTitleName(channel.title, 18) }}&lt;/p&gt;
+                            &lt;/div&gt;
+                            }
+                        &lt;/div&gt;
+                        }
+                    &lt;/div&gt;
+                    }
+                    @if (sidenavService.showChannels) {
+                    &lt;div class&#x3D;&quot;add-channel-container&quot;&gt;
+                        &lt;div class&#x3D;&quot;add-channel-subcontainer&quot; (click)&#x3D;&quot;openDialog()&quot;&gt;
+                            &lt;img src&#x3D;&quot;./assets/img/add_circle.png&quot;&gt;
+                            &lt;p&gt;Channel hinzufügen&lt;/p&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    }
+                &lt;/div&gt;
+                &lt;!-- Show user direct messages section --&gt;
+                &lt;div class&#x3D;&quot;private-message-container&quot;&gt;
+                    &lt;div class&#x3D;&quot;private-message-headline-container&quot; (click)&#x3D;&quot;sidenavService.toggleSidenav(&#x27;private&#x27;)&quot;&gt;
+                        &lt;img class&#x3D;&quot;img-arrow&quot; src&#x3D;&quot;./assets/img/arrow_drop_down.png&quot;
+                            [ngStyle]&#x3D;&quot;{&#x27;transform&#x27;: sidenavService.showDirectMessages ? &#x27;rotate(0deg)&#x27; : &#x27;rotate(270deg)&#x27;}&quot;&gt;
+                        &lt;div class&#x3D;&quot;headline-subcontainer&quot;&gt;
+                            &lt;img class&#x3D;&quot;img-logo&quot; src&#x3D;&quot;./assets/img/private_message_logo.png&quot;&gt;
+                            &lt;h2 class&#x3D;&quot;private-headline project-font&quot;&gt;Direktnachrichten&lt;/h2&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    @if (sidenavService.showDirectMessages) {
+                    &lt;div class&#x3D;&quot;direct-message-user-container&quot;&gt;
+                        @for (user of selectedUser; track $index) {
+                        &lt;div class&#x3D;&quot;user-subcontainer&quot;&gt;
+                            @for (chat of directMessageTitle; track $index) {
+                            &lt;div class&#x3D;&quot;user-container&quot; [routerLink]&#x3D;&quot;[&#x27;/dashboard/chat&#x27;, chat.id]&quot;
+                                [routerLinkActive]&#x3D;&quot;[&#x27;active-user&#x27;]&quot; (click)&#x3D;&quot;sidenavService.toggleSidenavIfScreenIsSmall(&#x27;sidenav&#x27;)&quot;&gt;
+                                &lt;div class&#x3D;&quot;profile-img-container&quot; [routerLink]&#x3D;&quot;[&#x27;/dashboard/chat&#x27;, chat.id]&quot;&gt;
+                                    &lt;img class&#x3D;&quot;profile-img&quot; src&#x3D;&quot;{{ chat.imageUrl }}&quot; referrerpolicy&#x3D;&quot;no-referrer&quot;&gt;
+                                    @if (chat.onlineStatus &#x3D;&#x3D;&#x3D; &#x27;online&#x27;) {
+                                    &lt;img class&#x3D;&quot;online-status&quot; src&#x3D;&quot;./assets/img/online.png&quot;&gt;
+                                    }
+                                    @if (chat.onlineStatus &#x3D;&#x3D;&#x3D; &#x27;offline&#x27;) {
+                                    &lt;img class&#x3D;&quot;online-status&quot; src&#x3D;&quot;./assets/img/offline.png&quot;&gt;
+                                    }
+                                &lt;/div&gt;
+                                &lt;div&gt;
+                                    &lt;p&gt;{{ chat.name }}&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            }
+                        &lt;/div&gt;
+                        }
+                    &lt;/div&gt;
+                    }
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/mat-drawer&gt;
+    &lt;/mat-drawer-container&gt;
+&lt;/div&gt;
+}
+&lt;!-- Images for buttons to open or close the sidenav --&gt;
+@if (sidenavService.opened) {
+&lt;img class&#x3D;&quot;img-as-button&quot; src&#x3D;&quot;./assets/img/sidemenu_close_normal.png&quot; (click)&#x3D;&quot;sidenavService.toggleSidenav(&#x27;sidenav&#x27;)&quot;&gt;
+}
+@if (!sidenavService.opened) {
+&lt;img class&#x3D;&quot;img-as-button-open&quot; src&#x3D;&quot;./assets/img/sidemenu_open_normal.png&quot; (click)&#x3D;&quot;sidenavService.toggleSidenav(&#x27;sidenav&#x27;)&quot;&gt;
+}</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div>@if (sidenavService.opened) {<div class="main-container" [@fadeInOut]="sidenavService.opened ? \'open\' : \'closed\'">    <mat-drawer-container class="sidenav-container" autosize>        <mat-drawer #drawer class="sidenav" mode="side" [opened]="sidenavService.opened">            <app-search></app-search>            <div class="inner-container">                <!-- Headline with logo section -->                <div class="headline-container">                    <img src="./assets/img/devspace_logo.png">                    <h1 class="project-font">Devspace</h1>                </div>                <!-- Show user channels section -->                <div class="private-message-container">                    <div class="private-message-headline-container">                        <div class="dF" (click)="sidenavService.toggleSidenav(\'channels\')">                            <img class="img-arrow-channels" src="./assets/img/arrow_drop_down.png"                                [ngStyle]="{\'transform\': sidenavService.showChannels ? \'rotate(0deg)\' : \'rotate(270deg)\'}">                            <div class="headline-subcontainer-channels">                                <img class="img-logo" src="./assets/img/workspaces.png">                                <h2 class="private-headline project-font">Channels</h2>                            </div>                        </div>                        <img class="add-icon" src="./assets/img/add_channel.png" (click)="openDialog()">                    </div>                    @if (sidenavService.showChannels) {                    <div class="channels-container">                        @for (user of selectedUser; track $index) {                        <div class="channel-subcontainer">                            @for (channel of channelTitles; track $index) {                            <div class="channel" [routerLink]="[\'/dashboard/channel\', channel.channelId]"                                [routerLinkActive]="[\'active-channel\']" (click)="sidenavService.toggleSidenavIfScreenIsSmall(\'sidenav\')">                                <img class="tag-img" src="./assets/img/tag.png">                                <p>{{ truncateTitleName(channel.title, 18) }}</p>                            </div>                            }                        </div>                        }                    </div>                    }                    @if (sidenavService.showChannels) {                    <div class="add-channel-container">                        <div class="add-channel-subcontainer" (click)="openDialog()">                            <img src="./assets/img/add_circle.png">                            <p>Channel hinzufügen</p>                        </div>                    </div>                    }                </div>                <!-- Show user direct messages section -->                <div class="private-message-container">                    <div class="private-message-headline-container" (click)="sidenavService.toggleSidenav(\'private\')">                        <img class="img-arrow" src="./assets/img/arrow_drop_down.png"                            [ngStyle]="{\'transform\': sidenavService.showDirectMessages ? \'rotate(0deg)\' : \'rotate(270deg)\'}">                        <div class="headline-subcontainer">                            <img class="img-logo" src="./assets/img/private_message_logo.png">                            <h2 class="private-headline project-font">Direktnachrichten</h2>                        </div>                    </div>                    @if (sidenavService.showDirectMessages) {                    <div class="direct-message-user-container">                        @for (user of selectedUser; track $index) {                        <div class="user-subcontainer">                            @for (chat of directMessageTitle; track $index) {                            <div class="user-container" [routerLink]="[\'/dashboard/chat\', chat.id]"                                [routerLinkActive]="[\'active-user\']" (click)="sidenavService.toggleSidenavIfScreenIsSmall(\'sidenav\')">                                <div class="profile-img-container" [routerLink]="[\'/dashboard/chat\', chat.id]">                                    <img class="profile-img" src="{{ chat.imageUrl }}" referrerpolicy="no-referrer">                                    @if (chat.onlineStatus === \'online\') {                                    <img class="online-status" src="./assets/img/online.png">                                    }                                    @if (chat.onlineStatus === \'offline\') {                                    <img class="online-status" src="./assets/img/offline.png">                                    }                                </div>                                <div>                                    <p>{{ chat.name }}</p>                                </div>                            </div>                            }                        </div>                        }                    </div>                    }                </div>            </div>        </mat-drawer>    </mat-drawer-container></div>}<!-- Images for buttons to open or close the sidenav -->@if (sidenavService.opened) {<img class="img-as-button" src="./assets/img/sidemenu_close_normal.png" (click)="sidenavService.toggleSidenav(\'sidenav\')">}@if (!sidenavService.opened) {<img class="img-as-button-open" src="./assets/img/sidemenu_open_normal.png" (click)="sidenavService.toggleSidenav(\'sidenav\')">}</div>'
+    var COMPONENTS = [{'name': 'AddChannelComponent', 'selector': 'app-add-channel'},{'name': 'AddImgToMessageComponent', 'selector': 'app-add-img-to-message'},{'name': 'AddUsersComponent', 'selector': 'app-channel-members'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChannelChatComponent', 'selector': 'app-channel-chat'},{'name': 'ChannelMembersComponent', 'selector': 'app-channel-members'},{'name': 'ChannelParticipantsComponent', 'selector': 'app-channel-participants'},{'name': 'ChannelThreadComponent', 'selector': 'app-channel-thread'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'EditChannelComponent', 'selector': 'app-edit-channel'},{'name': 'EmojiMartComponent', 'selector': 'app-emoji-mart'},{'name': 'FullThreadComponent', 'selector': 'app-full-thread'},{'name': 'FullThreadMessageComponent', 'selector': 'app-full-thread-message'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'ImprintComponent', 'selector': 'app-imprint'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LogoComponent', 'selector': 'app-logo'},{'name': 'MessageReactionComponent', 'selector': 'app-message-reaction'},{'name': 'PageNotFoundComponent', 'selector': 'app-page-not-found'},{'name': 'PasswordResetComponent', 'selector': 'app-password-reset'},{'name': 'PhotoSelectionComponent', 'selector': 'app-photo-selection'},{'name': 'PrivacyComponent', 'selector': 'app-privacy'},{'name': 'ProfileEditComponent', 'selector': 'app-profile-edit'},{'name': 'ProfileViewComponent', 'selector': 'app-profile-view'},{'name': 'ReAuthenticateUserComponent', 'selector': 'app-re-authenticate-user'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterNextComponent', 'selector': 'app-register-next'},{'name': 'SearchComponent', 'selector': 'app-search'},{'name': 'SendMailToResetPasswordComponent', 'selector': 'app-send-mail-to-reset-password'},{'name': 'SidenavComponent', 'selector': 'app-sidenav'},{'name': 'TestComponent', 'selector': 'app-test'},{'name': 'UserChatComponent', 'selector': 'app-user-chat'},{'name': 'UserChatThreadComponent', 'selector': 'app-user-chat-thread'},{'name': 'ViewProfileComponent', 'selector': 'app-view-profile'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'SidenavComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'SidenavComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

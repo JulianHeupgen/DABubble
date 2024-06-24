@@ -1,0 +1,2423 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>dabubble documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">dabubble documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >AuthService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/services/auth.service.ts</code>
+        </p>
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#AUTHUSER" >AUTHUSER</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createFirebaseUser" >createFirebaseUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getDocIdFromAuthenticatedUser" >getDocIdFromAuthenticatedUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getDocIdFromAuthUserId" >getDocIdFromAuthUserId</a>
+                            </li>
+                            <li>
+                                <a href="#getUser" >getUser</a>
+                            </li>
+                            <li>
+                                <a href="#getUserAuthId" >getUserAuthId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getUserDoc" >getUserDoc</a>
+                            </li>
+                            <li>
+                                <a href="#getUsersList" >getUsersList</a>
+                            </li>
+                            <li>
+                                <a href="#isAuthenticated" >isAuthenticated</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#logout" >logout</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#reAuthenticateUser" >reAuthenticateUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#removeAuthUser" >removeAuthUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#removeFirestoreUser" >removeFirestoreUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#rollbackUser" >rollbackUser</a>
+                            </li>
+                            <li>
+                                <a href="#setGoogleUserData" >setGoogleUserData</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#signIn" >signIn</a>
+                            </li>
+                            <li>
+                                <a href="#signInWidthGoogle" >signInWidthGoogle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#signUp" >signUp</a>
+                            </li>
+                            <li>
+                                <a href="#stringifyUser" >stringifyUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateAuthUserEmail" >updateAuthUserEmail</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateEmailAllRefs" >updateEmailAllRefs</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateEmailUsingUID" >updateEmailUsingUID</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateFirebaseUser" >updateFirebaseUser</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(auth: Auth, firestore: Firestore, dataService: <a href="../injectables/DataService.html" target="_self">DataService</a>, router: Router)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/services/auth.service.ts:40</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>auth</td>
+                                                  
+                                                        <td>
+                                                                    <code>Auth</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>firestore</td>
+                                                  
+                                                        <td>
+                                                                    <code>Firestore</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dataService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DataService.html" target="_self" >DataService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createFirebaseUser"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>createFirebaseUser</b></span>
+                        <a href="#createFirebaseUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createFirebaseUser(user: <a href="../classes/User.html" target="_self">User</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="468"
+                                    class="link-to-prism">src/app/services/auth.service.ts:468</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Creates a new user document in Firestore.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../classes/User.html" target="_self" >User</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user object to create in Firestore.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDocIdFromAuthenticatedUser"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getDocIdFromAuthenticatedUser</b></span>
+                        <a href="#getDocIdFromAuthenticatedUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getDocIdFromAuthenticatedUser()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="153"
+                                    class="link-to-prism">src/app/services/auth.service.ts:153</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get the document ID of the currently authenticated user.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;string | undefined&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>A Promise that resolves with the document ID, or undefined if no user is authenticated.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDocIdFromAuthUserId"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getDocIdFromAuthUserId</b></span>
+                        <a href="#getDocIdFromAuthUserId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getDocIdFromAuthUserId(uid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="429"
+                                    class="link-to-prism">src/app/services/auth.service.ts:429</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Searches the users collection for a given UID.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>uid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The Auth ID of the user to search for.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>A Promise that resolves with the document ID of the user.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUser"></a>
+                    <span class="name">
+                        <span ><b>getUser</b></span>
+                        <a href="#getUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUser()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="243"
+                                    class="link-to-prism">src/app/services/auth.service.ts:243</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Add a stream of the Firestore user data for the currently logged-in user.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>An Observable that emits the user data.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUserAuthId"></a>
+                    <span class="name">
+                        <span ><b>getUserAuthId</b></span>
+                        <a href="#getUserAuthId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUserAuthId()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="448"
+                                    class="link-to-prism">src/app/services/auth.service.ts:448</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Returns the UID of the currently authenticated user.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>A Promise that resolves with the user&#39;s UID or rejects if no user is authenticated.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUserDoc"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getUserDoc</b></span>
+                        <a href="#getUserDoc"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getUserDoc()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="232"
+                                    class="link-to-prism">src/app/services/auth.service.ts:232</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get the document data of the currently authenticated user.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>A Promise that resolves with the user document data.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUsersList"></a>
+                    <span class="name">
+                        <span ><b>getUsersList</b></span>
+                        <a href="#getUsersList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUsersList()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="208"
+                                    class="link-to-prism">src/app/services/auth.service.ts:208</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Add a stream of data for all users in Firestore.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Observable&lt;User[]&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>An Observable that emits a list of all users.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isAuthenticated"></a>
+                    <span class="name">
+                        <span ><b>isAuthenticated</b></span>
+                        <a href="#isAuthenticated"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isAuthenticated()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="289"
+                                    class="link-to-prism">src/app/services/auth.service.ts:289</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Checks if the user is authenticated.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;boolean&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>An Observable that emits true if the user is authenticated, false otherwise.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logout"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>logout</b></span>
+                        <a href="#logout"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>logout()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="139"
+                                    class="link-to-prism">src/app/services/auth.service.ts:139</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Logout the currently logged-in user.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;boolean&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>A Promise that resolves to true if logout was successful, false otherwise.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reAuthenticateUser"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>reAuthenticateUser</b></span>
+                        <a href="#reAuthenticateUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>reAuthenticateUser(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="309"
+                                    class="link-to-prism">src/app/services/auth.service.ts:309</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Re-authenticate the user for sensitive actions.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user&#39;s email address.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>password</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user&#39;s password.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>A Promise that resolves when re-authentication is complete.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeAuthUser"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>removeAuthUser</b></span>
+                        <a href="#removeAuthUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeAuthUser()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="330"
+                                    class="link-to-prism">src/app/services/auth.service.ts:330</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Deletes the current user from Firebase Authentication.
+Ensure to re-authenticate the user with reAuthenticateUser() before calling this function.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>A Promise that resolves to true if the user was successfully deleted, false otherwise.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeFirestoreUser"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>removeFirestoreUser</b></span>
+                        <a href="#removeFirestoreUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeFirestoreUser()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="350"
+                                    class="link-to-prism">src/app/services/auth.service.ts:350</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Deletes the Firestore document of the currently authenticated user.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>A Promise that resolves when the Firestore user document is deleted.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rollbackUser"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>rollbackUser</b></span>
+                        <a href="#rollbackUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>rollbackUser(currentUser: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, oldEmail: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="376"
+                                    class="link-to-prism">src/app/services/auth.service.ts:376</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Rolls back the user&#39;s email to the old email if any error occurs during the update.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>currentUser</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The current authenticated user.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>oldEmail</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The old email address.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setGoogleUserData"></a>
+                    <span class="name">
+                        <span ><b>setGoogleUserData</b></span>
+                        <a href="#setGoogleUserData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setGoogleUserData(userData: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="122"
+                                    class="link-to-prism">src/app/services/auth.service.ts:122</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function sets user data for a Google authenticated user.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userData</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user data from Google authentication.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >{ id: string; name: any; email: any; onlineStatus: &quot;offline&quot;; authUserId: any; imageUrl: any; channels: {}; userChats: {}; }</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>An object with the user&#39;s data.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="signIn"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>signIn</b></span>
+                        <a href="#signIn"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>signIn(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="74"
+                                    class="link-to-prism">src/app/services/auth.service.ts:74</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function performs a sign-in using email and password.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The email address of the user.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>password</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The password for the user.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>A Promise that resolves with the user credentials.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="signInWidthGoogle"></a>
+                    <span class="name">
+                        <span ><b>signInWidthGoogle</b></span>
+                        <a href="#signInWidthGoogle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>signInWidthGoogle()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="88"
+                                    class="link-to-prism">src/app/services/auth.service.ts:88</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function performs a sign-in using Google authentication.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="signUp"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>signUp</b></span>
+                        <a href="#signUp"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>signUp(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="60"
+                                    class="link-to-prism">src/app/services/auth.service.ts:60</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>This function performs a signup using email and password.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The email address of the user.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>password</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The password for the user.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>A Promise that resolves with the user credentials.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="stringifyUser"></a>
+                    <span class="name">
+                        <span ><b>stringifyUser</b></span>
+                        <a href="#stringifyUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>stringifyUser(user: <a href="../classes/User.html" target="_self">User</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="483"
+                                    class="link-to-prism">src/app/services/auth.service.ts:483</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Converts a User object to a plain JavaScript object.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../classes/User.html" target="_self" >User</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user object to convert.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >{ id: any; name: any; email: any; onlineStatus: any; channels: any; userChats: any; authUserId: any; imageUrl: any; }</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>A plain JavaScript object representing the user.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateAuthUserEmail"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateAuthUserEmail</b></span>
+                        <a href="#updateAuthUserEmail"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateAuthUserEmail(newMail: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="190"
+                                    class="link-to-prism">src/app/services/auth.service.ts:190</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Update the email address of the currently authenticated user.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>newMail</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The new email address.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>A Promise that resolves when the update is complete.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateEmailAllRefs"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateEmailAllRefs</b></span>
+                        <a href="#updateEmailAllRefs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateEmailAllRefs(currentUser: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, newMail: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="391"
+                                    class="link-to-prism">src/app/services/auth.service.ts:391</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Bundled function to update the user&#39;s email in Firebase Authentication and Firestore.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>currentUser</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The current authenticated user.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>newMail</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The new email address.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateEmailUsingUID"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateEmailUsingUID</b></span>
+                        <a href="#updateEmailUsingUID"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateEmailUsingUID(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="404"
+                                    class="link-to-prism">src/app/services/auth.service.ts:404</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Updates the user&#39;s email in Firestore.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The new email address.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateFirebaseUser"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateFirebaseUser</b></span>
+                        <a href="#updateFirebaseUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateFirebaseUser(updateData: literal type)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="171"
+                                    class="link-to-prism">src/app/services/auth.service.ts:171</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Update the Firestore user object with the provided data.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>updateData</td>
+                                            <td>
+                                                        <code>literal type</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>An object containing the data to update.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>A Promise that resolves when the update is complete.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="AUTHUSER"></a>
+                    <span class="name">
+                        <span ><b>AUTHUSER</b></span>
+                        <a href="#AUTHUSER"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>getAuth()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/services/auth.service.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateEmail,
+  onAuthStateChanged,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  deleteUser,
+  signInWithCredential,
+  signOut
+} from &#x27;@angular/fire/auth&#x27;;
+import {Router} from &#x27;@angular/router&#x27;;
+import {GoogleAuthProvider, getAuth, signInWithPopup} from &quot;firebase/auth&quot;;
+
+import {
+  Firestore,
+  doc,
+  addDoc,
+  collection,
+  updateDoc,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  deleteDoc,
+  onSnapshot,
+  docSnapshots
+} from &#x27;@angular/fire/firestore&#x27;;
+import {User} from &#x27;../models/user.class&#x27;;
+import {Observable} from &#x27;rxjs&#x27;;
+import {DataService} from &#x27;./data.service&#x27;;
+
+@Injectable({
+  providedIn: &#x27;root&#x27;
+})
+export class AuthService {
+
+  AUTHUSER &#x3D; getAuth();
+
+  constructor(
+    private auth: Auth,
+    private firestore: Firestore,
+    private dataService: DataService,
+    private router: Router,
+  ) {
+  }
+
+  /* TEST SPACE */
+
+  /* END TEST SPACE */
+
+  /**
+   * This function performs a signup using email and password.
+   * @param email - The email address of the user.
+   * @param password - The password for the user.
+   * @returns A Promise that resolves with the user credentials.
+   */
+  async signUp(email: string, password: string) {
+    try {
+      return await createUserWithEmailAndPassword(this.auth, email, password);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * This function performs a sign-in using email and password.
+   * @param email - The email address of the user.
+   * @param password - The password for the user.
+   * @returns A Promise that resolves with the user credentials.
+   */
+  async signIn(email: string, password: string) {
+    try {
+      const userCredential &#x3D; await signInWithEmailAndPassword(this.auth, email, password);
+      await this.updateFirebaseUser({onlineStatus: &#x27;online&#x27;})
+      return userCredential;
+    } catch (error) {
+      // throw error;
+      return false
+    }
+  }
+
+  /**
+   * This function performs a sign-in using Google authentication.
+   */
+  signInWidthGoogle() {
+    const googleProvider &#x3D; new GoogleAuthProvider();
+    const googleAuth &#x3D; getAuth();
+
+    signInWithPopup(googleAuth, googleProvider)
+      .then(userCredential &#x3D;&gt; {
+        const userQuery &#x3D; query(this.dataService.getUserCollection(), where(&#x27;authUserId&#x27;, &#x27;&#x3D;&#x3D;&#x27;, userCredential.user.uid));
+        getDocs(userQuery).then(querySnapshot &#x3D;&gt; {
+          if (!querySnapshot.empty) {
+            // we do nothing if the user exists
+          } else {
+            const userData &#x3D; this.setGoogleUserData(userCredential.user);
+            const newUser &#x3D; new User(userData);
+            this.createFirebaseUser(newUser);
+          }
+          this.updateFirebaseUser({onlineStatus: &#x27;online&#x27;})
+          this.router.navigate([&#x27;/dashboard/&#x27;]);
+        }).catch((error) &#x3D;&gt; {
+          console.error(&#x27;Error checking user existence:&#x27;, error);
+        });
+      })
+      .catch((error) &#x3D;&gt; {
+        const errorCode &#x3D; error.code;
+        const errorMessage &#x3D; error.message;
+        const email &#x3D; error.customData.email;
+        const credential &#x3D; GoogleAuthProvider.credentialFromError(error);
+      });
+  }
+
+  /**
+   * This function sets user data for a Google authenticated user.
+   * @param userData - The user data from Google authentication.
+   * @returns An object with the user&#x27;s data.
+   */
+  setGoogleUserData(userData: any) {
+    return {
+      id: &#x27;&#x27;,
+      name: userData.displayName,
+      email: userData.email,
+      onlineStatus: &#x27;offline&#x27; as &#x27;offline&#x27;,
+      authUserId: userData.uid,
+      imageUrl: userData.photoURL,
+      channels: [&#x27;Yk2dgejx9yy7iHLij1Qj&#x27;],
+      userChats: []
+    }
+  }
+
+  /**
+   * Logout the currently logged-in user.
+   * @returns A Promise that resolves to true if logout was successful, false otherwise.
+   */
+  async logout(): Promise&lt;boolean&gt; {
+    try {
+      await signOut(this.auth);
+      return true;
+    } catch (error) {
+      console.error(&#x27;Error logging out.&#x27;);
+      return false;
+    }
+  }
+
+  /**
+   * Get the document ID of the currently authenticated user.
+   * @returns A Promise that resolves with the document ID, or undefined if no user is authenticated.
+   */
+  async getDocIdFromAuthenticatedUser(): Promise&lt;string | undefined&gt; {
+    try {
+      const auth &#x3D; this.auth.currentUser?.uid;
+      if (auth) {
+        return await this.getDocIdFromAuthUserId(auth);
+      }
+      return undefined;
+    } catch (error) {
+      console.error(&#x27;Could not provide the doc Id. &#x27;, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Update the Firestore user object with the provided data.
+   * @param updateData - An object containing the data to update.
+   * @returns A Promise that resolves when the update is complete.
+   */
+  async updateFirebaseUser(updateData: { [key: string]: any }): Promise&lt;void&gt; {
+    const docId &#x3D; await this.getDocIdFromAuthenticatedUser();
+    if (!docId) {
+      console.error(&#x27;No docId found for this user. Could not update the User Object.&#x27;);
+      return;
+    }
+    try {
+      await updateDoc(doc(this.firestore, &#x27;users&#x27;, docId), updateData)
+    } catch (error) {
+      console.error(&#x27;Error updating user online Status.&#x27;, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Update the email address of the currently authenticated user.
+   * @param newMail - The new email address.
+   * @returns A Promise that resolves when the update is complete.
+   */
+  async updateAuthUserEmail(newMail: string): Promise&lt;void&gt; {
+    if (!this.AUTHUSER.currentUser) {
+      return Promise.reject(&#x27;No user!&#x27;);
+    }
+
+    return updateEmail(this.AUTHUSER.currentUser, newMail)
+      .then(() &#x3D;&gt; {
+        console.log(&#x27;E-Mail updated successfully.&#x27;);
+      })
+      .catch((err) &#x3D;&gt; {
+        console.error(&#x27;Error updating user email.&#x27;, err);
+      })
+  }
+
+  /**
+   * Add a stream of data for all users in Firestore.
+   * @returns An Observable that emits a list of all users.
+   */
+  getUsersList(): Observable&lt;User[]&gt; {
+    return new Observable((subscriber) &#x3D;&gt; {
+      const q &#x3D; query(collection(this.firestore, &#x27;users&#x27;));
+      const unsubscribe &#x3D; onSnapshot(q, (qS) &#x3D;&gt; {
+        let arr: User[] &#x3D; [];
+        qS.forEach((doc) &#x3D;&gt; {
+          const user &#x3D; doc.data() as User;
+          arr.push(new User(user));
+        });
+        subscriber.next(arr);
+      });
+
+      // Return a teardown logic function that will be called when
+      // the Observable is unsubscribed
+      subscriber.add(() &#x3D;&gt; {
+        unsubscribe();
+      })
+    });
+  }
+
+  /**
+   * Get the document data of the currently authenticated user.
+   * @returns A Promise that resolves with the user document data.
+   */
+  async getUserDoc() {
+    const docId &#x3D; await this.getDocIdFromAuthenticatedUser();
+    const docRef &#x3D; doc(this.firestore, &quot;users&quot;, docId as string);
+    const docSnap &#x3D; await getDoc(docRef);
+    return docSnap.data();
+  }
+
+  /**
+   * Add a stream of the Firestore user data for the currently logged-in user.
+   * @returns An Observable that emits the user data.
+   */
+  getUser(): Observable&lt;any&gt; {
+    return new Observable(subscriber &#x3D;&gt; {
+      // First resolve the user auth id
+      this.getUserAuthId().then(authId &#x3D;&gt; {
+        if (!authId) {
+          subscriber.error(new Error(&#x27;No auth id.&#x27;));
+          return;
+        }
+        // Next resolve the docId by authId
+        this.getDocIdFromAuthUserId(authId)
+          .then(docId &#x3D;&gt; {
+            if (!docId) {
+              subscriber.error(new Error(&#x27;No doc ID found.&#x27;));
+              return;
+            }
+            // Use the docId to get onSnapShot data
+            const unsubscribe &#x3D; onSnapshot(doc(this.firestore, &#x27;users&#x27;, docId), docSnapshots &#x3D;&gt; {
+              if (docSnapshots.exists()) {
+                const user &#x3D; new User(docSnapshots.data() as User);
+                subscriber.next(user);
+              } else {
+                subscriber.error(new Error(&#x27;Document does not exist.&#x27;));
+              }
+            }, error &#x3D;&gt; {
+              subscriber.error(error);
+            });
+
+            subscriber.add(() &#x3D;&gt; {
+              unsubscribe();
+            });
+
+          }).catch(error &#x3D;&gt; {
+          subscriber.error(error);
+        });
+
+      }).catch(error &#x3D;&gt; {
+        subscriber.error(error);
+      });
+
+    });
+  }
+
+  /**
+   * Checks if the user is authenticated.
+   * @returns An Observable that emits true if the user is authenticated, false otherwise.
+   */
+  isAuthenticated(): Observable&lt;boolean&gt; {
+    return new Observable((subscriber) &#x3D;&gt; {
+      const unsubscribe &#x3D; this.auth.onAuthStateChanged(user &#x3D;&gt; {
+        subscriber.next(!!user);
+      }, err &#x3D;&gt; {
+        subscriber.error(err);
+      });
+      // Cleanup logic
+      subscriber.add(() &#x3D;&gt; {
+        unsubscribe();
+      })
+    });
+  }
+
+  /**
+   * Re-authenticate the user for sensitive actions.
+   * @param email - The user&#x27;s email address.
+   * @param password - The user&#x27;s password.
+   * @returns A Promise that resolves when re-authentication is complete.
+   */
+  async reAuthenticateUser(email: string, password: string) {
+    const user &#x3D; this.auth.currentUser;
+    const credential &#x3D; EmailAuthProvider.credential(email, password);
+
+    if (!user || !credential) {
+      throw new Error(&#x27;Authentication failed. User or Credentials wrong.&#x27;);
+    }
+
+    try {
+      await reauthenticateWithCredential(user, credential);
+    } catch (error) {
+      console.error(&#x27;Re-authentication error: &#x27;, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Deletes the current user from Firebase Authentication.
+   * Ensure to re-authenticate the user with reAuthenticateUser() before calling this function.
+   * @returns A Promise that resolves to true if the user was successfully deleted, false otherwise.
+   */
+  async removeAuthUser() {
+    const user &#x3D; this.auth.currentUser;
+    if (!user) {
+      console.error(&#x27;User not found&#x27;);
+      return false;
+    }
+    try {
+      await deleteUser(user);
+      console.log(&#x27;Auth User successfully deleted&#x27;);
+      return true;
+    } catch (error) {
+      console.error(&#x27;Failed to delete user:&#x27;, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Deletes the Firestore document of the currently authenticated user.
+   * @returns A Promise that resolves when the Firestore user document is deleted.
+   */
+  async removeFirestoreUser() {
+    const user &#x3D; this.auth.currentUser;
+    if (!user) {
+      throw new Error(&#x27;No UID found for current user.&#x27;);
+    }
+
+    const uid &#x3D; user.uid; // this gets the auth id from the current logged user
+    const docId &#x3D; await this.getDocIdFromAuthUserId(uid);
+    if (!docId) {
+      throw new Error(&#x27;User docId not found by Auth ID.&#x27;)
+    }
+
+    try {
+      await deleteDoc(doc(this.firestore, &#x27;users&#x27;, docId));
+      console.log(&#x27;Firestore User successfully deleted&#x27;);
+    } catch (error) {
+      console.error(&#x27;Could not delete firestore user.&#x27;, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Rolls back the user&#x27;s email to the old email if any error occurs during the update.
+   * @param currentUser - The current authenticated user.
+   * @param oldEmail - The old email address.
+   */
+  async rollbackUser(currentUser: any, oldEmail: string) {
+    try {
+      await updateEmail(currentUser, oldEmail);
+      console.warn(&#x27;Reverted back to old email.&#x27;);
+    } catch (revertError) {
+      console.error(&#x27;Failed to revert email in Auth: &#x27;, revertError);
+      throw new Error(&#x27;Critical failure. email update and rollback both failed!&#x27;);
+    }
+  }
+
+  /**
+   * Bundled function to update the user&#x27;s email in Firebase Authentication and Firestore.
+   * @param currentUser - The current authenticated user.
+   * @param newMail - The new email address.
+   */
+  async updateEmailAllRefs(currentUser: any, newMail: string) {
+    try {
+      await updateEmail(currentUser, newMail); // updates email in auth
+      await this.updateEmailUsingUID(newMail); // updates email in firestore db
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * Updates the user&#x27;s email in Firestore.
+   * @param email - The new email address.
+   */
+  async updateEmailUsingUID(email: string) {
+    const user &#x3D; this.auth.currentUser;
+    if (!user) {
+      throw new Error(&#x27;No UID found for current user.&#x27;);
+    }
+
+    const uid &#x3D; user.uid; // this gets the auth id from the current logged user
+    const docId &#x3D; await this.getDocIdFromAuthUserId(uid);
+    if (!docId) {
+      throw new Error(&#x27;User not found by Auth ID.&#x27;)
+    }
+
+    try {
+      await this.updateFirebaseUser({&#x27;email&#x27;: email});
+    } catch (error) {
+      console.error(&#x27;Could not update email on the firestore user.&#x27;, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Searches the users collection for a given UID.
+   * @param uid - The Auth ID of the user to search for.
+   * @returns A Promise that resolves with the document ID of the user.
+   */
+  async getDocIdFromAuthUserId(uid: string): Promise&lt;string&gt; {
+    const usersRef &#x3D; collection(this.firestore, &quot;users&quot;);
+    const q &#x3D; query(usersRef, where(&quot;authUserId&quot;, &quot;&#x3D;&#x3D;&quot;, uid));
+    const querySnapshot &#x3D; await getDocs(q);
+    if (querySnapshot.empty) {
+      throw new Error(&#x27;No firestore user document found for the provided UID.&#x27;);
+    }
+    try {
+      const userDoc &#x3D; querySnapshot.docs[0];
+      return userDoc.id;
+    } catch (error) {
+      throw new Error(&#x27;Failed to retrieve document ID.&#x27;);
+    }
+  }
+
+  /**
+   * Returns the UID of the currently authenticated user.
+   * @returns A Promise that resolves with the user&#x27;s UID or rejects if no user is authenticated.
+   */
+  getUserAuthId() {
+    return new Promise&lt;string&gt;((resolve, reject) &#x3D;&gt; {
+      const unsubscribe &#x3D; onAuthStateChanged(this.auth, (user) &#x3D;&gt; {
+        unsubscribe();
+        if (user) {
+          resolve(user.uid);
+        } else {
+          reject(new Error(&#x27;No user signed in.&#x27;));
+        }
+      }, (error) &#x3D;&gt; {
+        console.error(&#x27;Failed to get Authentication state &#x27;, error);
+        reject(error);
+      });
+    })
+  }
+
+  /**
+   * Creates a new user document in Firestore.
+   * @param user - The user object to create in Firestore.
+   */
+  async createFirebaseUser(user: User) {
+    const strUser &#x3D; this.stringifyUser(user);
+    try {
+      return await addDoc(collection(this.firestore, &#x27;users&#x27;), strUser);
+    } catch (error) {
+      console.error(&#x27;Error uploading user to firebase: &#x27;, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Converts a User object to a plain JavaScript object.
+   * @param user - The user object to convert.
+   * @returns A plain JavaScript object representing the user.
+   */
+  stringifyUser(user: User) {
+    return {
+      &quot;id&quot;: user.id,
+      &quot;name&quot;: user.name,
+      &quot;email&quot;: user.email,
+      &quot;onlineStatus&quot;: user.onlineStatus,
+      &quot;channels&quot;: user.channels,
+      &quot;userChats&quot;: user.userChats,
+      &quot;authUserId&quot;: user.authUserId,
+      &quot;imageUrl&quot;: user.imageUrl,
+    }
+  }
+
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'AuthService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

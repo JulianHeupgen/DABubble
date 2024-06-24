@@ -1,0 +1,4536 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>dabubble documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">dabubble documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >DataService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/services/data.service.ts</code>
+        </p>
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#allChannels" >allChannels</a>
+                            </li>
+                            <li>
+                                <a href="#allThreads" >allThreads</a>
+                            </li>
+                            <li>
+                                <a href="#allUserChats" >allUserChats</a>
+                            </li>
+                            <li>
+                                <a href="#allUsers" >allUsers</a>
+                            </li>
+                            <li>
+                                <a href="#currentChannelId" >currentChannelId</a>
+                            </li>
+                            <li>
+                                <a href="#firestore" >firestore</a>
+                            </li>
+                            <li>
+                                <a href="#firstLoad" >firstLoad</a>
+                            </li>
+                            <li>
+                                <a href="#groupedChannelThreads" >groupedChannelThreads</a>
+                            </li>
+                            <li>
+                                <a href="#groupedThreads" >groupedThreads</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#threadUnsubscribe" >threadUnsubscribe</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#addChannel" >addChannel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#addThread" >addThread</a>
+                            </li>
+                            <li>
+                                <a href="#addThreads" >addThreads</a>
+                            </li>
+                            <li>
+                                <a href="#addThreadToGroup" >addThreadToGroup</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#addUserChat" >addUserChat</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteThread" >deleteThread</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteUserChat" >deleteUserChat</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteUserChatThread" >deleteUserChatThread</a>
+                            </li>
+                            <li>
+                                <a href="#formatDateForDisplay" >formatDateForDisplay</a>
+                            </li>
+                            <li>
+                                <a href="#getChannelCollection" >getChannelCollection</a>
+                            </li>
+                            <li>
+                                <a href="#getChannelDocRef" >getChannelDocRef</a>
+                            </li>
+                            <li>
+                                <a href="#getChannelsList" >getChannelsList</a>
+                            </li>
+                            <li>
+                                <a href="#getParticipantImages" >getParticipantImages</a>
+                            </li>
+                            <li>
+                                <a href="#getParticipantInfos" >getParticipantInfos</a>
+                            </li>
+                            <li>
+                                <a href="#getThreadCollection" >getThreadCollection</a>
+                            </li>
+                            <li>
+                                <a href="#getThreadDocRef" >getThreadDocRef</a>
+                            </li>
+                            <li>
+                                <a href="#getThreadsList" >getThreadsList</a>
+                            </li>
+                            <li>
+                                <a href="#getUserChat" >getUserChat</a>
+                            </li>
+                            <li>
+                                <a href="#getUserChatDocRef" >getUserChatDocRef</a>
+                            </li>
+                            <li>
+                                <a href="#getUserChatsCollection" >getUserChatsCollection</a>
+                            </li>
+                            <li>
+                                <a href="#getUserChatsList" >getUserChatsList</a>
+                            </li>
+                            <li>
+                                <a href="#getUserCollection" >getUserCollection</a>
+                            </li>
+                            <li>
+                                <a href="#getUserDocRef" >getUserDocRef</a>
+                            </li>
+                            <li>
+                                <a href="#getUsersList" >getUsersList</a>
+                            </li>
+                            <li>
+                                <a href="#groupThreadsByDate" >groupThreadsByDate</a>
+                            </li>
+                            <li>
+                                <a href="#modifyThreads" >modifyThreads</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#removeThreadFromGroup" >removeThreadFromGroup</a>
+                            </li>
+                            <li>
+                                <a href="#removeThreads" >removeThreads</a>
+                            </li>
+                            <li>
+                                <a href="#setChannelObject" >setChannelObject</a>
+                            </li>
+                            <li>
+                                <a href="#setThreadObject" >setThreadObject</a>
+                            </li>
+                            <li>
+                                <a href="#setUserChatObject" >setUserChatObject</a>
+                            </li>
+                            <li>
+                                <a href="#setUserObject" >setUserObject</a>
+                            </li>
+                            <li>
+                                <a href="#sortThreadByFirstMessageTimestamp" >sortThreadByFirstMessageTimestamp</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateChannel" >updateChannel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateThread" >updateThread</a>
+                            </li>
+                            <li>
+                                <a href="#updateThreadInGroup" >updateThreadInGroup</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateUser" >updateUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateUserChat" >updateUserChat</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateUserChatsOfUser" >updateUserChatsOfUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateUserChatThread" >updateUserChatThread</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/services/data.service.ts:17</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addChannel"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>addChannel</b></span>
+                        <a href="#addChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addChannel(channel: <a href="../classes/Channel.html" target="_self">Channel</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="450"
+                                    class="link-to-prism">src/app/services/data.service.ts:450</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Adds a new channel to the Firestore collection and returns the document ID.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>channel</td>
+                                            <td>
+                                                            <code><a href="../classes/Channel.html" target="_self" >Channel</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The channel object to be added.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves to the document ID of the added channel.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addThread"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>addThread</b></span>
+                        <a href="#addThread"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addThread(thread: <a href="../classes/Thread.html" target="_self">Thread</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="467"
+                                    class="link-to-prism">src/app/services/data.service.ts:467</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Adds a new thread to the Firestore collection.
+Logs the document ID on successful addition or logs an error if the addition fails.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>thread</td>
+                                            <td>
+                                                            <code><a href="../classes/Thread.html" target="_self" >Thread</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The thread object to be added.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves when the thread is added.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addThreads"></a>
+                    <span class="name">
+                        <span ><b>addThreads</b></span>
+                        <a href="#addThreads"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addThreads(threadData: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="227"
+                                    class="link-to-prism">src/app/services/data.service.ts:227</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Adds a new thread to the list of all threads and updates the grouped threads if not the first load.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>threadData</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The data of the thread to be added.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addThreadToGroup"></a>
+                    <span class="name">
+                        <span ><b>addThreadToGroup</b></span>
+                        <a href="#addThreadToGroup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addThreadToGroup(thread: <a href="../classes/Thread.html" target="_self">Thread</a>, index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="270"
+                                    class="link-to-prism">src/app/services/data.service.ts:270</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Adds a thread to the grouped threads by date.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>thread</td>
+                                            <td>
+                                                            <code><a href="../classes/Thread.html" target="_self" >Thread</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The thread to be added to the group.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The index of the thread in the allThreads array.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addUserChat"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>addUserChat</b></span>
+                        <a href="#addUserChat"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addUserChat(userChat: <a href="../classes/UserChat.html" target="_self">UserChat</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="483"
+                                    class="link-to-prism">src/app/services/data.service.ts:483</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Adds a new user chat to the Firestore collection.
+Converts threads to string format before adding.
+Logs the document ID on successful addition or logs an error if the addition fails.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userChat</td>
+                                            <td>
+                                                            <code><a href="../classes/UserChat.html" target="_self" >UserChat</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user chat object to be added.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves when the user chat is added.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteThread"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteThread</b></span>
+                        <a href="#deleteThread"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteThread(threadId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="659"
+                                    class="link-to-prism">src/app/services/data.service.ts:659</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Deletes a thread document from Firestore.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>threadId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The ID of the thread to delete.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves when the deletion is complete.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteUserChat"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteUserChat</b></span>
+                        <a href="#deleteUserChat"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteUserChat(userChatId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="647"
+                                    class="link-to-prism">src/app/services/data.service.ts:647</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Deletes a user chat document from Firestore.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userChatId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The ID of the user chat to delete.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves when the deletion is complete.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteUserChatThread"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteUserChatThread</b></span>
+                        <a href="#deleteUserChatThread"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteUserChatThread(userChatId: string | undefined, index: number | undefined)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="672"
+                                    class="link-to-prism">src/app/services/data.service.ts:672</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Deletes a specific thread in a user chat document in Firestore.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userChatId</td>
+                                            <td>
+                                                        <code>string | undefined</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The ID of the user chat.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                        <code>number | undefined</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The index of the thread in the user chat.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves when the deletion is complete.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatDateForDisplay"></a>
+                    <span class="name">
+                        <span ><b>formatDateForDisplay</b></span>
+                        <a href="#formatDateForDisplay"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatDateForDisplay(date: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="373"
+                                    class="link-to-prism">src/app/services/data.service.ts:373</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Formats a date string for display.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>date</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The date string in YYYY-MM-DD format.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>The formatted date string for display.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getChannelCollection"></a>
+                    <span class="name">
+                        <span ><b>getChannelCollection</b></span>
+                        <a href="#getChannelCollection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getChannelCollection()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="103"
+                                    class="link-to-prism">src/app/services/data.service.ts:103</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Returns the Firestore collection reference for channels.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>Firestore collection reference for channels.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getChannelDocRef"></a>
+                    <span class="name">
+                        <span ><b>getChannelDocRef</b></span>
+                        <a href="#getChannelDocRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getChannelDocRef(channelId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="557"
+                                    class="link-to-prism">src/app/services/data.service.ts:557</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retrieves a reference to a channel document in Firestore.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>channelId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The ID of the channel.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>The document reference.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getChannelsList"></a>
+                    <span class="name">
+                        <span ><b>getChannelsList</b></span>
+                        <a href="#getChannelsList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getChannelsList()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="87"
+                                    class="link-to-prism">src/app/services/data.service.ts:87</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fetches the list of channels from the Firestore database and updates the allChannels array.
+Returns an observable that emits the updated list of channels.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>An observable emitting the list of channels.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getParticipantImages"></a>
+                    <span class="name">
+                        <span ><b>getParticipantImages</b></span>
+                        <a href="#getParticipantImages"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getParticipantImages(channelId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="131"
+                                    class="link-to-prism">src/app/services/data.service.ts:131</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fetches the images of participants in a given channel.
+Returns an observable that emits an array of objects containing user IDs and their image URLs.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>channelId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The ID of the channel.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>An observable emitting an array of participant images.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getParticipantInfos"></a>
+                    <span class="name">
+                        <span ><b>getParticipantInfos</b></span>
+                        <a href="#getParticipantInfos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getParticipantInfos(channelId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="160"
+                                    class="link-to-prism">src/app/services/data.service.ts:160</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fetches the information of participants in a given channel.
+Returns an observable that emits an array of user objects.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>channelId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The ID of the channel.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>An observable emitting an array of participant information.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getThreadCollection"></a>
+                    <span class="name">
+                        <span ><b>getThreadCollection</b></span>
+                        <a href="#getThreadCollection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getThreadCollection()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="316"
+                                    class="link-to-prism">src/app/services/data.service.ts:316</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Returns the Firestore collection reference for threads.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>Firestore collection reference for threads.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getThreadDocRef"></a>
+                    <span class="name">
+                        <span ><b>getThreadDocRef</b></span>
+                        <a href="#getThreadDocRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getThreadDocRef(threadId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="580"
+                                    class="link-to-prism">src/app/services/data.service.ts:580</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retrieves a reference to a thread document in Firestore.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>threadId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The ID of the thread.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>The document reference.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getThreadsList"></a>
+                    <span class="name">
+                        <span ><b>getThreadsList</b></span>
+                        <a href="#getThreadsList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getThreadsList()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="189"
+                                    class="link-to-prism">src/app/services/data.service.ts:189</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fetches the list of threads for the current channel and updates the internal state.
+Listens for real-time updates from Firestore and handles added, modified, and removed threads.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUserChat"></a>
+                    <span class="name">
+                        <span ><b>getUserChat</b></span>
+                        <a href="#getUserChat"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUserChat(userChatId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="434"
+                                    class="link-to-prism">src/app/services/data.service.ts:434</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fetches a specific user chat by ID and returns its threads.
+Returns an observable that emits the threads of the user chat.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userChatId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The ID of the user chat to fetch.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>An observable emitting the threads of the user chat.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUserChatDocRef"></a>
+                    <span class="name">
+                        <span ><b>getUserChatDocRef</b></span>
+                        <a href="#getUserChatDocRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUserChatDocRef(userChatId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="611"
+                                    class="link-to-prism">src/app/services/data.service.ts:611</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retrieves a reference to a user chat document in Firestore.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userChatId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The ID of the user chat.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>The document reference.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUserChatsCollection"></a>
+                    <span class="name">
+                        <span ><b>getUserChatsCollection</b></span>
+                        <a href="#getUserChatsCollection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUserChatsCollection()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="408"
+                                    class="link-to-prism">src/app/services/data.service.ts:408</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Returns the Firestore collection reference for user chats.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>Firestore collection reference for user chats.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUserChatsList"></a>
+                    <span class="name">
+                        <span ><b>getUserChatsList</b></span>
+                        <a href="#getUserChatsList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUserChatsList()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="393"
+                                    class="link-to-prism">src/app/services/data.service.ts:393</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fetches the list of user chats and updates the internal state.
+Returns an observable that emits the list of user chats.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;UserChat[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>An observable emitting the list of user chats.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUserCollection"></a>
+                    <span class="name">
+                        <span ><b>getUserCollection</b></span>
+                        <a href="#getUserCollection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUserCollection()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="57"
+                                    class="link-to-prism">src/app/services/data.service.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Returns the Firestore collection reference for users.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>Firestore collection reference for users.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUserDocRef"></a>
+                    <span class="name">
+                        <span ><b>getUserDocRef</b></span>
+                        <a href="#getUserDocRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUserDocRef(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="517"
+                                    class="link-to-prism">src/app/services/data.service.ts:517</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retrieves a reference to a user document in Firestore.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The ID of the user.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>The document reference.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUsersList"></a>
+                    <span class="name">
+                        <span ><b>getUsersList</b></span>
+                        <a href="#getUsersList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUsersList()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="42"
+                                    class="link-to-prism">src/app/services/data.service.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fetches the list of users from the Firestore database and updates the allUsers array.
+Returns an observable that emits the updated list of users.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>An observable emitting the list of users.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="groupThreadsByDate"></a>
+                    <span class="name">
+                        <span ><b>groupThreadsByDate</b></span>
+                        <a href="#groupThreadsByDate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>groupThreadsByDate(threads: <a href="../classes/Thread.html" target="_self">Thread[]</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="350"
+                                    class="link-to-prism">src/app/services/data.service.ts:350</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Groups threads by their date.</p>
+<p>values are arrays of thread objects with their indices.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>threads</td>
+                                            <td>
+                                                            <code><a href="../classes/Thread.html" target="_self" >Thread[]</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The array of threads to be grouped.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>literal type</code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>An object where keys are dates (YYYY-MM-DD) and 
+values are arrays of thread objects with their indices.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="modifyThreads"></a>
+                    <span class="name">
+                        <span ><b>modifyThreads</b></span>
+                        <a href="#modifyThreads"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>modifyThreads(threadData: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, change: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="243"
+                                    class="link-to-prism">src/app/services/data.service.ts:243</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Modifies an existing thread in the list of all threads and updates the grouped threads.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>threadData</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The data of the thread to be modified.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>change</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The Firestore document change object.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="693"
+                                    class="link-to-prism">src/app/services/data.service.ts:693</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Unsubscribes from the thread observable when the service is destroyed.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeThreadFromGroup"></a>
+                    <span class="name">
+                        <span ><b>removeThreadFromGroup</b></span>
+                        <a href="#removeThreadFromGroup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeThreadFromGroup(thread: <a href="../classes/Thread.html" target="_self">Thread</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="299"
+                                    class="link-to-prism">src/app/services/data.service.ts:299</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Removes a thread from the grouped threads by date.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>thread</td>
+                                            <td>
+                                                            <code><a href="../classes/Thread.html" target="_self" >Thread</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The thread to be removed from the group.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeThreads"></a>
+                    <span class="name">
+                        <span ><b>removeThreads</b></span>
+                        <a href="#removeThreads"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeThreads(change: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="256"
+                                    class="link-to-prism">src/app/services/data.service.ts:256</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Removes a thread from the list of all threads and updates the grouped threads.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>change</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The Firestore document change object.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setChannelObject"></a>
+                    <span class="name">
+                        <span ><b>setChannelObject</b></span>
+                        <a href="#setChannelObject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setChannelObject(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="114"
+                                    class="link-to-prism">src/app/services/data.service.ts:114</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Creates a channel object from the provided data.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The channel ID.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>data</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The channel data.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>The channel object.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setThreadObject"></a>
+                    <span class="name">
+                        <span ><b>setThreadObject</b></span>
+                        <a href="#setThreadObject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setThreadObject(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="327"
+                                    class="link-to-prism">src/app/services/data.service.ts:327</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Creates a thread object from the provided data.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The thread ID.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>data</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The thread data.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>The thread object.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setUserChatObject"></a>
+                    <span class="name">
+                        <span ><b>setUserChatObject</b></span>
+                        <a href="#setUserChatObject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setUserChatObject(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="419"
+                                    class="link-to-prism">src/app/services/data.service.ts:419</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Creates a user chat object from the provided data.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user chat ID.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>data</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user chat data.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>The user chat object.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setUserObject"></a>
+                    <span class="name">
+                        <span ><b>setUserObject</b></span>
+                        <a href="#setUserObject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setUserObject(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="68"
+                                    class="link-to-prism">src/app/services/data.service.ts:68</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Creates a user object from the provided data.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user ID.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>data</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user data.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>The user object.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sortThreadByFirstMessageTimestamp"></a>
+                    <span class="name">
+                        <span ><b>sortThreadByFirstMessageTimestamp</b></span>
+                        <a href="#sortThreadByFirstMessageTimestamp"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>sortThreadByFirstMessageTimestamp()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="339"
+                                    class="link-to-prism">src/app/services/data.service.ts:339</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sorts the list of all threads by the timestamp of their first message.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateChannel"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateChannel</b></span>
+                        <a href="#updateChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateChannel(channel: <a href="../classes/Channel.html" target="_self">Channel</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="544"
+                                    class="link-to-prism">src/app/services/data.service.ts:544</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Updates a channel document in Firestore.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>channel</td>
+                                            <td>
+                                                            <code><a href="../classes/Channel.html" target="_self" >Channel</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The channel object to update.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves when the update is complete.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateThread"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateThread</b></span>
+                        <a href="#updateThread"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateThread(thread: <a href="../classes/Thread.html" target="_self">Thread</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="567"
+                                    class="link-to-prism">src/app/services/data.service.ts:567</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Updates a thread document in Firestore.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>thread</td>
+                                            <td>
+                                                            <code><a href="../classes/Thread.html" target="_self" >Thread</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The thread object to update.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves when the update is complete.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateThreadInGroup"></a>
+                    <span class="name">
+                        <span ><b>updateThreadInGroup</b></span>
+                        <a href="#updateThreadInGroup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateThreadInGroup(thread: <a href="../classes/Thread.html" target="_self">Thread</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="283"
+                                    class="link-to-prism">src/app/services/data.service.ts:283</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Updates a thread in the grouped threads by date.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>thread</td>
+                                            <td>
+                                                            <code><a href="../classes/Thread.html" target="_self" >Thread</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The thread to be updated in the group.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateUser"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateUser</b></span>
+                        <a href="#updateUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateUser(user: <a href="../classes/User.html" target="_self">User</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="504"
+                                    class="link-to-prism">src/app/services/data.service.ts:504</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Updates a user document in Firestore.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../classes/User.html" target="_self" >User</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user object to update.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves when the update is complete.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateUserChat"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateUserChat</b></span>
+                        <a href="#updateUserChat"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateUserChat(userChat: <a href="../classes/UserChat.html" target="_self">UserChat</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="590"
+                                    class="link-to-prism">src/app/services/data.service.ts:590</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Updates a user chat document in Firestore.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userChat</td>
+                                            <td>
+                                                            <code><a href="../classes/UserChat.html" target="_self" >UserChat</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user chat object to update.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves when the update is complete.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateUserChatsOfUser"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateUserChatsOfUser</b></span>
+                        <a href="#updateUserChatsOfUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateUserChatsOfUser(user: <a href="../classes/User.html" target="_self">User</a>, userChatId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="528"
+                                    class="link-to-prism">src/app/services/data.service.ts:528</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Updates the userChats field of a user document in Firestore.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../classes/User.html" target="_self" >User</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user object.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>userChatId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The ID of the user chat to add.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves when the update is complete.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateUserChatThread"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateUserChatThread</b></span>
+                        <a href="#updateUserChatThread"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateUserChatThread(thread: <a href="../classes/Thread.html" target="_self">Thread</a>, userChatId: string | undefined, index: number | undefined)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="623"
+                                    class="link-to-prism">src/app/services/data.service.ts:623</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Updates a specific thread in a user chat document in Firestore.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>thread</td>
+                                            <td>
+                                                            <code><a href="../classes/Thread.html" target="_self" >Thread</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The thread object to update.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>userChatId</td>
+                                            <td>
+                                                        <code>string | undefined</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The ID of the user chat.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                        <code>number | undefined</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The index of the thread in the user chat.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>A promise that resolves when the update is complete.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="allChannels"></a>
+                    <span class="name">
+                        <span ><b>allChannels</b></span>
+                        <a href="#allChannels"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Channel.html" target="_self" >Channel[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/services/data.service.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="allThreads"></a>
+                    <span class="name">
+                        <span ><b>allThreads</b></span>
+                        <a href="#allThreads"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Thread.html" target="_self" >Thread[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/services/data.service.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="allUserChats"></a>
+                    <span class="name">
+                        <span ><b>allUserChats</b></span>
+                        <a href="#allUserChats"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>UserChat[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/services/data.service.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="allUsers"></a>
+                    <span class="name">
+                        <span ><b>allUsers</b></span>
+                        <a href="#allUsers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/User.html" target="_self" >User[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/services/data.service.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentChannelId"></a>
+                    <span class="name">
+                        <span ><b>currentChannelId</b></span>
+                        <a href="#currentChannelId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/services/data.service.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="firestore"></a>
+                    <span class="name">
+                        <span ><b>firestore</b></span>
+                        <a href="#firestore"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Firestore</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(Firestore)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/services/data.service.ts:17</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="firstLoad"></a>
+                    <span class="name">
+                        <span ><b>firstLoad</b></span>
+                        <a href="#firstLoad"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/services/data.service.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="groupedChannelThreads"></a>
+                    <span class="name">
+                        <span ><b>groupedChannelThreads</b></span>
+                        <a href="#groupedChannelThreads"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>BehaviorSubject&lt;literal type&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new BehaviorSubject({})</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/services/data.service.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="groupedThreads"></a>
+                    <span class="name">
+                        <span ><b>groupedThreads</b></span>
+                        <a href="#groupedThreads"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/services/data.service.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="threadUnsubscribe"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>threadUnsubscribe</b></span>
+                        <a href="#threadUnsubscribe"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Unsubscribe | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/services/data.service.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, inject } from &#x27;@angular/core&#x27;;
+import { Firestore, addDoc, arrayUnion, collection, deleteDoc, doc, getDoc, onSnapshot, query, updateDoc, where } from &#x27;@angular/fire/firestore&#x27;;
+import { User } from &#x27;../models/user.class&#x27;;
+import { Channel } from &#x27;../models/channel.class&#x27;;
+import { Thread } from &#x27;../models/thread.class&#x27;;
+import { UserChat } from &#x27;../models/user-chat&#x27;;
+import { BehaviorSubject, Observable } from &#x27;rxjs&#x27;;
+import { Unsubscribe } from &#x27;@angular/fire/auth&#x27;;
+import { UserChatJson } from &#x27;../interfaces/user-chat-json.interface&#x27;;
+
+
+@Injectable({
+  providedIn: &#x27;root&#x27;
+})
+export class DataService {
+
+  firestore: Firestore &#x3D; inject(Firestore);
+
+  constructor() {
+    this.getUsersList();
+    this.getChannelsList();
+    this.getUserChatsList();
+  }
+
+  allUsers: User[] &#x3D; [];
+  allChannels: Channel[] &#x3D; [];
+  allThreads: Thread[] &#x3D; [];
+  allUserChats: UserChat[] &#x3D; [];
+
+  groupedThreads: any &#x3D; [];
+  firstLoad: boolean &#x3D; false;
+  currentChannelId!: string;
+  groupedChannelThreads: BehaviorSubject&lt;{ [key: string]: { thread: Thread, index: number }[] }&gt; &#x3D; new BehaviorSubject({});
+  private threadUnsubscribe: Unsubscribe | null &#x3D; null;
+
+  /**
+   * Fetches the list of users from the Firestore database and updates the allUsers array.
+   * Returns an observable that emits the updated list of users.
+   * 
+   * @returns {Observable&lt;User[]&gt;} - An observable emitting the list of users.
+   */
+  getUsersList() {
+    return new Observable(observer &#x3D;&gt; {
+      const unsubscribe &#x3D; onSnapshot(this.getUserCollection(), list &#x3D;&gt; {
+        this.allUsers &#x3D; [];
+        list.forEach(user &#x3D;&gt; this.allUsers.push(this.setUserObject(user.id, user.data())))
+        observer.next(this.allUsers);
+      });
+    });
+  }
+
+  /**
+   * Returns the Firestore collection reference for users.
+   * 
+   * @returns {CollectionReference} - Firestore collection reference for users.
+   */
+  getUserCollection() {
+    return collection(this.firestore, &#x27;users&#x27;);
+  }
+
+  /**
+   * Creates a user object from the provided data.
+   * 
+   * @param {string} id - The user ID.
+   * @param {any} data - The user data.
+   * @returns {User} - The user object.
+   */
+  setUserObject(id: string, data: any): any {
+    return {
+      id: id,
+      name: data.name,
+      email: data.email,
+      onlineStatus: data.onlineStatus,
+      channels: data.channels,
+      userChats: data.userChats,
+      authUserId: data.authUserId,
+      imageUrl: data.imageUrl,
+    }
+  }
+
+  /**
+   * Fetches the list of channels from the Firestore database and updates the allChannels array.
+   * Returns an observable that emits the updated list of channels.
+   * 
+   * @returns {Observable&lt;Channel[]&gt;} - An observable emitting the list of channels.
+   */
+  getChannelsList() {
+    return new Observable(observer &#x3D;&gt; {
+      const unsubscribe &#x3D; onSnapshot(this.getChannelCollection(),
+        list &#x3D;&gt; {
+          this.allChannels &#x3D; [];
+          list.forEach(channel &#x3D;&gt; this.allChannels.push(this.setChannelObject(channel.id, channel.data())))
+          observer.next(this.allChannels);
+        });
+    })
+  }
+
+  /**
+   * Returns the Firestore collection reference for channels.
+   * 
+   * @returns {CollectionReference} - Firestore collection reference for channels.
+   */
+  getChannelCollection() {
+    return collection(this.firestore, &#x27;channels&#x27;);
+  }
+
+  /**
+   * Creates a channel object from the provided data.
+   * 
+   * @param {string} id - The channel ID.
+   * @param {any} data - The channel data.
+   * @returns {Channel} - The channel object.
+   */
+  setChannelObject(id: string, data: any): any {
+    return {
+      channelId: id,
+      title: data.title,
+      participants: data.participants,
+      description: data.description,
+      createdBy: data.createdBy
+    }
+  }
+
+  /**
+   * Fetches the images of participants in a given channel.
+   * Returns an observable that emits an array of objects containing user IDs and their image URLs.
+   * 
+   * @param {string} channelId - The ID of the channel.
+   * @returns {Observable&lt;{userId: string, participantImage: string}[]&gt;} - An observable emitting an array of participant images.
+   */
+  getParticipantImages(channelId: string) {
+    return new Observable(observer &#x3D;&gt; {
+      const unsubscribe &#x3D; onSnapshot(doc(this.firestore, &#x27;channels&#x27;, channelId), async (channelSnapshot) &#x3D;&gt; {
+        if (channelSnapshot.exists()) {
+
+          const participantsImages: any &#x3D; [];
+
+          this.allUsers.forEach((user: any) &#x3D;&gt; {
+            if (user.channels &amp;&amp; user.channels.includes(channelId)) {
+              participantsImages.push({
+                userId: user.id,
+                participantImage: user.imageUrl
+              });
+            }
+          });
+          observer.next(participantsImages);
+        }
+      });
+      return () &#x3D;&gt; unsubscribe();
+    });
+  }
+
+  /**
+   * Fetches the information of participants in a given channel.
+   * Returns an observable that emits an array of user objects.
+   * 
+   * @param {string} channelId - The ID of the channel.
+   * @returns {Observable&lt;User[]&gt;} - An observable emitting an array of participant information.
+   */
+  getParticipantInfos(channelId: string) {
+    return new Observable(observer &#x3D;&gt; {
+      const unsubscribe &#x3D; onSnapshot(doc(this.firestore, &#x27;channels&#x27;, channelId), async (channelSnapshot) &#x3D;&gt; {
+        if (channelSnapshot.exists()) {
+          const channelData &#x3D; channelSnapshot.data();
+          const channelParticipants &#x3D; channelData[&#x27;participants&#x27;];
+
+          const participantsData: any &#x3D; [];
+
+          for (const userId of channelParticipants) {
+            const userDoc &#x3D; await getDoc(doc(this.firestore, &#x27;users&#x27;, userId));
+            if (userDoc.exists()) {
+              const user &#x3D; this.setUserObject(userDoc.id, userDoc.data());
+              if (user) {
+                participantsData.push(user);
+              }
+            }
+          }
+          observer.next(participantsData);
+        }
+      });
+      return () &#x3D;&gt; unsubscribe();
+    });
+  }
+
+  /**
+   * Fetches the list of threads for the current channel and updates the internal state.
+   * Listens for real-time updates from Firestore and handles added, modified, and removed threads.
+   */
+  getThreadsList() {
+    this.groupedThreads &#x3D; [];
+    this.allThreads &#x3D; [];
+    this.firstLoad &#x3D; true;
+
+    if (this.threadUnsubscribe) {
+      this.threadUnsubscribe();
+      this.threadUnsubscribe &#x3D; null;
+    }
+
+    const threadQuery &#x3D; query(this.getThreadCollection(), where(&#x27;channelId&#x27;, &#x27;&#x3D;&#x3D;&#x27;, this.currentChannelId));
+    this.threadUnsubscribe &#x3D; onSnapshot(threadQuery, list &#x3D;&gt; {
+      list.docChanges().forEach(change &#x3D;&gt; {
+        const threadData &#x3D; this.setThreadObject(change.doc.id, change.doc.data());
+
+        if (change.type &#x3D;&#x3D;&#x3D; &#x27;added&#x27;) {
+          this.addThreads(threadData);
+        } else if (change.type &#x3D;&#x3D;&#x3D; &#x27;modified&#x27;) {
+          this.modifyThreads(threadData, change);
+        } else if (change.type &#x3D;&#x3D;&#x3D; &#x27;removed&#x27;) {
+          this.removeThreads(change);
+        }
+      });
+
+      if (this.firstLoad) {
+        this.sortThreadByFirstMessageTimestamp();
+        this.groupedThreads &#x3D; this.groupThreadsByDate(this.allThreads);
+        this.firstLoad &#x3D; false;
+      }
+      this.groupedChannelThreads.next(this.groupedThreads);
+    });
+  }
+
+  /**
+   * Adds a new thread to the list of all threads and updates the grouped threads if not the first load.
+   * 
+   * @param {any} threadData - The data of the thread to be added.
+   */
+  addThreads(threadData: any) {
+    const newThread &#x3D; new Thread(threadData);
+    this.allThreads.push(newThread);
+
+    if (!this.firstLoad) {
+      const index &#x3D; this.allThreads.length - 1;
+      this.addThreadToGroup(newThread, index);
+    }
+  }
+
+  /**
+   * Modifies an existing thread in the list of all threads and updates the grouped threads.
+   * 
+   * @param {any} threadData - The data of the thread to be modified.
+   * @param {any} change - The Firestore document change object.
+   */
+  modifyThreads(threadData: any, change: any) {
+    const modifiedThreadIndex &#x3D; this.allThreads.findIndex(thread &#x3D;&gt; thread.threadId &#x3D;&#x3D;&#x3D; change.doc.id);
+    if (modifiedThreadIndex !&#x3D;&#x3D; -1) {
+      this.allThreads[modifiedThreadIndex] &#x3D; new Thread(threadData);
+      this.updateThreadInGroup(this.allThreads[modifiedThreadIndex]);
+    }
+  }
+
+  /**
+   * Removes a thread from the list of all threads and updates the grouped threads.
+   * 
+   * @param {any} change - The Firestore document change object.
+   */
+  removeThreads(change: any) {
+    const removedThreadIndex &#x3D; this.allThreads.findIndex(thread &#x3D;&gt; thread.threadId &#x3D;&#x3D;&#x3D; change.doc.id);
+    if (removedThreadIndex !&#x3D;&#x3D; -1) {
+      const removedThread &#x3D; this.allThreads.splice(removedThreadIndex, 1)[0];
+      this.removeThreadFromGroup(removedThread);
+    }
+  }
+
+  /**
+   * Adds a thread to the grouped threads by date.
+   * 
+   * @param {Thread} thread - The thread to be added to the group.
+   * @param {number} index - The index of the thread in the allThreads array.
+   */
+  addThreadToGroup(thread: Thread, index: number) {
+    const date &#x3D; new Date(thread.timestamp).toISOString().split(&#x27;T&#x27;)[0];
+    if (!this.groupedThreads[date]) {
+      this.groupedThreads[date] &#x3D; [];
+    }
+    this.groupedThreads[date].push({ thread, index });
+  }
+
+  /**
+   * Updates a thread in the grouped threads by date.
+   * 
+   * @param {Thread} thread - The thread to be updated in the group.
+   */
+  updateThreadInGroup(thread: Thread) {
+    const date &#x3D; new Date(thread.timestamp).toISOString().split(&#x27;T&#x27;)[0];
+    const group &#x3D; this.groupedThreads[date];
+    if (group) {
+      const threadIndex &#x3D; group.findIndex((t: Thread) &#x3D;&gt; t.threadId &#x3D;&#x3D;&#x3D; thread.threadId);
+      if (threadIndex !&#x3D;&#x3D; -1) {
+        group[threadIndex].thread &#x3D; thread;
+      }
+    }
+  }
+
+  /**
+   * Removes a thread from the grouped threads by date.
+   * 
+   * @param {Thread} thread - The thread to be removed from the group.
+   */
+  removeThreadFromGroup(thread: Thread) {
+    const date &#x3D; new Date(thread.timestamp).toISOString().split(&#x27;T&#x27;)[0];
+    const group &#x3D; this.groupedThreads[date];
+
+    if (group) {
+      const threadIndex &#x3D; group.findIndex((t: { thread: Thread, index: number }) &#x3D;&gt; t.thread.threadId &#x3D;&#x3D;&#x3D; thread.threadId);
+      if (threadIndex !&#x3D;&#x3D; -1) {
+        group.splice(threadIndex, 1);
+      }
+    }
+  }
+
+  /**
+   * Returns the Firestore collection reference for threads.
+   * 
+   * @returns {CollectionReference} - Firestore collection reference for threads.
+   */
+  getThreadCollection() {
+    return collection(this.firestore, &#x27;threads&#x27;);
+  }
+
+  /**
+   * Creates a thread object from the provided data.
+   * 
+   * @param {string} id - The thread ID.
+   * @param {any} data - The thread data.
+   * @returns {any} - The thread object.
+   */
+  setThreadObject(id: string, data: any): any {
+    return {
+      threadId: id,
+      channelId: data.channelId,
+      messages: data.messages,
+      timestamp: data.timestamp
+    }
+  }
+
+  /**
+   * Sorts the list of all threads by the timestamp of their first message.
+   */
+  sortThreadByFirstMessageTimestamp() {
+    this.allThreads.sort((a, b) &#x3D;&gt; a.timestamp - b.timestamp);
+  }
+
+  /**
+   * Groups threads by their date.
+   * 
+   * @param {Thread[]} threads - The array of threads to be grouped.
+   * @returns {{ [key: string]: { thread: Thread, index: number }[] }} - An object where keys are dates (YYYY-MM-DD) and 
+   * values are arrays of thread objects with their indices.
+   */
+  groupThreadsByDate(threads: Thread[]): { [key: string]: { thread: Thread, index: number }[] } {
+    const groupedThreads &#x3D; threads.reduce((groups, thread, index) &#x3D;&gt; {
+      const date &#x3D; new Date(thread.timestamp).toISOString().split(&#x27;T&#x27;)[0]; // Format: YYYY-MM-DD
+      if (!groups[date]) {
+        groups[date] &#x3D; [];
+      }
+      groups[date].push({ thread, index });
+      return groups;
+    }, {} as { [key: string]: { thread: Thread, index: number }[] });
+    const today &#x3D; new Date().toISOString().split(&#x27;T&#x27;)[0];
+    if (!groupedThreads[today]) {
+      groupedThreads[today] &#x3D; [];
+    }
+
+    return groupedThreads;
+  }
+
+  /**
+   * Formats a date string for display.
+   * 
+   * @param {string} date - The date string in YYYY-MM-DD format.
+   * @returns {string} - The formatted date string for display.
+   */
+  formatDateForDisplay(date: string): string {
+    const today &#x3D; new Date().toISOString().split(&#x27;T&#x27;)[0];
+    const yesterday &#x3D; new Date(Date.now() - 86400000).toISOString().split(&#x27;T&#x27;)[0]
+
+    if (date &#x3D;&#x3D;&#x3D; today) {
+      return &#x27;Heute&#x27;;
+    } else if (date &#x3D;&#x3D;&#x3D; yesterday) {
+      return &#x27;Gestern&#x27;;
+    } else {
+      const [year, month, day] &#x3D; date.split(&#x27;-&#x27;);
+      return &#x60;${day}.${month}.${year}&#x60;;
+    }
+  }
+
+  /**
+   * Fetches the list of user chats and updates the internal state.
+   * Returns an observable that emits the list of user chats.
+   * 
+   * @returns {Observable&lt;UserChat[]&gt;} - An observable emitting the list of user chats.
+   */
+  getUserChatsList(): Observable&lt;UserChat[]&gt; {
+    return new Observable(observer &#x3D;&gt; {
+      const unsubscribe &#x3D; onSnapshot(this.getUserChatsCollection(), list &#x3D;&gt; {
+        this.allUserChats &#x3D; [];
+        list.forEach(userChat &#x3D;&gt; this.allUserChats.push(this.setUserChatObject(userChat.id, userChat.data())))
+        observer.next(this.allUserChats);
+      });
+    });
+  }
+
+  /**
+   * Returns the Firestore collection reference for user chats.
+   * 
+   * @returns {CollectionReference} - Firestore collection reference for user chats.
+   */
+  getUserChatsCollection() {
+    return collection(this.firestore, &#x27;directMessages&#x27;);
+  }
+
+  /**
+   * Creates a user chat object from the provided data.
+   * 
+   * @param {string} id - The user chat ID.
+   * @param {any} data - The user chat data.
+   * @returns {any} - The user chat object.
+   */
+  setUserChatObject(id: string, data: any): any {
+    return {
+      userChatId: id,
+      participants: data.participants,
+      threads: data.threads
+    }
+  }
+
+  /**
+   * Fetches a specific user chat by ID and returns its threads.
+   * Returns an observable that emits the threads of the user chat.
+   * 
+   * @param {string} userChatId - The ID of the user chat to fetch.
+   * @returns {Observable&lt;any[]&gt;} - An observable emitting the threads of the user chat.
+   */
+  getUserChat(userChatId: string) {
+    return new Observable(observer &#x3D;&gt; {
+      const unsubscribe &#x3D; onSnapshot(doc(this.firestore, &#x27;directMessages&#x27;, userChatId), userChat &#x3D;&gt; {
+        let userChatObject &#x3D; new UserChat(this.setUserChatObject(userChat.id, userChat.data()));
+        observer.next(userChatObject.threads);
+      })
+    })
+  }
+
+  /**
+   * Adds a new channel to the Firestore collection and returns the document ID.
+   * 
+   * @param {Channel} channel - The channel object to be added.
+   * @returns {Promise&lt;string&gt;} - A promise that resolves to the document ID of the added channel.
+   * @throws {Error} - Throws an error if there is an issue adding the channel.
+   */
+  async addChannel(channel: Channel): Promise&lt;string&gt; {
+    try {
+      const docRef &#x3D; await addDoc(this.getChannelCollection(), channel.toJSON());
+      return docRef.id;
+    } catch (err) {
+      console.error(&quot;Fehler beim Hinzufügen des Kanals: &quot;, err);
+      throw err;
+    }
+  }
+
+  /**
+   * Adds a new thread to the Firestore collection.
+   * Logs the document ID on successful addition or logs an error if the addition fails.
+   * 
+   * @param {Thread} thread - The thread object to be added.
+   * @returns {Promise&lt;void&gt;} - A promise that resolves when the thread is added.
+   */
+  async addThread(thread: Thread) {
+    await addDoc(this.getThreadCollection(), thread.toJSON()).catch((err) &#x3D;&gt; {
+      console.error(err)
+    }).then((docRef) &#x3D;&gt; {
+      console.log(&quot;Document written with ID: &quot;, docRef?.id)
+    });
+  }
+
+  /**
+   * Adds a new user chat to the Firestore collection.
+   * Converts threads to string format before adding.
+   * Logs the document ID on successful addition or logs an error if the addition fails.
+   * 
+   * @param {UserChat} userChat - The user chat object to be added.
+   * @returns {Promise&lt;void&gt;} - A promise that resolves when the user chat is added.
+   */
+  async addUserChat(userChat: UserChat) {
+    let userChatCopy &#x3D; new UserChat(userChat.toJSON());
+    let threadsAsString &#x3D; userChatCopy.threads.map(thread &#x3D;&gt; JSON.stringify(thread));
+    let userChatJson &#x3D; userChatCopy.toJSON() as UserChatJson;
+    userChatJson.threads &#x3D; threadsAsString;
+
+    let userChatForFirebase: { [key: string]: any } &#x3D; userChatJson;
+
+    await addDoc(this.getUserChatsCollection(), userChatForFirebase).catch((err) &#x3D;&gt; {
+      console.error(err)
+    }).then((docRef) &#x3D;&gt; {
+      console.log(&quot;Document written with ID: &quot;, docRef?.id)
+    });
+  }
+
+  /**
+   * Updates a user document in Firestore.
+   *
+   * @param {User} user - The user object to update.
+   * @returns {Promise&lt;void&gt;} - A promise that resolves when the update is complete.
+   */
+  async updateUser(user: User) {
+    let docRef &#x3D; this.getUserDocRef(user.id);
+    await updateDoc(docRef, user.toJSON()).catch((err) &#x3D;&gt; {
+      console.error(err)
+    });
+  }
+
+   /**
+   * Retrieves a reference to a user document in Firestore.
+   *
+   * @param {string} userId - The ID of the user.
+   * @returns {DocumentReference} - The document reference.
+   */
+  getUserDocRef(userId: string) {
+    return doc(collection(this.firestore, &#x27;users&#x27;), userId);
+  }
+
+/**
+   * Updates the userChats field of a user document in Firestore.
+   *
+   * @param {User} user - The user object.
+   * @param {string} userChatId - The ID of the user chat to add.
+   * @returns {Promise&lt;void&gt;} - A promise that resolves when the update is complete.
+   */
+  async updateUserChatsOfUser(user: User, userChatId: string) {
+    let docRef &#x3D; this.getUserDocRef(user.id);
+    const newUserChat &#x3D; {
+      userChatId: userChatId
+    };
+    await updateDoc(docRef, {
+      userChats: arrayUnion(newUserChat)
+    });
+  }
+
+  /**
+   * Updates a channel document in Firestore.
+   *
+   * @param {Channel} channel - The channel object to update.
+   * @returns {Promise&lt;void&gt;} - A promise that resolves when the update is complete.
+   */
+  async updateChannel(channel: Channel) {
+    let docRef &#x3D; this.getChannelDocRef(channel.channelId);
+    await updateDoc(docRef, channel.toJSON()).catch((err) &#x3D;&gt; {
+      console.error(err)
+    });
+  }
+
+  /**
+   * Retrieves a reference to a channel document in Firestore.
+   *
+   * @param {string} channelId - The ID of the channel.
+   * @returns {DocumentReference} - The document reference.
+   */
+  getChannelDocRef(channelId: string) {
+    return doc(collection(this.firestore, &#x27;channels&#x27;), channelId);
+  }
+
+  /**
+   * Updates a thread document in Firestore.
+   *
+   * @param {Thread} thread - The thread object to update.
+   * @returns {Promise&lt;void&gt;} - A promise that resolves when the update is complete.
+   */
+  async updateThread(thread: Thread) {
+    let docRef &#x3D; this.getThreadDocRef(thread.threadId);
+    await updateDoc(docRef, thread.toJSON()).catch((err) &#x3D;&gt; {
+      console.error(err)
+    });
+  }
+
+  /**
+   * Retrieves a reference to a thread document in Firestore.
+   *
+   * @param {string} threadId - The ID of the thread.
+   * @returns {DocumentReference} - The document reference.
+   */
+  getThreadDocRef(threadId: string) {
+    return doc(collection(this.firestore, &#x27;threads&#x27;), threadId);
+  }
+
+   /**
+   * Updates a user chat document in Firestore.
+   *
+   * @param {UserChat} userChat - The user chat object to update.
+   * @returns {Promise&lt;void&gt;} - A promise that resolves when the update is complete.
+   */
+  async updateUserChat(userChat: UserChat) {
+    let userChatCopy &#x3D; new UserChat(userChat.toJSON());
+    let threadsAsString &#x3D; userChatCopy.threads.map(thread &#x3D;&gt; JSON.stringify(thread));
+    let userChatJson &#x3D; userChatCopy.toJSON() as UserChatJson;
+    userChatJson.threads &#x3D; threadsAsString;
+
+    let userChatForFirebase: { [key: string]: any } &#x3D; userChatJson;
+
+    let docRef &#x3D; this.getUserChatDocRef(userChat.userChatId);
+
+    await updateDoc(docRef, userChatForFirebase).catch((err) &#x3D;&gt; {
+      console.error(err)
+    });
+  }
+
+   /**
+   * Retrieves a reference to a user chat document in Firestore.
+   *
+   * @param {string} userChatId - The ID of the user chat.
+   * @returns {DocumentReference} - The document reference.
+   */
+  getUserChatDocRef(userChatId: string) {
+    return doc(collection(this.firestore, &#x27;directMessages&#x27;), userChatId)
+  }
+
+  /**
+   * Updates a specific thread in a user chat document in Firestore.
+   *
+   * @param {Thread} thread - The thread object to update.
+   * @param {string | undefined} userChatId - The ID of the user chat.
+   * @param {number | undefined} index - The index of the thread in the user chat.
+   * @returns {Promise&lt;void&gt;} - A promise that resolves when the update is complete.
+   */
+  async updateUserChatThread(thread: Thread, userChatId: string | undefined, index: number | undefined) {
+    if (userChatId !&#x3D;&#x3D; undefined &amp;&amp; index !&#x3D;&#x3D; undefined) {
+      try {
+        let docRef &#x3D; this.getUserChatDocRef(userChatId);
+        const docSnap &#x3D; await getDoc(docRef);
+        if (docSnap.exists()) {
+          let currentThreads &#x3D; docSnap.data()[&#x27;threads&#x27;];
+          currentThreads[index] &#x3D; thread.toJSON();
+          await updateDoc(docRef, { threads: currentThreads });
+        } else {
+          console.log(&quot;No such document!&quot;);
+        }
+      } catch (err) {
+        console.error(&quot;Error updating document: &quot;, err);
+      }
+    }
+  }
+
+  /**
+   * Deletes a user chat document from Firestore.
+   *
+   * @param {string} userChatId - The ID of the user chat to delete.
+   * @returns {Promise&lt;void&gt;} - A promise that resolves when the deletion is complete.
+   */
+  async deleteUserChat(userChatId: string) {
+    await deleteDoc(this.getUserChatDocRef(userChatId)).catch((err) &#x3D;&gt; {
+      console.error(err)
+    });
+  }
+
+  /**
+   * Deletes a thread document from Firestore.
+   *
+   * @param {string} threadId - The ID of the thread to delete.
+   * @returns {Promise&lt;void&gt;} - A promise that resolves when the deletion is complete.
+   */
+  async deleteThread(threadId: string) {
+    await deleteDoc(this.getThreadDocRef(threadId)).catch((err) &#x3D;&gt; {
+      console.error(err)
+    })
+  }
+
+  /**
+   * Deletes a specific thread in a user chat document in Firestore.
+   *
+   * @param {string | undefined} userChatId - The ID of the user chat.
+   * @param {number | undefined} index - The index of the thread in the user chat.
+   * @returns {Promise&lt;void&gt;} - A promise that resolves when the deletion is complete.
+   */
+  async deleteUserChatThread(userChatId: string | undefined, index: number | undefined) {
+    if (userChatId !&#x3D;&#x3D; undefined &amp;&amp; index !&#x3D;&#x3D; undefined) {
+      try {
+        let docRef &#x3D; this.getUserChatDocRef(userChatId);
+        const docSnap &#x3D; await getDoc(docRef);
+        if (docSnap.exists()) {
+          let currentThreads &#x3D; docSnap.data()[&#x27;threads&#x27;];
+          currentThreads.splice(index, 1);
+          await updateDoc(docRef, { threads: currentThreads });
+        } else {
+          console.log(&quot;No such document!&quot;);
+        }
+      } catch (err) {
+        console.error(&quot;Error deleting thread: &quot;, err);
+      }
+    }
+  }
+
+  /**
+   * Unsubscribes from the thread observable when the service is destroyed.
+   */
+  ngOnDestroy() {
+    if (this.threadUnsubscribe) {
+      this.threadUnsubscribe();
+    }
+  }
+
+}
+
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'DataService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

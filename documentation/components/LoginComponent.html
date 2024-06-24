@@ -1,0 +1,861 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>dabubble documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">dabubble documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  LoginComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/login/login.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-login</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>MatButtonModule</code>
+                            <code>MatCardModule</code>
+                            <code>MatInputModule</code>
+                            <code>MatIconModule</code>
+                            <code>ReactiveFormsModule</code>
+                            <code>RouterLink</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./login.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./login.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#authService" >authService</a>
+                            </li>
+                            <li>
+                                <a href="#loginData" >loginData</a>
+                            </li>
+                            <li>
+                                <a href="#logInFalse" >logInFalse</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#anonymousUserLogin" >anonymousUserLogin</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#guestLogin" >guestLogin</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#logIn" >logIn</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(formBuilder: FormBuilder, authService: <a href="../injectables/AuthService.html" target="_self">AuthService</a>, auth: Auth, router: Router)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/login/login.component.ts:40</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>formBuilder</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormBuilder</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>auth</td>
+                                                  
+                                                        <td>
+                                                                    <code>Auth</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="anonymousUserLogin"></a>
+                    <span class="name">
+                        <span ><b>anonymousUserLogin</b></span>
+                        <a href="#anonymousUserLogin"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>anonymousUserLogin()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="86"
+                                    class="link-to-prism">src/app/login/login.component.ts:86</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fallback method in case auth does not get Guest User - when for example deleted</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="guestLogin"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>guestLogin</b></span>
+                        <a href="#guestLogin"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>guestLogin()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="71"
+                                    class="link-to-prism">src/app/login/login.component.ts:71</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>login for guest</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logIn"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>logIn</b></span>
+                        <a href="#logIn"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>logIn(event: Event)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="54"
+                                    class="link-to-prism">src/app/login/login.component.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>login with email and password via firebase authentication</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>Event</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="authService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>authService</b></span>
+                        <a href="#authService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/login/login.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loginData"></a>
+                    <span class="name">
+                        <span ><b>loginData</b></span>
+                        <a href="#loginData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.formBuilder.group({
+    email: &#x27;&#x27;,
+    password: &#x27;&#x27;,
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/login/login.component.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logInFalse"></a>
+                    <span class="name">
+                        <span ><b>logInFalse</b></span>
+                        <a href="#logInFalse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/login/login.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
+import { FormBuilder, ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
+import { MatButtonModule } from &#x27;@angular/material/button&#x27;;
+import { MatCardModule } from &#x27;@angular/material/card&#x27;;
+import { MatInputModule } from &#x27;@angular/material/input&#x27;;
+import { MatIconModule } from &#x27;@angular/material/icon&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { Router, RouterLink } from &#x27;@angular/router&#x27;;
+import { Firestore } from &#x27;@angular/fire/firestore&#x27;;
+import { AuthService } from &#x27;../services/auth.service&#x27;;
+import { Auth, getAuth, signInWithEmailAndPassword } from &#x27;@angular/fire/auth&#x27;;
+import { signInAnonymously } from &#x27;@firebase/auth&#x27;;
+
+
+
+@Component({
+  selector: &#x27;app-login&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatCardModule,
+    MatInputModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    RouterLink
+  ],
+  templateUrl: &#x27;./login.component.html&#x27;,
+  styleUrl: &#x27;./login.component.scss&#x27;
+})
+export class LoginComponent {
+
+  loginData &#x3D; this.formBuilder.group({
+    email: &#x27;&#x27;,
+    password: &#x27;&#x27;,
+  })
+
+
+
+  logInFalse &#x3D; false;
+
+
+  constructor(
+    private formBuilder: FormBuilder,
+    public authService: AuthService,
+    private auth: Auth,
+    private router: Router,
+  ) { }
+
+  /**
+   * login with email and password via firebase authentication
+   * @param {Event} event 
+   */
+  async logIn(event: Event) {
+    let email &#x3D; this.loginData.value.email || &#x27;&#x27;;
+    let password &#x3D; this.loginData.value.password || &#x27;&#x27;;
+    event.preventDefault();
+    let logInSuccess &#x3D; await this.authService.signIn(email, password);
+    if (logInSuccess) {
+      this.logInFalse &#x3D; false;
+      this.router.navigate([&#x27;/dashboard/&#x27;]);
+    } else {
+      this.logInFalse &#x3D; true;
+      console.log(&#x27;Anmeldung fehlgeschlagen&#x27;);
+    }
+  }
+
+  /**
+   * login for guest
+   */
+  async guestLogin() {
+    this.authService.signIn(&#x27;max@mustermann.com&#x27;, &#x27;123456&#x27;)
+      .then(() &#x3D;&gt; {
+        console.log(&#x27;Guest signed in with sucess.&#x27;);
+        this.router.navigate([&#x27;/dashboard/&#x27;]);
+      })
+      .catch(error &#x3D;&gt; {
+        console.warn(&#x27;Could not sign up with the Guest User. Signing up with anonymous login. &#x27;);
+        this.anonymousUserLogin();
+      })
+  }
+
+  /**
+   * Fallback method in case auth does not get Guest User - when for example deleted
+   */
+  anonymousUserLogin() {
+    const auth &#x3D; getAuth();
+    signInAnonymously(auth)
+      .then(() &#x3D;&gt; {
+        this.router.navigate([&#x27;/dashboard/&#x27;]);
+      })
+      .catch((error) &#x3D;&gt; {
+        console.error(&#x27;Could not sign up with guest account. &#x27;, error);
+      });
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;img class&#x3D;&quot;logo&quot; src&#x3D;&quot;../../assets/img/dabubble_header_logo.png&quot; alt&#x3D;&quot;&quot;&gt;
+&lt;div class&#x3D;&quot;go-to-register&quot;&gt;
+    &lt;span&gt;Neu bei DABubble?&lt;/span&gt;
+    &lt;span class&#x3D;&quot;link-to-register&quot; [routerLink]&#x3D;&quot;[&#x27;/register&#x27;]&quot;&gt;Konto erstellen&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class&#x3D;&quot;space&quot;&gt;&lt;/div&gt;
+&lt;mat-card&gt;
+    &lt;mat-card-content&gt;
+        &lt;h1&gt;Anmeldung&lt;/h1&gt;
+        &lt;span&gt;Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.&lt;/span&gt;
+        &lt;form [formGroup]&#x3D;&quot;loginData&quot; (ngSubmit)&#x3D;&quot;logIn($event)&quot;&gt;
+            &lt;div class&#x3D;&quot;width-100&quot;&gt;
+                &lt;div class&#x3D;&quot;input-errormessage&quot;&gt;
+                    &lt;div class&#x3D;&quot;input-login&quot;&gt;
+                        &lt;mat-icon&gt;mail_outline&lt;/mat-icon&gt;
+                        &lt;input formControlName&#x3D;&quot;email&quot; type&#x3D;&quot;email&quot; placeholder&#x3D;&quot;beispielname@email.com&quot;&gt;
+                    &lt;/div&gt;
+                    &lt;p [class.show-error-message]&#x3D;&quot;logInFalse&quot; class&#x3D;&quot;hide-error-message&quot;&gt;*Diese E-Mail-Adresse ist
+                        leider ungültig.&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;input-errormessage&quot;&gt;
+                    &lt;div class&#x3D;&quot;input-login&quot;&gt;
+                        &lt;mat-icon&gt;lock_outline&lt;/mat-icon&gt;
+                        &lt;input formControlName&#x3D;&quot;password&quot; type&#x3D;&quot;password&quot; placeholder&#x3D;&quot;Password&quot;&gt;
+                    &lt;/div&gt;
+                    &lt;p [class.show-error-message]&#x3D;&quot;logInFalse&quot; class&#x3D;&quot;hide-error-message&quot;&gt;*Dieses Passwort ist leider
+                        ungültig.&lt;/p&gt;
+                &lt;/div&gt;
+
+                &lt;a routerLink&#x3D;&quot;/send-mail-to-reset&quot;&gt;Passwort vergessen?&lt;/a&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;border-line&quot;&gt;
+                &lt;div&gt;&lt;/div&gt;
+                &lt;span&gt;ODER&lt;/span&gt;
+                &lt;div&gt;&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;google-login-btn&quot; (click)&#x3D;&quot;authService.signInWidthGoogle()&quot;&gt;&lt;img
+                    src&#x3D;&quot;../../assets/img/google.png&quot; alt&#x3D;&quot;&quot;&gt;&lt;span&gt;Anmelden mit Google&lt;/span&gt;&lt;/button&gt;
+
+            &lt;div&gt;
+                &lt;!-- &lt;asl-google-signin-button type&#x3D;&#x27;icon&#x27; size&#x3D;&#x27;medium&#x27;&gt;&lt;/asl-google-signin-button&gt; --&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;login-btn-field&quot;&gt;
+                &lt;button class&#x3D;&quot;login-btn&quot; type&#x3D;&quot;submit&quot;&gt;Anmelden&lt;/button&gt;
+                &lt;button class&#x3D;&quot;guest-login-btn&quot; type&#x3D;&quot;button&quot; (click)&#x3D;&quot;guestLogin()&quot;&gt;Gäste-Login&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/mat-card-content&gt;
+&lt;/mat-card&gt;
+
+&lt;div class&#x3D;&quot;space imprint-privacy&quot;&gt;
+    &lt;a [routerLink]&#x3D;&quot;[&#x27;/imprint&#x27;]&quot;&gt;Impressum&lt;/a&gt;
+    &lt;a [routerLink]&#x3D;&quot;[&#x27;/privacy&#x27;]&quot;&gt;Datenschutz&lt;/a&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><img class="logo" src="../../assets/img/dabubble_header_logo.png" alt=""><div class="go-to-register">    <span>Neu bei DABubble?</span>    <span class="link-to-register" [routerLink]="[\'/register\']">Konto erstellen</span></div><div class="space"></div><mat-card>    <mat-card-content>        <h1>Anmeldung</h1>        <span>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</span>        <form [formGroup]="loginData" (ngSubmit)="logIn($event)">            <div class="width-100">                <div class="input-errormessage">                    <div class="input-login">                        <mat-icon>mail_outline</mat-icon>                        <input formControlName="email" type="email" placeholder="beispielname@email.com">                    </div>                    <p [class.show-error-message]="logInFalse" class="hide-error-message">*Diese E-Mail-Adresse ist                        leider ungültig.</p>                </div>                <div class="input-errormessage">                    <div class="input-login">                        <mat-icon>lock_outline</mat-icon>                        <input formControlName="password" type="password" placeholder="Password">                    </div>                    <p [class.show-error-message]="logInFalse" class="hide-error-message">*Dieses Passwort ist leider                        ungültig.</p>                </div>                <a routerLink="/send-mail-to-reset">Passwort vergessen?</a>            </div>            <div class="border-line">                <div></div>                <span>ODER</span>                <div></div>            </div>            <button type="button" class="google-login-btn" (click)="authService.signInWidthGoogle()"><img                    src="../../assets/img/google.png" alt=""><span>Anmelden mit Google</span></button>            <div>                <!-- <asl-google-signin-button type=\'icon\' size=\'medium\'></asl-google-signin-button> -->            </div>            <div class="login-btn-field">                <button class="login-btn" type="submit">Anmelden</button>                <button class="guest-login-btn" type="button" (click)="guestLogin()">Gäste-Login</button>            </div>        </form>    </mat-card-content></mat-card><div class="space imprint-privacy">    <a [routerLink]="[\'/imprint\']">Impressum</a>    <a [routerLink]="[\'/privacy\']">Datenschutz</a></div></div>'
+    var COMPONENTS = [{'name': 'AddChannelComponent', 'selector': 'app-add-channel'},{'name': 'AddImgToMessageComponent', 'selector': 'app-add-img-to-message'},{'name': 'AddUsersComponent', 'selector': 'app-channel-members'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChannelChatComponent', 'selector': 'app-channel-chat'},{'name': 'ChannelMembersComponent', 'selector': 'app-channel-members'},{'name': 'ChannelParticipantsComponent', 'selector': 'app-channel-participants'},{'name': 'ChannelThreadComponent', 'selector': 'app-channel-thread'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'EditChannelComponent', 'selector': 'app-edit-channel'},{'name': 'EmojiMartComponent', 'selector': 'app-emoji-mart'},{'name': 'FullThreadComponent', 'selector': 'app-full-thread'},{'name': 'FullThreadMessageComponent', 'selector': 'app-full-thread-message'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'ImprintComponent', 'selector': 'app-imprint'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LogoComponent', 'selector': 'app-logo'},{'name': 'MessageReactionComponent', 'selector': 'app-message-reaction'},{'name': 'PageNotFoundComponent', 'selector': 'app-page-not-found'},{'name': 'PasswordResetComponent', 'selector': 'app-password-reset'},{'name': 'PhotoSelectionComponent', 'selector': 'app-photo-selection'},{'name': 'PrivacyComponent', 'selector': 'app-privacy'},{'name': 'ProfileEditComponent', 'selector': 'app-profile-edit'},{'name': 'ProfileViewComponent', 'selector': 'app-profile-view'},{'name': 'ReAuthenticateUserComponent', 'selector': 'app-re-authenticate-user'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RegisterNextComponent', 'selector': 'app-register-next'},{'name': 'SearchComponent', 'selector': 'app-search'},{'name': 'SendMailToResetPasswordComponent', 'selector': 'app-send-mail-to-reset-password'},{'name': 'SidenavComponent', 'selector': 'app-sidenav'},{'name': 'TestComponent', 'selector': 'app-test'},{'name': 'UserChatComponent', 'selector': 'app-user-chat'},{'name': 'UserChatThreadComponent', 'selector': 'app-user-chat-thread'},{'name': 'ViewProfileComponent', 'selector': 'app-view-profile'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'LoginComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'LoginComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
