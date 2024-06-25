@@ -9,11 +9,9 @@
         </div>
     </div>
 
-
     <div class="channel-history" *ngIf="thread && thread.messages && thread.messages[0] && threadOwner">
+
         <div #fullThreadContainer class="chat-history">
-
-
             <div class="channel-chat-message" [class.other-users-channel-chat-message]="!isCurrentUser">
                 <div class="reaction-menu" *ngIf="isCurrentUser">
                     <div class="icon" *ngIf="isCurrentUser">
@@ -28,12 +26,7 @@
                                 (click)="dataService.deleteThread(this.thread.threadId)">Nachricht löschen</button>
                         </mat-menu>
                     </div>
-
-
-
                 </div>
-
-
 
                 <div class="channel-chat-content">
                     <div class="channel-chat-time-sender">
@@ -43,8 +36,10 @@
 
 
                     <div class="message" *ngIf="!thread.messages[0].editMode">
-                        <img *ngIf="thread.messages[0].imgFileURL.length > 0" src="{{ thread.messages[0].imgFileURL }}"
-                            alt="">
+                        <img *ngIf="thread.messages[0].imgFileURL.length > 1 && !thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')"
+                            src="{{ thread.messages[0].imgFileURL }}" alt="">
+                        <a *ngIf="thread.messages[0].imgFileURL.length > 1 && thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')"
+                            href="{{ thread.messages[0].imgFileURL }}" target="blank" download="">Open PDF</a>
                         <span>
                             {{ thread.messages[0].content }}
                         </span>

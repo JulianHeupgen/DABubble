@@ -51,7 +51,8 @@
       <div class="message-textarea-content">
         <div class="img-container" *ngIf="thread.messages[0].imgFileURL.length > 1">
           <img class="delete-icon" src="../../../../assets/img/close.png" alt="" (click)="deleteImg(this.thread)">
-          <img class="message-img" src="{{ thread.messages[0].imgFileURL }}" alt="">
+          <img *ngIf="thread.messages[0].imgFileURL.length > 1 && !thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')" src="{{ thread.messages[0].imgFileURL }}" alt="">
+      <a *ngIf="thread.messages[0].imgFileURL.length > 1 && thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')" href="{{ thread.messages[0].imgFileURL }}"target="blank" download="">Open PDF</a>
         </div>
           <textarea #editMessageBox>{{ thread.messages[0].content }}</textarea>
       </div>
