@@ -55,6 +55,13 @@
             img {
                 width: 200px;
                 border-radius: 10px;
+            } 
+            
+            a {
+                img{
+                    width: 24px;
+                    border-radius: unset;
+                }
             }
         }
 

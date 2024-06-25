@@ -12,6 +12,7 @@ import { User } from '../../../models/user.class';
 import { deleteObject, getStorage, ref } from '@angular/fire/storage';
 import { ViewProfileComponent } from '../../../dialog/view-profile/view-profile.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-channel-thread',
@@ -34,10 +35,10 @@ export class ChannelThreadComponent {
   @ViewChild("editMessageBox") editMessageBox!: ElementRef;
   threadUser!: User
   isCurrentUser: boolean = false;
-  // setReactionMenuHover: boolean = false;
   editMessage: boolean = false;
   imgFile: string = '';
   isImgFileEdited: boolean = false;
+  sanitizedUrl: any;
 
   /**
    * creates an instance of ChannelThreadComponent
@@ -51,6 +52,7 @@ export class ChannelThreadComponent {
     public dataService: DataService,
     public threadService: ThreadService,
     public dialog: MatDialog,
+    private domSanitizer: DomSanitizer
   ) { }
 
   /**
@@ -65,6 +67,7 @@ export class ChannelThreadComponent {
       this.isCurrentUser = false;
     }
     this.findThreadUser(messageOwnerId);
+    this.sanitizedUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.thread.messages[0].imgFileURL);
   }
 
   /**
