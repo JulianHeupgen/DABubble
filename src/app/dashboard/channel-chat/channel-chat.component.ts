@@ -170,7 +170,9 @@ export class ChannelChatComponent {
         console.error("Could not scroll to bottom:", err);
       }
     }
-    this.threadMessageBox.nativeElement.focus();
+    setTimeout(() => {
+      this.threadMessageBox.nativeElement.focus();
+    }, 500);
   }
 
 

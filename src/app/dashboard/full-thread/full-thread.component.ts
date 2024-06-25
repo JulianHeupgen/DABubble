@@ -156,7 +156,9 @@ export class FullThreadComponent {
         console.error("Could not scroll to bottom:", err);
       }
     }
-    this.fullThreadMessageBox.nativeElement.focus();
+    setTimeout(() => {
+      this.fullThreadMessageBox.nativeElement.focus();
+    }, 500);
   }
 
 
