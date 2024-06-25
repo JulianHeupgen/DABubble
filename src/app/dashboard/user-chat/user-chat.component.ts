@@ -123,6 +123,7 @@ export class UserChatComponent {
         console.error("Could not scroll to bottom:", err);
       }
     }
+    this.threadMessageBox.nativeElement.focus();
   }
 
   /**
