@@ -87,6 +87,13 @@
 
                 .img-container {
                     position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    a {
+                        img {
+                            width: 24px;
+                        }
+                    }
 
                     .delete-icon {
                         cursor: pointer;

@@ -17,6 +17,7 @@ import { AddImgToMessageComponent } from '../add-img-to-message/add-img-to-messa
 import { EmojiCommunicationService } from '../../services/emoji-communication.service';
 import { Channel } from '../../models/channel.class';
 import { Message } from '../../models/message.class';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-full-thread',
@@ -52,6 +53,7 @@ export class FullThreadComponent {
   users: any[] = [];
   emojiSubscription: Subscription;
   imgFile: File | undefined = undefined;
+  sanitizedUrl: any;
 
   imgFileLink: string = '';
   isImgFileEdited: boolean = false;
@@ -83,6 +85,7 @@ export class FullThreadComponent {
     private formBuilder: FormBuilder,
     public dataService: DataService,
     private emojiService: EmojiCommunicationService,
+    private domSanitizer: DomSanitizer,
   ) {
     this.emojiSubscription = this.emojiService.emojiEvent$.subscribe(
       (event) => {
@@ -96,7 +99,7 @@ export class FullThreadComponent {
           this.thread = event.thread;
         }
       }
-    });
+    });    
   }
 
 
@@ -119,6 +122,7 @@ export class FullThreadComponent {
       if (event.thread) {
         this.sortNewDataFromThreadService(event)
         this.checkCurrentUser();
+        this.sanitizedUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(event.thread.messages[0].imgFileURL);
       }
       this.getUsersOfThread();
       this.filteredUsers = this.pingUserControlFullThread.valueChanges.pipe(
@@ -221,7 +225,7 @@ export class FullThreadComponent {
     this.users = Array.from(userMap.values());
   }
 
-  
+
   /**
  * Closes the current thread.
  * Sets the thread to not open using `threadService`.
@@ -245,7 +249,7 @@ export class FullThreadComponent {
     );
   }
 
-  
+
   /**
  * Adds a user to the message.
  * Sets the user's name in the text area and closes the user menu.
@@ -260,7 +264,7 @@ export class FullThreadComponent {
     }
   }
 
-  
+
   /**
  * Sends the entered message or img in the current thread.
  * Optionally adds an image to the message and updates thread data in Firebase.
@@ -281,7 +285,7 @@ export class FullThreadComponent {
     }
   }
 
-  
+
   /**
  * Converts the messages of the thread to a string representation.
  *
@@ -329,7 +333,7 @@ export class FullThreadComponent {
     messageObj.editMode = true;
   }
 
-  
+
   /**
  * Cancels editing mode for a message.
  *

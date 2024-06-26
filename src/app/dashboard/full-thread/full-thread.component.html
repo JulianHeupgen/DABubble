@@ -37,9 +37,14 @@
 
                     <div class="message" *ngIf="!thread.messages[0].editMode">
                         <img *ngIf="thread.messages[0].imgFileURL.length > 1 && !thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')"
-                            src="{{ thread.messages[0].imgFileURL }}" alt="">
-                        <a *ngIf="thread.messages[0].imgFileURL.length > 1 && thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')"
-                            href="{{ thread.messages[0].imgFileURL }}" target="blank" download="">Open PDF</a>
+                            [src]="sanitizedUrl">
+                        <embed
+                            *ngIf="thread.messages[0].imgFileURL.length > 1 && thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')"
+                            [src]="sanitizedUrl" />
+                        <a *ngIf="thread.messages[0].imgFileURL.length > 1" [href]="sanitizedUrl" target="_blank"
+                            [download]="">
+                            <img src="../../../../assets/img/download-icon.png">
+                        </a>
                         <span>
                             {{ thread.messages[0].content }}
                         </span>

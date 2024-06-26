@@ -28,7 +28,8 @@
       </button>
       <mat-menu class="edit-message-btn" #editMessage="matMenu">
         <button mat-menu-item (click)="editThreadMessage()">Nachricht bearbeiten</button>
-        <button class="delete-btn" mat-menu-item (click)="dataService.deleteThread(this.thread.threadId)">Nachricht löschen</button>
+        <button class="delete-btn" mat-menu-item (click)="dataService.deleteThread(this.thread.threadId)">Nachricht
+          löschen</button>
       </mat-menu>
     </div>
 
@@ -40,11 +41,15 @@
       <h3 (click)="showProfile(threadUser)">{{ threadUser.name }}</h3>
     </div>
     <div class="message" *ngIf="!editMessage">
-      <img *ngIf="thread.messages[0].imgFileURL.length > 1 && !thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')" [src]="sanitizedUrl">
-      <embed *ngIf="thread.messages[0].imgFileURL.length > 1 && thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')" [src]="sanitizedUrl"/>
-        <a *ngIf="thread.messages[0].imgFileURL.length > 1" [href]="sanitizedUrl" target="_blank" [download]="">
-          <img src="../../../../assets/img/download-icon.png">
-        </a>
+      <img
+        *ngIf="thread.messages[0].imgFileURL.length > 1 && !thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')"
+        [src]="sanitizedUrl">
+      <embed
+        *ngIf="thread.messages[0].imgFileURL.length > 1 && thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')"
+        [src]="sanitizedUrl" />
+      <a *ngIf="thread.messages[0].imgFileURL.length > 1" [href]="sanitizedUrl" target="_blank" [download]="">
+        <img src="../../../../assets/img/download-icon.png">
+      </a>
       <!-- <a *ngIf="thread.messages[0].imgFileURL.length > 1 && thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')" href="{{ thread.messages[0].imgFileURL }}"target="blank" download="">Open PDF</a> -->
       <span [class.other-users-message]="!isCurrentUser">
         {{ thread.messages[0].content }}
@@ -55,10 +60,17 @@
       <div class="message-textarea-content">
         <div class="img-container" *ngIf="thread.messages[0].imgFileURL.length > 1">
           <img class="delete-icon" src="../../../../assets/img/close.png" alt="" (click)="deleteImg(this.thread)">
-          <img *ngIf="thread.messages[0].imgFileURL.length > 1 && !thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')" src="{{ thread.messages[0].imgFileURL }}" alt="">
-      <a *ngIf="thread.messages[0].imgFileURL.length > 1 && thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')" href="{{ thread.messages[0].imgFileURL }}"target="blank" download="">Open PDF</a>
+          <img
+            *ngIf="thread.messages[0].imgFileURL.length > 1 && !thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')"
+            [src]="sanitizedUrl">
+          <embed
+            *ngIf="thread.messages[0].imgFileURL.length > 1 && thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')"
+            [src]="sanitizedUrl" />
+          <a *ngIf="thread.messages[0].imgFileURL.length > 1" [href]="sanitizedUrl" target="_blank" [download]="">
+            <img src="../../../../assets/img/download-icon.png">
+          </a>
         </div>
-          <textarea #editMessageBox>{{ thread.messages[0].content }}</textarea>
+        <textarea #editMessageBox>{{ thread.messages[0].content }}</textarea>
       </div>
       <div class="edit-message-btns">
         <span (click)="cancelEditMessage()">Abbrechen</span>
@@ -68,11 +80,11 @@
 
     <div class="reaction-and-answercount">
 
-      <span *ngIf="thread.messages.length > 1 && thread.messages.length < 3"  (click)="openThread(this.thread)">
+      <span *ngIf="thread.messages.length > 1 && thread.messages.length < 3" (click)="openThread(this.thread)">
         {{ thread.messages.length - 1 }} Antwort
       </span>
 
-      <span *ngIf="thread.messages.length >= 3"  (click)="openThread(this.thread)">
+      <span *ngIf="thread.messages.length >= 3" (click)="openThread(this.thread)">
         {{ thread.messages.length - 1 }} Antworten
       </span>
 
