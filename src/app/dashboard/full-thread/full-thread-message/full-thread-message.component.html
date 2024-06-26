@@ -34,12 +34,21 @@
         </div>
 
         <div class="message" *ngIf="!message.editMode">
+
           <div *ngIf="message.imgFileURL.length > 1">
             <img *ngIf="message.imgFileURL.length > 1 && !message.imgFileURL.toLowerCase().includes('.pdf')"
-              src="{{ message.imgFileURL }}" alt="">
-            <a *ngIf="message.imgFileURL.length > 1 && message.imgFileURL.toLowerCase().includes('.pdf')"
-              href="{{ message.imgFileURL }}" target="blank" download="">Open PDF</a>
+              [src]="getImgUrlforPDF(message.imgFileURL)">
+            <embed *ngIf="message.imgFileURL.length > 1 && message.imgFileURL.toLowerCase().includes('.pdf')"
+              [src]="getImgUrlforPDF(message.imgFileURL)" />
+            <div class="download-icon">
+              <a *ngIf="message.imgFileURL.length > 1" [href]="getImgUrlforPDF(message.imgFileURL)" target="_blank"
+                [download]="">
+                <img src="../../../../assets/img/download-icon.png">
+              </a>
+            </div>
           </div>
+
+
           <span>
             {{ message.content }}
           </span>
@@ -48,11 +57,16 @@
         <div class="message-textarea" *ngIf="message.editMode">
           <div class="message-textarea-content">
             <div class="img-container" *ngIf="message.imgFileURL.length > 1">
-              <img class="delete-icon" src="../../../../assets/img/close.png" alt="" (click)="deleteImg(message)">
               <img *ngIf="message.imgFileURL.length > 1 && !message.imgFileURL.toLowerCase().includes('.pdf')"
-                src="{{ message.imgFileURL }}" alt="">
-              <a *ngIf="message.imgFileURL.length > 1 && message.imgFileURL.toLowerCase().includes('.pdf')"
-                href="{{ message.imgFileURL }}" target="blank" download="">Open PDF</a>
+                [src]="getImgUrlforPDF(message.imgFileURL)">
+              <embed *ngIf="message.imgFileURL.length > 1 && message.imgFileURL.toLowerCase().includes('.pdf')"
+                [src]="getImgUrlforPDF(message.imgFileURL)" />
+              <div class="download-icon">
+                <a *ngIf="message.imgFileURL.length > 1" [href]="getImgUrlforPDF(message.imgFileURL)" target="_blank"
+                  [download]="">
+                  <img src="../../../../assets/img/download-icon.png">
+                </a>
+              </div>
             </div>
             <textarea #editMessageReply>{{ message.content }}</textarea>
           </div>

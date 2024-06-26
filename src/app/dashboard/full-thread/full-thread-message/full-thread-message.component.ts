@@ -10,6 +10,7 @@ import { ThreadService } from '../../../services/thread.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { deleteObject, getStorage, ref } from '@angular/fire/storage';
 import { Message } from '../../../models/message.class';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-full-thread-message',
@@ -45,7 +46,8 @@ export class FullThreadMessageComponent {
   constructor(
     public dataService: DataService,
     public threadService: ThreadService,
-    private firebase: Firestore
+    private firebase: Firestore,
+    private domSanitizer: DomSanitizer,
   ) { }
 
 
@@ -255,6 +257,10 @@ export class FullThreadMessageComponent {
  */
   ngOnDestroy() {
     this.threadUnsubscribe();
+  }
+
+  getImgUrlforPDF(messageContent: string) {
+    return this.domSanitizer.bypassSecurityTrustResourceUrl(messageContent);
   }
 }
 

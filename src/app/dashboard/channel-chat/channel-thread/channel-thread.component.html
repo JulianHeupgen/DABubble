@@ -47,9 +47,11 @@
       <embed
         *ngIf="thread.messages[0].imgFileURL.length > 1 && thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')"
         [src]="sanitizedUrl" />
-      <a *ngIf="thread.messages[0].imgFileURL.length > 1" [href]="sanitizedUrl" target="_blank" [download]="">
-        <img src="../../../../assets/img/download-icon.png">
-      </a>
+        <div class="download-icon">
+          <a *ngIf="thread.messages[0].imgFileURL.length > 1" [href]="sanitizedUrl" target="_blank" [download]="">
+            <img src="../../../../assets/img/download-icon.png">
+          </a>
+        </div>
       <!-- <a *ngIf="thread.messages[0].imgFileURL.length > 1 && thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')" href="{{ thread.messages[0].imgFileURL }}"target="blank" download="">Open PDF</a> -->
       <span [class.other-users-message]="!isCurrentUser">
         {{ thread.messages[0].content }}
@@ -66,9 +68,11 @@
           <embed
             *ngIf="thread.messages[0].imgFileURL.length > 1 && thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')"
             [src]="sanitizedUrl" />
-          <a *ngIf="thread.messages[0].imgFileURL.length > 1" [href]="sanitizedUrl" target="_blank" [download]="">
-            <img src="../../../../assets/img/download-icon.png">
-          </a>
+            <div class="download-icon">
+              <a *ngIf="thread.messages[0].imgFileURL.length > 1" [href]="sanitizedUrl" target="_blank" [download]="">
+                <img src="../../../../assets/img/download-icon.png">
+              </a>
+            </div>
         </div>
         <textarea #editMessageBox>{{ thread.messages[0].content }}</textarea>
       </div>

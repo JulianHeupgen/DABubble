@@ -77,5 +77,6 @@ app-full-thread-message {
 @media (max-width: 800px) {
     .open-thread {
         width: 100%;
+        min-width: unset;
     }
 }

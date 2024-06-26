@@ -41,10 +41,12 @@
                         <embed
                             *ngIf="thread.messages[0].imgFileURL.length > 1 && thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')"
                             [src]="sanitizedUrl" />
-                        <a *ngIf="thread.messages[0].imgFileURL.length > 1" [href]="sanitizedUrl" target="_blank"
-                            [download]="">
-                            <img src="../../../../assets/img/download-icon.png">
-                        </a>
+                        <div class="download-icon">
+                            <a *ngIf="thread.messages[0].imgFileURL.length > 1" [href]="sanitizedUrl" target="_blank"
+                                [download]="">
+                                <img src="../../../../assets/img/download-icon.png">
+                            </a>
+                        </div>
                         <span>
                             {{ thread.messages[0].content }}
                         </span>
