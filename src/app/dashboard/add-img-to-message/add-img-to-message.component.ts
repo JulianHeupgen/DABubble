@@ -26,23 +26,37 @@ export class AddImgToMessageComponent {
    * 
    * @param {Event} event - The file input change event.
    */
-  handleFileInput(event: any) {
-    const file: File = event.target.files[0];
-    const reader: FileReader = new FileReader();
-    this.removeImage();
-    reader.onloadend = () => {
-      const imgElement = document.createElement('img');
-      imgElement.src = reader.result as string;
-      imgElement.classList.add('img-file');
-      this.showImgRef.innerHTML= '';
-      this.showImgRef.appendChild(imgElement);
-      imgElement.addEventListener('click', this.removeImage.bind(this));
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-      this.imgFile = file;
+    handleFileInput(event: any) {
+      const file: File = event.target.files[0];
+      const reader: FileReader = new FileReader();
+      this.removeImage();
+      reader.onloadend = () => {
+        this.showImgRef.innerHTML = ''; // Clear previous content
+        const containerElement = document.createElement('div');
+        containerElement.classList.add('file-container');
+        containerElement.addEventListener('click', this.removeImage.bind(this));
+  
+        if (file.type === 'application/pdf') {
+          const embedElement = document.createElement('embed');
+          embedElement.src = reader.result as string;
+          embedElement.classList.add('img-file');
+          embedElement.type = 'application/pdf';
+          containerElement.appendChild(embedElement);
+        } else {
+          const imgElement = document.createElement('img');
+          imgElement.src = reader.result as string;
+          imgElement.classList.add('img-file');
+          containerElement.appendChild(imgElement);
+        }
+  
+        this.showImgRef.appendChild(containerElement);
+      };
+      if (file) {
+        reader.readAsDataURL(file);
+        this.imgFile = file;
+        console.log(this.imgFile);
+      }
     }
-  }
 
     /**
    * Removes the currently displayed image from the `showImgRef` element 
