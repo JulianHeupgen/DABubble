@@ -9,6 +9,7 @@ import { EmojiMartComponent } from '../../emoji-mart/emoji-mart.component';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { deleteObject, getStorage, ref } from '@angular/fire/storage';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-user-chat-thread',
@@ -34,12 +35,14 @@ export class UserChatThreadComponent {
   editMessage: boolean = false;
   imgFile: string = '';
   isImgFileEdited: boolean = false;
+  sanitizedUrl: any;
 
 
   constructor(
     public userChat: UserChatComponent,
     public dataService: DataService,
-    public threadService: ThreadService
+    public threadService: ThreadService,
+    private domSanitizer: DomSanitizer,
   ) {}
 
 
@@ -57,6 +60,8 @@ export class UserChatThreadComponent {
       this.currentUserIsMessageOwner = false;
       this.findThreadOwner(messageOwnerId);
     }
+    this.sanitizedUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.thread.messages[0].imgFileURL);
+
   }
 
 
