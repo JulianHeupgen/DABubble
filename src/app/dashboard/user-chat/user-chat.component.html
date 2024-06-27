@@ -14,42 +14,20 @@
   <div #threadContainer class="chat-history">
     <div class="emptyUserChat" *ngIf="emptyUserChat">Starte einen Chat !</div>
 
-
-
     @for(date of (groupedcurrentUserChatThreads$ | async) | keyvalue; track date.key) {
-
     <div *ngIf="date.value.length > 0" class="date-container">
       <div class="date-line"></div>
       <div class="date"> {{ dataService.formatDateForDisplay(date.key) }} </div>
       <div class="date-line"></div>
     </div>
-    
     @for(item of date.value; track item.thread.timestamp) {
-      <!-- <ng-container *ngFor="let item of date.value; trackBy: trackByTimestamp"> -->
-        <app-user-chat-thread [thread]="item.thread" [userChatId]="currentUserChat?.userChatId" [userChatIndex]="item.index">
-        </app-user-chat-thread>
-      <!-- </ng-container> -->
+    <app-user-chat-thread [thread]="item.thread" [userChatId]="currentUserChat?.userChatId"
+      [userChatIndex]="item.index">
+    </app-user-chat-thread>
     }
-  }
-
-
-
-    <!-- <div *ngFor="let date of (groupedcurrentUserChatThreads$ | async) | keyvalue">
-      <div *ngIf="date.value.length > 0" class="date-container">
-        <div class="date-line"></div>
-        <div class="date"> {{ dataService.formatDateForDisplay(date.key) }} </div>
-        <div class="date-line"></div>
-      </div>
-
-      <ng-container *ngFor="let thread of date.value; let i = index; trackBy: trackByTimestamp">
-        <app-user-chat-thread [thread]="thread" [userChatId]="currentUserChat?.userChatId" [userChatIndex]="i">
-        </app-user-chat-thread>
-      </ng-container>
-    </div> -->
-
-
-
+    }
   </div>
+
   <!-- User Chat Input -->
   <form [formGroup]="channelThreadMessage" class="text-box" *ngIf="currentUserChatThreads">
     <div #imgBox class="add-file-img-box"></div>
@@ -61,6 +39,7 @@
         <app-add-img-to-message [showImgRef]="imgBox"></app-add-img-to-message>
 
         <div class="border-line"></div>
+
         <app-emoji-mart [emojiImg]="'emoticon.png'" [emojiImgHover]="'emoticon-hover.png'"
           [assigningComponent]="'UserChatComponent'"></app-emoji-mart>
 
@@ -73,7 +52,6 @@
         <button type="submit" class="hover-icon" (click)="sendMessage(); removeChatInput()">
           <img src="assets/img/send-message-hover.png" alt="">
         </button>
-
       </div>
     </div>
   </form>

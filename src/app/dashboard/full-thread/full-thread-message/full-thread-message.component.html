@@ -34,7 +34,6 @@
         </div>
 
         <div class="message" *ngIf="!message.editMode">
-
           <div *ngIf="message.imgFileURL.length > 1">
             <img *ngIf="message.imgFileURL.length > 1 && !message.imgFileURL.toLowerCase().includes('.pdf')"
               [src]="getImgUrlforPDF(message.imgFileURL)">
@@ -47,8 +46,6 @@
               </a>
             </div>
           </div>
-
-
           <span>
             {{ message.content }}
           </span>
