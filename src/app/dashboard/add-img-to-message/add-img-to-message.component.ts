@@ -54,7 +54,6 @@ export class AddImgToMessageComponent {
       if (file) {
         reader.readAsDataURL(file);
         this.imgFile = file;
-        console.log(this.imgFile);
       }
     }
 
