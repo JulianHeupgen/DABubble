@@ -163,7 +163,7 @@ export class SidenavComponent {
       this.selectedUser = [];
       this.selectedUser.push(user);
     } else {
-      console.log('Kein User gefunden', uid);
+      console.log('Kein User gefunden');
     }
   }
 

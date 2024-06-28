@@ -467,9 +467,7 @@ export class DataService {
   async addThread(thread: Thread) {
     await addDoc(this.getThreadCollection(), thread.toJSON()).catch((err) => {
       console.error(err)
-    }).then((docRef) => {
-      console.log("Document written with ID: ", docRef?.id)
-    });
+    }).then( );
   }
 
   /**
@@ -490,9 +488,7 @@ export class DataService {
 
     await addDoc(this.getUserChatsCollection(), userChatForFirebase).catch((err) => {
       console.error(err)
-    }).then((docRef) => {
-      console.log("Document written with ID: ", docRef?.id)
-    });
+    }).then();
   }
 
   /**
