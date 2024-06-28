@@ -3,7 +3,7 @@
   <!-- logo-animation.component.html -->
   <div [@resizeAndMove]="{ value: containerState, params: { scaleFactor: scaleFactor } }" class="logo-container" (@resizeAndMove.done)="resizeAndMoveDone()">
 
-    <img [style.width]="iconLogoWidth" src="./../../../assets/img/logo-icon.png" class="icon" />
+    <img [style.width]="iconLogoWidth" src="assets/img/logo-icon.png" class="icon" />
 
     <div
       [@grow]="{ value: '', params: { textLogoWidth: textLogoWidth } }"

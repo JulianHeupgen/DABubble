@@ -14,10 +14,10 @@
         </app-emoji-mart>
 
         <div class="icon" *ngIf="message.sender.id == currentUser.id">
-          <img class="not-hover-icon" src="../../../../assets/img/dots.png" alt="">
+          <img class="not-hover-icon" src="assets/img/dots.png" alt="">
           <button class="hover-icon" mat-button [matMenuTriggerFor]="editMessage"
             (click)="setHoverReactionbar(message)">
-            <img src="../../../../assets/img/dots-hover.png" alt="">
+            <img src="assets/img/dots-hover.png" alt="">
           </button>
           <mat-menu class="edit-message-btn" #editMessage="matMenu">
             <button mat-menu-item (click)="editThreadMessageReply(message)">Nachricht bearbeiten</button>
@@ -42,7 +42,7 @@
             <div class="download-icon">
               <a *ngIf="message.imgFileURL.length > 1" [href]="getImgUrlforPDF(message.imgFileURL)" target="_blank"
                 [download]="">
-                <img src="../../../../assets/img/download-icon.png">
+                <img src="assets/img/download-icon.png">
               </a>
             </div>
           </div>
@@ -61,7 +61,7 @@
               <div class="download-icon">
                 <a *ngIf="message.imgFileURL.length > 1" [href]="getImgUrlforPDF(message.imgFileURL)" target="_blank"
                   [download]="">
-                  <img src="../../../../assets/img/download-icon.png">
+                  <img src="assets/img/download-icon.png">
                 </a>
               </div>
             </div>

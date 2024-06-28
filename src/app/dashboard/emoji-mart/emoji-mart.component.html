@@ -1,7 +1,7 @@
 <div class="add-emoticons">
-    <img class="not-hover-icon" src="../../../assets/img/{{ emojiImg }}" alt="">
+    <img class="not-hover-icon" src="assets/img/{{ emojiImg }}" alt="">
     <button class="hover-icon" mat-button [matMenuTriggerFor]="emoji">
-        <img src="../../assets/img/{{ emojiImgHover }}" alt="">
+        <img src="assets/img/{{ emojiImgHover }}" alt="">
     </button>
     <mat-menu #emoji="matMenu" class="emoji-menu">
         <button mat-menu-item (click)="$event.stopPropagation()">

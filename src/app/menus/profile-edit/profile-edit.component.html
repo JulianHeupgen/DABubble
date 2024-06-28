@@ -3,7 +3,7 @@
     <div class="profile-menu-data" (click)="$event.stopPropagation()">
       <div class="p-head">
         <span>Profil bearbeiten</span>
-        <img (click)="closeEdit($event)" src="./../../../assets/img/close.png">
+        <img (click)="closeEdit($event)" src="assets/img/close.png">
       </div>
       <div class="p-img">
         <div class="image-container">
@@ -17,7 +17,7 @@
         <form [formGroup]="editUserForm" (ngSubmit)="save()">
           <div class="input-container">
             <div class="edit-label">
-              <img src="./../../../assets/img/account_circle.png">
+              <img src="assets/img/account_circle.png">
               <span>Vollständiger Name</span>
             </div>
             <div class="input-field-container">
@@ -33,7 +33,7 @@
           </div>
           <div class="input-container">
             <div class="edit-label">
-              <img src="./../../../assets/img/mail.png">
+              <img src="assets/img/mail.png">
               <span>E-Mail-Adresse</span>
             </div>
             <div class="input-field-container">

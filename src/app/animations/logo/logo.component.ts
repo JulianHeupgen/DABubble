@@ -53,8 +53,8 @@ import { Router } from '@angular/router';
 })
 export class LogoComponent {
 
-  logoTextUrl: string = './../../../assets/img/logo-text-white.png';
-  fullLogoBlackUrl: string = './../../../assets/img/dabubble_header_logo.png';
+  logoTextUrl: string = 'assets/img/logo-text-white.png';
+  fullLogoBlackUrl: string = 'assets/img/dabubble_header_logo.png';
 
   startGrowing = false;
   containerState = 'start';
@@ -135,7 +135,7 @@ export class LogoComponent {
   async resizeAndMoveDone() {
     if (this.containerState === 'end') {
       this.defaultBackground = true;
-      this.logoTextUrl = './../../../assets/img/logo-text-black.png';
+      this.logoTextUrl = 'assets/img/logo-text-black.png';
       await this.route.navigateByUrl('dashboard');
     }
   }

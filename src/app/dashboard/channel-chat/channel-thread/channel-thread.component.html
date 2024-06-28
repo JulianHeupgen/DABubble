@@ -5,11 +5,11 @@
   <div class="reaction-menu">
 
     <div class="icon" (click)="messageReaction.reactToThread(thread.messages[0], 'check-mark.png')">
-      <img src="../../../../assets/img/check-mark.png" alt="">
+      <img src="assets/img/check-mark.png" alt="">
     </div>
 
     <div class="icon" (click)="messageReaction.reactToThread(thread.messages[0], 'hands-up.png')">
-      <img src="../../../../assets/img/hands-up.png" alt="">
+      <img src="assets/img/hands-up.png" alt="">
     </div>
 
     <app-emoji-mart [emojiImg]="'emoji-reaction.png'" [emojiImgHover]="'emoji-reaction-hover.png'"
@@ -17,14 +17,14 @@
     </app-emoji-mart>
 
     <div class="icon">
-      <img class="not-hover-icon" src="../../../../assets/img/comment.png" alt="">
-      <img class="hover-icon" src="../../../../assets/img/comment-hover.png" alt="" (click)="openThread(this.thread)">
+      <img class="not-hover-icon" src="assets/img/comment.png" alt="">
+      <img class="hover-icon" src="assets/img/comment-hover.png" alt="" (click)="openThread(this.thread)">
     </div>
 
     <div class="icon" *ngIf="isCurrentUser">
-      <img class="not-hover-icon" src="../../../../assets/img/dots.png" alt="">
+      <img class="not-hover-icon" src="assets/img/dots.png" alt="">
       <button class="hover-icon" mat-button [matMenuTriggerFor]="editMessage">
-        <img src="../../../../assets/img/dots-hover.png" alt="">
+        <img src="assets/img/dots-hover.png" alt="">
       </button>
       <mat-menu class="edit-message-btn" #editMessage="matMenu">
         <button mat-menu-item (click)="editThreadMessage()">Nachricht bearbeiten</button>
@@ -49,7 +49,7 @@
         [src]="sanitizedUrl" />
       <div class="download-icon">
         <a *ngIf="thread.messages[0].imgFileURL.length > 1" [href]="sanitizedUrl" target="_blank" [download]="">
-          <img src="../../../../assets/img/download-icon.png">
+          <img src="assets/img/download-icon.png">
         </a>
       </div>
       <span [class.other-users-message]="!isCurrentUser">
@@ -60,7 +60,7 @@
     <div class="message-textarea" *ngIf="editMessage">
       <div class="message-textarea-content">
         <div class="img-container" *ngIf="thread.messages[0].imgFileURL.length > 1">
-          <img class="delete-icon" src="../../../../assets/img/close.png" alt="" (click)="deleteImg(this.thread)">
+          <img class="delete-icon" src="assets/img/close.png" alt="" (click)="deleteImg(this.thread)">
           <img
             *ngIf="thread.messages[0].imgFileURL.length > 1 && !thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')"
             [src]="sanitizedUrl">
@@ -69,7 +69,7 @@
             [src]="sanitizedUrl" />
           <div class="download-icon">
             <a *ngIf="thread.messages[0].imgFileURL.length > 1" [href]="sanitizedUrl" target="_blank" [download]="">
-              <img src="../../../../assets/img/download-icon.png">
+              <img src="assets/img/download-icon.png">
             </a>
           </div>
         </div>

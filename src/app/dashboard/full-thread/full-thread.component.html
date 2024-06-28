@@ -5,7 +5,7 @@
             <span># DevTeam</span>
         </div>
         <div class="close-thread" (click)="closeThread()">
-            <img src="../../../assets/img/close.png" alt="">
+            <img src="assets/img/close.png" alt="">
         </div>
     </div>
 
@@ -15,9 +15,9 @@
             <div class="channel-chat-message" [class.other-users-channel-chat-message]="!isCurrentUser">
                 <div class="reaction-menu" *ngIf="isCurrentUser">
                     <div class="icon" *ngIf="isCurrentUser">
-                        <img class="not-hover-icon" src="../../../../assets/img/dots.png" alt="">
+                        <img class="not-hover-icon" src="assets/img/dots.png" alt="">
                         <button class="hover-icon" mat-button [matMenuTriggerFor]="editMessage">
-                            <img src="../../../../assets/img/dots-hover.png" alt="">
+                            <img src="assets/img/dots-hover.png" alt="">
                         </button>
                         <mat-menu class="edit-message-btn" #editMessage="matMenu">
                             <button mat-menu-item (click)="editThreadMessage(this.thread.messages[0])">Nachricht
@@ -44,7 +44,7 @@
                         <div class="download-icon">
                             <a *ngIf="thread.messages[0].imgFileURL.length > 1" [href]="sanitizedUrl" target="_blank"
                                 [download]="">
-                                <img src="../../../../assets/img/download-icon.png">
+                                <img src="assets/img/download-icon.png">
                             </a>
                         </div>
                         <span>
@@ -55,7 +55,7 @@
                     <div class="message-textarea" *ngIf="thread.messages[0].editMode">
                         <div class="message-textarea-content">
                             <div class="img-container" *ngIf="thread.messages[0].imgFileURL.length > 1">
-                                <img class="delete-icon" src="../../../../assets/img/close.png" alt=""
+                                <img class="delete-icon" src="assets/img/close.png" alt=""
                                     (click)="deleteImg(this.thread)">
                                 <img class="message-img" src="{{ thread.messages[0].imgFileURL }}" alt="">
                             </div>
@@ -99,9 +99,9 @@
                         [assigningComponent]="'FullThreadComponent'"></app-emoji-mart>
 
                     <div class="address-message-to-user">
-                        <img class="not-hover-icon" src="../../../assets/img/ping-user.png" alt="">
+                        <img class="not-hover-icon" src="assets/img/ping-user.png" alt="">
                         <button class="hover-icon" mat-button [matMenuTriggerFor]="pingUser">
-                            <img src="../../../assets/img/ping-user-hover.png" alt="">
+                            <img src="assets/img/ping-user-hover.png" alt="">
                         </button>
                         <mat-menu #pingUser="matMenu" class="address-message-to-user-menu">
                             <mat-form-field class="example-full-width" (click)="$event.stopPropagation()">
@@ -122,10 +122,10 @@
 
                 <div class="send-message">
                     <button class="not-hover-icon">
-                        <img src="../../../assets/img/send-message.png" alt="">
+                        <img src="assets/img/send-message.png" alt="">
                     </button>
                     <button type="submit" class="hover-icon" (click)="sendMessage(); removeChatInput()">
-                        <img src="../../../assets/img/send-message-hover.png" alt="">
+                        <img src="assets/img/send-message-hover.png" alt="">
                     </button>
 
                 </div>
