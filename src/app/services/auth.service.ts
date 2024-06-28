@@ -26,7 +26,7 @@ import {
   getDoc,
   deleteDoc,
   onSnapshot,
-  docSnapshots
+  docSnapshots, arrayUnion
 } from '@angular/fire/firestore';
 import {User} from '../models/user.class';
 import {Observable} from 'rxjs';
@@ -180,6 +180,13 @@ export class AuthService {
       console.error('Error updating user online Status.', error);
       throw error;
     }
+  }
+
+  async updateChannelParticipantsArray(userId: string, channelId: string) {
+    const channelRef = doc(this.firestore, "channels", channelId);
+    await updateDoc(channelRef, {
+      participants: arrayUnion(userId)
+    });
   }
 
   /**

@@ -4,6 +4,8 @@ import { AuthService } from "./auth.service";
 import { User } from "../models/user.class";
 import { Router } from "@angular/router";
 import {SnackBarService} from "./snack-bar.service";
+import {doc} from "@angular/fire/firestore";
+import {defaultChannel} from "../default-data";
 
 @Injectable({
   providedIn: 'root'
@@ -129,8 +131,10 @@ export class UserRegistrationService {
       const userRef = await this.authService.createFirebaseUser(user);
       const userId = userRef.id;
       await this.authService.updateFirebaseUser({'userChats': [{userChatId: userId}]});
+      await this.authService.updateChannelParticipantsArray(userId, defaultChannel)
+      // Add userId to the Channel participants
     } catch (error) {
-      console.error('Error after saving user to firebase: ', error);
+      console.error('Error after saving user to firebase and updating channel: ', error);
     }
   }
 }

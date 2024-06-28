@@ -5,6 +5,7 @@ import { NgForOf, NgIf } from "@angular/common";
 import { RouterLink } from "@angular/router";
 import { PhotoSelectionComponent } from "../photo-selection/photo-selection.component";
 import { UserRegistrationService } from "../services/user-registration.service";
+import {defaultChannel} from "../default-data";
 
 /**
  * @component RegisterNextComponent
@@ -67,7 +68,7 @@ export class RegisterNextComponent {
       }
       this.userRegService.updateUserObject('imageUrl', storageUrl as string);
       this.userRegService.updateUserObject('onlineStatus', 'online');
-      this.userRegService.updateUserObject('channels', ['Yk2dgejx9yy7iHLij1Qj']);
+      this.userRegService.updateUserObject('channels', [defaultChannel]);
       this.userRegService.signUpAndCreateUser();
     }
     catch (error) {
