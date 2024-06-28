@@ -123,11 +123,6 @@ export class UserChatComponent {
         console.error("Could not scroll to bottom:", err);
       }
     }
-    console.log('BOTTOMSCROLL');
-    
-    setTimeout(() => {
-      this.threadMessageBox.nativeElement.focus();
-    }, 500);
   }
 
   /**
