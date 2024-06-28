@@ -10,6 +10,10 @@
     height: 100%;
 }
 
+.chat-history {
+    padding-top: 40px;
+}
+
 .thread-header {
     @include flex-align-justify($jc: space-between);
     padding: 32px 20px;
