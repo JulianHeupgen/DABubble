@@ -111,7 +111,6 @@ export class UserRegistrationService {
    */
   async saveFirebaseUser() {
     const user = new User(this._userData);
-    // Connect firebase and set Doc User HERE
     await this.saveUserToFirebase(user)
       .then(() => {
         this.router.navigate(['dashboard']);
@@ -131,8 +130,7 @@ export class UserRegistrationService {
       const userRef = await this.authService.createFirebaseUser(user);
       const userId = userRef.id;
       await this.authService.updateFirebaseUser({'userChats': [{userChatId: userId}]});
-      await this.authService.updateChannelParticipantsArray(userId, defaultChannel)
-      // Add userId to the Channel participants
+      await this.authService.updateChannelParticipantsArray(userId, defaultChannel);
     } catch (error) {
       console.error('Error after saving user to firebase and updating channel: ', error);
     }
