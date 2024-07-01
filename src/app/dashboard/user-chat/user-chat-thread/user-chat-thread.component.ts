@@ -10,11 +10,13 @@ import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { deleteObject, getStorage, ref } from '@angular/fire/storage';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ViewProfileComponent } from '../../../dialog/view-profile/view-profile.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-chat-thread',
   standalone: true,
-  imports: [EmojiMartComponent, MatMenuTrigger, MatMenu, MessageReactionComponent, CommonModule],
+  imports: [EmojiMartComponent, MatMenuTrigger, MatMenu, MessageReactionComponent, CommonModule, ViewProfileComponent],
   templateUrl: './user-chat-thread.component.html',
   styleUrls: [
     './user-chat-thread.component.scss',
@@ -43,6 +45,7 @@ export class UserChatThreadComponent {
     public dataService: DataService,
     public threadService: ThreadService,
     private domSanitizer: DomSanitizer,
+    private dialog: MatDialog
   ) {}
 
 
@@ -155,4 +158,14 @@ export class UserChatThreadComponent {
     obj.messages[0].imgFileURL = '';
   }
 
+
+    /**
+   * show profile of user in thread
+   * @param participant 
+   */
+    showProfile(participant: any) {
+      this.dialog.open(ViewProfileComponent, {
+        data: participant
+     });
+   }
 }

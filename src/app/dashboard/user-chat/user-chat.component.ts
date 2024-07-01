@@ -23,6 +23,7 @@ import { ChannelChatComponent } from '../channel-chat/channel-chat.component';
 import { Observable, Subscription, firstValueFrom, of } from 'rxjs';
 import { ThreadService } from '../../services/thread.service';
 import { UserChatThreadComponent } from './user-chat-thread/user-chat-thread.component';
+import { ViewProfileComponent } from '../../dialog/view-profile/view-profile.component';
 
 
 @Component({
@@ -30,7 +31,7 @@ import { UserChatThreadComponent } from './user-chat-thread/user-chat-thread.com
   standalone: true,
   imports: [MatCard, MatCardHeader, MatCardContent, MatFormField, MatLabel, MatList, MatListModule, CommonModule, ReactiveFormsModule, MatDialogModule,
     MatMenuModule, MatFormFieldModule, MatInputModule, MatAutocompleteModule, EmojiMartComponent, AddImgToMessageComponent, ChannelThreadComponent,
-    ChannelChatComponent, UserChatThreadComponent],
+    ChannelChatComponent, UserChatThreadComponent, ViewProfileComponent],
   templateUrl: './user-chat.component.html',
   styleUrl: './user-chat.component.scss',
 })
@@ -405,4 +406,15 @@ export class UserChatComponent {
   trackByTimestamp(item: any): number {
     return item.timestamp;
   }
+
+
+      /**
+   * show profile of user in thread
+   * @param participant 
+   */
+      showProfile(participant: any) {
+        this.dialog.open(ViewProfileComponent, {
+          data: participant
+       });
+     }
 }

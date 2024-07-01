@@ -6,7 +6,7 @@
         <img class="online-status" [class.online]="recipient.onlineStatus === 'online'"
           [class.offline]="recipient.onlineStatus === 'offline'">
       </div>
-      <span>{{ recipient.name }}</span>
+      <span (click)="showProfile(recipient)">{{ recipient.name }}</span>
     </div>
   </mat-card-header>
 
