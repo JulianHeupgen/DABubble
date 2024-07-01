@@ -12,6 +12,16 @@
     position: relative;
     width: 100%;
     max-width: 1920px;
+    height: 100%;
+}
+
+.shadow {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
 }
 
 app-header {
@@ -37,6 +47,10 @@ app-full-thread {
         position: absolute;
         left: 5px;
         z-index: 2;
+    }
+
+    .shadow {
+        display: unset;
     }
 }
 

@@ -7,6 +7,7 @@ import { RouterOutlet } from '@angular/router';
 import { FullThreadComponent } from './full-thread/full-thread.component';
 import { CommonModule } from '@angular/common';
 import { ThreadService } from '../services/thread.service';
+import { SidenavService } from '../services/sidenav.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,7 +25,7 @@ export class DashboardComponent {
    * 
    * @param {ThreadService} threadService - The service for managing thread operations.
    */
-  constructor(public threadService: ThreadService) {
+  constructor(public threadService: ThreadService, public sidenavService: SidenavService) {
     this.threadService.openCurrentThread$.subscribe(openThreadBoolean => {
         this.openThread = openThreadBoolean;      
     });
